@@ -1,0 +1,525 @@
+{
+  "Characters": [
+    {
+      "Name": "Amazing Spider-Man",
+      "Alter Ego": "Peter Parker",
+      "Affiliations": ["Defenders", "Web Warriors"],
+      "CP": 37,
+      "Cost": 5,
+      "Healthy": {
+        "CardImage": "amazing_spiderman_healthy.png",
+        "HP": 6,
+        "Movement": "Long",
+        "Size": 2,
+        "PhysicalDefense": 4,
+        "EnergyDefense": 4,
+        "MysticDefense": 3,
+        "Attack1": {
+          "Name": "Spider Strike",
+          "Type": "{Ph}",
+          "Range": 3,
+          "Weight": 5,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "{C}{W} <b>Momentum</b>: Choose another enemy character with {R} 2 of the target character. Place this character with {R}1 of the chosen character. The chosen character suffers a collision as if this character were thrown into them."
+        },
+        "Attack2": {
+          "Name": "Whatever a Spider Can",
+          "Type": "{Ph}",
+          "Range": 2,
+          "Weight": 8,
+          "Cost": 5,
+          "Effect1": "After this attack is resolved, this character may advance {M}.",
+          "Effect2": "{W} <b>Catch!</b>: After this attack is resolved, you may choose an interactive terrain feature of size 2 or less and within {R}3 of this character and destroy it. The target character suffers a collision as if the terrain were thrown into them."
+        },
+        "Attack3": null,
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "Friendly Neighborhood Spider-Team (Affiliation: Web Warriors)",
+          "Type": "Affiliation",
+          "Cost": 0,
+          "Effect": "Once per turn, during an allied character's activation, it may pay one {P} and choose an enemy character within {R}2. The chosen character gains the Slow special condition. If the chosen character already had the Slow special condition, place it within {R} 1 of its current position and remove the Slow special condition."
+        },
+        "Superpower2": {
+          "Name": "Web Swing",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "Place this character within {R} 3 of its current position. The next time it makes a Spider Strike this turn, add two dice to the attack roll. This superpower can be used only once per turn."
+        },
+        "Superpower3": {
+          "Name": "Witty Banter",
+          "Type": "Reaction",
+          "Cost": 1,
+          "Effect": "When an enemy character within {R} 3 of this character is attacking an allied character, this character may use this superpower during the Modify Opponent's Dice step of the attack. You may reroll one die in the attack roll."
+        },
+        "Superpower4": {
+          "Name": "Mastered Spider-Sense",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "This character may reroll any of its defense or dodge dice."
+        },
+        "Superpower5": {
+          "Name": "Wall Crawler",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": ""
+        },
+        "Superpower6": null
+      },
+      "Injured": {
+        "CardImage": "amazing_spiderman_injured.png",
+        "HP": 6,
+        "Movement": "Long",
+        "Size": 2,
+        "PhysicalDefense": 4,
+        "EnergyDefense": 4,
+        "MysticDefense": 3,
+        "Attack1": {
+          "Name": "Spider Strike",
+          "Type": "{Ph}",
+          "Range": 3,
+          "Weight": 5,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "{C}{W} <b>Momentum</b>: Choose another enemy character with {R} 2 of the target character. Place this character with {R} 1 of the chosen character. The chosen character suffers a collision as if this character were thrown into them."
+        },
+        "Attack2": {
+          "Name": "Whatever a Spider Can",
+          "Type": "{Ph}",
+          "Range": 2,
+          "Weight": 8,
+          "Cost": 5,
+          "Effect1": "After this attack is resolved, this character may advance {M}.",
+          "Effect2": "{W} <b>Catch!</b>: After this attack is resolved, you may choose an interactive terrain feature of size 2 or less and within {R} 3 of this character and destroy it. The target character suffers a collision as if the terrain were thrown into them."
+        },
+        "Attack3": null,
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "Friendly Neighborhood Spider-Team (Affiliation: Web Warriors)",
+          "Type": "Affiliation",
+          "Cost": 0,
+          "Effect": "Once per turn, during an allied character's activation, it may pay one {P} and choose an enemy character within {R}2. The chosen character gains the Slow special condition. If the chosen character already had the Slow special condition, place it within {R} 1 of its current position and remove the Slow special condition."
+        },
+        "Superpower2": {
+          "Name": "Web Swing",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "Place this character within {R} 3 of its current position. The next time it makes a Spider Strike this turn, add two dice to the attack roll. This superpower can be used only once per turn."
+        },
+        "Superpower3": {
+          "Name": "Witty Banter",
+          "Type": "Reaction",
+          "Cost": 1,
+          "Effect": "When an enemy character within {R} 3 of this character is attacking an allied character, this character may use this superpower during the Modify Opponent's Dice step of the attack. You may reroll one die in the attack roll."
+        },
+        "Superpower4": {
+          "Name": "Mastered Spider-Sense",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "This character may reroll any of its defense or dodge dice."
+        },
+        "Superpower5": {
+          "Name": "Wall Crawler",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": ""
+        },
+        "Superpower6": null
+      }
+    },
+    {
+      "Name": "Ancient One",
+      "Alter Ego": "Ancient One",
+      "Affiliations": ["Convocation", "Defenders"],
+      "CP": 64,
+      "Cost": 4,
+      "Healthy": {
+        "CardImage": "ancient_one_healthy.png",
+        "HP": 6,
+        "Movement": "{M}",
+        "Size": 2,
+        "PhysicalDefense": 2,
+        "EnergyDefense": 3,
+        "MysticDefense": 5,
+        "Attack1": {
+          "Name": "Shards of the Seraphim",
+          "Type": "{My}",
+          "Range": 2,
+          "Weight": 5,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "{W} <b>Pierce</b>: Change one of the defending character's {C}, {W}, or {B} results to a blank."
+        },
+        "Attack2": {
+          "Name": "Fangs of Farallah",
+          "Type": "{My}",
+          "Range": 3,
+          "Weight": 4,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains 1 {P}.",
+          "Effect2": "If this attack deals {D}, after this attack is resolved the target character gains the Posion special condition."
+        },
+        "Attack3": {
+          "Name": "Astral Strike",
+          "Type": "{My}",
+          "Range": 2,
+          "Weight": 8,
+          "Cost": 4,
+          "Effect1": "The defending character does not add {C} results in its defense roll to its total successes and cannot add additional dice to its defense roll as a result of {C} results.",
+          "Effect2": "If this attack deals {D}, after this attack is resolved the target character gains the Stagger special condition."
+        },
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "Mists of Hoggoth",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "Place this character within {R} 2 of its current position. This superpower can only be used once per turn."
+        },
+        "Superpower2": {
+          "Name": "Winds of Watoomb",
+          "Type": "Reaction",
+          "Cost": 3,
+          "Effect": "When this character is targeted by an attack it may use this superpower. Push the attacking character toward this character {S}."
+        },
+        "Superpower3": {
+          "Name": "Keeper of the Eye of Agamotto",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "When this character is making a defense or dodge roll, it may reroll up to two of its defense or dodge dice.\n\nAdditionally, during the power phase this character gains 1 additional {P}."
+        },
+        "Superpower4": {
+          "Name": "Martial Artist",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "When this character is defending against a {Ph} or {E} attack targeting it from within {R} 2, this character adds blanks in its defense roll to its total successes."
+        },
+        "Superpower5": null,
+        "Superpower6": null
+      },
+      "Injured": {
+        "CardImage": "ancient_one_injured.png",
+        "HP": 6,
+        "Movement": "{M}",
+        "Size": 2,
+        "PhysicalDefense": 2,
+        "EnergyDefense": 3,
+        "MysticDefense": 5,
+        "Attack1": {
+          "Name": "Shards of the Seraphim",
+          "Type": "{My}",
+          "Range": 2,
+          "Weight": 5,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "{W} <b>Pierce</b>: Change one of the defending character's {C}, {W}, or {B} results to a blank."
+        },
+        "Attack2": {
+          "Name": "Fangs of Farallah",
+          "Type": "{My}",
+          "Range": 3,
+          "Weight": 4,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains 1 {P}.",
+          "Effect2": "If this attack deals {D}, after this attack is resolved the target character gains the Posion special condition."
+        },
+        "Attack3": {
+          "Name": "Astral Strike",
+          "Type": "{My}",
+          "Range": 2,
+          "Weight": 8,
+          "Cost": 4,
+          "Effect1": "The defending character does not add {C} results in its defense roll to its total successes and cannot add additional dice to its defense roll as a result of {C} results.",
+          "Effect2": "If this attack deals {D}, after this attack is resolved the target character gains the Stagger special condition."
+        },
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "Mists of Hoggoth",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "Place this character within {R} 2 of its current position. This superpower can only be used once per turn."
+        },
+        "Superpower2": {
+          "Name": "Winds of Watoomb",
+          "Type": "Reaction",
+          "Cost": 3,
+          "Effect": "When this character is targeted by an attack it may use this superpower. Push the attacking character toward this character {S}."
+        },
+        "Superpower3": {
+          "Name": "Keeper of the Eye of Agamotto",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "When this character is making a defense or dodge roll, it may reroll up to two of its defense or dodge dice.\n\nAdditionally, during the power phase this character gains 1 additional {P}."
+        },
+        "Superpower4": {
+          "Name": "Martial Artist",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "When this character is defending against a {Ph} or {E} attack targeting it from within {R} 2, this character adds blanks in its defense roll to its total successes."
+        },
+        "Superpower5": null,
+        "Superpower6": null
+      }
+    },
+
+    {
+      "Name": "Angela",
+      "Alter Ego": "Aldrif Odinsdottir",
+      "Affiliations": ["A-Force", "Asgard", "Guardians of the Galaxy"],
+      "CP": 28,
+      "Cost": 5,
+      "Healthy": {
+        "CardImage": "angela_healthy.png",
+        "HP": 6,
+        "Movement": "{L}",
+        "Size": 2,
+        "PhysicalDefense": 4,
+        "EnergyDefense": 4,
+        "MysticDefense": 4,
+        "Attack1": {
+          "Name": "Xiphos, Sword of the Stars",
+          "Type": "{Ph}",
+          "Range": 2,
+          "Weight": 6,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "After this attack is resolved, place this character within {R} 2 of the target."
+        },
+        "Attack2": {
+          "Name": "Blades of Ichor",
+          "Type": "{E}",
+          "Range": 4,
+          "Weight": 5,
+          "Cost": 1,
+          "Effect1": "{H} <b>Pursuit</b>: Before {D} is dealt, this character may advance toward the target character {S}.",
+          "Effect2": ""
+        },
+        "Attack3": {
+          "Name": "Heven's Wrath",
+          "Type": "{Ph}",
+          "Range": 3,
+          "Weight": 4,
+          "Cost": 3,
+          "Effect1": "Add dice to the attack roll equal to the size of the target's Size.",
+          "Effect2": "{C}{C}{W} <b>Cleave</b>: After this attack is resolved, this character may make an additional Heven's Wrath attack without paying the {E} cost. The additional attack must target the original character. This additonal attack does not have the Cleave special rule."
+        },
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "Odinsdottir's Might",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "Choose an interactive terrain feature of size 4 or less and within {R} 2, and throw it {M}. This superpower can be used only once per turn."
+        },
+        "Superpower2": {
+          "Name": "Angelic Assassin",
+          "Type": "Reaction",
+          "Cost": 2,
+          "Effect": "If this character dazes or KOs an enemy character with an attack during its activation, this character may use this superpower. This character advances {S}, then makes a Xiphos, Sword of the Stars attack. This superpower can be used only once per turn."
+        },
+        "Superpower3": {
+          "Name": "Asgardian",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "During the power phase, this character gains 1 additional {P}."
+        },
+        "Superpower4": {
+          "Name": "Living Ribbons",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "Enemy characters cannot place the movement tool overlapping this character's base. Enemy characters cannot reroll or change attack dice when targeting this character with attacks."
+        },
+        "Superpower5": {
+          "Name": "Flight",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": ""
+        },
+        "Superpower6": null
+      },
+      "Injured": {
+        "CardImage": "angela_injured.png",
+        "HP": 7,
+        "Movement": "{L}",
+        "Size": 2,
+        "PhysicalDefense": 4,
+        "EnergyDefense": 4,
+        "MysticDefense": 4,
+        "Attack1": {
+          "Name": "Xiphos, Sword of the Stars",
+          "Type": "{Ph}",
+          "Range": 2,
+          "Weight": 6,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "After this attack is resolved, place this character within {R} 2 of the target."
+        },
+        "Attack2": {
+          "Name": "Blades of Ichor",
+          "Type": "{E}",
+          "Range": 4,
+          "Weight": 5,
+          "Cost": 1,
+          "Effect1": "{H} <b>Pursuit</b>: Before {D} is dealt, this character may advance toward the target character {S}.",
+          "Effect2": ""
+        },
+        "Attack3": {
+          "Name": "Heven's Wrath",
+          "Type": "{Ph}",
+          "Range": 3,
+          "Weight": 4,
+          "Cost": 3,
+          "Effect1": "Add dice to the attack roll equal to the size of the target's Size.",
+          "Effect2": "{C}{C}{W} <b>Cleave</b>: After this attack is resolved, this character may make an additional Heven's Wrath attack without paying the {E} cost. The additional attack must target the original character. This additonal attack does not have the Cleave special rule."
+        },
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "Odinsdottir's Might",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "Choose an interactive terrain feature of size 4 or less and within {R} 2, and throw it {M}. This superpower can be used only once per turn."
+        },
+        "Superpower2": {
+          "Name": "Angelic Assassin",
+          "Type": "Reaction",
+          "Cost": 2,
+          "Effect": "If this character dazes or KOs an enemy character with an attack during its activation, this character may use this superpower. This character advances {S}, then makes a Xiphos, Sword of the Stars attack. This superpower can be used only once per turn."
+        },
+        "Superpower3": {
+          "Name": "Asgardian",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "During the power phase, this character gains 1 additional {P}."
+        },
+        "Superpower4": {
+          "Name": "Living Ribbons",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "Enemy characters cannot place the movement tool overlapping this character's base. Enemy characters cannot reroll or change attack dice when targeting this character with attacks."
+        },
+        "Superpower5": {
+          "Name": "Flight",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": ""
+        },
+        "Superpower6": null
+      }
+    },
+    {
+      "Name": "Black Panther",
+      "Alter Ego": "T'Challa",
+      "Affiliations": ["Wakanda", "Avengers"],
+      "CP": 7,
+      "Cost": 4,
+      "Healthy": {
+        "CardImage": "black_panther_healthy.jpg",
+        "HP": 6,
+        "Movement": "Long",
+        "Size": 2,
+        "PhysicalDefense": 4,
+        "EnergyDefense": 3,
+        "MysticDefense": 3,
+        "Attack1": {
+          "Name": "Strike",
+          "Type": "{Ph}",
+          "Range": 2,
+          "Weight": 5,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "Before {D} is dealt, push the target character away from this character {S}."
+        },
+        "Attack2": {
+          "Name": "Kinetic Burst",
+          "Type": "{E}",
+          "Range": 2,
+          "Weight": 6,
+          "Cost": 3,
+          "Effect1": "When making this attack, during the pay {P} cost step of the atttack, this character may spend up to 3 additional {P}. Add one die to this attack for each {P} spent in this way.",
+          "Effect2": "{W} <b>Explosive Force</b>: After this attack is resolved, other characters within {R}2 of this character are Pushed away from this character {S}. Pushed characters suffer one {D}."
+        },
+        "Attack3": null,
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "King of Wakanda",
+          "Type": "Affiliation",
+          "Cost": 0,
+          "Effect": "After an allied character rolls attack, defense, or dodge dice, it may spend 1 {P}. If it does, that character may reroll one of the dice in that roll."
+        },
+        "Superpower2": {
+          "Name": "Mantle of the Black Panther",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "When making attacks this turn this character may reroll any of number of its attack dice."
+        },
+        "Superpower3": {
+          "Name": "Pounce",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "This character is thrown {S}. It does not suffer damage if it collides with another character or terrain feature. This superpower can be used only once per activation."
+        },
+        "Superpower4": {
+          "Name": "Vibranium Armor",
+          "Type": "Passive",
+          "Cost": 0,
+          "Effect": "When defending against {Ph} or {E} attacks, this character adds blanks in its defense roll to its total successes."
+        },
+        "Superpower5": null,
+        "Superpower6": null
+      },
+      "Injured": {
+        "CardImage": "black_panther_injured.jpg",
+        "HP": 6,
+        "Movement": "Long",
+        "Size": 2,
+        "PhysicalDefense": 4,
+        "EnergyDefense": 3,
+        "MysticDefense": 3,
+        "Attack1": {
+          "Name": "Strike",
+          "Type": "{Ph}",
+          "Range": 2,
+          "Weight": 5,
+          "Cost": 0,
+          "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
+          "Effect2": "Before {D} is dealt, push the target character away from this character {S}."
+        },
+        "Attack2": {
+          "Name": "Kinetic Burst",
+          "Type": "{E}",
+          "Range": 2,
+          "Weight": 6,
+          "Cost": 3,
+          "Effect1": "When making this attack, during the pay {P} cost step of the atttack, this character may spend up to 3 additional {P}. Add one die to this attack for each {P} spent in this way.",
+          "Effect2": "{W} <b>Explosive Force</b>: After this attack is resolved, other characters within {R} 2 of this character are Pushed away from this character {S}. Pushed characters suffer one {D}."
+        },
+        "Attack3": null,
+        "Attack4": null,
+        "Superpower1": {
+          "Name": "King of Wakanda",
+          "Type": "Affiliation",
+          "Cost": 0,
+          "Effect": "After an allied character rolls attack, defense, or dodge dice, it may spend 1 {P}. If it does, that character may reroll one of the dice in that roll."
+        },
+        "Superpower2": {
+          "Name": "Mantle of the Black Panther",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "When making attacks this turn this character may reroll any of number of its attack dice."
+        },
+        "Superpower3": {
+          "Name": "Pounce",
+          "Type": "Activated",
+          "Cost": 2,
+          "Effect": "This character is thrown {S}. It does not suffer damage if it collides with another character or terrain feature. This superpower can be used only once per activation."
+        },
+        "Superpower4": {
+          "Name": "Vibranium Armor",
+          "Type": "Reaction",
+          "Cost": 2,
+          "Effect": "When this character is targeted by a {Ph} or {E} attack, it may use this superpower. Add two dice to this character's defense roll against that attack."
+        },
+        "Superpower5": null,
+        "Superpower6": null
+      }
+    }
+  ]
+}
