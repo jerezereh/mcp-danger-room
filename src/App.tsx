@@ -1,12 +1,14 @@
 import { GlobalStyle } from './styles/GlobalStyle'
-import { RosterView } from './components/RosterView/RosterView'
+import { CardBrowser } from './components/CardBrowser/CardBrowser'
 
 
 export function App() {
   return (
     <>
       <GlobalStyle />
-      <RosterView />
+      <CardBrowser />
+      {/* <InfoPane /> */}
+      {/* <RosterView /> */}
     </>
   )
 }
