@@ -6,6 +6,9 @@ module.exports = [
   {
     test: /\.(m?js|node)$/,
     parser: { amd: false },
+    resolve: {
+      fullySpecified: false
+    },
     use: {
       loader: '@marshallofsound/webpack-asset-relocator-loader',
       options: {
