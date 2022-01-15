@@ -15,12 +15,6 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
-    "@mui/material": "^5.0.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-hot-loader": "4.13.0",
-    "styled-components": "5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -28,6 +22,7 @@
     "@babel/preset-env": "7.14.5",
     "@babel/preset-react": "7.14.5",
     "@babel/preset-typescript": "7.14.5",
+    "@babel/runtime": "^7.15.4",
     "@electron-forge/cli": "6.0.0-beta.57",
     "@electron-forge/maker-deb": "6.0.0-beta.57",
     "@electron-forge/maker-rpm": "6.0.0-beta.57",
@@ -37,6 +32,7 @@
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@mui/material": "^5.0.4",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "11.2.7",
     "@types/electron-devtools-installer": "2.2.0",
@@ -64,6 +60,10 @@
     "mui-datatables": "^3.7.8",
     "npm-run-all": "4.1.5",
     "prettier": "2.3.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-hot-loader": "4.13.0",
+    "styled-components": "5.3.0",
     "ts-jest": "27.0.3",
     "typescript": "4.3.4",
     "wait-on": "5.3.0"
