@@ -1,5 +1,7 @@
 import { GlobalStyle } from './styles/GlobalStyle'
 import { CardBrowser } from './components/CardBrowser/CardBrowser'
+import { InfoPane } from './components/InfoPane/InfoPane'
+import { RosterView } from './components/RosterView/RosterView'
 
 
 export function App() {
@@ -7,8 +9,8 @@ export function App() {
     <>
       <GlobalStyle />
       <CardBrowser />
-      {/* <InfoPane /> */}
-      {/* <RosterView /> */}
+      <InfoPane/>
+      <RosterView />
     </>
-  )
-}
+  ) 
+} 
