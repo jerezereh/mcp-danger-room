@@ -1,15 +1,15 @@
 import { Image } from './styles';
 
-import { IFullCharacterProps } from "../../dataTypes/IFullCharacterProps";
+// import { IFullCharacterProps } from "../../dataTypes/IFullCharacterProps";
 
-export const InfoPane = (props: IFullCharacterProps) => {
+export function InfoPane(healthyCardImage, injuredCardImage) { 
   return (
     <div>
       <div>
-        <Image src={require('../../../assets/characterCardImages/' + props.healthyCardImage)} />
+        <Image src={require('../../../assets/characterCardImages/' + 'angela_healthy.png')} /> 
       </div>
       <div>
-        <Image src={require('../../../assets/characterCardImages/' + props.injuredCardImage)} />
+        <Image src={require('../../../assets/characterCardImages/' + 'angela_injured.png')} />
       </div>
     </div>);
 }

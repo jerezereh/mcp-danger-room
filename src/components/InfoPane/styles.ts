@@ -14,7 +14,7 @@ export const Container = styled.div`
 `
 
 export const Image = styled.img`
-  width: 60px;
+  width: 400px;
 `
 
 export const Text = styled.p`
