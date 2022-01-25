@@ -1,12 +1,12 @@
-import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 
-export function RosterView(){
+export function RosterView() {
     const [value, setValue] = useState('');
     const [rows, setRows] = useState();
     const columns = ['Card Name', 'Card Type'];
     
-    function onSubmit(){}
+    function onSubmit() {}
+    
     return (
         <>
         <form onSubmit={onSubmit}>

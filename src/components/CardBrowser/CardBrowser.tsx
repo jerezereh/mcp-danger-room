@@ -1,11 +1,22 @@
 import MUIDataTable from "mui-datatables";
 import data from '../../../assets/CharacterCards.json';
+import { CharacterDataToICard } from "../../dataTypes/transforms";
 
-export function CardBrowser() {
+export function CardBrowser(props: { setSelectedCard: any; }) {
   const columns = ["Name", "Alter Ego", "Affiliations", "Cost", "CP"];
   const options = {
     filter: true,
+    onRowClick: onRowClick,
   };
+
+  function onRowClick(rowData: string[]) {
+    const result = data.Characters.find(c => c.Name === rowData[0]);
+    if (result === undefined) {
+      return;
+    }
+
+    props.setSelectedCard(CharacterDataToICard(result));
+  }
 
   return (
     <>

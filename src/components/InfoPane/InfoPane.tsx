@@ -1,15 +1,15 @@
+import { ICardProps } from '../../dataTypes/ICardProps';
 import { Image } from './styles';
 
-// import { IFullCharacterProps } from "../../dataTypes/IFullCharacterProps";
-
-export function InfoPane(healthyCardImage, injuredCardImage) { 
+export function InfoPane(props: { card: ICardProps | null; }) {
   return (
     <div>
       <div>
-        <Image src={require('../../../assets/characterCardImages/' + 'angela_healthy.png')} /> 
+        <Image src={props.card ? require('../../../assets/characterCardImages/' + props.card.cardImage1) : null} /> 
       </div>
       <div>
-        <Image src={require('../../../assets/characterCardImages/' + 'angela_injured.png')} />
+        <Image src={props.card ? require('../../../assets/characterCardImages/' + props.card.cardImage2) : null} />
       </div>
-    </div>);
+    </div>
+  );
 }
