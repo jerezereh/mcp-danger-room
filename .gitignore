@@ -7,7 +7,6 @@ out
 # Generated files
 .webpack
 package-lock.json
-yarn.lock
 
 # Code Editor files
 .vscode
