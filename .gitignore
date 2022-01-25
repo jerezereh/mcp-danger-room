@@ -1,7 +1,13 @@
+# Build files
 node_modules
 dist
 packages
-.webpack
 out
-.vscode
+
+# Generated files
+.webpack
 package-lock.json
+yarn.lock
+
+# Code Editor files
+.vscode
