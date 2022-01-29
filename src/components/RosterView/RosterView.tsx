@@ -16,14 +16,16 @@ export function RosterView() {
             </label>
         </form>
         <table>
-            <tr>
-                <th>Card Name</th>
-                <th>Card Type</th>
-            </tr>
-            <tr>
-                <td>Spider-Man</td>
-                <td>Character</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <th>Card Name</th>
+                    <th>Card Type</th>
+                </tr>
+                <tr>
+                    <td>Spider-Man</td>
+                    <td>Character</td>
+                </tr>
+            </tbody>
         </table>
         </>
     )

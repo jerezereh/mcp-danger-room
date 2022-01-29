@@ -6,7 +6,6 @@ out
 
 # Generated files
 .webpack
-package-lock.json
 
 # Code Editor files
 .vscode
