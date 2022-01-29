@@ -14,7 +14,6 @@
   },
   "keywords": [],
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/plugin-transform-runtime": "7.14.5",
@@ -29,9 +28,7 @@
     "@electron-forge/maker-zip": "6.0.0-beta.57",
     "@electron-forge/plugin-webpack": "6.0.0-beta.57",
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@mui/material": "^5.0.4",
+    "@mui/material": "^5.3.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "11.2.7",
     "@types/electron-devtools-installer": "2.2.0",
@@ -45,7 +42,7 @@
     "babel": "^6.23.0",
     "babel-loader": "^8.2.2",
     "cross-env": "7.0.3",
-    "electron": "13.1.2",
+    "electron": "16.0.7",
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
@@ -121,5 +118,9 @@
         }
       ]
     }
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0"
   }
 }
