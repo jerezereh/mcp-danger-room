@@ -22,23 +22,5 @@ export function CardBrowser(props: { setSelectedCard: any; }) {
   return (
     <>
       <CardTable dataSet={data.Characters.map(CharacterDataToICard)} onRowClick={onRowClick} />
-      {/* <MUIDataTable
-        title={"Character Cards"}
-        data={data.Characters}
-        columns={columns}
-        options={options}
-      /> */}
-      {/* <MUIDataTable
-        title={"Tactics Cards"}
-        data={data.Tactics}
-        columns={columns}
-        options={options}
-      /> */}
-      {/* <MUIDataTable
-        title={"Objective Cards"}
-        data={data.Objectives}
-        columns={columns}
-        options={options}
-      /> */}
     </>);
 }
