@@ -45,7 +45,11 @@ function createWindow() {
     },
     {
       label: 'Options',
-      submenu: [{ role: 'selectAll' }, { role: 'reload' }],
+      submenu: [
+        { role: 'selectAll' },
+        { role: 'reload' },
+        { role: 'toggleDevTools' },
+      ],
     },
   ]);
 

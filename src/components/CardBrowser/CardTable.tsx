@@ -1,8 +1,19 @@
-import React from "react";
-import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, tableCellClasses } from "@mui/material";
-import { ICardProps } from "../../dataTypes/ICardProps";
+import React from 'react';
+import {
+  Table,
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  tableCellClasses,
+} from '@mui/material';
+import { ICardProps } from '../../dataTypes/ICardProps';
 
-export function CardTable(props: { dataSet: ICardProps[], onRowClick: (e: any) => void }) {
+export function CardTable(props: {
+  dataSet: ICardProps[];
+  onRowClick: (e: any) => void;
+}) {
   const [selectedRow, setSelectedRow] = React.useState<null | number>(null);
 
   return (
@@ -13,7 +24,7 @@ export function CardTable(props: { dataSet: ICardProps[], onRowClick: (e: any) =
             [`& .${tableCellClasses.root}`]: {
               // borderBottom: "none"
             },
-            backgroundColor: "white"
+            backgroundColor: 'white',
           }}
         >
           <TableHead>
@@ -29,20 +40,23 @@ export function CardTable(props: { dataSet: ICardProps[], onRowClick: (e: any) =
             {props.dataSet.map((item: ICardProps, index: number) => (
               <TableRow
                 key={index}
-                onClick={(e) => { props.onRowClick(e); setSelectedRow(index); console.log(selectedRow, e); }}
+                onClick={e => {
+                  props.onRowClick(e);
+                  setSelectedRow(index);
+                }}
                 selected={index === selectedRow}
                 sx={{
-                  ":hover": {
-                    backgroundColor: "lightblue"
+                  ':hover': {
+                    backgroundColor: 'lightblue',
                   },
-                  "&.Mui-selected": {
-                    backgroundColor: "aqua"
-                  }
+                  '&.Mui-selected': {
+                    backgroundColor: 'aqua',
+                  },
                 }}
               >
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.alterEgo}</TableCell>
-                <TableCell>{item.affiliations.join(", ")}</TableCell>
+                <TableCell>{item.affiliations.join(', ')}</TableCell>
                 <TableCell>{item.cost}</TableCell>
                 <TableCell>{item.cp}</TableCell>
               </TableRow>

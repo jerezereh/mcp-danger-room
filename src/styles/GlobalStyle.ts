@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -12,4 +12,26 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     color: #E1E1E6;
   }
-`
+`;
+
+export const Container = styled.div`
+  height: 90vh;
+  // padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  // justify-content: center;
+
+  button {
+    margin-top: 24px;
+  }
+`;
+
+export const Image = styled.img`
+  width: 400px;
+`;
+
+export const Text = styled.p`
+  margin-top: 24px;
+  font-size: 18px;
+`;
