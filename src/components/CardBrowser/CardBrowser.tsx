@@ -1,17 +1,13 @@
 import { BaseSyntheticEvent } from 'react';
 import data from '../../../assets/CharacterCards.json';
-import { CharacterDataToICard } from "../../dataTypes/transforms";
-import { CardTable } from "./CardTable";
+import { CharacterDataToICard } from '../../dataTypes/transforms';
+import { CardTable } from './CardTable';
 
-export function CardBrowser(props: { setSelectedCard: any; }) {
-  // const columns = ["Name", "Alter Ego", "Affiliations", "Cost", "CP"];
-  // const options = {
-  //   filter: true,
-  //   onRowClick: onRowClick,
-  // };
-
+export function CardBrowser(props: { setSelectedCard: any }) {
   function onRowClick(event: BaseSyntheticEvent) {
-    const result = data.Characters.find(c => c.Name === event.target.parentNode.childNodes[0].outerText);
+    const result = data.Characters.find(
+      c => c.Name === event.target.parentNode.childNodes[0].outerText
+    );
     if (result === undefined) {
       return;
     }
@@ -21,6 +17,10 @@ export function CardBrowser(props: { setSelectedCard: any; }) {
 
   return (
     <>
-      <CardTable dataSet={data.Characters.map(CharacterDataToICard)} onRowClick={onRowClick} />
-    </>);
+      <CardTable
+        dataSet={data.Characters.map(CharacterDataToICard)}
+        onRowClick={onRowClick}
+      />
+    </>
+  );
 }
