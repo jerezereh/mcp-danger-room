@@ -31,15 +31,11 @@ export function App() {
         <Container style={{ flexDirection: 'row' }}>
           <CardBrowser setSelectedCard={setSelectedCard} />
           <InfoPane card={selectedCard} />
-          <RosterView />
+          {/* <RosterView /> */}
         </Container>
       </TabPanel>
       <TabPanel value={selectedTab} index={1}>
-        <GameView
-          gameViewState={gameViewState}
-          stateCallback={setGameViewState}
-          selectedCard={selectedCard}
-        />
+        <GameView gameViewState={gameViewState} stateCallback={setGameViewState} selectedCard={selectedCard} />
       </TabPanel>
     </>
   );

@@ -29,6 +29,9 @@ export const Container = styled.div`
 
 export const Image = styled.img`
   width: 400px;
+  height: 600px;
+  cursor: pointer;
+  display: block;
 `;
 
 export const Text = styled.p`
