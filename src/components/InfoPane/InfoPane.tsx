@@ -1,29 +1,39 @@
+import { useState } from 'react';
 import { ICardProps } from '../../dataTypes/ICardProps';
 import { Image } from '../../styles/GlobalStyle';
 
 export function InfoPane(props: { card: ICardProps | null }) {
-  return (
-    <div>
-      <div>
+  const [showInjured, setShowInjured] = useState(false);
+
+  const handleClick = () => {
+    setShowInjured(!showInjured);
+  };
+
+  if (props.card === null) {
+    return (
+      <>
+        <Image style={{ cursor: 'default' }} />
+      </>
+    );
+  }
+
+  if (showInjured) {
+    return (
+      <>
         <Image
-          src={
-            props.card
-              ? require('../../../assets/characterCardImages/' +
-                  props.card.cardImage1)
-              : null
-          }
+          src={props.card ? require('../../../assets/characterCardImages/' + props.card.cardImage2) : null}
+          onClick={handleClick}
         />
-      </div>
-      <div>
+      </>
+    );
+  } else {
+    return (
+      <>
         <Image
-          src={
-            props.card
-              ? require('../../../assets/characterCardImages/' +
-                  props.card.cardImage2)
-              : null
-          }
+          src={props.card ? require('../../../assets/characterCardImages/' + props.card.cardImage1) : null}
+          onClick={handleClick}
         />
-      </div>
-    </div>
-  );
+      </>
+    );
+  }
 }
