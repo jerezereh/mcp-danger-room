@@ -12,7 +12,7 @@ export function InfoPane(props: { card: ICardProps | null }) {
   if (props.card === null) {
     return (
       <>
-        <Image style={{ cursor: 'default' }} />
+        <Image src={require('../../../assets/characterCardImages/Placeholder.png')} style={{ cursor: 'default' }} />
       </>
     );
   }

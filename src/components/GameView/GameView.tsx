@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import OpenWithIcon from '@mui/icons-material/OpenWith';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { ICardProps } from '../../dataTypes/ICardProps';
-import { CharacterStatusBlock } from '../CharacterStatusBlock/CharacterStatusBlock';
+// import { CharacterStatusBlock } from '../CharacterStatusBlock/CharacterStatusBlock';
 import { InfoPane } from '../InfoPane/InfoPane';
 import './GameView.scss';
 
@@ -35,9 +35,12 @@ export function GameView(props: IGameViewProps) {
           <div className="game-map" />
         </MapInteractionCSS>
       </div>
-      <div className="selectedCardInfoPane" style={{ borderRadius: '2px', border: 'solid', float: 'right' }}>
+      <div className="selectedCardInfoPane" style={{ float: 'right' }}>
         <InfoPane card={selectedCard} />
-        {/* <CharacterStatusBlock /> */}
+        {/* TODO: add current roster and statuses of currently selected in-game character to game view
+        <CardTable />
+        <CharacterStatusBlock /> 
+        */}
       </div>
     </>
   );
