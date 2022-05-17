@@ -16,15 +16,9 @@ export const GlobalStyle = createGlobalStyle`
 
 export const Container = styled.div`
   height: 90vh;
-  // padding: 25px;
   display: flex;
   flex-direction: column;
   align-items: top;
-  // justify-content: center;
-
-  button {
-    margin-top: 24px;
-  }
 `;
 
 export const Image = styled.img`
@@ -32,6 +26,8 @@ export const Image = styled.img`
   height: 600px;
   cursor: pointer;
   display: block;
+  border: 2px solid;
+  margin: 0 25px;
 `;
 
 export const Text = styled.p`

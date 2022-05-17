@@ -14,8 +14,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     // icon: path.join(assetsPath, 'assets', 'icon.png'),
     title: 'MCP: Danger Room',
-    width: 1100,
-    height: 700,
+    width: 1200,
+    height: 800,
     backgroundColor: '#191622',
     webPreferences: {
       nodeIntegration: false,
@@ -45,11 +45,7 @@ function createWindow() {
     },
     {
       label: 'Options',
-      submenu: [
-        { role: 'selectAll' },
-        { role: 'reload' },
-        { role: 'toggleDevTools' },
-      ],
+      submenu: [{ role: 'selectAll' }, { role: 'reload' }, { role: 'toggleDevTools' }],
     },
   ]);
 
