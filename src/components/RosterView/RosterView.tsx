@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import React from 'react';
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, tableCellClasses } from '@mui/material';
+import { ICardProps } from '../../dataTypes/ICardProps';
 
-export function RosterView() {
-  const [value, setValue] = useState('');
-
-  function onSubmit() {}
+export function RosterView(props: { dataSet: ICardProps[]; onRowClick: (e: any) => void }) {
+  const [selectedRow, setSelectedRow] = React.useState<null | number>(null);
 
   return (
     <>
-      <TableContainer style={{ paddingRight: '25px' }}>
+      <TableContainer>
         <Table
           sx={{
             [`& .${tableCellClasses.root}`]: {
@@ -20,7 +19,10 @@ export function RosterView() {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Affiliations</TableCell>
               <TableCell>Cost</TableCell>
+              <TableCell>CP</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -42,7 +44,7 @@ export function RosterView() {
                 }}
               >
                 <TableCell>{item.name}</TableCell>
-                <TableCell>{item.alterEgo}</TableCell>
+                <TableCell>{item.type}</TableCell>
                 <TableCell>{item.affiliations.join(', ')}</TableCell>
                 <TableCell>{item.cost}</TableCell>
                 <TableCell>{item.cp}</TableCell>
@@ -51,24 +53,6 @@ export function RosterView() {
           </TableBody>
         </Table>
       </TableContainer>
-      <form onSubmit={onSubmit}>
-        <label>
-          Roster Name:
-          <input type="text" value={value} onChange={e => setValue(e.target.value)} />
-        </label>
-      </form>
-      <table>
-        <tbody>
-          <tr>
-            <th>Card Name</th>
-            <th>Card Type</th>
-          </tr>
-          <tr>
-            <td>Spider-Man</td>
-            <td>Character</td>
-          </tr>
-        </tbody>
-      </table>
     </>
   );
 }

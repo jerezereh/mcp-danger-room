@@ -1,9 +1,10 @@
 import { BaseSyntheticEvent } from 'react';
-import data from '../../../assets/CharacterCards.json';
 import { CharacterDataToICard } from '../../dataTypes/transforms';
 import { Container } from '../../styles/GlobalStyle';
 import { InfoPane } from '../InfoPane/InfoPane';
+import { RosterView } from '../RosterView/RosterView';
 import { CardTable } from './CardTable';
+import data from '../../../assets/CharacterCards.json';
 
 export function CardBrowser(props: { selectedCard: any; setSelectedCard: any }) {
   function onRowClick(event: BaseSyntheticEvent) {
@@ -21,6 +22,7 @@ export function CardBrowser(props: { selectedCard: any; setSelectedCard: any }) 
         {/* TODO: add all types of cards to main card table */}
         <CardTable dataSet={data.Characters.map(CharacterDataToICard)} onRowClick={onRowClick} />
         <InfoPane card={props.selectedCard} />
+        <RosterView dataSet={data.Characters.map(CharacterDataToICard)} onRowClick={onRowClick} />
         {/* TODO: add card table for team roster
       <CardTable 
         dataSet={data.Characters.map(CharacterDataToICard)}
