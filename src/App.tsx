@@ -1,20 +1,19 @@
+import { BaseSyntheticEvent, useState } from 'react';
 import { CardBrowser } from './components/CardBrowser/CardBrowser';
-import React, { useState } from 'react';
-import { ICardProps } from './dataTypes/ICardProps';
 import { GameView } from './components/GameView/GameView';
 import { CssBaseline, Tab, Tabs } from '@mui/material';
 import { TabPanel } from './components/TabPanel/TabPanel';
 
 export function App() {
-  const [selectedCard, setSelectedCard] = useState<ICardProps | null>(null);
   const [selectedTab, setSelectedTab] = useState(0);
   const [gameViewState, setGameViewState] = useState({
     scale: 1,
     translation: { x: 0, y: 0 },
   });
 
-  const tabChange = (_event: React.SyntheticEvent, newValue: number) => {
+  const tabChange = (event: BaseSyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
+    window.Main.menuChange(event.currentTarget.childNodes[0].data);
   };
 
   return (
@@ -25,10 +24,10 @@ export function App() {
         <Tab label="Game View" />
       </Tabs>
       <TabPanel value={selectedTab} index={0}>
-        <CardBrowser selectedCard={selectedCard} setSelectedCard={setSelectedCard} />
+        <CardBrowser menu={null} />
       </TabPanel>
       <TabPanel value={selectedTab} index={1}>
-        <GameView gameViewState={gameViewState} stateCallback={setGameViewState} selectedCard={selectedCard} />
+        <GameView gameViewState={gameViewState} stateCallback={setGameViewState} />
       </TabPanel>
     </>
   );

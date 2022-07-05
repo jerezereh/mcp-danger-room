@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import OpenWithIcon from '@mui/icons-material/OpenWith';
 import { MapInteractionCSS } from 'react-map-interaction';
@@ -15,15 +16,19 @@ interface IGameViewProps {
     };
   };
   stateCallback: any;
-  selectedCard: ICardProps | null;
 }
 
 export function GameView(props: IGameViewProps) {
-  const { gameViewState, stateCallback, selectedCard } = props;
+  const { gameViewState, stateCallback } = props;
+  const [selectedCard, setSelectedCard] = useState<ICardProps | null>(null);
 
   function resetGameView() {
     stateCallback({ scale: 1, translation: { x: 0, y: 0 } });
   }
+
+  useEffect(() => {
+    // setSelectedCard(set to selected icon/piece/etc);
+  }, [selectedCard]);
 
   return (
     <>

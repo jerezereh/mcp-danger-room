@@ -18,7 +18,7 @@ function createWindow() {
     height: 800,
     backgroundColor: '#191622',
     webPreferences: {
-      nodeIntegration: false,
+      nodeIntegration: true,
       contextIsolation: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
@@ -40,7 +40,42 @@ function createWindow() {
           label: 'New Local Game',
           click: function () {},
         },
-        { label: 'New Roster' },
+      ],
+    },
+    {
+      label: 'Roster',
+      id: 'Card Browser',
+      enabled: true,
+      submenu: [
+        {
+          label: 'New Roster',
+          click: function () {
+            console.log(app.getPath('appData'), app.getPath('home'));
+          },
+        },
+        {
+          label: 'Save Roster',
+          click: function () {
+            console.log(app.getPath('appData'), app.getPath('home'));
+          },
+        },
+        {
+          label: 'Load Roster',
+          click: function () {
+            console.log(app.getPath('appData'), app.getPath('home'));
+          },
+        },
+      ],
+    },
+    {
+      label: 'Game',
+      id: 'Game View',
+      enabled: false,
+      submenu: [
+        {
+          label: 'Test',
+          click: function () {},
+        },
       ],
     },
     {
@@ -58,6 +93,11 @@ async function registerListeners() {
    */
   ipcMain.on('message', (_, message) => {
     console.log(message);
+  });
+
+  ipcMain.on('menu', (_, tabName) => {
+    const menu = app.applicationMenu!.getMenuItemById(tabName)!;
+    menu.enabled = !menu?.enabled;
   });
 }
 

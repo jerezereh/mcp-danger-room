@@ -1,13 +1,21 @@
-import React from 'react';
+import { useState } from 'react';
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, tableCellClasses } from '@mui/material';
 import { ICardProps } from '../../dataTypes/ICardProps';
 
-export function RosterView(props: { dataSet: ICardProps[]; onRowClick: (e: any) => void }) {
-  const [selectedRow, setSelectedRow] = React.useState<null | number>(null);
+export function RosterView(props: {
+  dataSet: ICardProps[];
+  onRowClick: (e: any) => void;
+  onRowDoubleClick: (e: any, index: number) => void;
+}) {
+  const [selectedRow, setSelectedRow] = useState<null | number>(null);
 
   return (
     <>
-      <TableContainer>
+      <TableContainer
+        sx={{
+          border: '1px solid',
+        }}
+      >
         <Table
           sx={{
             [`& .${tableCellClasses.root}`]: {
@@ -32,6 +40,9 @@ export function RosterView(props: { dataSet: ICardProps[]; onRowClick: (e: any) 
                 onClick={e => {
                   props.onRowClick(e);
                   setSelectedRow(index);
+                }}
+                onDoubleClick={e => {
+                  props.onRowDoubleClick(e, index);
                 }}
                 selected={index === selectedRow}
                 sx={{
