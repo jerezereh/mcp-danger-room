@@ -1,29 +1,24 @@
-import React from 'react';
-import {
-  Table,
-  TableContainer,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  tableCellClasses,
-} from '@mui/material';
+import { useState } from 'react';
+import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, tableCellClasses } from '@mui/material';
 import { ICardProps } from '../../dataTypes/ICardProps';
 
 export function CardTable(props: {
   dataSet: ICardProps[];
   onRowClick: (e: any) => void;
+  onRowDoubleClick: (e: any) => void;
 }) {
-  const [selectedRow, setSelectedRow] = React.useState<null | number>(null);
+  const [selectedRow, setSelectedRow] = useState<null | number>(null);
 
   return (
     <>
-      <TableContainer>
+      <TableContainer
+        sx={{
+          border: '1px solid',
+        }}
+      >
         <Table
           sx={{
-            [`& .${tableCellClasses.root}`]: {
-              // borderBottom: "none"
-            },
+            [`& .${tableCellClasses.root}`]: {},
             backgroundColor: 'white',
           }}
         >
@@ -43,6 +38,9 @@ export function CardTable(props: {
                 onClick={e => {
                   props.onRowClick(e);
                   setSelectedRow(index);
+                }}
+                onDoubleClick={e => {
+                  props.onRowDoubleClick(e);
                 }}
                 selected={index === selectedRow}
                 sx={{
