@@ -24,7 +24,7 @@ function rosterReducer(roster: ICardProps[], action: any) {
   }
 }
 
-export function CardBrowser(props: { menu: Menu }) {
+export function CardBrowser(props: {}) {
   const [selectedCard, setSelectedCard] = useState<ICardProps | null>(null);
   const [roster, dispatch] = useReducer(rosterReducer, []);
 
