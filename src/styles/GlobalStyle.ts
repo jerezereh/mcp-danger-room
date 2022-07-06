@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    color: #E1E1E6;
+    // color: #E1E1E6;
   }
 `;
 
@@ -22,8 +22,8 @@ export const Container = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 400px;
-  height: 600px;
+  width: 30vmax;
+  height: 30vmax;
   cursor: pointer;
   display: block;
   border: 2px solid;

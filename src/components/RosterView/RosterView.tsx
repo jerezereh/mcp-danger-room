@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, tableCellClasses } from '@mui/material';
+import { Table, TableContainer, TableHead, TableBody, TableRow, tableCellClasses } from '@mui/material';
 import { ICardProps } from '../../dataTypes/ICardProps';
+import StyledTableCell from '../StyledComponents/StyledTableCell';
 
 export function RosterView(props: {
   dataSet: ICardProps[];
@@ -26,11 +27,12 @@ export function RosterView(props: {
         >
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Affiliations</TableCell>
-              <TableCell>Cost</TableCell>
-              <TableCell>CP</TableCell>
+              <StyledTableCell contrast={true}>Name</StyledTableCell>
+              <StyledTableCell contrast={true}>Alter Ego</StyledTableCell>
+              <StyledTableCell contrast={true}>Type</StyledTableCell>
+              <StyledTableCell contrast={true}>Affiliations</StyledTableCell>
+              <StyledTableCell contrast={true}>Cost</StyledTableCell>
+              <StyledTableCell contrast={true}>CP</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -54,11 +56,12 @@ export function RosterView(props: {
                   },
                 }}
               >
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.type}</TableCell>
-                <TableCell>{item.affiliations.join(', ')}</TableCell>
-                <TableCell>{item.cost}</TableCell>
-                <TableCell>{item.cp}</TableCell>
+                <StyledTableCell>{item.name}</StyledTableCell>
+                <StyledTableCell>{item.alterEgo}</StyledTableCell>
+                <StyledTableCell>{item.type}</StyledTableCell>
+                <StyledTableCell>{item.affiliations.join(', ')}</StyledTableCell>
+                <StyledTableCell>{item.cost}</StyledTableCell>
+                <StyledTableCell>{item.cp}</StyledTableCell>
               </TableRow>
             ))}
           </TableBody>
