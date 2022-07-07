@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  height: 90vh;
+  height: 87vh;
   display: flex;
   flex-direction: column;
   align-items: top;

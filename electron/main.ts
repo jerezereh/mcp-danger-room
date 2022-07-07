@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain, Menu } from 'electron';
+import { cardBrowserMenu, fullMenuTemplate, gameViewMenu } from './menuTemplates';
 
 let mainWindow: BrowserWindow | null;
 
@@ -32,59 +33,7 @@ function createWindow() {
     mainWindow = null;
   });
 
-  const menu = Menu.buildFromTemplate([
-    {
-      label: 'Menu',
-      submenu: [
-        {
-          label: 'New Local Game',
-          click: function () {},
-        },
-      ],
-    },
-    {
-      label: 'Roster',
-      id: 'Card Browser',
-      enabled: true,
-      submenu: [
-        {
-          label: 'New Roster',
-          click: function () {
-            console.log(app.getPath('appData'), app.getPath('home'));
-          },
-        },
-        {
-          label: 'Save Roster',
-          click: function () {
-            console.log(app.getPath('appData'), app.getPath('home'));
-          },
-        },
-        {
-          label: 'Load Roster',
-          click: function () {
-            console.log(app.getPath('appData'), app.getPath('home'));
-          },
-        },
-      ],
-    },
-    {
-      label: 'Game',
-      id: 'Game View',
-      enabled: false,
-      submenu: [
-        {
-          label: 'Test',
-          click: function () {},
-        },
-      ],
-    },
-    {
-      label: 'Options',
-      submenu: [{ role: 'selectAll' }, { role: 'reload' }, { role: 'toggleDevTools' }],
-    },
-  ]);
-
-  Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(cardBrowserMenu);
 }
 
 async function registerListeners() {
@@ -96,8 +45,15 @@ async function registerListeners() {
   });
 
   ipcMain.on('menu', (_, tabName) => {
-    const menu = app.applicationMenu!.getMenuItemById(tabName)!;
-    menu.enabled = !menu?.enabled;
+    if (tabName === 'Card Browser') {
+      Menu.setApplicationMenu(cardBrowserMenu);
+    } else if (tabName === 'Game View') {
+      Menu.setApplicationMenu(gameViewMenu);
+    }
+  });
+
+  ipcMain.on('getPath', (event, name) => {
+    event.returnValue = app.getPath(name);
   });
 }
 
