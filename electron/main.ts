@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain, Menu } from 'electron';
-import { cardBrowserMenu, fullMenuTemplate, gameViewMenu } from './menuTemplates';
+import { cardBrowserMenu, gameViewMenu } from './menuTemplates';
 
 let mainWindow: BrowserWindow | null;
 
