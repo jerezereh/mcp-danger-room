@@ -17,6 +17,10 @@ export const api = {
     ipcRenderer.send('menu', tabName);
   },
 
+  getPath: (name: string) => {
+    return ipcRenderer.sendSync('getPath', name);
+  },
+
   /**
    * Provide an easier way to listen to events
    */

@@ -35,6 +35,7 @@ export function CardBrowser(props: {}) {
     }
 
     setSelectedCard(CharacterDataToICard(result));
+    console.log(window.Main.getPath('home'));
   }
 
   function addToRoster(event: BaseSyntheticEvent) {
@@ -46,6 +47,7 @@ export function CardBrowser(props: {}) {
   }
 
   function saveRoster(event: BaseSyntheticEvent) {
+    console.log(window.Main.getPath('home'));
     // console.log(app.getPath('appData'), app.getPath('home'));
     // writeFileSync('', )
   }
