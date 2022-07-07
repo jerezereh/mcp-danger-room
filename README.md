@@ -15,7 +15,7 @@ yarn
 Just run `start` script.
 
 ```bash
-yarn start
+yarn start | npm start
 ```
 
 ## Packaging

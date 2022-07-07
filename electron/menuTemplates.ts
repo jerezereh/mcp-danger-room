@@ -1,6 +1,7 @@
-import { app, Menu, MenuItemConstructorOptions } from 'electron';
+import { app, BrowserWindow, dialog, KeyboardEvent, Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
+import { readFile, writeFileSync } from 'fs';
 
-const fileMenu = {
+const fileMenu: MenuItemConstructorOptions = {
   label: 'File',
   id: 'fileMenu',
   enabled: true,
@@ -12,7 +13,7 @@ const fileMenu = {
   ],
 };
 
-const rosterMenu = {
+const rosterMenu: MenuItemConstructorOptions = {
   label: 'Roster',
   id: 'cardBrowserMenu',
   enabled: true,
@@ -25,14 +26,35 @@ const rosterMenu = {
     },
     {
       label: 'Save Roster',
-      click: function () {
-        console.log(app.getPath('appData'), app.getPath('home'));
+      click: function saveRoster(_menuItem: MenuItem, browserWindow: BrowserWindow | undefined, _event: KeyboardEvent) {
+        console.log(browserWindow);
+        writeFileSync(app.getPath('userData') + '/data/roster.txt', 'test', 'utf-8');
       },
     },
     {
       label: 'Load Roster',
-      click: function () {
-        console.log(app.getPath('appData'), app.getPath('home'));
+      click: function (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined, _event: KeyboardEvent) {
+        try {
+          if (browserWindow === undefined) {
+            throw new Error();
+          }
+          dialog
+            .showOpenDialog(browserWindow, {
+              defaultPath: app.getPath('userData') + '/data/',
+              properties: ['openFile'],
+            })
+            .then(result => {
+              readFile(result.filePaths[0], (err, data) => {
+                if (!err) {
+                  browserWindow.webContents.send('loadRoster', data.toString());
+                } else {
+                  throw err;
+                }
+              });
+            });
+        } catch (e: any) {
+          console.log(e);
+        }
       },
     },
   ],
