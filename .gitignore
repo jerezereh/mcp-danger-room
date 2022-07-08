@@ -1,6 +1,11 @@
+# Build files
 node_modules
 dist
 packages
-.webpack
 out
+
+# Generated files
+.webpack
+
+# Code Editor files
 .vscode
