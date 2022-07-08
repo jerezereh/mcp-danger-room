@@ -1,4 +1,13 @@
-import { app, BrowserWindow, dialog, KeyboardEvent, Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  dialog,
+  ipcMain,
+  KeyboardEvent,
+  Menu,
+  MenuItem,
+  MenuItemConstructorOptions,
+} from 'electron';
 import { readFile, writeFileSync } from 'fs';
 
 const fileMenu: MenuItemConstructorOptions = {
@@ -27,8 +36,28 @@ const rosterMenu: MenuItemConstructorOptions = {
     {
       label: 'Save Roster',
       click: function saveRoster(_menuItem: MenuItem, browserWindow: BrowserWindow | undefined, _event: KeyboardEvent) {
-        console.log(browserWindow);
-        writeFileSync(app.getPath('userData') + '/data/roster.txt', 'test', 'utf-8');
+        try {
+          if (browserWindow === undefined) {
+            throw new Error();
+          }
+          dialog
+            .showSaveDialog(browserWindow, {
+              defaultPath: app.getPath('userData') + '/data/',
+              properties: ['createDirectory'],
+            })
+            .then(result => {
+              if (!result.canceled) {
+                browserWindow.webContents.send('saveRoster'); // needs return value of roster data
+                ipcMain.handleOnce('saveRoster', (_, data: string) => {
+                  if (result.filePath !== undefined) {
+                    writeFileSync(result.filePath, data);
+                  }
+                });
+              }
+            });
+        } catch (e: any) {
+          console.log(e);
+        }
       },
     },
     {
@@ -44,13 +73,15 @@ const rosterMenu: MenuItemConstructorOptions = {
               properties: ['openFile'],
             })
             .then(result => {
-              readFile(result.filePaths[0], (err, data) => {
-                if (!err) {
-                  browserWindow.webContents.send('loadRoster', data.toString());
-                } else {
-                  throw err;
-                }
-              });
+              if (!result.canceled) {
+                readFile(result.filePaths[0], (err, data) => {
+                  if (!err) {
+                    browserWindow.webContents.send('loadRoster', data.toString());
+                  } else {
+                    throw err;
+                  }
+                });
+              }
             });
         } catch (e: any) {
           console.log(e);

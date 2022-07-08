@@ -21,7 +21,9 @@ export const api = {
     return ipcRenderer.sendSync('getPath', name);
   },
 
-  saveRoster: () => {},
+  saveRoster: async (data: string) => {
+    await ipcRenderer.invoke('saveRoster', data);
+  },
 
   /**
    * Provide an easier way to listen to events
