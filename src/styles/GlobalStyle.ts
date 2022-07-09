@@ -22,8 +22,9 @@ export const Container = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 30vmax;
-  height: 30vmax;
+  min-width: 23vmax;
+  max-width: 23vmax;
+  max-height: 30vmax;
   cursor: pointer;
   display: block;
   border: 2px solid;
@@ -34,3 +35,9 @@ export const Text = styled.p`
   margin-top: 24px;
   font-size: 18px;
 `;
+
+export const sidebarStyle = {
+  minHeight: '30px',
+  maxWidth: '36px',
+  padding: '2px 6px 2px 6px',
+};

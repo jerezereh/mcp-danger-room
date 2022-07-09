@@ -6,7 +6,7 @@ import StyledTableCell from '../StyledComponents/StyledTableCell';
 export function CardTable(props: {
   dataSet: ICardProps[];
   onRowClick: (e: any) => void;
-  onRowDoubleClick: (e: any) => void;
+  onRowDoubleClick: (e: any, index: number) => void;
 }) {
   const [selectedRow, setSelectedRow] = useState<null | number>(null);
 
@@ -20,8 +20,9 @@ export function CardTable(props: {
         <Table
           sx={{
             [`& .${tableCellClasses.root}`]: {},
-
             backgroundColor: 'white',
+            cursor: 'pointer',
+            userSelect: 'none',
           }}
         >
           <TableHead>
@@ -43,7 +44,7 @@ export function CardTable(props: {
                   setSelectedRow(index);
                 }}
                 onDoubleClick={e => {
-                  props.onRowDoubleClick(e);
+                  props.onRowDoubleClick(e, index);
                 }}
                 selected={index === selectedRow}
                 sx={{

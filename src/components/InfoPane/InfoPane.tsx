@@ -9,31 +9,19 @@ export function InfoPane(props: { card: ICardProps | null }) {
     setShowInjured(!showInjured);
   };
 
-  if (props.card === null) {
-    return (
-      <>
-        <Image src={require('../../../assets/characterCardImages/Placeholder.png')} style={{ cursor: 'default' }} />
-      </>
-    );
-  }
-
-  if (showInjured) {
-    return (
-      <>
-        <Image
-          src={props.card ? require('../../../assets/characterCardImages/' + props.card.cardImage2) : null}
-          onClick={handleClick}
-        />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Image
-          src={props.card ? require('../../../assets/characterCardImages/' + props.card.cardImage1) : null}
-          onClick={handleClick}
-        />
-      </>
-    );
-  }
+  return (
+    <>
+      <Image
+        src={
+          props.card
+            ? showInjured
+              ? require('../../../assets/characterCardImages/' + props.card.cardImage2)
+              : require('../../../assets/characterCardImages/' + props.card.cardImage1)
+            : require('../../../assets/characterCardImages/Placeholder.png')
+        }
+        style={{ cursor: 'pointer' }}
+        onClick={handleClick}
+      />
+    </>
+  );
 }
