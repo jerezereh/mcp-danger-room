@@ -9,6 +9,7 @@ export function RosterView(props: {
   return (
     <>
       <CardTable dataSet={props.dataSet} onRowClick={props.onRowClick} onRowDoubleClick={props.onRowDoubleClick} />
+      {/* TODO: remove Type, CP rows from this table (make CardTable columns customizable) */}
     </>
   );
 }

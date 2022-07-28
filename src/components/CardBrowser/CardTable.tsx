@@ -25,6 +25,7 @@ export function CardTable(props: {
             userSelect: 'none',
           }}
         >
+          {/* TODO: make columns sortable (asc, desc) */}
           <TableHead>
             <TableRow>
               <StyledTableCell contrast={true}>Name</StyledTableCell>

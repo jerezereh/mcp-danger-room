@@ -41,6 +41,7 @@ function rosterReducer(roster: ICardProps[], action: any) {
 export function CardBrowser(_props: {}) {
   const [selectedCard, setSelectedCard] = useState<ICardProps | null>(null);
   const [roster, rosterDispatch, getState] = useEnhancedReducer(rosterReducer, []);
+  // TODO: save roster between tabs -- use redux to save various states
 
   function onRowClick(event: BaseSyntheticEvent) {
     const result = data.Characters.find(c => c.Name === event.target.parentNode.childNodes[0].outerText);
