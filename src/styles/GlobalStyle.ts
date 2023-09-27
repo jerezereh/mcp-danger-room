@@ -22,9 +22,9 @@ export const Container = styled.div`
 `;
 
 export const Image = styled.img`
-  min-width: 23vmax;
-  max-width: 23vmax;
-  max-height: 30vmax;
+  // min-width: 23vmax;
+  // max-width: 23vmax;
+  max-height: 20vmax;
   cursor: pointer;
   display: block;
   border: 2px solid;

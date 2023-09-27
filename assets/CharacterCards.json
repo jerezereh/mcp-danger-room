@@ -7,7 +7,7 @@
       "CP": 37,
       "Cost": 5,
       "Healthy": {
-        "CardImage": "amazing_spiderman_healthy.png",
+        "CardImage": "ASM Healthy.jpg",
         "HP": 6,
         "Movement": "Long",
         "Size": 2,
@@ -67,7 +67,7 @@
         "Superpower6": null
       },
       "Injured": {
-        "CardImage": "amazing_spiderman_injured.png",
+        "CardImage": "ASM Injured.jpg",
         "HP": 6,
         "Movement": "Long",
         "Size": 2,
@@ -134,9 +134,9 @@
       "CP": 64,
       "Cost": 4,
       "Healthy": {
-        "CardImage": "ancient_one_healthy.png",
+        "CardImage": "Ancient One Healthy.png",
         "HP": 6,
-        "Movement": "{M}",
+        "Movement": "Medium",
         "Size": 2,
         "PhysicalDefense": 2,
         "EnergyDefense": 3,
@@ -197,9 +197,9 @@
         "Superpower6": null
       },
       "Injured": {
-        "CardImage": "ancient_one_injured.png",
+        "CardImage": "Ancient One Injured.png",
         "HP": 6,
-        "Movement": "{M}",
+        "Movement": "Medium",
         "Size": 2,
         "PhysicalDefense": 2,
         "EnergyDefense": 3,
@@ -270,7 +270,7 @@
       "Healthy": {
         "CardImage": "angela_healthy.png",
         "HP": 6,
-        "Movement": "{L}",
+        "Movement": "Long",
         "Size": 2,
         "PhysicalDefense": 4,
         "EnergyDefense": 4,
@@ -338,7 +338,7 @@
       "Injured": {
         "CardImage": "angela_injured.png",
         "HP": 7,
-        "Movement": "{L}",
+        "Movement": "Long",
         "Size": 2,
         "PhysicalDefense": 4,
         "EnergyDefense": 4,
@@ -522,10 +522,6 @@
       }
     }
   ],
-  "Tactics": [
-    
-  ],
-  "Objectives": [
-
-  ]
+  "Tactics": [],
+  "Objectives": []
 }
