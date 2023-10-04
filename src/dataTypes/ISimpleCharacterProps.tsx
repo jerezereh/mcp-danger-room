@@ -1,7 +1,7 @@
-export interface ISimpleCharacterProps {
-  name: string,
-  alterEgo: string,
-  affiliiations: string[],
-  cp: number,
-  cost: number,
+export type ISimpleCharacterProps = {
+  name: string;
+  alterEgo: string;
+  affiliations: string[];
+  cp: number;
+  cost: number;
 };

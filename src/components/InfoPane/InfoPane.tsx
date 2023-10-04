@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { ICardProps } from '../../dataTypes/ICardProps';
+import { ICharacterCardProps } from '../../dataTypes/ICharacterCardProps';
 import { Image } from '../../styles/GlobalStyle';
 import { Card, CardContent, CardHeader, Typography } from '@mui/material';
 
-export function InfoPane(props: { card: ICardProps | null }) {
+export function InfoPane(props: { card: ICharacterCardProps | null }) {
   const [showInjured, setShowInjured] = useState(false);
 
   const handleClick = () => {
     setShowInjured(!showInjured);
   };
-
-  console.log(props.card);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>

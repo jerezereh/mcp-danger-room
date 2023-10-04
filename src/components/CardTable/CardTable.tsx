@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Table, TableContainer, TableHead, TableBody, TableRow, tableCellClasses } from '@mui/material';
-import { ICardProps } from '../../dataTypes/ICardProps';
+import { ICharacterCardProps } from '../../dataTypes/ICharacterCardProps';
 import StyledTableCell from '../StyledComponents/StyledTableCell';
 
 export function CardTable(props: {
-  dataSet: ICardProps[];
+  dataSet: ICharacterCardProps[];
   onRowClick: (e: any) => void;
   onRowDoubleClick: (e: any, index: number) => void;
 }) {
@@ -28,16 +28,20 @@ export function CardTable(props: {
           {/* TODO: make columns sortable (asc, desc) */}
           <TableHead>
             <TableRow>
+              {/* {console.log(props.dataSet)}
+              {props.dataSet.length > 0 && Object.keys(props.dataSet[0]).map((item, index) => (
+                <StyledTableCell key={index} contrast={true}>{item}</StyledTableCell>
+              ))} */}
               <StyledTableCell contrast={true}>Name</StyledTableCell>
               <StyledTableCell contrast={true}>Alter Ego</StyledTableCell>
-              <StyledTableCell contrast={true}>Type</StyledTableCell>
+              {/* <StyledTableCell contrast={true}>Type</StyledTableCell> */}
               <StyledTableCell contrast={true}>Affiliations</StyledTableCell>
               <StyledTableCell contrast={true}>Cost</StyledTableCell>
               <StyledTableCell contrast={true}>CP</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.dataSet.map((item: ICardProps, index: number) => (
+            {props.dataSet.map((item: ICharacterCardProps, index: number) => (
               <TableRow
                 key={index}
                 onClick={e => {
@@ -59,7 +63,7 @@ export function CardTable(props: {
               >
                 <StyledTableCell>{item.name}</StyledTableCell>
                 <StyledTableCell>{item.alterEgo}</StyledTableCell>
-                <StyledTableCell>{item.type}</StyledTableCell>
+                {/* <StyledTableCell>{item.type}</StyledTableCell> */}
                 <StyledTableCell>{item.affiliations.join(', ')}</StyledTableCell>
                 <StyledTableCell>{item.cost}</StyledTableCell>
                 <StyledTableCell>{item.cp}</StyledTableCell>

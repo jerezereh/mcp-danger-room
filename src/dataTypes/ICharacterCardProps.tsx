@@ -1,12 +1,9 @@
-export interface ICardProps {
-  name: string;
-  alterEgo: string;
+import { ISimpleCharacterProps } from './ISimpleCharacterProps';
+
+export type ICharacterCardProps = ISimpleCharacterProps & {
   type: string;
   cardImage1: string;
   cardImage2: string | null;
-  affiliations: string[];
-  cost: number;
-  cp: number;
 
   healthyHp: number;
   healthyMovement: string;
@@ -21,4 +18,4 @@ export interface ICardProps {
   injuredPhysicalDefense: number;
   injuredEnergyDefense: number;
   injuredMysticDefense: number;
-}
+};

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import OpenWithIcon from '@mui/icons-material/OpenWith';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { ICardProps } from '../../dataTypes/ICardProps';
+import { ICharacterCardProps } from '../../dataTypes/ICharacterCardProps';
 // import { CharacterStatusBlock } from '../CharacterStatusBlock/CharacterStatusBlock';
 import { InfoPane } from '../InfoPane/InfoPane';
 import './GameView.scss';
@@ -20,7 +20,7 @@ interface IGameViewProps {
 
 export function GameView(props: IGameViewProps) {
   const { gameViewState, stateCallback } = props;
-  const [selectedCard, setSelectedCard] = useState<ICardProps | null>(null);
+  const [selectedCard, setSelectedCard] = useState<ICharacterCardProps | null>(null);
 
   function resetGameView() {
     stateCallback({ scale: 1, translation: { x: 0, y: 0 } });

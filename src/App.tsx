@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, useState } from 'react';
-import { CardBrowser } from './components/CardBrowser/CardBrowser';
+import { RosterView } from './components/RosterView/RosterView';
 import { GameView } from './components/GameView/GameView';
 import { CssBaseline, Tab, Tabs } from '@mui/material';
 import { TabPanel } from './components/TabPanel/TabPanel';
@@ -24,11 +24,11 @@ export function App() {
       <CssBaseline />
       {inputGlobalStyles}
       <Tabs value={selectedTab} onChange={tabChange}>
-        <Tab label="Card Browser" />
-        <Tab label="Game View" />
+        <Tab label="Roster" />
+        <Tab label="Game" />
       </Tabs>
       <TabPanel value={selectedTab} index={0}>
-        <CardBrowser />
+        <RosterView />
       </TabPanel>
       <TabPanel value={selectedTab} index={1}>
         <GameView gameViewState={gameViewState} stateCallback={setGameViewState} />

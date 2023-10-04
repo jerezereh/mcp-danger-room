@@ -3,7 +3,7 @@ import os
 import json
 
 reader = easyocr.Reader(['en'])
-result = reader.readtext('assets/characterCardImages/mystique_injured.jpg', detail=0)
+result = reader.readtext('assets/crisisCardImages/01EAlienShipCrashesInDowntown.png', detail=0)
 
 print(json.dumps(result))
 

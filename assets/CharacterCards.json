@@ -2,7 +2,7 @@
   "Characters": [
     {
       "Name": "Amazing Spider-Man",
-      "Alter Ego": "Peter Parker",
+      "AlterEgo": "Peter Parker",
       "Affiliations": ["Defenders", "Web Warriors"],
       "CP": 37,
       "Cost": 5,
@@ -21,7 +21,7 @@
           "Weight": 5,
           "Cost": 0,
           "Effect1": "After this attack is resolved, this character gains {P} equal to the {D} dealt.",
-          "Effect2": "{C}{W} <b>Momentum</b>: Choose another enemy character with {R} 2 of the target character. Place this character with {R}1 of the chosen character. The chosen character suffers a collision as if this character were thrown into them."
+          "Effect2": "{C}{W} <b>Momentum</b>: Choose another enemy character with {R} 2 of the target character. Place this character with {R} 1 of the chosen character. The chosen character suffers a collision as if this character were thrown into them."
         },
         "Attack2": {
           "Name": "Whatever a Spider Can",
@@ -30,7 +30,7 @@
           "Weight": 8,
           "Cost": 5,
           "Effect1": "After this attack is resolved, this character may advance {M}.",
-          "Effect2": "{W} <b>Catch!</b>: After this attack is resolved, you may choose an interactive terrain feature of size 2 or less and within {R}3 of this character and destroy it. The target character suffers a collision as if the terrain were thrown into them."
+          "Effect2": "{W} <b>Catch!</b>: After this attack is resolved, you may choose an interactive terrain feature of size 2 or less and within {R} 3 of this character and destroy it. The target character suffers a collision as if the terrain were thrown into them."
         },
         "Attack3": null,
         "Attack4": null,
@@ -38,7 +38,7 @@
           "Name": "Friendly Neighborhood Spider-Team (Affiliation: Web Warriors)",
           "Type": "Affiliation",
           "Cost": 0,
-          "Effect": "Once per turn, during an allied character's activation, it may pay one {P} and choose an enemy character within {R}2. The chosen character gains the Slow special condition. If the chosen character already had the Slow special condition, place it within {R} 1 of its current position and remove the Slow special condition."
+          "Effect": "Once per turn, during an allied character's activation, it may pay one {P} and choose an enemy character within {R} 2. The chosen character gains the Slow special condition. If the chosen character already had the Slow special condition, place it within {R} 1 of its current position and remove the Slow special condition."
         },
         "Superpower2": {
           "Name": "Web Swing",
@@ -98,7 +98,7 @@
           "Name": "Friendly Neighborhood Spider-Team (Affiliation: Web Warriors)",
           "Type": "Affiliation",
           "Cost": 0,
-          "Effect": "Once per turn, during an allied character's activation, it may pay one {P} and choose an enemy character within {R}2. The chosen character gains the Slow special condition. If the chosen character already had the Slow special condition, place it within {R} 1 of its current position and remove the Slow special condition."
+          "Effect": "Once per turn, during an allied character's activation, it may pay one {P} and choose an enemy character within {R} 2. The chosen character gains the Slow special condition. If the chosen character already had the Slow special condition, place it within {R} 1 of its current position and remove the Slow special condition."
         },
         "Superpower2": {
           "Name": "Web Swing",
@@ -129,7 +129,7 @@
     },
     {
       "Name": "Ancient One",
-      "Alter Ego": "Ancient One",
+      "AlterEgo": "Ancient One",
       "Affiliations": ["Convocation", "Defenders"],
       "CP": 64,
       "Cost": 4,
@@ -263,7 +263,7 @@
 
     {
       "Name": "Angela",
-      "Alter Ego": "Aldrif Odinsdottir",
+      "AlterEgo": "Aldrif Odinsdottir",
       "Affiliations": ["A-Force", "Asgard", "Guardians of the Galaxy"],
       "CP": 28,
       "Cost": 5,
@@ -406,7 +406,7 @@
     },
     {
       "Name": "Black Panther",
-      "Alter Ego": "T'Challa",
+      "AlterEgo": "T'Challa",
       "Affiliations": ["Wakanda", "Avengers"],
       "CP": 7,
       "Cost": 4,

@@ -1,0 +1,16 @@
+{
+  "CrisisCards": [
+    {
+      "Name": "Alien Ship Crashes in Downtown!",
+      "Image": "01EAlienShipCrashesInDowntown.png",
+      "Type": "Extraction",
+      "MaximumThreat": 17,
+      "Setup": "Place 3 Power Core tokens (Asset) as shown on Map C.",
+      "Scoring": "Players score 1 VP for character they control that is holding a Power Core during the <b>Cleanup Phase</b>.",
+      "Rules": {
+        "Interact": "<b>Interact (Power Core)</b>: Pick up this Power Core. <i>A character can hold only 1 Power Core at a time.</i>",
+        "Effect": "During the <b>Cleanup Phase</b>, each character with 3 or more {E} holding a Power Core rolls 3 dice. For each {F} and {W} in the result, the character holding the Power Core and all characters within {R} 2 of it suffer 1 {D}."
+      }
+    }
+  ]
+}

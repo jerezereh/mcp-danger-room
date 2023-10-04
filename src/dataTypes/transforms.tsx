@@ -1,9 +1,10 @@
-import { ICardProps } from './ICardProps';
+import { ICharacterCardProps } from './ICharacterCardProps';
+import { ICrisisCardProps } from './ICrisisCardProps';
 
-export function CharacterDataToICard(character: any): ICardProps {
+export function CharacterDataToICard(character: any): ICharacterCardProps {
   return {
     name: character.Name,
-    alterEgo: character['Alter Ego'],
+    alterEgo: character.AlterEgo,
     type: 'Character',
     cardImage1: character.Healthy.CardImage,
     cardImage2: character.Injured.CardImage,
@@ -24,5 +25,18 @@ export function CharacterDataToICard(character: any): ICardProps {
     injuredPhysicalDefense: character.Injured.PhysicalDefense,
     injuredEnergyDefense: character.Injured.EnergyDefense,
     injuredMysticDefense: character.Injured.MysticDefense,
+  };
+}
+
+export function CrisisDataToICard(crisis: any): ICrisisCardProps {
+  return {
+    name: crisis.Name,
+    type: 'Crisis',
+    image: crisis.Image,
+    crisisType: crisis.Type,
+    maxThreat: crisis.MaximumThreat,
+    setup: crisis.Setup,
+    scoring: crisis.Scoring,
+    rules: crisis.Rules,
   };
 }
