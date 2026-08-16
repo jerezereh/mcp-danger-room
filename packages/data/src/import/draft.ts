@@ -14,7 +14,13 @@
 
 import type { Attack, Character, StatBlock, Superpower } from '../schema.js';
 
-export type DraftSource = 'cerebro' | 'bsdata' | 'ocr' | 'legacy-import' | 'manual';
+export type DraftSource =
+  | 'cerebro'
+  | 'bsdata'
+  | 'jarvis'
+  | 'ocr'
+  | 'legacy-import'
+  | 'manual';
 
 export interface StatBlockDraft {
   cardImage?: string | null;

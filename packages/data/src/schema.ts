@@ -110,7 +110,7 @@ export const Character = z.object({
    * imply a human has checked the result — that is what `verified` is for.
    */
   source: z
-    .enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'ocr'])
+    .enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'jarvis', 'ocr'])
     .default('manual'),
   /** False until a human has checked it against the physical card. */
   verified: z.boolean().default(false),

@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { parsePack, toDraft } from './cerebro.js';
+import { cerebroToDraft, parsePack } from './cerebro.js';
 import type { CharacterDraft } from './draft.js';
 import { finalize } from './draft.js';
 import { mergeDrafts } from './merge.js';
+import { applyOverrides, Override } from './overrides.js';
 import { qualifiedSlug, slugify, splitName } from './slug.js';
 import {
   crossCheck,
@@ -67,17 +68,17 @@ describe('cerebro', () => {
   });
 
   it('drops the alias when it just repeats the name', () => {
-    const draft = toDraft({ ID: 1, Name: 'Abomination', Alias: 'Abomination' });
+    const draft = cerebroToDraft({ ID: 1, Name: 'Abomination', Alias: 'Abomination' });
     expect(draft.alterEgo).toBeNull();
   });
 
   it('keeps a real alter ego', () => {
-    const draft = toDraft({ ID: 1, Name: 'Abomination', Alias: 'Emil Blonsky' });
+    const draft = cerebroToDraft({ ID: 1, Name: 'Abomination', Alias: 'Emil Blonsky' });
     expect(draft.alterEgo).toBe('Emil Blonsky');
   });
 
   it('produces an incomplete draft — it has no rules text to give', () => {
-    const draft = toDraft({
+    const draft = cerebroToDraft({
       ID: 1,
       Name: 'Abomination',
       Cost: 5,
@@ -121,7 +122,7 @@ describe('merge precedence', () => {
   };
 
   it('takes identity from Cerebro and rules data from BSData', () => {
-    const { drafts } = mergeDrafts([cerebro], [bsdata]);
+    const { drafts } = mergeDrafts({ cerebro: [cerebro], bsdata: [bsdata] });
     const merged = drafts[0];
 
     expect(merged?.name).toBe('Angela'); // Cerebro's casing
@@ -133,7 +134,7 @@ describe('merge precedence', () => {
   it('does not report case-only name differences as conflicts', () => {
     // BSData uppercases every name. Reporting those would bury the real
     // disagreements under one conflict per character.
-    const { conflicts } = mergeDrafts([cerebro], [bsdata]);
+    const { conflicts } = mergeDrafts({ cerebro: [cerebro], bsdata: [bsdata] });
     expect(conflicts.filter(c => c.field === 'name')).toEqual([]);
   });
 
@@ -145,19 +146,19 @@ describe('merge precedence', () => {
    */
   it('takes current (errata-aware) stamina from Cerebro', () => {
     const withErrata: CharacterDraft = { ...cerebro, errata: 'Stamina change 6/6 to 7/6' };
-    const { drafts } = mergeDrafts([withErrata], [bsdata]); // cerebro 7, bsdata 6
+    const { drafts } = mergeDrafts({ cerebro: [withErrata], bsdata: [bsdata] }); // cerebro 7, bsdata 6
     expect(drafts[0]?.healthy?.stamina).toBe(7);
   });
 
   it('does not flag a difference that a stamina errata explains', () => {
     const withErrata: CharacterDraft = { ...cerebro, errata: 'Stamina change 6/6 to 7/6' };
-    const { conflicts } = mergeDrafts([withErrata], [bsdata]);
+    const { conflicts } = mergeDrafts({ cerebro: [withErrata], bsdata: [bsdata] });
     expect(conflicts.filter(c => c.field.endsWith('stamina'))).toEqual([]);
   });
 
   it('flags a difference with no errata to explain it', () => {
     // No errata text: one of the two sources is simply wrong.
-    const { conflicts } = mergeDrafts([cerebro], [bsdata]);
+    const { conflicts } = mergeDrafts({ cerebro: [cerebro], bsdata: [bsdata] });
     const found = conflicts.find(c => c.field === 'healthy.stamina');
 
     expect(found).toBeDefined();
@@ -175,15 +176,15 @@ describe('merge precedence', () => {
       ...bsdata,
       injured: { ...bsdata.healthy, stamina: 8 },
     };
-    const { drafts } = mergeDrafts([singleSided], [bsWithInjured]);
+    const { drafts } = mergeDrafts({ cerebro: [singleSided], bsdata: [bsWithInjured] });
     expect(drafts[0]?.injured?.stamina).toBe(8);
   });
 
   it('passes through characters present in only one source', () => {
-    const { drafts, stats } = mergeDrafts(
-      [cerebro, { id: 'bastion', name: 'Bastion', sources: ['cerebro'] }],
-      [bsdata],
-    );
+    const { drafts, stats } = mergeDrafts({
+      cerebro: [cerebro, { id: 'bastion', name: 'Bastion', sources: ['cerebro'] }],
+      bsdata: [bsdata],
+    });
     expect(drafts).toHaveLength(2);
     expect(stats.matched).toBe(1);
     expect(stats.onlyIn['cerebro']).toBe(1);
@@ -430,5 +431,102 @@ describe('errata-aware OCR cross-check', () => {
     const found = crossCheck(extracted(5, 6), { healthyStamina: 7, injuredStamina: 6 });
     expect(found[0]).toMatchObject({ field: 'healthy.stamina', extracted: 5, known: 7 });
     expect(found[0]?.explained).toBeUndefined();
+  });
+});
+
+describe('manual overrides', () => {
+  const base = () => ({
+    id: 'toad',
+    name: 'Toad',
+    alterEgo: null,
+    affiliations: ['Brotherhood of Mutants'],
+    packCode: 'CP12',
+    packName: null,
+    threat: 2,
+    errata: null,
+    baseMm: 40,
+    healthy: {
+      cardImage: null,
+      stamina: 4,
+      movement: 'M' as const,
+      size: 2,
+      defense: { physical: 3, energy: 2, mystic: 2 },
+      attacks: [
+        { name: 'Kick', type: 'physical' as const, range: 1, dice: 4, cost: 0, text: [] },
+      ],
+      superpowers: [],
+    },
+    injured: {
+      cardImage: null,
+      stamina: 4,
+      movement: 'M' as const,
+      size: 2,
+      defense: { physical: 3, energy: 2, mystic: 2 },
+      attacks: [
+        { name: 'Kick', type: 'physical' as const, range: 1, dice: 4, cost: 0, text: [] },
+      ],
+      superpowers: [],
+    },
+    source: 'jarvis' as const,
+    verified: false,
+  });
+
+  it('patches one field without restating the card', () => {
+    const { characters, applied } = applyOverrides(
+      [base()],
+      [{ id: 'toad', reason: 'checked against the printed card', healthy: { stamina: 5 } }],
+    );
+
+    expect(applied).toEqual(['toad']);
+    expect(characters[0]?.healthy.stamina).toBe(5);
+    // Everything else survives — an override is a patch, not a replacement.
+    expect(characters[0]?.healthy.defense).toEqual({ physical: 3, energy: 2, mystic: 2 });
+    expect(characters[0]?.healthy.attacks).toHaveLength(1);
+    expect(characters[0]?.injured.stamina).toBe(4);
+  });
+
+  it('deep-merges a single defense value', () => {
+    const { characters } = applyOverrides(
+      [base()],
+      [{ id: 'toad', reason: 'errata', healthy: { defense: { mystic: 4 } } }],
+    );
+    expect(characters[0]?.healthy.defense).toEqual({ physical: 3, energy: 2, mystic: 4 });
+  });
+
+  // Overrides are the only route to verified:true — a flag a machine can set
+  // for itself records nothing.
+  it('is the only way a record becomes verified', () => {
+    const { characters } = applyOverrides(
+      [base()],
+      [{ id: 'toad', reason: 'compared against my copy of the card', verified: true }],
+    );
+    expect(characters[0]?.verified).toBe(true);
+  });
+
+  it('reports an id that matched nothing instead of ignoring it', () => {
+    // A typo'd id would otherwise look like a correction that silently never
+    // happened — the worst failure mode for a hand-maintained file.
+    const { applied, unmatched } = applyOverrides(
+      [base()],
+      [{ id: 'toadd', reason: 'typo' }],
+    );
+    expect(applied).toEqual([]);
+    expect(unmatched).toEqual(['toadd']);
+  });
+
+  it('leaves characters untouched when there are no overrides', () => {
+    const { characters } = applyOverrides([base()], []);
+    expect(characters[0]).toEqual(base());
+  });
+
+  it('requires a reason', () => {
+    expect(Override.safeParse({ id: 'toad' }).success).toBe(false);
+    expect(Override.safeParse({ id: 'toad', reason: 'why' }).success).toBe(true);
+  });
+
+  it('rejects unknown fields rather than silently dropping them', () => {
+    expect(
+      Override.safeParse({ id: 'toad', reason: 'x', stamina: 5 }).success,
+    ).toBe(false);
   });
 });

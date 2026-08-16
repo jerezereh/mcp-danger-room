@@ -18,18 +18,24 @@ import { fileURLToPath } from 'node:url';
 
 import { Character } from '../src/schema.js';
 import {
+  applyOverrides,
   fetchCerebroCharacters,
   finalize,
   mergeDrafts,
+  OverrideFile,
   parseBsdata,
-  toDraft,
+  cerebroToDraft,
   type CharacterDraft,
 } from '../src/import/index.js';
+import { fetchJarvisCharacters, jarvisToDraft } from '../src/import/jarvis.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = resolve(here, '..');
 const OUT_DIR = resolve(pkgRoot, '.import');
 const CORPUS = resolve(pkgRoot, 'src/characters.json');
+
+const JARVIS_CACHE = resolve(OUT_DIR, 'jarvis-characters.json');
+const OVERRIDES = resolve(pkgRoot, 'overrides.json');
 
 const BSDATA_CAT = resolve(OUT_DIR, 'MCP Inventory.cat');
 const BSDATA_GST = resolve(OUT_DIR, 'Marvel Crisis Protocol.gst');
@@ -53,12 +59,20 @@ async function cached(path: string, url: string): Promise<string> {
   return body;
 }
 
+/** Cache a JSON fetch on disk — one request per source per import at most. */
+async function cachedJson<T>(path: string, fetcher: () => Promise<T>): Promise<T> {
+  if (existsSync(path)) return JSON.parse(readFileSync(path, 'utf8')) as T;
+  const body = await fetcher();
+  writeFileSync(path, JSON.stringify(body));
+  return body;
+}
+
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
 
   console.log('Fetching Cerebro…');
   const cerebroRaw = await fetchCerebroCharacters();
-  const cerebro = cerebroRaw.map(toDraft);
+  const cerebro = cerebroRaw.map(cerebroToDraft);
   console.log(`  ${cerebro.length} characters`);
 
   console.log('Parsing BSData…');
@@ -69,12 +83,25 @@ async function main() {
   const bsdata = parseBsdata(catalogue, gameSystem);
   console.log(`  ${bsdata.drafts.length} characters, ${bsdata.warnings.length} warnings`);
 
+  // Jarvis is optional: its access is provisional, so a failure degrades the
+  // pipeline to Cerebro + BSData rather than breaking the import.
+  console.log('Fetching Jarvis…');
+  let jarvis: CharacterDraft[] = [];
+  try {
+    const raw = await cachedJson(JARVIS_CACHE, () => fetchJarvisCharacters());
+    jarvis = raw.map(jarvisToDraft);
+    console.log(`  ${jarvis.length} characters`);
+  } catch (error) {
+    console.log(`  unavailable (${(error as Error).message.split('.')[0]}) — continuing without it`);
+  }
+
   console.log('Merging…');
-  const merged = mergeDrafts(cerebro, bsdata.drafts);
+  const merged = mergeDrafts({ cerebro, bsdata: bsdata.drafts, jarvis });
   console.log(
     `  ${merged.stats.total} total · ${merged.stats.matched} in both · ` +
       `${merged.stats.onlyIn['cerebro'] ?? 0} Cerebro-only · ` +
-      `${merged.stats.onlyIn['bsdata'] ?? 0} BSData-only`,
+      `${merged.stats.onlyIn['bsdata'] ?? 0} BSData-only · ` +
+      `${merged.stats.onlyIn['jarvis'] ?? 0} Jarvis-only`,
   );
   console.log(`  ${merged.conflicts.length} field conflicts`);
 
@@ -150,7 +177,21 @@ async function main() {
     }
   }
 
-  writeFileSync(CORPUS, JSON.stringify({ characters }, null, 2) + '\n');
+  // Human corrections win over every source, and are the only way a record
+  // becomes verified.
+  const overrideFile = existsSync(OVERRIDES)
+    ? OverrideFile.parse(JSON.parse(readFileSync(OVERRIDES, 'utf8')))
+    : { overrides: [] };
+  const patched = applyOverrides(characters, overrideFile.overrides);
+
+  if (overrideFile.overrides.length > 0) {
+    console.log(`\nOverrides: ${patched.applied.length} applied`);
+    for (const id of patched.unmatched) {
+      console.log(`  ⚠ no character matched override id "${id}"`);
+    }
+  }
+
+  writeFileSync(CORPUS, JSON.stringify({ characters: patched.characters }, null, 2) + '\n');
   writeFileSync(
     resolve(OUT_DIR, 'needs-data.json'),
     JSON.stringify({ generatedAt: new Date().toISOString(), needsData }, null, 2) + '\n',
@@ -164,7 +205,7 @@ async function main() {
     ) + '\n',
   );
 
-  console.log(`\n✓ ${characters.length} characters written to src/characters.json`);
+  console.log(`\n✓ ${patched.characters.length} characters written to src/characters.json`);
   console.log(`  ${needsData.length} need more data → .import/needs-data.json`);
   console.log(`  ${merged.conflicts.length} conflicts → .import/conflicts.json`);
 

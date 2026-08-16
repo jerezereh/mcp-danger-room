@@ -93,7 +93,7 @@ export function parsePack(cp: string | undefined): { code: string | null; name: 
  * is enough for the merge to attach rules text to later, and enough for the
  * OCR cross-check to have something to verify against.
  */
-export function toDraft(raw: CerebroCharacter): CharacterDraft {
+export function cerebroToDraft(raw: CerebroCharacter): CharacterDraft {
   const pack = parsePack(raw.CP);
   const alias = raw.Alias?.trim();
 
