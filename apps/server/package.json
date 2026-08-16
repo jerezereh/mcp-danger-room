@@ -1,0 +1,22 @@
+{
+  "name": "@danger-room/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Authoritative game server. Owns the rules engine; clients only send intent.",
+  "scripts": {
+    "dev": "tsx watch --conditions=development src/index.ts",
+    "build": "tsc --build",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --build"
+  },
+  "dependencies": {
+    "@colyseus/core": "^0.15.0",
+    "@colyseus/ws-transport": "^0.15.3",
+    "@danger-room/protocol": "*",
+    "@danger-room/rules": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.17.0"
+  }
+}

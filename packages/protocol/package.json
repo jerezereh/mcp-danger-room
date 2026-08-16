@@ -1,0 +1,23 @@
+{
+  "name": "@danger-room/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Wire types shared by client and server. No logic.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --build"
+  },
+  "dependencies": {
+    "@danger-room/rules": "*"
+  }
+}

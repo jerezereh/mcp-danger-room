@@ -1,0 +1,194 @@
+/**
+ * App shell.
+ *
+ * Two views for now — the roster builder (useful today) and the game board
+ * (a skeleton). Routing is a `useState` because there are two routes; swap in a
+ * router when there are five.
+ */
+
+import { useState } from 'react';
+import { edgeDistance, hasLineOfSight, rangeBandTo } from '@danger-room/rules';
+
+import { Board } from './components/Board.js';
+import { characterName, inches } from './lib/format.js';
+import { GameLog } from './components/GameLog.js';
+import { RosterBuilder } from './components/RosterBuilder.js';
+import { selectActionCount, selectGame, useStore } from './store.js';
+
+type View = 'roster' | 'play';
+
+const TABS: { id: View; label: string }[] = [
+  { id: 'roster', label: 'Rosters' },
+  { id: 'play', label: 'Play' },
+];
+
+function GameView() {
+  const dispatch = useStore(s => s.dispatch);
+  const selected = useStore(s => s.selectedModel);
+  const game = useStore(selectGame);
+  const newGame = useStore(s => s.newGame);
+  const actionCount = useStore(selectActionCount);
+  const saveToStorage = useStore(s => s.saveToStorage);
+  const loadFromStorage = useStore(s => s.loadFromStorage);
+  const loadError = useStore(s => s.lastLoadError);
+
+  const model = selected ? game.models[selected] : undefined;
+
+  return (
+    <div className="grid h-full grid-cols-[1fr_300px] overflow-hidden">
+      <Board />
+
+      <aside className="flex flex-col overflow-hidden border-l border-surface-border bg-surface-raised">
+        <div className="border-b border-surface-border p-3">
+          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            Selection
+          </h3>
+          {model ? (
+            <div className="space-y-2 text-sm">
+              <p className="font-semibold text-slate-100">{characterName(model.characterId)}</p>
+              <dl className="grid grid-cols-2 gap-1 text-xs text-slate-400">
+                <dt>Health</dt>
+                <dd className="text-right text-slate-200">{model.health}</dd>
+                <dt>Damage</dt>
+                <dd className="text-right tabular-nums text-slate-200">{model.damage}</dd>
+                <dt>Power</dt>
+                <dd className="text-right tabular-nums text-slate-200">{model.power}</dd>
+                <dt>Activated</dt>
+                <dd className="text-right text-slate-200">
+                  {model.activatedThisRound ? 'yes' : 'no'}
+                </dd>
+                <dt>Position</dt>
+                <dd className="text-right tabular-nums text-slate-200">
+                  {model.pos.x.toFixed(1)}, {model.pos.y.toFixed(1)}
+                </dd>
+              </dl>
+
+              {/*
+                The numeric counterpart to the rings and sight lines on the
+                board. If a ring says a model is inside R2 and this says R3,
+                the geometry is wrong — which is the point of showing both.
+              */}
+              <div className="border-t border-surface-border pt-2">
+                <h4 className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                  Measured to
+                </h4>
+                <ul className="space-y-1 text-xs">
+                  {Object.values(game.models)
+                    .filter(other => other.id !== model.id)
+                    .map(other => {
+                      const gap = edgeDistance(model, other);
+                      const band = rangeBandTo(model, other);
+                      const los = hasLineOfSight(model, other, game.terrain);
+                      return (
+                        <li key={other.id} className="flex items-baseline justify-between gap-2">
+                          <span className="truncate text-slate-400">{characterName(other.characterId)}</span>
+                          <span className="flex shrink-0 items-center gap-1.5 tabular-nums">
+                            <span className="text-slate-300">{inches(gap)}</span>
+                            <span className="text-[#4ab3c7]">{band ? `R${band}` : '—'}</span>
+                            <span
+                              title={
+                                los.clear
+                                  ? 'Line of sight clear'
+                                  : `Blocked by ${los.blockedBy.join(', ')}`
+                              }
+                              className={los.clear ? 'text-emerald-400' : 'text-accent'}
+                            >
+                              {los.clear ? 'LOS' : 'blocked'}
+                            </span>
+                          </span>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="button"
+                  disabled={model.activatedThisRound}
+                  onClick={() =>
+                    dispatch({ type: 'ACTIVATE', player: model.owner, modelId: model.id })
+                  }
+                  className="flex-1 rounded bg-accent/80 px-2 py-1.5 text-xs font-medium text-white transition hover:bg-accent disabled:cursor-not-allowed disabled:bg-surface disabled:text-slate-600"
+                >
+                  Activate
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-slate-600">Click a model on the board.</p>
+          )}
+        </div>
+
+        <div className="min-h-0 flex-1">
+          <GameLog />
+        </div>
+
+        {loadError && (
+          <p className="border-t border-accent/30 bg-accent/10 px-3 py-2 text-xs text-accent">
+            {loadError.message}
+          </p>
+        )}
+
+        <div className="flex items-center gap-1 border-t border-surface-border px-3 py-2 text-xs text-slate-500">
+          <button type="button" onClick={() => newGame()} className="transition hover:text-slate-300">
+            New
+          </button>
+          <span className="text-slate-700">·</span>
+          <button
+            type="button"
+            onClick={saveToStorage}
+            className="transition hover:text-slate-300"
+          >
+            Save
+          </button>
+          <span className="text-slate-700">·</span>
+          <button
+            type="button"
+            onClick={loadFromStorage}
+            className="transition hover:text-slate-300"
+          >
+            Load
+          </button>
+          {/* The save file is this number of actions plus a seed — nothing else. */}
+          <span className="ml-auto tabular-nums text-slate-600">{actionCount} actions</span>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+export function App() {
+  const [view, setView] = useState<View>('roster');
+
+  return (
+    <div className="flex h-full flex-col">
+      <header className="flex items-center gap-6 border-b border-surface-border bg-surface-raised px-4">
+        <span className="py-3 text-sm font-semibold tracking-tight text-slate-100">
+          Danger Room
+        </span>
+
+        <nav className="flex gap-1">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setView(tab.id)}
+              className={`border-b-2 px-3 py-3 text-sm transition ${
+                view === tab.id
+                  ? 'border-accent text-slate-100'
+                  : 'border-transparent text-slate-500 hover:text-slate-300'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+      </header>
+
+      <main className="min-h-0 flex-1">
+        {view === 'roster' ? <RosterBuilder /> : <GameView />}
+      </main>
+    </div>
+  );
+}

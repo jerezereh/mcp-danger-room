@@ -1,0 +1,35 @@
+{
+  "name": "@danger-room/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The client. Renders; never rules.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --build && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --build"
+  },
+  "dependencies": {
+    "@danger-room/data": "*",
+    "@danger-room/protocol": "*",
+    "@danger-room/rules": "*",
+    "@react-three/drei": "^9.109.0",
+    "@react-three/fiber": "^8.16.8",
+    "colyseus.js": "^0.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.166.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.166.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "vite": "^5.3.5"
+  }
+}

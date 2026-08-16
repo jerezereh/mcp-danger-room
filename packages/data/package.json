@@ -1,0 +1,24 @@
+{
+  "name": "@danger-room/data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Card definitions, validated schemas, and the symbol vocabulary.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --build",
+    "import:legacy": "node scripts/import-legacy.mjs"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
