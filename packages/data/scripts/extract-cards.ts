@@ -3,7 +3,8 @@
  *
  *   npm run extract:cards --workspace @danger-room/data -- [options]
  *
- *   --images <dir>   Where card scans live (default: assets/characterCardImages)
+ *   --images <dir>   Local card scans (default: assets/characterCardImages)
+ *   --local-only     Don't fall back to downloading scans from Cerebro
  *   --limit <n>      Only process the first n characters (start here)
  *   --sync           Run immediately instead of via the Batch API
  *   --all            Re-extract every character, not just the incomplete ones
@@ -26,6 +27,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 
 import { characters as corpus } from '../src/characters.js';
+import { cardImageUrl } from '../src/import/cerebro.js';
 import { buildSystemPrompt, crossCheck, ExtractedCard } from '../src/import/extraction.js';
 import { slugify } from '../src/import/slug.js';
 
@@ -33,6 +35,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = resolve(here, '..');
 const repoRoot = resolve(pkgRoot, '../..');
 const OUT_DIR = resolve(pkgRoot, '.import');
+const CACHE_DIR = resolve(OUT_DIR, 'card-images');
 
 // ---------------------------------------------------------------------------
 // Options
@@ -51,6 +54,7 @@ const LIMIT = Number(option('limit', '0'));
 const DRY_RUN = flag('dry-run');
 const SYNC = flag('sync');
 const ALL = flag('all');
+const LOCAL_ONLY = flag('local-only');
 
 // ---------------------------------------------------------------------------
 // Image resolution
@@ -87,7 +91,7 @@ const MEDIA: Record<string, 'image/png' | 'image/jpeg' | 'image/webp'> = {
 };
 
 /** Try the recorded filename first, then conventional variants of the id. */
-function resolveSide(
+function resolveLocal(
   index: Map<string, string>,
   recorded: string | null,
   id: string,
@@ -107,6 +111,29 @@ function resolveSide(
   return undefined;
 }
 
+/**
+ * Fetch a card scan from Cerebro, caching it on disk.
+ *
+ * This is what makes the extractor usable at all: the characters that need OCR
+ * are recent releases, which is precisely the set nobody has local scans of.
+ * Cerebro's API already gives us the exact filename, and its web app serves
+ * those from a predictable path.
+ *
+ * Cached because the images are ~1MB each and the host is a volunteer project —
+ * re-downloading 80 of them on every run would be rude, and slow.
+ */
+async function fetchRemote(filename: string): Promise<string | undefined> {
+  const cached = resolve(CACHE_DIR, filename);
+  if (existsSync(cached)) return cached;
+
+  const response = await fetch(cardImageUrl(filename));
+  if (!response.ok) return undefined;
+
+  mkdirSync(CACHE_DIR, { recursive: true });
+  writeFileSync(cached, Buffer.from(await response.arrayBuffer()));
+  return cached;
+}
+
 function encode(path: string) {
   return {
     media_type: MEDIA[extname(path).toLowerCase()] ?? 'image/png',
@@ -115,6 +142,18 @@ function encode(path: string) {
 }
 
 // ---------------------------------------------------------------------------
+
+/** One row of .import/needs-data.json, plus what --all synthesizes. */
+interface WorklistEntry {
+  id: string;
+  name?: string;
+  threat?: number;
+  affiliations?: string[];
+  healthyImage?: string | null;
+  injuredImage?: string | null;
+  healthyStamina?: number;
+  injuredStamina?: number;
+}
 
 interface Job {
   id: string;
@@ -129,21 +168,40 @@ interface Job {
   injuredPath: string;
 }
 
-function buildJobs(): { jobs: Job[]; noImages: string[] } {
+async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: number }> {
   const index = indexImages(IMAGE_DIR);
 
   // Which characters need work? Everything by default is wasteful — the point
   // is to fill gaps, and 190-odd characters already have full stat blocks.
   const needsPath = resolve(OUT_DIR, 'needs-data.json');
-  const needing: Set<string> = ALL
-    ? new Set(corpus.map(c => c.id))
-    : new Set(
-        existsSync(needsPath)
-          ? (JSON.parse(readFileSync(needsPath, 'utf8')).needsData as { id: string }[]).map(
-              n => n.id,
-            )
-          : [],
-      );
+  const worklist: WorklistEntry[] = existsSync(needsPath)
+    ? (JSON.parse(readFileSync(needsPath, 'utf8')).needsData as WorklistEntry[])
+    : [];
+
+  /*
+   * Characters needing extraction are, by definition, the ones that failed to
+   * finalize — so they are absent from characters.json and cannot be looked up
+   * there. The worklist written by import-cards carries their metadata and card
+   * image filenames precisely so this script has something to work from.
+   */
+  const known = new Map<string, WorklistEntry>();
+  for (const entry of worklist) known.set(entry.id, entry);
+  for (const c of corpus) {
+    if (ALL && !known.has(c.id)) {
+      known.set(c.id, {
+        id: c.id,
+        name: c.name,
+        threat: c.threat,
+        affiliations: c.affiliations,
+        healthyImage: c.healthy.cardImage,
+        injuredImage: c.injured.cardImage,
+        healthyStamina: c.healthy.stamina,
+        injuredStamina: c.injured.stamina,
+      });
+    }
+  }
+
+  const needing = new Set(ALL ? known.keys() : worklist.map(e => e.id));
 
   if (needing.size === 0 && !ALL) {
     console.log('Nothing to extract — .import/needs-data.json is empty or missing.');
@@ -152,11 +210,25 @@ function buildJobs(): { jobs: Job[]; noImages: string[] } {
 
   const jobs: Job[] = [];
   const noImages: string[] = [];
+  let fetched = 0;
 
   for (const id of [...needing].sort()) {
-    const known = corpus.find(c => c.id === id);
-    const healthyPath = resolveSide(index, known?.healthy.cardImage ?? null, id, 'healthy');
-    const injuredPath = resolveSide(index, known?.injured.cardImage ?? null, id, 'injured');
+    const entry = known.get(id);
+
+    // Local scans first — free, and the user may have better ones. Fall back to
+    // Cerebro, which is the only source for recently-released characters.
+    const side = async (which: 'healthy' | 'injured') => {
+      const recorded = (which === 'healthy' ? entry?.healthyImage : entry?.injuredImage) ?? null;
+      const local = resolveLocal(index, recorded, id, which);
+      if (local || LOCAL_ONLY || !recorded) return local;
+
+      const remote = await fetchRemote(recorded);
+      if (remote) fetched++;
+      return remote;
+    };
+
+    const healthyPath = await side('healthy');
+    const injuredPath = await side('injured');
 
     if (!healthyPath || !injuredPath) {
       noImages.push(id);
@@ -166,14 +238,14 @@ function buildJobs(): { jobs: Job[]; noImages: string[] } {
     jobs.push({
       id,
       known: {
-        ...(known?.name ? { name: known.name } : {}),
-        ...(known?.threat !== undefined ? { threat: known.threat } : {}),
-        ...(known?.affiliations ? { affiliations: known.affiliations } : {}),
-        ...(known?.healthy.stamina !== undefined
-          ? { healthyStamina: known.healthy.stamina }
+        ...(entry?.name ? { name: entry.name } : {}),
+        ...(entry?.threat !== undefined ? { threat: entry.threat } : {}),
+        ...(entry?.affiliations ? { affiliations: entry.affiliations } : {}),
+        ...(entry?.healthyStamina !== undefined
+          ? { healthyStamina: entry.healthyStamina }
           : {}),
-        ...(known?.injured.stamina !== undefined
-          ? { injuredStamina: known.injured.stamina }
+        ...(entry?.injuredStamina !== undefined
+          ? { injuredStamina: entry.injuredStamina }
           : {}),
       },
       healthyPath,
@@ -181,7 +253,7 @@ function buildJobs(): { jobs: Job[]; noImages: string[] } {
     });
   }
 
-  return { jobs: LIMIT > 0 ? jobs.slice(0, LIMIT) : jobs, noImages };
+  return { jobs: LIMIT > 0 ? jobs.slice(0, LIMIT) : jobs, noImages, fetched };
 }
 
 function requestFor(job: Job) {
@@ -298,9 +370,10 @@ async function runBatch(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
 async function main() {
   mkdirSync(OUT_DIR, { recursive: true });
 
-  const { jobs, noImages } = buildJobs();
+  const { jobs, noImages, fetched } = await buildJobs();
 
-  console.log(`Images:  ${IMAGE_DIR}`);
+  console.log(`Images:  ${IMAGE_DIR}${LOCAL_ONLY ? ' (local only)' : ' + Cerebro'}`);
+  if (fetched > 0) console.log(`         ${fetched} downloaded from Cerebro → .import/card-images/`);
   console.log(`Model:   ${MODEL}${SYNC ? ' (sync)' : ' (batch — 50% cheaper)'}`);
   console.log(`Jobs:    ${jobs.length} character(s) with both card sides on disk`);
   if (noImages.length > 0) {
@@ -312,8 +385,8 @@ async function main() {
   }
 
   if (jobs.length === 0) {
-    console.log('\nNothing to do. Card scans need to be in the images directory,');
-    console.log('named after the character (e.g. "black-widow-healthy.png").');
+    console.log('\nNothing to do.');
+    if (LOCAL_ONLY) console.log('Drop --local-only to fetch card scans from Cerebro.');
     return;
   }
 

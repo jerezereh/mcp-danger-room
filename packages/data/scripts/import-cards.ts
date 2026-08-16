@@ -90,12 +90,41 @@ async function main() {
   }
 
   const characters = [];
-  const needsData: { id: string; missing: readonly string[]; sources: string[] }[] = [];
+
+  /*
+   * The worklist carries the draft's own metadata, not just its id.
+   *
+   * These characters by definition never make it into characters.json, so the
+   * OCR extractor cannot look them up there — and the card image filenames it
+   * needs to fetch scans live only on the draft. Passing them through here is
+   * what lets the extractor work on exactly the characters that need it.
+   */
+  const needsData: {
+    id: string;
+    missing: readonly string[];
+    sources: string[];
+    name?: string;
+    threat?: number;
+    affiliations?: string[];
+    healthyImage?: string | null;
+    injuredImage?: string | null;
+  }[] = [];
+
+  const worklistEntry = (draft: CharacterDraft, missing: readonly string[]) => ({
+    id: draft.id,
+    missing,
+    sources: draft.sources,
+    ...(draft.name ? { name: draft.name } : {}),
+    ...(draft.threat !== undefined ? { threat: draft.threat } : {}),
+    ...(draft.affiliations ? { affiliations: draft.affiliations } : {}),
+    healthyImage: draft.healthy?.cardImage ?? null,
+    injuredImage: draft.injured?.cardImage ?? null,
+  });
 
   for (const draft of merged.drafts) {
     const result = finalize(draft, draft.sources.includes('bsdata') ? 'bsdata' : 'cerebro');
     if (!result.ok) {
-      needsData.push({ id: result.id, missing: result.missing, sources: draft.sources });
+      needsData.push(worklistEntry(draft, result.missing));
       continue;
     }
 
@@ -106,11 +135,12 @@ async function main() {
     if (parsed.success) {
       characters.push(parsed.data);
     } else {
-      needsData.push({
-        id: draft.id,
-        missing: parsed.error.issues.map(i => `${i.path.join('.')}: ${i.message}`),
-        sources: draft.sources,
-      });
+      needsData.push(
+        worklistEntry(
+          draft,
+          parsed.error.issues.map(i => `${i.path.join('.')}: ${i.message}`),
+        ),
+      );
     }
   }
 

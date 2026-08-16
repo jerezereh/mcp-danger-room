@@ -130,6 +130,26 @@ function pick<T>(
   return first.value;
 }
 
+/**
+ * Stamina: BSData is authoritative, verified against the printed cards.
+ *
+ * Cerebro's `front_health` was worth investigating as a cross-check and turned
+ * out not to be one. Across 382 matched pairs it sits one above BSData 56% of
+ * the time, agrees exactly 38%, and is scattered for the rest — no consistent
+ * relationship, so it cannot validate anything.
+ *
+ * It is therefore used only as a fallback where BSData has no value at all.
+ * Reporting the divergence as a conflict would add ~230 entries that describe a
+ * known flaw in a source we don't control and would never act on, drowning the
+ * conflicts that do warrant a look.
+ */
+function pickStamina(
+  bsdata: number | undefined,
+  cerebro: number | undefined,
+): number | undefined {
+  return bsdata ?? cerebro;
+}
+
 function mergeSide(
   id: string,
   label: string,
@@ -142,29 +162,7 @@ function mergeSide(
   return {
     // Only Cerebro has image filenames.
     cardImage: cerebro?.cardImage ?? bsdata?.cardImage ?? null,
-    /*
-     * Stamina is the one stat both sources carry, so it is the only field that
-     * genuinely cross-validates — and they disagree on most characters, almost
-     * always by exactly 1 with Cerebro higher.
-     *
-     * That systematic offset means the two are measuring different things
-     * (Cerebro's field is named `front_health`, not stamina), not that one has
-     * sloppy data. BSData leads here because it is the rules-focused source and
-     * because the independently hand-entered legacy corpus agreed with it
-     * (Amazing Spider-Man: legacy 6, BSData 6, Cerebro 7).
-     *
-     * TODO(verify): confirm against a printed card which definition is Stamina.
-     * Every conflict is reported, so flipping this is a one-line change.
-     */
-    stamina: pick(
-      id,
-      `${label}.stamina`,
-      [
-        { source: 'bsdata', value: bsdata?.stamina },
-        { source: 'cerebro', value: cerebro?.stamina },
-      ],
-      conflicts,
-    ),
+    stamina: pickStamina(bsdata?.stamina, cerebro?.stamina),
     movement: bsdata?.movement ?? cerebro?.movement,
     size: bsdata?.size ?? cerebro?.size,
     defense: bsdata?.defense ?? cerebro?.defense,

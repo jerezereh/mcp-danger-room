@@ -132,17 +132,27 @@ describe('merge precedence', () => {
     expect(conflicts.filter(c => c.field === 'name')).toEqual([]);
   });
 
-  it('reports a real disagreement with both values', () => {
-    const { conflicts } = mergeDrafts([cerebro], [bsdata]);
-    const stamina = conflicts.find(c => c.field === 'healthy.stamina');
-
-    expect(stamina).toBeDefined();
-    expect(stamina?.values).toEqual({ bsdata: 6, cerebro: 7 });
+  // BSData's stamina is the printed stat, verified against the cards.
+  it('uses the printed Stamina from BSData, not Cerebro', () => {
+    const { drafts } = mergeDrafts([cerebro], [bsdata]); // cerebro 7, bsdata 6
+    expect(drafts[0]?.healthy?.stamina).toBe(6);
   });
 
-  it('prefers BSData for stamina — the rules-focused source', () => {
-    const { drafts } = mergeDrafts([cerebro], [bsdata]);
-    expect(drafts[0]?.healthy?.stamina).toBe(6);
+  // Cerebro's front_health has no consistent relationship to Stamina, so it
+  // cannot validate anything — reporting the divergence would be ~230 entries
+  // about a known flaw in a source we neither control nor would act on.
+  it('does not report stamina divergence as a conflict', () => {
+    const { conflicts } = mergeDrafts([cerebro], [bsdata]);
+    expect(conflicts.filter(c => c.field.endsWith('stamina'))).toEqual([]);
+  });
+
+  it('falls back to Cerebro stamina only when BSData has none', () => {
+    const noStamina: CharacterDraft = {
+      ...bsdata,
+      healthy: { ...bsdata.healthy, stamina: undefined },
+    };
+    const { drafts } = mergeDrafts([cerebro], [noStamina]);
+    expect(drafts[0]?.healthy?.stamina).toBe(7);
   });
 
   it('passes through characters present in only one source', () => {

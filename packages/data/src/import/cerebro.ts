@@ -17,6 +17,25 @@ import { slugify } from './slug.js';
 
 export const CEREBRO_BASE = 'https://api.cerebromcp.com';
 
+/**
+ * Where Cerebro serves card scans.
+ *
+ * The API returns bare filenames (`ABOMINATION_healthy.png`); the web app
+ * builds URLs from them as `this.url + "Characters/" + filename`. That means
+ * the API response alone is enough to fetch every card image — no local scans
+ * needed, which is what makes OCR extraction possible for characters nobody has
+ * scanned locally.
+ *
+ * Images are ~1MB each and this is a volunteer-run host, so callers must cache.
+ */
+export const CEREBRO_IMAGE_BASE = 'https://cerebromcp.com/MCPImages/';
+
+export type CerebroImageKind = 'Characters' | 'Tactics' | 'Crisis' | 'InfinityGem' | 'Conditions';
+
+export function cardImageUrl(filename: string, kind: CerebroImageKind = 'Characters'): string {
+  return `${CEREBRO_IMAGE_BASE}${kind}/${encodeURIComponent(filename)}`;
+}
+
 /** One record as Cerebro returns it. Only the fields we consume are typed. */
 export interface CerebroCharacter {
   ID: number | string;
