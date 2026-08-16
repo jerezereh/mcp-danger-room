@@ -1,11 +1,12 @@
-# Build files
-node_modules
-dist
-packages
-out
-
-# Generated files
-.webpack
-
-# Code Editor files
-.vscode
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.vite/
+coverage/
+.env
+.env.*
+!.env.example
+.DS_Store
+.vscode/
+.idea/
