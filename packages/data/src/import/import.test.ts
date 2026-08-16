@@ -89,7 +89,7 @@ describe('cerebro', () => {
     expect(draft.affiliations).toEqual(['Criminal Syndicate', 'Hydra']);
     expect(draft.healthy?.attacks).toBeUndefined();
 
-    const finalized = finalize(draft, 'cerebro');
+    const finalized = finalize(draft);
     expect(finalized.ok).toBe(false);
     if (finalized.ok) return;
     expect(finalized.missing).toContain('healthy.attacks');
@@ -216,10 +216,10 @@ describe('finalize', () => {
   });
 
   it('promotes a complete draft', () => {
-    const result = finalize(complete(), 'bsdata');
+    const result = finalize(complete());
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.character.source).toBe('bsdata');
+    expect(result.character.sources).toEqual(['bsdata']);
     // Nothing this pipeline produces has been checked against a printed card.
     expect(result.character.verified).toBe(false);
   });
@@ -229,7 +229,7 @@ describe('finalize', () => {
     delete draft.healthy?.size;
     delete draft.threat;
 
-    const result = finalize(draft, 'bsdata');
+    const result = finalize(draft);
     expect(result.ok).toBe(false);
     if (result.ok) return;
     expect(result.missing).toContain('threat');
@@ -240,7 +240,7 @@ describe('finalize', () => {
     const draft = complete();
     draft.healthy = { ...draft.healthy, attacks: [] };
 
-    const result = finalize(draft, 'bsdata');
+    const result = finalize(draft);
     expect(result.ok).toBe(false);
     if (result.ok) return;
     expect(result.missing).toContain('healthy.attacks');
@@ -467,7 +467,7 @@ describe('manual overrides', () => {
       ],
       superpowers: [],
     },
-    source: 'jarvis' as const,
+    sources: ['jarvis' as const],
     verified: false,
   });
 

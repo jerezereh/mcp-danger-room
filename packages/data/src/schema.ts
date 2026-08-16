@@ -103,15 +103,19 @@ export const Character = z.object({
   healthy: StatBlock,
   injured: StatBlock,
   /**
-   * Where this data came from, so gaps are auditable.
+   * Every source that contributed to this record, so provenance is auditable.
    *
-   * `cerebro` is metadata-only (no rules text), `bsdata` carries full stat
-   * blocks, `ocr` was read off a card image by a vision model. None of them
-   * imply a human has checked the result — that is what `verified` is for.
+   * An array rather than one value, because a merged character genuinely comes
+   * from several: Jarvis for current stats, Cerebro for images and errata,
+   * BSData for rules text. A single label had to pick one and was misleading —
+   * it reported all 196 characters as "bsdata" when most of their stats came
+   * from Jarvis.
+   *
+   * None of these imply a human has checked the result; that is `verified`.
    */
-  source: z
-    .enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'jarvis', 'ocr'])
-    .default('manual'),
+  sources: z
+    .array(z.enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'jarvis', 'ocr']))
+    .default([]),
   /** False until a human has checked it against the physical card. */
   verified: z.boolean().default(false),
 });

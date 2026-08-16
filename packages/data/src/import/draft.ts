@@ -83,7 +83,7 @@ function missingFromSide(side: StatBlockDraft | undefined, label: string): strin
  * partial corpus plus a worklist, instead of failing the whole import because
  * one character released after BSData stopped updating.
  */
-export function finalize(draft: CharacterDraft, source: DraftSource): FinalizeResult {
+export function finalize(draft: CharacterDraft, sources?: readonly DraftSource[]): FinalizeResult {
   const missing: string[] = [];
   if (!draft.name) missing.push('name');
   if (draft.threat === undefined) missing.push('threat');
@@ -120,7 +120,7 @@ export function finalize(draft: CharacterDraft, source: DraftSource): FinalizeRe
       errata: draft.errata ?? null,
       healthy: side(draft.healthy as StatBlockDraft),
       injured: side(draft.injured as StatBlockDraft),
-      source,
+      sources: [...(sources ?? draft.sources)],
       // Nothing this pipeline produces has been checked against a printed card.
       verified: false,
     },

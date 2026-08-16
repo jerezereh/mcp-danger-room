@@ -155,7 +155,7 @@ async function main() {
   });
 
   for (const draft of merged.drafts) {
-    const result = finalize(draft, draft.sources.includes('bsdata') ? 'bsdata' : 'cerebro');
+    const result = finalize(draft);
     if (!result.ok) {
       needsData.push(worklistEntry(draft, result.missing));
       continue;
