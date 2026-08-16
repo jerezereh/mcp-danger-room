@@ -108,6 +108,9 @@ async function main() {
     affiliations?: string[];
     healthyImage?: string | null;
     injuredImage?: string | null;
+    healthyStamina?: number;
+    injuredStamina?: number;
+    errata?: string | null;
   }[] = [];
 
   const worklistEntry = (draft: CharacterDraft, missing: readonly string[]) => ({
@@ -119,6 +122,9 @@ async function main() {
     ...(draft.affiliations ? { affiliations: draft.affiliations } : {}),
     healthyImage: draft.healthy?.cardImage ?? null,
     injuredImage: draft.injured?.cardImage ?? null,
+    ...(draft.healthy?.stamina !== undefined ? { healthyStamina: draft.healthy.stamina } : {}),
+    ...(draft.injured?.stamina !== undefined ? { injuredStamina: draft.injured.stamina } : {}),
+    errata: draft.errata ?? null,
   });
 
   for (const draft of merged.drafts) {

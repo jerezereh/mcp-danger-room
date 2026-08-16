@@ -5,7 +5,12 @@ import type { CharacterDraft } from './draft.js';
 import { finalize } from './draft.js';
 import { mergeDrafts } from './merge.js';
 import { qualifiedSlug, slugify, splitName } from './slug.js';
-import { crossCheck, ExtractedCard as ExtractedCardSchema, type ExtractedCard } from './extraction.js';
+import {
+  crossCheck,
+  ExtractedCard as ExtractedCardSchema,
+  parseStaminaErrata,
+  type ExtractedCard,
+} from './extraction.js';
 import { characters } from '../characters.js';
 
 describe('slug — the join key across sources', () => {
@@ -334,5 +339,96 @@ describe('extraction schema stays compatible with the corpus', () => {
 
   it('rejects output that is missing a required field', () => {
     expect(ExtractedCardSchema.safeParse({ name: 'X' }).success).toBe(false);
+  });
+});
+
+describe('errata-aware OCR cross-check', () => {
+  const extracted = (h: number, i: number): ExtractedCard => ({
+    name: 'Ancient One',
+    alterEgo: null,
+    affiliations: [],
+    threat: 4,
+    healthy: {
+      stamina: h,
+      movement: 'M',
+      size: 2,
+      defense: { physical: 2, energy: 3, mystic: 5 },
+      attacks: [],
+      superpowers: [],
+    },
+    injured: {
+      stamina: i,
+      movement: 'M',
+      size: 2,
+      defense: { physical: 2, energy: 3, mystic: 5 },
+      attacks: [],
+      superpowers: [],
+    },
+    legibility: 'clear',
+    notes: '',
+  });
+
+  const ANCIENT_ONE = 'Stamina change 6/6 to 7/6';
+
+  it('parses the printed and current values out of the errata', () => {
+    expect(parseStaminaErrata(ANCIENT_ONE)).toEqual({ printed: [6, 6], current: [7, 6] });
+  });
+
+  it.each([
+    ['Stamina changed 6/7 to 7/8. Blades of Ichor Pursuit changed to...', [6, 7], [7, 8]],
+    ['Stamina Changed 5/5 to 6/6. Speed changed to Medium from Short.', [5, 5], [6, 6]],
+    ['Stamina change 6/6 to 7/7.', [6, 6], [7, 7]],
+    // Single-sided characters write one number, and She-Hulk mixes the forms
+    // because errata gave her an injured side she did not previously have.
+    ['Stamina Changed 13 to 14. Leadership removed.', [13, 13], [14, 14]],
+    ['Stamina changed 20 to 10/10. Physical Defense up to 4 from 3.', [20, 20], [10, 10]],
+  ])('handles the real-world phrasings: %s', (text, printed, current) => {
+    expect(parseStaminaErrata(text as string)).toEqual({ printed, current });
+  });
+
+  it('returns null when errata does not touch stamina', () => {
+    expect(parseStaminaErrata('Peerless added.')).toBeNull();
+    expect(parseStaminaErrata(null)).toBeNull();
+  });
+
+  /*
+   * The scan is a physical card; the corpus holds the current value. For the
+   * 136 errata'd characters those differ by design, so a faithful reading of a
+   * pre-errata card must not be reported as a misread — otherwise the review
+   * queue fills with false positives and the real ones get lost.
+   */
+  it('accepts the printed value on a pre-errata scan, marked explained', () => {
+    const found = crossCheck(extracted(6, 6), {
+      healthyStamina: 7,
+      injuredStamina: 6,
+      errata: ANCIENT_ONE,
+    });
+
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatchObject({ field: 'healthy.stamina', extracted: 6, known: 7, explained: true });
+  });
+
+  it('accepts the current value on a reprinted card, silently', () => {
+    expect(
+      crossCheck(extracted(7, 6), { healthyStamina: 7, injuredStamina: 6, errata: ANCIENT_ONE }),
+    ).toEqual([]);
+  });
+
+  // The parse is what keeps this a real check rather than a blanket exemption.
+  it('still catches a genuine misread on an errata\'d character', () => {
+    const found = crossCheck(extracted(9, 6), {
+      healthyStamina: 7,
+      injuredStamina: 6,
+      errata: ANCIENT_ONE,
+    });
+
+    expect(found).toHaveLength(1);
+    expect(found[0]?.explained).toBeUndefined();
+  });
+
+  it('catches a misread when there is no errata at all', () => {
+    const found = crossCheck(extracted(5, 6), { healthyStamina: 7, injuredStamina: 6 });
+    expect(found[0]).toMatchObject({ field: 'healthy.stamina', extracted: 5, known: 7 });
+    expect(found[0]?.explained).toBeUndefined();
   });
 });

@@ -153,6 +153,7 @@ interface WorklistEntry {
   injuredImage?: string | null;
   healthyStamina?: number;
   injuredStamina?: number;
+  errata?: string | null;
 }
 
 interface Job {
@@ -163,6 +164,7 @@ interface Job {
     affiliations?: string[];
     healthyStamina?: number;
     injuredStamina?: number;
+    errata?: string | null;
   };
   healthyPath: string;
   injuredPath: string;
@@ -197,6 +199,7 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
         injuredImage: c.injured.cardImage,
         healthyStamina: c.healthy.stamina,
         injuredStamina: c.injured.stamina,
+        errata: c.errata,
       });
     }
   }
@@ -247,6 +250,9 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
         ...(entry?.injuredStamina !== undefined
           ? { injuredStamina: entry.injuredStamina }
           : {}),
+        // Without this, every errata'd character reports a false stamina
+        // mismatch — the scan is pre-errata, the corpus is current.
+        ...(entry?.errata ? { errata: entry.errata } : {}),
       },
       healthyPath,
       injuredPath,
@@ -403,7 +409,12 @@ async function main() {
   console.log('');
   const results = SYNC ? await runSync(client, jobs) : await runBatch(client, jobs);
 
-  const flagged = results.filter(r => r.disagreements.length > 0 || r.card.legibility !== 'clear');
+  // Only *unexplained* disagreements warrant review — a pre-errata scan
+  // reading the printed value is expected, and flagging 136 of those would
+  // bury the real misreads.
+  const flagged = results.filter(
+    r => r.disagreements.some(d => !d.explained) || r.card.legibility !== 'clear',
+  );
 
   writeFileSync(
     resolve(OUT_DIR, 'extracted.json'),

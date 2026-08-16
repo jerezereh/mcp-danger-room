@@ -113,6 +113,13 @@ Bold trigger names (Pierce, Momentum, Cleave) stay as <b>Name</b>.
   injured side prints a different set. If a side is not legible, still return
   your best reading and lower "legibility".
 
+## Errata
+
+Some cards were revised after printing. Transcribe what is physically on the
+card in front of you, not what you believe the current official value to be —
+reconciling printed against current is handled downstream, and it can only work
+if your reading is faithful to the card.
+
 ## Honesty
 
 Set "legibility" to "clear" only when you could read every stat and every line
@@ -126,6 +133,51 @@ export interface CrossCheck {
   readonly field: string;
   readonly extracted: unknown;
   readonly known: unknown;
+  /**
+   * True when errata accounts for the difference — informational, not a
+   * problem. A scan of a pre-errata card legitimately shows the old value.
+   */
+  readonly explained?: boolean;
+  readonly note?: string;
+}
+
+/**
+ * Pull the before/after stamina out of an errata note.
+ *
+ * The format is consistent across the 136 characters that have one:
+ * "Stamina change 6/6 to 7/6", occasionally "changed", sometimes followed by
+ * other revisions in the same paragraph.
+ *
+ * Worth parsing rather than merely detecting, because it converts the check
+ * from "ignore stamina when errata exists" into something stronger: the model's
+ * reading must match either the printed value or the current one. A reading of
+ * 9 on a card errata'd from 6 to 7 is still caught.
+ */
+export function parseStaminaErrata(
+  errata: string | null | undefined,
+): { printed: [number, number]; current: [number, number] } | null {
+  if (!errata) return null;
+
+  // Both sides are "N" or "N/N": single-sided characters (Hulkbuster,
+  // She-Hulk) write one number, and She-Hulk mixes the two forms because the
+  // errata gave her an injured side she did not previously have.
+  const match = errata.match(
+    /stamina\s+chang\w*\s+(\d+(?:\s*\/\s*\d+)?)\s+to\s+(\d+(?:\s*\/\s*\d+)?)/i,
+  );
+  if (!match) return null;
+
+  const pair = (raw: string | undefined): [number, number] | null => {
+    if (!raw) return null;
+    const parts = raw.split('/').map(n => Number(n.trim()));
+    const [a, b] = parts;
+    if (a === undefined || !Number.isFinite(a)) return null;
+    // A single value applies to both sides.
+    return [a, b !== undefined && Number.isFinite(b) ? b : a];
+  };
+
+  const printed = pair(match[1]);
+  const current = pair(match[2]);
+  return printed && current ? { printed, current } : null;
 }
 
 /**
@@ -144,6 +196,8 @@ export function crossCheck(
     affiliations?: string[];
     healthyStamina?: number;
     injuredStamina?: number;
+    /** Errata text, so a pre-errata scan is not mistaken for a misread. */
+    errata?: string | null;
   },
 ): CrossCheck[] {
   const out: CrossCheck[] = [];
@@ -156,20 +210,46 @@ export function crossCheck(
   if (known.threat !== undefined && known.threat !== extracted.threat) {
     out.push({ field: 'threat', extracted: extracted.threat, known: known.threat });
   }
-  if (known.healthyStamina !== undefined && known.healthyStamina !== extracted.healthy.stamina) {
-    out.push({
-      field: 'healthy.stamina',
-      extracted: extracted.healthy.stamina,
-      known: known.healthyStamina,
-    });
-  }
-  if (known.injuredStamina !== undefined && known.injuredStamina !== extracted.injured.stamina) {
-    out.push({
-      field: 'injured.stamina',
-      extracted: extracted.injured.stamina,
-      known: known.injuredStamina,
-    });
-  }
+
+  /*
+   * Stamina needs errata awareness, or every errata'd character reports a
+   * false positive.
+   *
+   * The corpus carries *current* stamina, but the scan is of a physical card —
+   * which for 136 characters was printed before the change. Ancient One reads 6
+   * on the card and is 7 in play. Flagging that as a misread would bury the
+   * genuine ones.
+   *
+   * Either value is acceptable: the printed one (an original card) or the
+   * current one (a reprint). Anything else is still a real misread.
+   */
+  const staminaErrata = parseStaminaErrata(known.errata);
+
+  const checkStamina = (
+    field: 'healthy.stamina' | 'injured.stamina',
+    read: number,
+    current: number | undefined,
+    index: 0 | 1,
+  ) => {
+    if (current === undefined || read === current) return;
+
+    const printed = staminaErrata?.printed[index];
+    if (printed !== undefined && read === printed) {
+      out.push({
+        field,
+        extracted: read,
+        known: current,
+        explained: true,
+        note: `card was printed ${printed}, errata'd to ${current} — scan is pre-errata`,
+      });
+      return;
+    }
+
+    out.push({ field, extracted: read, known: current });
+  };
+
+  checkStamina('healthy.stamina', extracted.healthy.stamina, known.healthyStamina, 0);
+  checkStamina('injured.stamina', extracted.injured.stamina, known.injuredStamina, 1);
   if (known.affiliations && known.affiliations.length > 0) {
     const a = new Set(known.affiliations.map(norm));
     const b = new Set(extracted.affiliations.map(norm));
