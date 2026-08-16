@@ -132,27 +132,46 @@ describe('merge precedence', () => {
     expect(conflicts.filter(c => c.field === 'name')).toEqual([]);
   });
 
-  // BSData's stamina is the printed stat, verified against the cards.
-  it('uses the printed Stamina from BSData, not Cerebro', () => {
-    const { drafts } = mergeDrafts([cerebro], [bsdata]); // cerebro 7, bsdata 6
-    expect(drafts[0]?.healthy?.stamina).toBe(6);
+  /*
+   * Stamina comes from Cerebro, because it tracks errata and BSData does not.
+   * Ancient One is the worked example: printed 6/6, errata'd to 7/6. Cerebro
+   * says 7 and carries "Stamina change 6/6 to 7/6"; BSData, frozen since 2024,
+   * still says 6.
+   */
+  it('takes current (errata-aware) stamina from Cerebro', () => {
+    const withErrata: CharacterDraft = { ...cerebro, errata: 'Stamina change 6/6 to 7/6' };
+    const { drafts } = mergeDrafts([withErrata], [bsdata]); // cerebro 7, bsdata 6
+    expect(drafts[0]?.healthy?.stamina).toBe(7);
   });
 
-  // Cerebro's front_health has no consistent relationship to Stamina, so it
-  // cannot validate anything — reporting the divergence would be ~230 entries
-  // about a known flaw in a source we neither control nor would act on.
-  it('does not report stamina divergence as a conflict', () => {
-    const { conflicts } = mergeDrafts([cerebro], [bsdata]);
+  it('does not flag a difference that a stamina errata explains', () => {
+    const withErrata: CharacterDraft = { ...cerebro, errata: 'Stamina change 6/6 to 7/6' };
+    const { conflicts } = mergeDrafts([withErrata], [bsdata]);
     expect(conflicts.filter(c => c.field.endsWith('stamina'))).toEqual([]);
   });
 
-  it('falls back to Cerebro stamina only when BSData has none', () => {
-    const noStamina: CharacterDraft = {
-      ...bsdata,
-      healthy: { ...bsdata.healthy, stamina: undefined },
+  it('flags a difference with no errata to explain it', () => {
+    // No errata text: one of the two sources is simply wrong.
+    const { conflicts } = mergeDrafts([cerebro], [bsdata]);
+    const found = conflicts.find(c => c.field === 'healthy.stamina');
+
+    expect(found).toBeDefined();
+    expect(found?.values).toMatchObject({ cerebro: 7, bsdata: 6 });
+  });
+
+  it('ignores a Cerebro stamina of 0 — the single-sided-card sentinel', () => {
+    // Hulk, Apocalypse and three others report back_health 0. Taken literally
+    // it fails schema validation and drops the character from the corpus.
+    const singleSided: CharacterDraft = {
+      ...cerebro,
+      injured: { cardImage: null, stamina: 0 },
     };
-    const { drafts } = mergeDrafts([cerebro], [noStamina]);
-    expect(drafts[0]?.healthy?.stamina).toBe(7);
+    const bsWithInjured: CharacterDraft = {
+      ...bsdata,
+      injured: { ...bsdata.healthy, stamina: 8 },
+    };
+    const { drafts } = mergeDrafts([singleSided], [bsWithInjured]);
+    expect(drafts[0]?.injured?.stamina).toBe(8);
   });
 
   it('passes through characters present in only one source', () => {

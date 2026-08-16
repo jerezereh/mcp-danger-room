@@ -95,6 +95,22 @@ export function CharacterCard({ character }: { character: Character }) {
         </div>
       </header>
 
+      {/*
+        Errata is shown prominently because it explains a discrepancy the player
+        would otherwise hit at the table: the printed card in their hand says one
+        thing and these stats say another. Without this the app just looks wrong.
+      */}
+      {character.errata && (
+        <div className="rounded border border-sky-500/30 bg-sky-500/10 px-2 py-1.5">
+          <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-300">
+            Errata — differs from the printed card
+          </div>
+          <p className="whitespace-pre-line text-xs leading-relaxed text-sky-100/80">
+            {character.errata}
+          </p>
+        </div>
+      )}
+
       {!character.verified && (
         <p className="rounded border border-amber-500/30 bg-amber-500/10 px-2 py-1 text-xs text-amber-300">
           Unverified data — imported, not yet checked against the printed card.

@@ -90,6 +90,14 @@ export const Character = z.object({
   packName: z.string().nullable().default(null),
   /** Squad cost in Threat. The game's only character cost. */
   threat: z.number().int().min(0),
+  /**
+   * Official errata, where the current stat line differs from the printed card.
+   *
+   * AMG revises stats after release. A card that reads Stamina 6 may currently
+   * be 7 — this records that, so a discrepancy between the corpus and a card in
+   * someone's hand is explainable rather than alarming.
+   */
+  errata: z.string().nullable().default(null),
   /** Base diameter in mm. */
   baseMm: z.number().int().default(40),
   healthy: StatBlock,

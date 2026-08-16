@@ -18,6 +18,7 @@ const stub = (id: string, threat: number): Character =>
     affiliations: [],
     packCode: null,
     packName: null,
+    errata: null,
     threat,
     baseMm: 40,
     source: 'manual',

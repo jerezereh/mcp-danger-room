@@ -41,6 +41,14 @@ export interface CharacterDraft {
   sources: DraftSource[];
   /** Free-form search tags, currently only from Cerebro. */
   tags?: string[];
+  /**
+   * Official errata text, from Cerebro.
+   *
+   * Load-bearing rather than decorative: it is what explains why the printed
+   * card and the current stat line differ, and the OCR extractor needs it to
+   * know that a card reading 6 where we expect 7 is errata, not a misread.
+   */
+  errata?: string | null;
 }
 
 export type FinalizeResult =
@@ -103,6 +111,7 @@ export function finalize(draft: CharacterDraft, source: DraftSource): FinalizeRe
       packName: draft.packName ?? null,
       threat: draft.threat as number,
       baseMm: draft.baseMm ?? 40,
+      errata: draft.errata ?? null,
       healthy: side(draft.healthy as StatBlockDraft),
       injured: side(draft.injured as StatBlockDraft),
       source,

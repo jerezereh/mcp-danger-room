@@ -53,6 +53,8 @@ export interface CerebroCharacter {
   thumbnail?: string;
   tags?: string;
   Date?: string;
+  /** Free text describing post-release stat/rules changes. */
+  Errata?: string;
 }
 
 const num = (v: unknown): number | undefined => {
@@ -106,13 +108,15 @@ export function toDraft(raw: CerebroCharacter): CharacterDraft {
     threat: num(raw.Cost),
     healthy: {
       cardImage: raw.Card_Healthy?.trim() || null,
-      ...(num(raw.front_health) === undefined ? {} : { stamina: num(raw.front_health) }),
+      ...(num(raw.front_health) ? { stamina: num(raw.front_health) } : {}),
     },
     injured: {
       cardImage: raw.Card_Injured?.trim() || null,
-      ...(num(raw.back_health) === undefined ? {} : { stamina: num(raw.back_health) }),
+      // 0 is Cerebro's sentinel for a single-sided card, not a real stamina.
+      ...(num(raw.back_health) ? { stamina: num(raw.back_health) } : {}),
     },
     tags: list(raw.tags),
+    errata: raw.Errata?.trim() || null,
     sources: ['cerebro'],
   };
 }

@@ -131,30 +131,63 @@ function pick<T>(
 }
 
 /**
- * Stamina: BSData is authoritative, verified against the printed cards.
+ * Stamina: Cerebro leads, because it tracks errata and BSData does not.
  *
- * Cerebro's `front_health` was worth investigating as a cross-check and turned
- * out not to be one. Across 382 matched pairs it sits one above BSData 56% of
- * the time, agrees exactly 38%, and is scattered for the rest — no consistent
- * relationship, so it cannot validate anything.
+ * The two sources disagree on stamina for about 150 characters, and the reason
+ * is errata rather than sloppiness on either side. AMG revises stamina after
+ * release; Cerebro carries the revised value and records the change in an
+ * `Errata` field ("Stamina change 6/6 to 7/6" for Ancient One), while BSData —
+ * frozen since late 2024 — still has what was printed on the card.
  *
- * It is therefore used only as a fallback where BSData has no value at all.
- * Reporting the divergence as a conflict would add ~230 entries that describe a
- * known flaw in a source we don't control and would never act on, drowning the
- * conflicts that do warrant a look.
+ * A stamina errata explains 133 of the 149 disagreements outright. That makes
+ * Cerebro the source for *current* stamina, which is the number that matters
+ * for play. BSData remains the source for everything else, since it is the only
+ * one with rules text.
+ *
+ * The exception is `back_health: 0`, which is Cerebro's sentinel for a
+ * single-sided card (Hulk, Apocalypse, Omega Sentinel, The Immortal Hulk,
+ * Weapon X) rather than a stamina of zero. Taken literally it would fail schema
+ * validation and drop those characters from the corpus entirely.
  */
 function pickStamina(
+  id: string,
+  label: string,
   bsdata: number | undefined,
   cerebro: number | undefined,
+  hasStaminaErrata: boolean,
+  conflicts: Conflict[],
 ): number | undefined {
-  return bsdata ?? cerebro;
+  const usable = cerebro !== undefined && cerebro > 0 ? cerebro : undefined;
+
+  if (usable === undefined) return bsdata;
+  if (bsdata === undefined) return usable;
+
+  // Errata fully accounts for a difference — not worth a human's attention.
+  if (usable !== bsdata && !hasStaminaErrata) {
+    conflicts.push({
+      id,
+      field: `${label}.stamina`,
+      values: {
+        cerebro: usable,
+        bsdata,
+        note: 'differs with no recorded stamina errata — one source is wrong',
+      },
+    });
+  }
+
+  return usable;
 }
+
+/** Does this character's errata text mention a stamina change? */
+const mentionsStamina = (errata: string | null | undefined): boolean =>
+  /stamina/i.test(errata ?? '');
 
 function mergeSide(
   id: string,
   label: string,
   cerebro: StatBlockDraft | undefined,
   bsdata: StatBlockDraft | undefined,
+  hasStaminaErrata: boolean,
   conflicts: Conflict[],
 ): StatBlockDraft | undefined {
   if (!cerebro && !bsdata) return undefined;
@@ -162,7 +195,7 @@ function mergeSide(
   return {
     // Only Cerebro has image filenames.
     cardImage: cerebro?.cardImage ?? bsdata?.cardImage ?? null,
-    stamina: pickStamina(bsdata?.stamina, cerebro?.stamina),
+    stamina: pickStamina(id, label, bsdata?.stamina, cerebro?.stamina, hasStaminaErrata, conflicts),
     movement: bsdata?.movement ?? cerebro?.movement,
     size: bsdata?.size ?? cerebro?.size,
     defense: bsdata?.defense ?? cerebro?.defense,
@@ -195,6 +228,8 @@ export function mergeDrafts(
     else if (cerebro) onlyIn['cerebro'] = (onlyIn['cerebro'] ?? 0) + 1;
     else onlyIn['bsdata'] = (onlyIn['bsdata'] ?? 0) + 1;
 
+    const staminaErrata = mentionsStamina(cerebro?.errata);
+
     // Candidate order encodes precedence per field.
     const order = <T>(field: string, c: T | undefined, b: T | undefined) =>
       pick(
@@ -220,8 +255,9 @@ export function mergeDrafts(
       packCode: cerebro?.packCode ?? null,
       packName: cerebro?.packName ?? null,
       threat: order('threat', cerebro?.threat, bsdata?.threat),
-      healthy: mergeSide(id, 'healthy', cerebro?.healthy, bsdata?.healthy, conflicts),
-      injured: mergeSide(id, 'injured', cerebro?.injured, bsdata?.injured, conflicts),
+      healthy: mergeSide(id, 'healthy', cerebro?.healthy, bsdata?.healthy, staminaErrata, conflicts),
+      injured: mergeSide(id, 'injured', cerebro?.injured, bsdata?.injured, staminaErrata, conflicts),
+      ...(cerebro?.errata ? { errata: cerebro.errata } : {}),
       ...(cerebro?.tags ? { tags: cerebro.tags } : {}),
       sources: [...(cerebro ? (['cerebro'] as const) : []), ...(bsdata ? (['bsdata'] as const) : [])],
     });

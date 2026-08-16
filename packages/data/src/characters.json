@@ -11,6 +11,7 @@
       "packCode": "CP162",
       "packName": "Abomination and Wrecking Crew",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "ABOMINATION_healthy.png",
@@ -185,10 +186,11 @@
       "packCode": "CP100",
       "packName": "Agent Venom and Spider-Woman,CP234: Web-Swinging Heroes Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "AGENT_VENOM_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -264,7 +266,7 @@
       },
       "injured": {
         "cardImage": "AGENT_VENOM_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -352,10 +354,11 @@
       "packCode": "CP37",
       "packName": "Amazing Spider-Man and Black Cat,CP234: Web-Swinging Heroes Affiliation Pack",
       "threat": 5,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "AMAZING_SPIDER_MAN_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -422,7 +425,7 @@
       },
       "injured": {
         "cardImage": "AMAZING_SPIDER_MAN_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -501,10 +504,11 @@
       "packCode": "CP64",
       "packName": "Mordo and Ancient One",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ANCIENT_ONE_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -661,10 +665,11 @@
       "packCode": "CP152",
       "packName": "Angel and Archangel",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ANGEL_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -725,7 +730,7 @@
       },
       "injured": {
         "cardImage": "ANGEL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -799,10 +804,11 @@
       "packCode": "CP28",
       "packName": "Angela and Enchantress,CP225: Warriors of Asgard Affiliation Pack",
       "threat": 5,
+      "errata": "Stamina changed 6/7 to 7/8. Blades of Ichor Pursuit changed to\nautomatically trigger. Heven’s Wrath change to add dice\nbased off Threat Value instead of Size and Cleave trigger\nupdated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ANGELA_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -879,7 +885,7 @@
       },
       "injured": {
         "cardImage": "ANGELA_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -968,10 +974,11 @@
       "packCode": "CP26",
       "packName": "Ant-Man and Wasp",
       "threat": 3,
+      "errata": "Stamina changed 5/5 to 6/6. Can now hold Assets while (Tiny). Hitch a Ride updated to drop objectives.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ANT_MAN_NORMAL_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1054,7 +1061,7 @@
       },
       "injured": {
         "cardImage": "ANT_MAN_NORMAL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1148,6 +1155,7 @@
       "packCode": "CP107",
       "packName": "Apocalypse",
       "threat": 6,
+      "errata": "Peerless added. \r\n\r\nHORSEMEN CARDS\r\nWar: Fury updated to once per Turn.\r\nDeath: Created to End reduced to 2 Power from 3.\r\nFamine: No changes.\r\nPestilence: Consuming Blight increased to 3 Power from 2.\r\nMaster of the Horsemen: Gains 1 Evolution token during the\r\nCleanup Phase instead of the Power Phase. Can no longer\r\nreroll attack and dodge rolls with Evolution Tokens.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "APOCALYPSE_healthy.png",
@@ -1310,10 +1318,11 @@
       "packCode": "CP152",
       "packName": "Angel and Archangel",
       "threat": 4,
+      "errata": "Stamina change 5/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ARCHANGEL_healthy.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1374,7 +1383,7 @@
       },
       "injured": {
         "cardImage": "ARCHANGEL_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1447,10 +1456,11 @@
       "packCode": "CP76",
       "packName": "Baron Strucker and Arnim Zola",
       "threat": 3,
+      "errata": "Stamina change 6/6 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ARNIM_ZOLA_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -1586,10 +1596,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 5/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BARON_HELMUT_ZEMO_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1662,7 +1673,7 @@
       },
       "injured": {
         "cardImage": "BARON_HELMUT_ZEMO_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1747,6 +1758,7 @@
       "packCode": "CP64",
       "packName": "Mordo and Ancient One",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BARON_MORDO_healthy.png",
@@ -1827,7 +1839,7 @@
       },
       "injured": {
         "cardImage": "BARON_MORDO_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1916,10 +1928,11 @@
       "packCode": "CP76",
       "packName": "Baron Strucker and Arnim Zola",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/6. Strategic Genius replaced with Tactical Insight.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BARON_STRUCKER_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -1985,7 +1998,7 @@
       },
       "injured": {
         "cardImage": "BARON_STRUCKER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -2063,10 +2076,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CP142: Cabal Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/5. Master Swordsman once per Turn. Strategic Genius replaced with Tactical Insight.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BARON_ZEMO_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -2202,6 +2216,7 @@
       "packCode": "CP43",
       "packName": "Mystique and Beast, CP139: Uncanny X-Men Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "BEAST_healthy.png",
@@ -2341,6 +2356,7 @@
       "packCode": "CP130",
       "packName": "Beta Ray Bill and Ulik",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BETA_RAY_BILL_healthy.png",
@@ -2428,7 +2444,7 @@
       },
       "injured": {
         "cardImage": "BETA_RAY_BILL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -2524,10 +2540,11 @@
       "packCode": "CP112",
       "packName": "Bishop and Nightcrawler,CP226: Xavier's Students Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BISHOP_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -2589,7 +2606,7 @@
       },
       "injured": {
         "cardImage": "BISHOP_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -2662,6 +2679,7 @@
       "packCode": "CP34",
       "packName": "Black Bolt and Medusa,CP218: Inhumans Affiliation Pack",
       "threat": 5,
+      "errata": "Peerless added. King of the Inhumans updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_BOLT_healthy.png",
@@ -2861,6 +2879,7 @@
       "packCode": "CP37",
       "packName": "Amazing Spider-Man and Black Cat,CP234: Web-Swinging Heroes Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_CAT_healthy.png",
@@ -3001,10 +3020,11 @@
       "packCode": "CP19",
       "packName": "Black Dwarf and Ebony Maw, CP159: Black Order Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina Changed 6/8 to 7/8. Brutal End down to 3 Power cost from 4.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_DWARF_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 4,
         "defense": {
@@ -3134,6 +3154,7 @@
       "packCode": "CP07",
       "packName": "Black Panther and Killmonger, CP147: Wakanda Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_PANTHER_healthy.png",
@@ -3204,7 +3225,7 @@
       },
       "injured": {
         "cardImage": "BLACK_PANTHER_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -3286,10 +3307,11 @@
       "packCode": null,
       "packName": null,
       "threat": 3,
+      "errata": "Stamina Change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_PANTHER_CHOSEN_OF_BAST_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -3355,7 +3377,7 @@
       },
       "injured": {
         "cardImage": "BLACK_PANTHER_CHOSEN_OF_BAST_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -3432,10 +3454,11 @@
       "packCode": "CP81",
       "packName": "Black Swan and Supergiant",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_SWAN_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -3513,7 +3536,7 @@
       },
       "injured": {
         "cardImage": "BLACK_SWAN_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -3606,6 +3629,7 @@
       "packCode": "CP01",
       "packName": "Core Set, CP141: Avengers Affiliation Pack",
       "threat": 2,
+      "errata": "Replace the Alter Ego with Natasha Romanoff",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_WIDOW_healthy.png",
@@ -3748,10 +3772,11 @@
       "packCode": "CP24",
       "packName": "Hawkeye and Black Widow;MCP03: S.H.I.E.L.D Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLACK_WIDOW_AGENT_OF_S_H_I_E_L_D_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -3817,7 +3842,7 @@
       },
       "injured": {
         "cardImage": "BLACK_WIDOW_AGENT_OF_S_H_I_E_L_D_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -3896,6 +3921,7 @@
       "packCode": "CP48",
       "packName": "Blade and Moon Knight, CP220: Midnight Sons Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BLADE_healthy.png",
@@ -3974,7 +4000,7 @@
       },
       "injured": {
         "cardImage": "BLADE_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -4061,6 +4087,7 @@
       "packCode": "CP45",
       "packName": "Deadpool and Bob, Agent of Hydra",
       "threat": 2,
+      "errata": "Replace the third special rule of the Excessive Violence attack with the following text:\r\nAfter this attack is resolved, this character is Thrown Away from the target character short. This Throw is resolved by the player controlling the target character. Then, if this character does not have a Dazed token, it suffers 3 damage.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "BOB_AGENT_OF_HYDRA_healthy.png",
@@ -4198,6 +4225,7 @@
       "packCode": "CP30",
       "packName": "Daredevil and Bullseye,CP214: Criminal Syndicate Affiliation Pack",
       "threat": 2,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "BULLSEYE_healthy.png",
@@ -4330,6 +4358,7 @@
       "packCode": "CP47",
       "packName": "Cable and Domino,CP224: X-Force Affiliation Pack",
       "threat": 5,
+      "errata": "Stamina change 7/7 to 7/8",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CABLE_healthy.png",
@@ -4406,7 +4435,7 @@
       },
       "injured": {
         "cardImage": "CABLE_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -4491,10 +4520,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CAPTAIN_AMERICA_FIRST_AVENGER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -4556,7 +4586,7 @@
       },
       "injured": {
         "cardImage": "CAPTAIN_AMERICA_FIRST_AVENGER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -4630,6 +4660,7 @@
       "packCode": "CP38",
       "packName": "Captain America and War Machine",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6\r\n\r\nCaptain America (Sam Wilson)'s leadership should read:\r\n\r\nWhen an allied non-Grunt character is Dazed or KO’d by an enemy effect, choose another non-Dazed allied character. After the effect is resolved, the chosen character removes 1 damage, removes 1 special condition, and may Advance Short. A character can be affected by this Leadership ability only once per Round.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CAPTAIN_AMERICA_SAM_WILSON_healthy.png",
@@ -4702,7 +4733,7 @@
       },
       "injured": {
         "cardImage": "CAPTAIN_AMERICA_SAM_WILSON_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -4782,10 +4813,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CP141: Avengers Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina Changed 5/6 to 6/7. A Day Unlike Any Other changed.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CAPTAIN_AMERICA_STEVE_ROGERS_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -4857,7 +4889,7 @@
       },
       "injured": {
         "cardImage": "CAPTAIN_AMERICA_STEVE_ROGERS_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -4941,10 +4973,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CP141: Avengers Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CAPTAIN_MARVEL_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5020,7 +5053,7 @@
       },
       "injured": {
         "cardImage": "CAPTAIN_MARVEL_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5109,6 +5142,7 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 5,
+      "errata": "Stamina change 7/7 to 7/8",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CAPTAIN_MARVEL_COSMIC_AVENGER_NORMAL_healthy.png",
@@ -5226,7 +5260,7 @@
       },
       "injured": {
         "cardImage": "CAPTAIN_MARVEL_COSMIC_AVENGER_NORMAL_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5351,10 +5385,11 @@
       "packCode": "CP50",
       "packName": "Mysterio and Carnage,CP272: Spider-Foes Starter Set",
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "CARNAGE_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5502,6 +5537,7 @@
       "packCode": "CP53",
       "packName": "Jean Grey and Cassandra Nova,CP236: Sentinels Affiliation Pack",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "CASSANDRA_NOVA_healthy.png",
@@ -5587,7 +5623,7 @@
       },
       "injured": {
         "cardImage": "CASSANDRA_NOVA_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5681,10 +5717,11 @@
       "packCode": "CP67",
       "packName": "Doctor Strange and Clea",
       "threat": 3,
+      "errata": "Stamina changed 6/5 to 7/6. Demon Claws of Denak Range increased to 4 from 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CLEA_healthy.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5746,7 +5783,7 @@
       },
       "injured": {
         "cardImage": "CLEA_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -5822,10 +5859,11 @@
       "packCode": "CP57",
       "packName": "Colossus and Magik,CP226: Xavier's Students Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina Changed 6/7 to 7/7. Playing Catch cost reduced to 2 from 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "COLOSSUS_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -5982,10 +6020,11 @@
       "packCode": "CP15",
       "packName": "Corvus Glaive and Proxima Midnight, CP159: Black Order Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina Changed 6/6 to 7/6. Atom Splitter Pursuit trigger updated to require Hit instead of Wild. Glaive’s Edge updated to Place within Range 1 before the attack.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CORVUS_GLAIVE_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -6139,6 +6178,7 @@
       "packCode": "CP90",
       "packName": "Cosmic Ghost Rider, CP222:Guardians of the Galaxy Affiliation Pack",
       "threat": 6,
+      "errata": "Peerless added.\r\n\r\nIncrease the power cost of the Power Cosmic Penance Stare attack to 8.\r\n\r\nReplace the text of the Chains of Cyttorak superpower with the following text:\r\nChoose a character within range 3 of this character and Push it Toward this character short. Then the chosen character gains the Incinerate special condition. This super power can be used only once per turn.\r\n\r\nReplace the text of the I’m the Spirit of Vengeance, Bearer of the Power Cosmic, and Just a Bit Unstable superpower with the following text:\r\nDuring the Cleanup Phase, remove all Psychosis tokens from this character. Then, this character rolls 5 dice. For each critical, wild, and hit results rolled, this character gains 1 power. Then, if this character has 5 or more power, this character gains a Psychosis token and drops all objective tokens it is holding.\r\n\r\nReplace the text of the Ready to Roll superpower with the following text:\r\nAt the start of the first Power Phase and when this character would be Dazed, this character gains a Psychosis token. While it has a Psychosis token, it counts failure/skull results in its attack, defense, and dodge rolls as successes. While this character has a Psychosis token, it cannot hold, Contest, or Interact with objective tokens. This character can have a maximum of one Psychosis token at any time.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "COSMIC_GHOST_RIDER_healthy.png",
@@ -6309,6 +6349,7 @@
       "packCode": "CP88",
       "packName": "Crimson Dynamo and Darkstar",
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "CRIMSON_DYNAMO_healthy.png",
@@ -6471,6 +6512,7 @@
       "packCode": "CP01",
       "packName": "Core Set, CP142: Cabal Affiliation Pack",
       "threat": 3,
+      "errata": "Speed up to Medium from Short.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CROSSBONES_healthy.png",
@@ -6595,6 +6637,7 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 3,
+      "errata": "Speed up to Medium from Short.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CROSSBONES_MERCILESS_MERC_healthy.png",
@@ -6718,10 +6761,11 @@
       "packCode": "CP35",
       "packName": "Crystal and Lockjaw,CP218: Inhumans Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CRYSTAL_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -6810,7 +6854,7 @@
       },
       "injured": {
         "cardImage": "CRYSTAL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -6910,10 +6954,11 @@
       "packCode": "CP41",
       "packName": "Cyclops and Storm, CP139: Uncanny X-Men Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "CYCLOPS_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -6974,7 +7019,7 @@
       },
       "injured": {
         "cardImage": "CYCLOPS_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7047,10 +7092,11 @@
       "packCode": "CP30",
       "packName": "Daredevil and Bullseye,CP219: Defenders Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 5/6 to 6/7\r\n\r\nReplace the Push special rule on the Baton Hook attack with: Wild Push: If the target character is Size 2 or less, before damage is dealt it may be pushed toward this character short.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DAREDEVIL_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -7128,7 +7174,7 @@
       },
       "injured": {
         "cardImage": "DAREDEVIL_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -7217,10 +7263,11 @@
       "packCode": "CP88",
       "packName": "Crimson Dynamo and Darkstar",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/6. Rending Force updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DARKSTAR_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7275,7 +7322,7 @@
       },
       "injured": {
         "cardImage": "DARKSTAR_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7344,10 +7391,11 @@
       "packCode": "CP45",
       "packName": "Deadpool and Bob, Agent of Hydra",
       "threat": 3,
+      "errata": "Stamina change 4/6 to 5/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DEADPOOL_healthy.png",
-        "stamina": 4,
+        "stamina": 5,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7544,10 +7592,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DOC_OCK_SINISTER_SCIENTIST_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7617,7 +7666,7 @@
       },
       "injured": {
         "cardImage": "DOC_OCK_SINISTER_SCIENTIST_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7698,10 +7747,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CPE01: Spider-Man vs Doctor Octopus, CP148: Spider Foes Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/6 to 6/6\r\n\r\nQ: If Doctor Octopus is defending against a character that can modify his dice and rolls a Critical [p], but that die is later changed to a blank, does he gain power from Scientific Hubris?\r\nA: Because Scientific Hubris takes affect “After the effect is resolved” the result must be in the final roll. Doctor Octopus would not gain a power in this case.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DOCTOR_OCTOPUS_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7824,10 +7874,11 @@
       "packCode": "CP23",
       "packName": "Doctor Strange and Wong,CP219: Defenders Affiliation Pack",
       "threat": 5,
+      "errata": "Stamina change 6/7 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DOCTOR_STRANGE_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7906,7 +7957,7 @@
       },
       "injured": {
         "cardImage": "DOCTOR_STRANGE_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -7997,10 +8048,11 @@
       "packCode": "CP67",
       "packName": "Doctor Strange and Clea",
       "threat": 5,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DOCTOR_STRANGE_SORCERER_SUPREME_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -8079,7 +8131,7 @@
       },
       "injured": {
         "cardImage": "DOCTOR_STRANGE_SORCERER_SUPREME_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -8171,6 +8223,7 @@
       "packCode": "CP65",
       "packName": "Doctor Voodoo and Hood, CP220: Midnight Sons Affiliation Pack",
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "DOCTOR_VOODOO_healthy.png",
@@ -8322,6 +8375,7 @@
       "packCode": "CP47",
       "packName": "Cable and Domino,CP224: X-Force Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "DOMINO_healthy.png",
@@ -8386,7 +8440,7 @@
       },
       "injured": {
         "cardImage": "DOMINO_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -8459,6 +8513,7 @@
       "packCode": "CP245",
       "packName": "Monsters Unleashed",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "DRACULA_healthy.png",
@@ -8617,6 +8672,7 @@
       "packCode": "CP20",
       "packName": "Drax and Ronan, CP223: The Galaxy’s Deadliest Character Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "DRAX_THE_DESTROYER_healthy.png",
@@ -8765,10 +8821,11 @@
       "packCode": "CP19",
       "packName": "Black Dwarf and Ebony Maw, CP159: Black Order Affiliation Pack",
       "threat": 5,
+      "errata": "Stamina change 7/6 to 8/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "EBONY_MAW_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -8841,7 +8898,7 @@
       },
       "injured": {
         "cardImage": "EBONY_MAW_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -8926,10 +8983,11 @@
       "packCode": "CP156",
       "packName": "Electro & Sandman & Shocker & Vulture,CP272: Spider-Foes Starter Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ELECTRO_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -8995,7 +9053,7 @@
       },
       "injured": {
         "cardImage": "ELECTRO_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -9073,10 +9131,11 @@
       "packCode": "CP79",
       "packName": "Shadowland Daredevil and Elektra",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/7.\r\n\r\nHand Ninjas: Can now interact with all Extract objective\r\ntokens.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ELEKTRA_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -9139,7 +9198,7 @@
       },
       "injured": {
         "cardImage": "ELEKTRA_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -9211,6 +9270,7 @@
       "packCode": null,
       "packName": null,
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -9352,10 +9412,11 @@
       "packCode": "CP103",
       "packName": "Emma Frost and Psylocke",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "EMMA_FROST_NORMAL_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -9468,7 +9529,7 @@
       },
       "injured": {
         "cardImage": "EMMA_FROST_NORMAL_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -9593,10 +9654,11 @@
       "packCode": "CP28",
       "packName": "Angela and Enchantress,CP225: Warriors of Asgard Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ENCHANTRESS_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -9670,7 +9732,7 @@
       },
       "injured": {
         "cardImage": "ENCHANTRESS_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -9755,10 +9817,11 @@
       "packCode": "CP245",
       "packName": "Monsters Unleashed",
       "threat": 4,
+      "errata": "Stamina change 7/7 to 8/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "FRANKENSTEIN_S_MONSTER_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -9913,6 +9976,7 @@
       "packCode": "CP60",
       "packName": "Rogue and Gambit,CP271: X-Men Starter Set",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "GAMBIT_healthy.png",
@@ -9981,7 +10045,7 @@
       },
       "injured": {
         "cardImage": "GAMBIT_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -10058,10 +10122,11 @@
       "packCode": "CP16",
       "packName": "Gamora and Nebula, CP223: The Galaxy’s Deadliest Character Pack",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "GAMORA_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -10122,7 +10187,7 @@
       },
       "injured": {
         "cardImage": "GAMORA_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -10195,6 +10260,7 @@
       "packCode": "CP27",
       "packName": "Ghost Rider, CP220: Midnight Sons Affiliation Pack",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "GHOST_RIDER_healthy.png",
@@ -10351,6 +10417,7 @@
       "packCode": "CP10",
       "packName": "Spider-Man and Ghost-Spider, CP146: Web Warrior Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "GHOST_SPIDER_healthy.png",
@@ -10420,7 +10487,7 @@
       },
       "injured": {
         "cardImage": "GHOST_SPIDER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -10498,10 +10565,11 @@
       "packCode": "CP21",
       "packName": "Green Goblin, CP148: Spider Foes Affiliation Pack,CP272: Spider-Foes Starter Set",
       "threat": 4,
+      "errata": "Stamina change 7/5 to 8/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "GREEN_GOBLIN_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -10604,7 +10672,7 @@
       },
       "injured": {
         "cardImage": "GREEN_GOBLIN_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -10718,6 +10786,7 @@
       "packCode": "CP17",
       "packName": "Rocket and Groot,CP222:Guardians of the Galaxy Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "GROOT_healthy.png",
@@ -10828,10 +10897,11 @@
       "packCode": "CP155",
       "packName": "Gwenom and Scarlet Spider",
       "threat": 4,
+      "errata": "Stamina change 6/7 to 7/8",
       "baseMm": 40,
       "healthy": {
         "cardImage": "GWENOM_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -10893,7 +10963,7 @@
       },
       "injured": {
         "cardImage": "GWENOM_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -10968,6 +11038,7 @@
       "packCode": "CP137",
       "packName": "Squirrel Girl and Gwenpool",
       "threat": 4,
+      "errata": "Stamina Changed 6/6 to 6/7. Travel Through Gutter Spaced updated to drop objective tokens.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "GWENPOOL_healthy.png",
@@ -11037,7 +11108,7 @@
       },
       "injured": {
         "cardImage": "GWENPOOL_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11114,6 +11185,7 @@
       "packCode": null,
       "packName": null,
       "threat": 0,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -11228,10 +11300,11 @@
       "packCode": "CP24",
       "packName": "Hawkeye and Black Widow;MCP03: S.H.I.E.L.D Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "HAWKEYE_healthy.png",
-        "stamina": 4,
+        "stamina": 5,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11276,7 +11349,7 @@
       },
       "injured": {
         "cardImage": "HAWKEYE_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11332,6 +11405,7 @@
       "packCode": "CP102",
       "packName": "Heimdall and Skurge,CP225: Warriors of Asgard Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "HEIMDALL_THE_ALL_SEEING_healthy.png",
@@ -11394,7 +11468,7 @@
       },
       "injured": {
         "cardImage": "HEIMDALL_THE_ALL_SEEING_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11464,10 +11538,11 @@
       "packCode": "CP12",
       "packName": "Loki and Hela, CP138: Asgardians Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/4 to 7/5",
       "baseMm": 40,
       "healthy": {
         "cardImage": "HELA_QUEEN_OF_HEL_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11544,7 +11619,7 @@
       },
       "injured": {
         "cardImage": "HELA_QUEEN_OF_HEL_injured.png",
-        "stamina": 4,
+        "stamina": 5,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11636,6 +11711,7 @@
       "packCode": "CP71",
       "packName": "X-23 and Honey Badger,CP224: X-Force Affiliation Pack",
       "threat": 2,
+      "errata": "Hamstring Strength up to 6 from 5. Can now interact with Extracts.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "HONEY_BADGER_healthy.png",
@@ -11773,6 +11849,7 @@
       "packCode": "CP65",
       "packName": "Doctor Voodoo and Hood,CP214: Criminal Syndicate Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "HOOD_NORMAL_healthy.png",
@@ -11873,7 +11950,7 @@
       },
       "injured": {
         "cardImage": "HOOD_NORMAL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -11982,6 +12059,7 @@
       "packCode": "CP04",
       "packName": "Hulk",
       "threat": 6,
+      "errata": "Hulk Smash! Updated to automatically Throw. Gamma Leap up to 4 Power from 3. Strongest One There Is changed to only Throw terrain.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "HULK_healthy.png",
@@ -12158,10 +12236,11 @@
       "packCode": "CP52",
       "packName": "Hulkbuster",
       "threat": 6,
+      "errata": "Stamina Changed 13 to 14. Leadership removed. Built to Take it reworked. Hulk-Scale Armor Innate superpower added. Iron Man(Hulkbuster) Stamina updated 5 to 6. Agile Armor Innate superpower added. Reserve keyword added.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "HULKBUSTER_standalone.png",
-        "stamina": 13,
+        "stamina": 14,
         "movement": "M",
         "size": 4,
         "defense": {
@@ -12266,7 +12345,7 @@
       },
       "injured": {
         "cardImage": "IRON_MAN_HULKBUSTER_standalone.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -12382,6 +12461,7 @@
       "packCode": null,
       "packName": null,
       "threat": 0,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -12479,10 +12559,11 @@
       "packCode": "CP96",
       "packName": "Iceman and Shadowcat",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ICEMAN_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -12536,7 +12617,7 @@
       },
       "injured": {
         "cardImage": "ICEMAN_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -12602,10 +12683,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "NVINCIBLE_IRON_MAN_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -12678,7 +12760,7 @@
       },
       "injured": {
         "cardImage": "INVINCIBLE_IRON_MAN_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -12764,6 +12846,7 @@
       "packCode": "CP49",
       "packName": "Luke Cage and Iron Fist,CP219: Defenders Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "IRON_FIST_healthy.png",
@@ -12827,7 +12910,7 @@
       },
       "injured": {
         "cardImage": "IRON_FIST_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -12900,6 +12983,7 @@
       "packCode": "CP01",
       "packName": "Core Set, CP141: Avengers Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 5/6\r\n\r\nQ: When Iron Man uses Friday AI, does it affect all my attacks made with Unibeam or only the first attack? \r\nA: Because Friday AI affects ALL attack rolls from the next attack made it will add +2 dice to ALL Unibeam attacks. Keep in mind that most effects like this on other characters only affect the NEXT attack made by a character.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "IRON_MAN_healthy.png",
@@ -12968,7 +13052,7 @@
       },
       "injured": {
         "cardImage": "IRON_MAN_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13044,10 +13128,11 @@
       "packCode": "CP53",
       "packName": "Jean Grey and Cassandra Nova",
       "threat": 5,
+      "errata": "Stamina change 6/7 to 7/8",
       "baseMm": 40,
       "healthy": {
         "cardImage": "JEAN_GREY_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13115,7 +13200,7 @@
       },
       "injured": {
         "cardImage": "JEAN_GREY_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13194,6 +13279,7 @@
       "packCode": "CP56",
       "packName": "Juggernaut",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "JUGGERNAUT_healthy.png",
@@ -13354,10 +13440,11 @@
       "packCode": "CP07",
       "packName": "Black Panther and Killmonger, CP147: Wakanda Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "KILLMONGER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13418,7 +13505,7 @@
       },
       "injured": {
         "cardImage": "KILLMONGER_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13491,10 +13578,11 @@
       "packCode": "CPE04",
       "packName": "Battle For the Throne",
       "threat": 4,
+      "errata": "Stamina Changed 6/6 to 7/7. Covert Weapons Updated. Leadership timing updated. Untamed Force updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "KILLMONGER_USURPER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13560,7 +13648,7 @@
       },
       "injured": {
         "cardImage": "KILLMONGER_USURPER_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -13638,6 +13726,7 @@
       "packCode": "CPE04",
       "packName": "Battle For the Throne",
       "threat": 5,
+      "errata": "Bound changed to 2 rerolls instead of extra attack dice. Defender of Wakanda changed to once per Turn.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "KING_T_CHALLA_healthy.png",
@@ -13776,6 +13865,7 @@
       "packCode": "CP29",
       "packName": "Kingpin,CP214: Criminal Syndicate Affiliation Pack",
       "threat": 4,
+      "errata": "Illicit Network updated to only count as 2 Healthy characters on Secure objective tokens.\r\n\r\nReplace the text of the Illicit\r\nNetwork Leadership ability with the following text:\r\nOnce per turn, at any time during an allied character’s activation,\r\nit may spend 2 power to use this Leadership Ability. Move one Asset or\r\nCivilian token being held by the active character to another allied\r\ncharacter within range 3. A character cannot hold more tokens than allowed\r\nby the crisis due to this Leadership Ability.\r\nAdditionally, each Healthy non-Grunt allied character contesting an\r\nobjective token counts as two Healthy characters when determining who\r\nis securing the objective token.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "KINGPIN_healthy.png",
@@ -13935,10 +14025,11 @@
       "packCode": "CP116",
       "packName": "Klaw and M'Baku",
       "threat": 5,
+      "errata": "Stamina change 7/7 to 8/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "KLAW_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14086,10 +14177,11 @@
       "packCode": "CP58",
       "packName": "Lizard and Kraven, CP148: Spider Foes Affiliation Pack,CP272: Spider-Foes Starter Set",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "KRAVEN_THE_HUNTER_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14146,7 +14238,7 @@
       },
       "injured": {
         "cardImage": "KRAVEN_THE_HUNTER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14214,6 +14306,7 @@
       "packCode": "CP91",
       "packName": "Mighty Thor, Lady Sif, Thor, Hero of Midgard & Loki, Prince of Lies",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "LADY_SIF_healthy.png",
@@ -14278,7 +14371,7 @@
       },
       "injured": {
         "cardImage": "LADY_SIF_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14350,6 +14443,7 @@
       "packCode": "CP58",
       "packName": "Lizard and Kraven, CP148: Spider Foes Affiliation Pack,CP272: Spider-Foes Starter Set",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "LIZARD_healthy.png",
@@ -14484,6 +14578,7 @@
       "packCode": "CP35",
       "packName": "Crystal and Lockjaw,CP218: Inhumans Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "LOCKJAW_healthy.png",
@@ -14549,7 +14644,7 @@
       },
       "injured": {
         "cardImage": "LOCKJAW_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -14623,6 +14718,7 @@
       "packCode": "CPE03",
       "packName": "Weapon X Program",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "LOGAN_THE_WOLVERINE_healthy.png",
@@ -14701,7 +14797,7 @@
       },
       "injured": {
         "cardImage": "LOGAN_THE_WOLVERINE_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14788,10 +14884,11 @@
       "packCode": "CP12",
       "packName": "Loki and Hela, CP138: Asgardians Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "LOKI_GOD_OF_MISCHIEF_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14872,7 +14969,7 @@
       },
       "injured": {
         "cardImage": "LOKI_GOD_OF_MISCHIEF_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -14965,6 +15062,7 @@
       "packCode": "CP91",
       "packName": "Mighty Thor, Lady Sif, Thor, Hero of Midgard & Loki, Prince of Lies",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "LOKI_PRINCE_OF_LIES_healthy.png",
@@ -15115,6 +15213,7 @@
       "packCode": "CP49",
       "packName": "Luke Cage and Iron Fist,CP219: Defenders Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "LUKE_CAGE_healthy.png",
@@ -15255,10 +15354,11 @@
       "packCode": "CP57",
       "packName": "Colossus and Magik,CP226: Xavier's Students Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MAGIK_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -15317,7 +15417,7 @@
       },
       "injured": {
         "cardImage": "MAGIK_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -15389,10 +15489,11 @@
       "packCode": "CP42",
       "packName": "Magneto and Toad, CP140: Brotherhood of Mutants Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 6,
+      "errata": "Stamina Changed 6/8 to 7/8. Physical and Energy Defense increased to 4 from 3. Shrapnel Blast replaced with Magnetic Crush. Fatal Attraction updated to 2 Power Cost. Force Projection replaced with Polarity Shield.\r\n\r\nQ: If two players in a game are both playing Magneto, can one Magneto benefit from the other Magneto’s Metallic Constructs?\r\nA: No, each Magneto puts their own Metallic Constructs into play. Their rules reference and affect only their own Metallic Constructs.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MAGNETO_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -15537,10 +15638,11 @@
       "packCode": "CP93",
       "packName": "Malekith",
       "threat": 7,
+      "errata": "Peerless added.\r\n\r\nReplace the text of the Conqueror of the Ten Realms superpower with thefollowing text:\r\nDuring the Power Phase, this character gains 1 additional power.\r\n\r\n\r\nPower Cost of the Ferocity superpower with 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MALEKITH_THE_ACCURSED_healthy.png",
-        "stamina": 9,
+        "stamina": 10,
         "movement": "M",
         "size": 4,
         "defense": {
@@ -15623,7 +15725,7 @@
       },
       "injured": {
         "cardImage": "MALEKITH_THE_ACCURSED_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 4,
         "defense": {
@@ -15715,6 +15817,7 @@
       "packCode": null,
       "packName": null,
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -15861,10 +15964,11 @@
       "packCode": "CP109",
       "packName": "Weapon X and Maverick",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MAVERICK_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -15935,7 +16039,7 @@
       },
       "injured": {
         "cardImage": "MAVERICK_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -16018,10 +16122,11 @@
       "packCode": "CP116",
       "packName": "Klaw and M'Baku",
       "threat": 4,
+      "errata": "Stamina change 7/6 to 8/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "M_BAKU_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -16089,7 +16194,7 @@
       },
       "injured": {
         "cardImage": "M_BAKU_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -16169,6 +16274,7 @@
       "packCode": "CP34",
       "packName": "Black Bolt and Medusa,CP218: Inhumans Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MEDUSA_healthy.png",
@@ -16321,6 +16427,7 @@
       "packCode": "CP66",
       "packName": "Mephisto",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "MEPHISTO_LORD_OF_TEMPTATION_healthy.png",
@@ -16493,10 +16600,11 @@
       "packCode": "CP46",
       "packName": "Mister Sinister",
       "threat": 4,
+      "errata": "Stamina Changed 6/5 to 7/7. Strike removed. Genetic Splicing updated to gain Power. Recombinant Disintegration changed. DNA Database changed.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MISTER_SINISTER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -16578,7 +16686,7 @@
       },
       "injured": {
         "cardImage": "MISTER_SINISTER_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -16672,6 +16780,7 @@
       "packCode": "CP05",
       "packName": "M.O.D.O.K.,CP214: Criminal Syndicate Affiliation Pack",
       "threat": 5,
+      "errata": "Stamina change 10/4 to 10/5.\r\n\r\nQ: M.O.D.O.K. has targeted Black Widow with his Doomsday Chair attack. Captain America then used his superpower Bodyguard to change the target to himself. The Whirling Blades special rule says I can make another Doomsday Chair attack, but I cannot choose the Original Target for the second attack. Which character is the Original Target?\r\nA: When rules state Original Target they are referring to the target of the previous attack - so in this case that would be Captain America. You could select Black Widow for the second Doomsday Chair attack.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "M_O_D_O_K_healthy.png",
@@ -16736,7 +16845,7 @@
       },
       "injured": {
         "cardImage": "M_O_D_O_K_injured.png",
-        "stamina": 4,
+        "stamina": 5,
         "movement": "S",
         "size": 4,
         "defense": {
@@ -16809,10 +16918,11 @@
       "packCode": "CP145",
       "packName": "M.O.D.O.K. Scientist Supreme",
       "threat": 4,
+      "errata": "Stamina Changed 7/5 to 8/6. Throw reduced to 2 Power from 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "M_O_D_O_K_SCIENTIST_SUPREME_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -16886,7 +16996,7 @@
       },
       "injured": {
         "cardImage": "M_O_D_O_K_SCIENTIST_SUPREME_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -16973,10 +17083,11 @@
       "packCode": "CP48",
       "packName": "Blade and Moon Knight, CP220: Midnight Sons Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MOON_KNIGHT_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -17049,7 +17160,7 @@
       },
       "injured": {
         "cardImage": "MOON_KNIGHT_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -17134,10 +17245,11 @@
       "packCode": "CP62",
       "packName": "Ms. Marvel",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MS_MARVEL_NORMAL_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -17209,7 +17321,7 @@
       },
       "injured": {
         "cardImage": "MS_MARVEL_NORMAL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -17294,6 +17406,7 @@
       "packCode": "CP50",
       "packName": "Mysterio and Carnage,CP272: Spider-Foes Starter Set",
       "threat": 3,
+      "errata": "Stamina Changed 6/5 to 6/6. Speed up to Medium from Short.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MYSTERIO_healthy.png",
@@ -17364,7 +17477,7 @@
       },
       "injured": {
         "cardImage": "MYSTERIO_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -17445,10 +17558,11 @@
       "packCode": "CP43",
       "packName": "Mystique and Beast, CP140: Brotherhood of Mutants Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6.\r\n\r\nQ: If the Freedom Force leadership from Mystique is used to place a token on an objective that already has a token placed on it from Freedom Force, who secures the objective?\r\nA: The player that has most recently placed a Freedom Force token on the objective secures the objective.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "MYSTIQUE_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -17514,7 +17628,7 @@
       },
       "injured": {
         "cardImage": "MYSTIQUE_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -17592,6 +17706,7 @@
       "packCode": "CP158",
       "packName": "Black Panther, Chosen of Bast and Namor, the Sub-Mariner",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "NAMOR_THE_SUB_MARINER_healthy.png",
@@ -17745,6 +17860,7 @@
       "packCode": "CP16",
       "packName": "Gamora and Nebula, CP223: The Galaxy’s Deadliest Character Pack",
       "threat": 2,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "NEBULA_healthy.png",
@@ -17889,10 +18005,11 @@
       "packCode": "CP55",
       "packName": "Nick Fury and S.H.I.E.L.D. Agents;MCP03: S.H.I.E.L.D Affiliation Pack",
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "NICK_FURY_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -17958,7 +18075,7 @@
       },
       "injured": {
         "cardImage": "NICK_FURY_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -18035,10 +18152,11 @@
       "packCode": "CP75",
       "packName": "Nick Fury, Sr. and Howling Commandos",
       "threat": 3,
+      "errata": "Stamina change 5/6 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "NICK_FURY_THE_HOWLING_COMMANDOS_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -18179,10 +18297,11 @@
       "packCode": "CP112",
       "packName": "Bishop and Nightcrawler,CP226: Xavier's Students Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "NIGHTCRAWLER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -18249,7 +18368,7 @@
       },
       "injured": {
         "cardImage": "NIGHTCRAWLER_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -18327,6 +18446,7 @@
       "packCode": "CP245",
       "packName": "Monsters Unleashed",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "N_KANTU_THE_LIVING_MUMMY_healthy.png",
@@ -18473,6 +18593,7 @@
       "packCode": null,
       "packName": null,
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -18646,6 +18767,7 @@
       "packCode": "CP08",
       "packName": "Shuri and Okoye, CP147: Wakanda Affiliation Pack",
       "threat": 2,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "OKOYE_healthy.png",
@@ -18787,10 +18909,11 @@
       "packCode": "CP54",
       "packName": "Omega Red",
       "threat": 4,
+      "errata": "Stamina Changed 6/6 to 7/6. Speed changed to Medium from Short.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "OMEGA_RED_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -18935,10 +19058,11 @@
       "packCode": "CP151",
       "packName": "Professor X and Shadow King",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "PROFESSOR_X_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19009,7 +19133,7 @@
       },
       "injured": {
         "cardImage": "PROFESSOR_X_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19091,10 +19215,11 @@
       "packCode": "CP15",
       "packName": "Corvus Glaive and Proxima Midnight, CP159: Black Order Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/5. Quantum Starburst up to 7 Strength from 6.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "PROXIMA_MIDNIGHT_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -19238,10 +19363,11 @@
       "packCode": "CP103",
       "packName": "Emma Frost and Psylocke",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "PSYLOCKE_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19313,7 +19439,7 @@
       },
       "injured": {
         "cardImage": "PSYLOCKE_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19396,6 +19522,7 @@
       "packCode": "CP32",
       "packName": "Punisher and Taskmaster",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "PUNISHER_healthy.png",
@@ -19460,7 +19587,7 @@
       },
       "injured": {
         "cardImage": "PUNISHER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19532,10 +19659,11 @@
       "packCode": "CP82",
       "packName": "The Blob and Pyro",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/6. Firewall Power Cost changed to 3 from 2. Stoke the Flames Power Cost changed to 2 from 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "PYRO_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19601,7 +19729,7 @@
       },
       "injured": {
         "cardImage": "PYRO_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19681,10 +19809,11 @@
       "packCode": "CP63",
       "packName": "Scarlet Witch and Quicksilver",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/6. Speedster changed to drop all objective tokens.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "QUICKSILVER_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -19745,7 +19874,7 @@
       },
       "injured": {
         "cardImage": "QUICKSILVER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -19817,10 +19946,11 @@
       "packCode": "CP89",
       "packName": "Ursa Major and Red Guardian",
       "threat": 3,
+      "errata": "Stamina Changed 5/6 to 6/6. Siberian Shield Slam updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "RED_GUARDIAN_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -19952,10 +20082,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CP142: Cabal Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina Changed 6/6 to 7/7. Cosmic Blast Power Cost down to 0 from 1. Cosmic Cube reworked.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "RED_SKULL_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -20026,7 +20157,7 @@
       },
       "injured": {
         "cardImage": "RED_SKULL_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -20109,6 +20240,7 @@
       "packCode": "CP74",
       "packName": "Red Skull and Hydra Troopers",
       "threat": 5,
+      "errata": "Blitz Strike attack triggers changed. Empowered Gauntlets changed to treat Fails at Crits. Peerless added. Hydra Troopers: Stamina Changed 3 to 2. Hydra Energy Weapons down to Range 3 from 4.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "RED_SKULL_MASTER_OF_HYDRA_healthy.png",
@@ -20260,10 +20392,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "RED_SKULL_MASTER_OF_THE_WORLD_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -20397,6 +20530,7 @@
       "packCode": "CP98",
       "packName": "Rhino,CP272: Spider-Foes Starter Set",
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "RHINO_healthy.png",
@@ -20523,6 +20657,7 @@
       "packCode": "CP17",
       "packName": "Rocket and Groot, CP222:Guardians of the Galaxy Affiliation Pack",
       "threat": 2,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "ROCKET_RACCOON_healthy.png",
@@ -20656,6 +20791,7 @@
       "packCode": "CP60",
       "packName": "Rogue and Gambit,CP271: X-Men Starter Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ROGUE_healthy.png",
@@ -20732,7 +20868,7 @@
       },
       "injured": {
         "cardImage": "ROGUE_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -20817,6 +20953,7 @@
       "packCode": "CP20",
       "packName": "Drax and Ronan, CP223: The Galaxy’s Deadliest Character Pack",
       "threat": 4,
+      "errata": "Stamina change 7/7 to 7/8.\r\n\r\nReplace the text of the Accuser superpower with the following text:\r\nIf an enemy effect would cause this character to be Dazed or KO’d, it may use this superpower. It is not Dazed or KO’d. After the effect is resolved, this character advances 1, makes one attack targeting the enemy character that caused the effect, and is then Dazed or KO’d.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "RONAN_THE_ACCUSER_healthy.png",
@@ -20892,7 +21029,7 @@
       },
       "injured": {
         "cardImage": "RONAN_THE_ACCUSER_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -20978,10 +21115,11 @@
       "packCode": "CP40",
       "packName": "Wolverine and Sabretooth, CP140: Brotherhood of Mutants Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SABRETOOTH_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 3,
         "defense": {
@@ -21042,7 +21180,7 @@
       },
       "injured": {
         "cardImage": "SABRETOOTH_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 3,
         "defense": {
@@ -21116,6 +21254,7 @@
       "packCode": "CPE03",
       "packName": "Weapon X Program",
       "threat": 4,
+      "errata": "Stamina change 7/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SABRETOOTH_APEX_PREDATOR_healthy.png",
@@ -21182,7 +21321,7 @@
       },
       "injured": {
         "cardImage": "SABRETOOTH_APEX_PREDATOR_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -21256,6 +21395,7 @@
       "packCode": null,
       "packName": null,
       "threat": 0,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -21369,10 +21509,11 @@
       "packCode": "CP156",
       "packName": "Electro & Sandman & Shocker & Vulture,CP272: Spider-Foes Starter Set",
       "threat": 4,
+      "errata": "Stamina change 6/7 to 7/8",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SANDMAN_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -21448,7 +21589,7 @@
       },
       "injured": {
         "cardImage": "SANDMAN_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -21535,10 +21676,11 @@
       "packCode": "CP155",
       "packName": "Gwenom and Scarlet Spider",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SCARLET_SPIDER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -21610,7 +21752,7 @@
       },
       "injured": {
         "cardImage": "SCARLET_SPIDER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -21697,10 +21839,11 @@
       "packCode": "CP63",
       "packName": "Scarlet Witch and Quicksilver",
       "threat": 5,
+      "errata": "Stamina change 6/6 to 7/7.\r\n\r\nReplace the text of the Curse superpower with the following text:\r\n\r\nWhen this character is damaged by an enemy effect, after the effect is resolved you may use this superpower. The character that caused the effect gains the Judgment special condition.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SCARLET_WITCH_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -21767,7 +21910,7 @@
       },
       "injured": {
         "cardImage": "SCARLET_WITCH_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -21846,10 +21989,11 @@
       "packCode": "CP151",
       "packName": "Professor Xavier and Shadow King",
       "threat": 5,
+      "errata": "Stamina Changed 6/6 to 8/7. Astral Fiend Power Cost changed to 0. Nightmare Visions changed to roll 4 dice.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHADOW_KING_healthy.png",
-        "stamina": 6,
+        "stamina": 8,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -21911,7 +22055,7 @@
       },
       "injured": {
         "cardImage": "SHADOW_KING_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -21985,10 +22129,11 @@
       "packCode": "CP96",
       "packName": "Iceman and Shadowcat",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHADOWCAT_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -22055,7 +22200,7 @@
       },
       "injured": {
         "cardImage": "SHADOWCAT_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -22133,6 +22278,7 @@
       "packCode": "CP79",
       "packName": "Shadowland Daredevil and Elektra",
       "threat": 4,
+      "errata": "Stamina change 6/7 to 6/8. Hand Ninjas: Can now interact with all Extract objective tokens.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHADOWLAND_DAREDEVIL_healthy.png",
@@ -22224,7 +22370,7 @@
       },
       "injured": {
         "cardImage": "SHADOWLAND_DAREDEVIL_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -22324,10 +22470,11 @@
       "packCode": "CP69",
       "packName": "Shang Chi and Silver Sable",
       "threat": 4,
+      "errata": "Stamina Changed 5/6 to 6/6. Ten Thousand Shapes Strike Stagger trigger updated. Five Elements Fist timing changed. One-Inch Punch effects changed. Sixty-Four Infinite Palms Power Cost up to 2 from 1. Wild Goose Leaves the Flock timing updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHANG_CHI_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -22509,10 +22656,11 @@
       "packCode": "CP39",
       "packName": "She-Hulk",
       "threat": 6,
+      "errata": "Stamina changed 20 to 10/10. Physical Defense up to 4 from 3. Now has Healthy and Injured sides. The Defense Rests updated. Gamma Transfusion updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHE_HULK_healthy.png",
-        "stamina": 20,
+        "stamina": 10,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -22584,7 +22732,7 @@
       },
       "injured": {
         "cardImage": "SHE_HULK_injured.png",
-        "stamina": 20,
+        "stamina": 10,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -22667,6 +22815,7 @@
       "packCode": null,
       "packName": null,
       "threat": 0,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -22764,10 +22913,11 @@
       "packCode": "CP156",
       "packName": "Electro & Sandman & Shocker & Vulture,CP272: Spider-Foes Starter Set",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHOCKER_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -22821,7 +22971,7 @@
       },
       "injured": {
         "cardImage": "SHOCKER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -22887,10 +23037,11 @@
       "packCode": "CP08",
       "packName": "Shuri and Okoye, CP147: Wakanda Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SHURI_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -22946,7 +23097,7 @@
       },
       "injured": {
         "cardImage": "SHURI_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -23015,10 +23166,11 @@
       "packCode": "CP69",
       "packName": "Shang Chi and Silver Sable",
       "threat": 4,
+      "errata": "Stamina Changed 5/6 to 7/7. Want My Help? Pay Up. updated.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SILVER_SABLE_healthy.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -23086,7 +23238,7 @@
       },
       "injured": {
         "cardImage": "SILVER_SABLE_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -23167,10 +23319,11 @@
       "packCode": "CP61",
       "packName": "Sin and Viper",
       "threat": 3,
+      "errata": "Stamina Changed 4/6 to 6/6. Make It Personal Power Cost reduced to 3. Partners in Crime updated to Brock Rumlow. Red Mayhem effect order now player’s choice.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SIN_healthy.png",
-        "stamina": 4,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -23314,6 +23467,7 @@
       "packCode": "CP102",
       "packName": "Heimdall and Skurge,CP225: Warriors of Asgard Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SKURGE_THE_EXECU_TIONER_healthy.png",
@@ -23378,7 +23532,7 @@
       },
       "injured": {
         "cardImage": "SKURGE_THE_EXECU_TIONER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -23451,6 +23605,7 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "SPECTACULAR_SPIDER_MAN_healthy.png",
@@ -23607,6 +23762,7 @@
       "packCode": "CP10",
       "packName": "Spider-Man and Ghost-Spider, CP146: Web Warrior Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "SPIDER_MAN_MILES_MORALES_healthy.png",
@@ -23754,10 +23910,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CPE01: Spider-Man vs Doctor Octopus, CP146: Web Warrior Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SPIDER_MAN_PETER_PARKER_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -23827,7 +23984,7 @@
       },
       "injured": {
         "cardImage": "SPIDER_MAN_PETER_PARKER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -23912,10 +24069,11 @@
       "packCode": "CP100",
       "packName": "Agent Venom and Spider-Woman,CP234: Web-Swinging Heroes Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SPIDER_WOMAN_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -23988,7 +24146,7 @@
       },
       "injured": {
         "cardImage": "SPIDER_WOMAN_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -24073,10 +24231,11 @@
       "packCode": "CP137",
       "packName": "Squirrel Girl and Gwenpool",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SQUIRREL_GIRL_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24143,7 +24302,7 @@
       },
       "injured": {
         "cardImage": "SQUIRREL_GIRL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24221,6 +24380,7 @@
       "packCode": "CP18",
       "packName": "Star-Lord, CP222:Guardians of the Galaxy Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "STAR_LORD_healthy.png",
@@ -24289,7 +24449,7 @@
       },
       "injured": {
         "cardImage": "STAR_LORD_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24366,10 +24526,11 @@
       "packCode": "CP77",
       "packName": "Captain America and the Original Human Torch",
       "threat": 4,
+      "errata": "Stamina Changed 6/5 to 7/7. On Your Left changed to not have objective token restriction. I’ve Knocked Out Tyrants Over 200 Times Once per Turn restriction removed.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "STEVE_ROGERS_CAPTAIN_AMERICA_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24424,7 +24585,7 @@
       },
       "injured": {
         "cardImage": "STEVE_ROGERS_CAPTAIN_AMERICA_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24493,10 +24654,11 @@
       "packCode": "CP41",
       "packName": "Cyclops and Storm, CP139: Uncanny X-Men Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6.\r\n\r\nReplace the second sentence of the X-Men Gold Leadership ability with the following text:\r\nIf you do, choose another allied character with range 2 of the active character.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "STORM_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24580,7 +24742,7 @@
       },
       "injured": {
         "cardImage": "STORM_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24677,10 +24839,11 @@
       "packCode": "CP153",
       "packName": "Sunspot and Warlock",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SUNSPOT_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24740,7 +24903,7 @@
       },
       "injured": {
         "cardImage": "SUNSPOT_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -24811,10 +24974,11 @@
       "packCode": "CP81",
       "packName": "Black Swan and Supergiant",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/6. Speed changed to Medium from Short.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "SUPERGIANT_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -24883,7 +25047,7 @@
       },
       "injured": {
         "cardImage": "SUPERGIANT_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -24965,6 +25129,7 @@
       "packCode": "CP32",
       "packName": "Punisher and Taskmaster",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6. Replace the icon of the Photographic Reflexes superpower with the reaction icon.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "TASKMASTER_healthy.png",
@@ -25041,7 +25206,7 @@
       },
       "injured": {
         "cardImage": "TASKMASTER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -25125,6 +25290,7 @@
       "packCode": "CP25",
       "packName": "Thanos",
       "threat": 6,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "THANOS_THE_MAD_TITAN_healthy.png",
@@ -25287,10 +25453,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "THE_BLACK_WIDOW_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -25362,7 +25529,7 @@
       },
       "injured": {
         "cardImage": "THE_BLACK_WIDOW_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -25446,6 +25613,7 @@
       "packCode": "CP82",
       "packName": "The Blob and Pyro",
       "threat": 3,
+      "errata": "Stamina change 6/6 to 6/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "THE_BLOB_healthy.png",
@@ -25504,7 +25672,7 @@
       },
       "injured": {
         "cardImage": "THE_BLOB_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -25571,6 +25739,7 @@
       "packCode": "CP144",
       "packName": "The Immortal Hulk",
       "threat": 7,
+      "errata": "Peerless added.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "THE_IMMORTAL_HULK_healthy.png",
@@ -25732,6 +25901,7 @@
       "packCode": "CP91",
       "packName": "Mighty Thor, Lady Sif, Thor, Hero of Midgard & Loki, Prince of Lies",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "THE_MIGHTY_THOR_healthy.png",
@@ -25904,10 +26074,11 @@
       "packCode": "CP77",
       "packName": "Captain America and the Original Human Torch",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "THE_ORIGINAL_HUMAN_TORCH_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -25981,7 +26152,7 @@
       },
       "injured": {
         "cardImage": "THE_ORIGINAL_HUMAN_TORCH_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -26067,10 +26238,11 @@
       "packCode": "CP162",
       "packName": "Abomination and Wrecking Crew",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "THE_WRECKING_CREW_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -26137,7 +26309,7 @@
       },
       "injured": {
         "cardImage": "THE_WRECKING_CREW_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 2,
         "defense": {
@@ -26215,6 +26387,7 @@
       "packCode": "CP91",
       "packName": "Mighty Thor, Lady Sif, Thor, Hero of Midgard & Loki, Prince of Lies",
       "threat": 6,
+      "errata": "Odinson’s Ire up to Range 3 from 2. Have at Thee! down to 3 Power from 4.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "THOR_HERO_OF_MIDGARD_healthy.png",
@@ -26378,10 +26551,11 @@
       "packCode": "CP11",
       "packName": "Thor and Valkyrie, CP138: Asgardians Affiliation Pack",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "THOR_PRINCE_OF_ASGARD_healthy.png",
-        "stamina": 7,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -26557,10 +26731,11 @@
       "packCode": "CP42",
       "packName": "Magneto and Toad, CP140: Brotherhood of Mutants Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 2,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "TOAD_healthy.png",
-        "stamina": 5,
+        "stamina": 4,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -26620,7 +26795,7 @@
       },
       "injured": {
         "cardImage": "TOAD_injured.png",
-        "stamina": 3,
+        "stamina": 4,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -26692,6 +26867,7 @@
       "packCode": "CP130",
       "packName": "Beta Ray Bill and Ulik",
       "threat": 5,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "ULIK_healthy.png",
@@ -26828,10 +27004,11 @@
       "packCode": "CP01",
       "packName": "Core Set, CP142: Cabal Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/7.\r\n\r\nQ: If Ultron is KO’d by an effect before attack damage is dealt and uses The Age of Ultron to “revive”, does he still take the normal attack damage or any other effects that occur after he was KO’d?\r\nA: No, he does not. Once KO’d no more effects of the attack can apply to a character even if they are brought back by an effect before those effects would apply.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ULTRON_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -26908,7 +27085,7 @@
       },
       "injured": {
         "cardImage": "ULTRON_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -26996,6 +27173,7 @@
       "packCode": null,
       "packName": null,
       "threat": 0,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
@@ -27116,6 +27294,7 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 5,
+      "errata": "Stamina change 8/6 to 8/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "ULTRON_METAL_TYRANT_healthy.png",
@@ -27192,7 +27371,7 @@
       },
       "injured": {
         "cardImage": "ULTRON_METAL_TYRANT_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -27276,10 +27455,11 @@
       "packCode": "CP89",
       "packName": "Ursa Major and Red Guardian",
       "threat": 4,
+      "errata": "Stamina Changed 7/7 to 8/8. Physical Defense up to 4 from 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "URSA_MAJOR_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -27334,7 +27514,7 @@
       },
       "injured": {
         "cardImage": "URSA_MAJOR_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -27402,6 +27582,7 @@
       "packCode": "CP11",
       "packName": "Thor and Valkyrie, CP138: Asgardians Affiliation Pack",
       "threat": 3,
+      "errata": "Stamina change 6/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "VALKYRIE_healthy.png",
@@ -27465,7 +27646,7 @@
       },
       "injured": {
         "cardImage": "VALKYRIE_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -27537,10 +27718,11 @@
       "packCode": "CP09",
       "packName": "Venom, CP146: Web Warrior Affiliation Pack",
       "threat": 4,
+      "errata": "Stamina change 7/6 to 8/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "VENOM_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -27606,7 +27788,7 @@
       },
       "injured": {
         "cardImage": "VENOM_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "S",
         "size": 3,
         "defense": {
@@ -27684,10 +27866,11 @@
       "packCode": "CP61",
       "packName": "Sin and Viper",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 6/6. Attack special rules for all attacks reworked.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "VIPER_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -27753,7 +27936,7 @@
       },
       "injured": {
         "cardImage": "VIPER_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "L",
         "size": 2,
         "defense": {
@@ -27830,10 +28013,11 @@
       "packCode": "CP13",
       "packName": "Vision and Winter Soldier",
       "threat": 4,
+      "errata": "Stamina change 6/6 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "VISION_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -27905,7 +28089,7 @@
       },
       "injured": {
         "cardImage": "VISION_injured.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -27989,10 +28173,11 @@
       "packCode": "CP156",
       "packName": "Electro & Sandmad & Shocker & Vulture,CP272: Spider-Foes Starter Set",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "VULTURE_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -28052,7 +28237,7 @@
       },
       "injured": {
         "cardImage": "VULTURE_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -28124,6 +28309,7 @@
       "packCode": "CP38",
       "packName": "Captain America and War Machine",
       "threat": 3,
+      "errata": "Stamina Changed 5/5 to 5/6. Empty the Clip updated. Reload active superpower added.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WAR_MACHINE_healthy.png",
@@ -28186,7 +28372,7 @@
       },
       "injured": {
         "cardImage": "WAR_MACHINE_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -28257,10 +28443,11 @@
       "packCode": "CP153",
       "packName": "Sunspot and Warlock",
       "threat": 3,
+      "errata": "Stamina change 5/5 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WARLOCK_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -28332,7 +28519,7 @@
       },
       "injured": {
         "cardImage": "WARLOCK_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -28416,10 +28603,11 @@
       "packCode": "CP26",
       "packName": "Ant-Man and Wasp",
       "threat": 3,
+      "errata": "Stamina changed 5/5 to 6/6. Can now hold Assets while (Tiny).",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WASP_NORMAL_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -28515,7 +28703,7 @@
       },
       "injured": {
         "cardImage": "WASP_NORMAL_injured.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -28622,6 +28810,7 @@
       "packCode": "CP109",
       "packName": "Weapon X and Maverick",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "WEAPON_X_healthy.png",
@@ -28806,6 +28995,7 @@
       "packCode": "CP245",
       "packName": "Monsters Unleashed",
       "threat": 5,
+      "errata": "Stamina Changed 7/7 to 7/8. Pounce and Midnight Massacre down to 2 Power from 3.",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WEREWOLF_BY_NIGHT_healthy.png",
@@ -28871,7 +29061,7 @@
       },
       "injured": {
         "cardImage": "WEREWOLF_BY_NIGHT_injured.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 3,
         "defense": {
@@ -28944,10 +29134,11 @@
       "packCode": "CP13",
       "packName": "Vision and Winter Soldier",
       "threat": 3,
+      "errata": "Stamina change 5/6 to 6/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WINTER_SOLDIER_healthy.png",
-        "stamina": 5,
+        "stamina": 6,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -29084,10 +29275,11 @@
       "packCode": "CP143",
       "packName": "Earth's Mightiest Core Set",
       "threat": 4,
+      "errata": "Stamina change 6/5 to 7/7",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WINTER_SOLDIER_OPERATIVE_healthy.png",
-        "stamina": 6,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -29158,7 +29350,7 @@
       },
       "injured": {
         "cardImage": "WINTER_SOLDIER_OPERATIVE_injured.png",
-        "stamina": 5,
+        "stamina": 7,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -29244,10 +29436,11 @@
       "packCode": "CP40",
       "packName": "Wolverine and Sabretooth, CP139: Uncanny X-Men Affiliation Pack,CP271: X-Men Starter Set",
       "threat": 4,
+      "errata": "Stamina change 7/6 to 8/6",
       "baseMm": 40,
       "healthy": {
         "cardImage": "WOLVERINE_healthy.png",
-        "stamina": 7,
+        "stamina": 8,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -29321,7 +29514,7 @@
       },
       "injured": {
         "cardImage": "WOLVERINE_injured.png",
-        "stamina": 6,
+        "stamina": 5,
         "movement": "M",
         "size": 2,
         "defense": {
@@ -29408,6 +29601,7 @@
       "packCode": "CP23",
       "packName": "Doctor Strange and Wong,CP219: Defenders Affiliation Pack",
       "threat": 2,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "WONG_healthy.png",
@@ -29523,6 +29717,7 @@
       "packCode": "CP71",
       "packName": "X-23 and Honey Badger,CP224: X-Force Affiliation Pack",
       "threat": 3,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": "X_23_healthy.png",
@@ -29671,6 +29866,7 @@
       "packCode": null,
       "packName": null,
       "threat": 4,
+      "errata": null,
       "baseMm": 40,
       "healthy": {
         "cardImage": null,
