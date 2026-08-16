@@ -16,9 +16,16 @@
   "scripts": {
     "build": "tsc --build",
     "typecheck": "tsc --build",
-    "import:legacy": "node scripts/import-legacy.mjs"
+    "import:legacy": "node scripts/import-legacy.mjs",
+    "import:cards": "tsx scripts/import-cards.ts",
+    "extract:cards": "tsx scripts/extract-cards.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.117.1",
+    "fast-xml-parser": "^5.11.0",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.17.0"
   }
 }

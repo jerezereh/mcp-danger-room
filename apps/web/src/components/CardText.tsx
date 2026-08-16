@@ -11,36 +11,50 @@
 
 import { tokenize, SYMBOL_LABELS, type SymbolKey } from '@danger-room/data';
 
+/*
+ * Colour groups the glyphs by what they mean: damage types warm, dice results
+ * by their function, movement templates neutral. Sources spell these
+ * differently ({P} vs {PWR}); the tokenizer normalizes to canonical keys, so
+ * this table is keyed on identity rather than on any one source's spelling.
+ */
 const SYMBOL_STYLES: Record<SymbolKey, string> = {
-  Ph: 'bg-orange-500/20 text-orange-300',
-  En: 'bg-sky-500/20 text-sky-300',
-  My: 'bg-violet-500/20 text-violet-300',
-  P: 'bg-amber-500/20 text-amber-300',
-  D: 'bg-rose-500/20 text-rose-300',
-  R: 'bg-slate-500/20 text-slate-300',
-  S: 'bg-slate-500/20 text-slate-300',
-  M: 'bg-slate-500/20 text-slate-300',
-  L: 'bg-slate-500/20 text-slate-300',
-  C: 'bg-yellow-500/20 text-yellow-300',
-  W: 'bg-emerald-500/20 text-emerald-300',
-  B: 'bg-blue-500/20 text-blue-300',
-  A: 'bg-slate-700/40 text-slate-400',
+  physical: 'bg-orange-500/20 text-orange-300',
+  energy: 'bg-sky-500/20 text-sky-300',
+  mystic: 'bg-violet-500/20 text-violet-300',
+  power: 'bg-amber-500/20 text-amber-300',
+  damage: 'bg-rose-500/20 text-rose-300',
+  range: 'bg-slate-500/20 text-slate-300',
+  short: 'bg-slate-500/20 text-slate-300',
+  medium: 'bg-slate-500/20 text-slate-300',
+  long: 'bg-slate-500/20 text-slate-300',
+  critical: 'bg-yellow-500/20 text-yellow-300',
+  wild: 'bg-emerald-500/20 text-emerald-300',
+  hit: 'bg-orange-500/20 text-orange-300',
+  block: 'bg-blue-500/20 text-blue-300',
+  fail: 'bg-slate-700/40 text-slate-400',
+  active: 'bg-teal-500/20 text-teal-300',
+  reactive: 'bg-teal-500/20 text-teal-300',
+  innate: 'bg-slate-500/20 text-slate-300',
 };
 
 const SYMBOL_GLYPHS: Partial<Record<SymbolKey, string>> = {
-  Ph: '✊',
-  En: '⚡',
-  My: '✦',
-  P: '◆',
-  D: '✸',
-  R: 'R',
-  S: 'S',
-  M: 'M',
-  L: 'L',
-  C: '★',
-  W: '✷',
-  B: '⛊',
-  A: '○',
+  physical: '✊',
+  energy: '⚡',
+  mystic: '✦',
+  power: '◆',
+  damage: '✸',
+  range: 'R',
+  short: 'S',
+  medium: 'M',
+  long: 'L',
+  critical: '★',
+  wild: '✷',
+  hit: '✱',
+  block: '⛊',
+  fail: '○',
+  active: '▶',
+  reactive: '↺',
+  innate: '∞',
 };
 
 function Glyph({ symbolKey }: { symbolKey: SymbolKey }) {

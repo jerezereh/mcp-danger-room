@@ -94,8 +94,16 @@ export const Character = z.object({
   baseMm: z.number().int().default(40),
   healthy: StatBlock,
   injured: StatBlock,
-  /** Where this data came from, so gaps are auditable. */
-  source: z.enum(['legacy-import', 'manual', 'scraped']).default('manual'),
+  /**
+   * Where this data came from, so gaps are auditable.
+   *
+   * `cerebro` is metadata-only (no rules text), `bsdata` carries full stat
+   * blocks, `ocr` was read off a card image by a vision model. None of them
+   * imply a human has checked the result — that is what `verified` is for.
+   */
+  source: z
+    .enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'ocr'])
+    .default('manual'),
   /** False until a human has checked it against the physical card. */
   verified: z.boolean().default(false),
 });
