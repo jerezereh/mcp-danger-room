@@ -58,6 +58,7 @@ export interface JarvisCharacter {
 const MOVEMENT: Record<string, 'S' | 'M' | 'L'> = { s: 'S', m: 'M', l: 'L' };
 
 export function jarvisToDraft(raw: JarvisCharacter): CharacterDraft {
+  // Kept even when it matches the name — see the note in cerebro.ts.
   const alterEgo = raw.alterEgo?.trim();
   const movement = MOVEMENT[(raw.speed ?? '').trim().toLowerCase()];
 
@@ -80,7 +81,7 @@ export function jarvisToDraft(raw: JarvisCharacter): CharacterDraft {
     // back so a record with an unexpected shape still joins.
     id: raw.slug?.trim() || slugify(raw.name),
     name: raw.name.trim(),
-    alterEgo: alterEgo && alterEgo !== raw.name.trim() ? alterEgo : null,
+    alterEgo: alterEgo || null,
     affiliations: (raw.affiliations ?? [])
       .map(a => a.name?.trim())
       .filter((n): n is string => Boolean(n)),

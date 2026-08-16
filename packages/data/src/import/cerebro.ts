@@ -100,8 +100,15 @@ export function cerebroToDraft(raw: CerebroCharacter): CharacterDraft {
   return {
     id: slugify(raw.Name),
     name: raw.Name.trim(),
-    // Cerebro repeats the name in Alias when a character has no alter ego.
-    alterEgo: alias && alias !== raw.Name.trim() ? alias : null,
+    /*
+     * Kept even when it matches the name.
+     *
+     * For 32 characters — Adam Warlock, Ancient One, Dormammu, Arnim Zola and
+     * others — the card really does print the same text as the alter ego,
+     * because that *is* their civilian name. Treating the repetition as "no
+     * alter ego" discarded a value the card actually carries.
+     */
+    alterEgo: alias || null,
     affiliations: list(raw.Affiliations),
     packCode: pack.code,
     packName: pack.name,

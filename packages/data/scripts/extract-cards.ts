@@ -299,16 +299,33 @@ interface Extraction {
 
 let totalIn = 0;
 let totalOut = 0;
+const failures: { id: string; error: string }[] = [];
 
 async function runSync(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
   const out: Extraction[] = [];
 
   for (const [i, job] of jobs.entries()) {
     process.stdout.write(`  [${i + 1}/${jobs.length}] ${job.id}… `);
-    const response = await client.messages.parse(requestFor(job));
+
+    /*
+     * One card failing must not abandon the rest of the run. Overloads and
+     * rate limits are transient and were observed in practice; losing 40 good
+     * extractions to the 41st is the wrong trade, and the failures are
+     * reported at the end so nothing disappears quietly.
+     */
+    let response;
+    try {
+      response = await client.messages.parse(requestFor(job));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.log(`failed — ${message.split('\n')[0]?.slice(0, 70)}`);
+      failures.push({ id: job.id, error: message });
+      continue;
+    }
 
     if (!response.parsed_output) {
       console.log('no structured output');
+      failures.push({ id: job.id, error: 'model returned no structured output' });
       continue;
     }
     const disagreements = crossCheck(response.parsed_output, job.known);
@@ -452,6 +469,15 @@ async function main() {
     console.log(
       `\nTokens: ${totalIn} in / ${totalOut} out · ~$${cost.toFixed(3)} ` +
         `(~$${per.toFixed(3)}/card, about $${(per * 41 * 0.5).toFixed(2)} for all 41 via batch)`,
+    );
+  }
+
+  if (failures.length > 0) {
+    console.log(`\n⚠ ${failures.length} failed — rerun to retry just these:`);
+    for (const f of failures.slice(0, 5)) console.log(`    ${f.id}: ${f.error.slice(0, 70)}`);
+    writeFileSync(
+      resolve(OUT_DIR, 'extraction-failures.json'),
+      JSON.stringify({ generatedAt: new Date().toISOString(), failures }, null, 2) + '\n',
     );
   }
 

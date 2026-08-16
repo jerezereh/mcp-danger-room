@@ -67,9 +67,20 @@ describe('cerebro', () => {
     expect(parsePack(undefined)).toEqual({ code: null, name: null });
   });
 
-  it('drops the alias when it just repeats the name', () => {
-    const draft = cerebroToDraft({ ID: 1, Name: 'Abomination', Alias: 'Abomination' });
-    expect(draft.alterEgo).toBeNull();
+  /*
+   * For 32 characters — Adam Warlock, Ancient One, Dormammu, Arnim Zola and
+   * others — the card really does print the same text as the alter ego,
+   * because that *is* their civilian name. Treating the repetition as "no
+   * alter ego" threw away a value the card carries.
+   */
+  it('keeps an alias that matches the name — it is still the alter ego', () => {
+    const draft = cerebroToDraft({ ID: 1, Name: 'Adam Warlock', Alias: 'Adam Warlock' });
+    expect(draft.alterEgo).toBe('Adam Warlock');
+  });
+
+  it('is null only when the source gives no alias at all', () => {
+    expect(cerebroToDraft({ ID: 1, Name: 'Abomination' }).alterEgo).toBeNull();
+    expect(cerebroToDraft({ ID: 1, Name: 'Abomination', Alias: '  ' }).alterEgo).toBeNull();
   });
 
   it('keeps a real alter ego', () => {
@@ -251,7 +262,6 @@ describe('OCR cross-check', () => {
   const extracted = (over: Partial<ExtractedCard> = {}): ExtractedCard => ({
     name: 'Angela',
     alterEgo: null,
-    affiliations: ['Asgard'],
     threat: 5,
     healthy: {
       stamina: 6,
@@ -276,28 +286,13 @@ describe('OCR cross-check', () => {
 
   it('is silent when the model agrees with what we already know', () => {
     expect(
-      crossCheck(extracted(), {
-        name: 'Angela',
-        threat: 5,
-        affiliations: ['Asgard'],
-        healthyStamina: 6,
-      }),
+      crossCheck(extracted(), { name: 'Angela', threat: 5, healthyStamina: 6 }),
     ).toEqual([]);
   });
 
   it('flags a misread stat with both values', () => {
     const found = crossCheck(extracted(), { threat: 4 });
     expect(found).toEqual([{ field: 'threat', extracted: 5, known: 4 }]);
-  });
-
-  it('ignores affiliation ordering but catches a genuine difference', () => {
-    expect(
-      crossCheck(extracted({ affiliations: ['Asgard', 'A-Force'] }), {
-        affiliations: ['A-Force', 'Asgard'],
-      }),
-    ).toEqual([]);
-
-    expect(crossCheck(extracted(), { affiliations: ['Cabal'] })).toHaveLength(1);
   });
 
   it('checks nothing it was given nothing for', () => {
@@ -347,7 +342,6 @@ describe('errata-aware OCR cross-check', () => {
   const extracted = (h: number, i: number): ExtractedCard => ({
     name: 'Ancient One',
     alterEgo: null,
-    affiliations: [],
     threat: 4,
     healthy: {
       stamina: h,

@@ -6,10 +6,14 @@
  * are things we already know, and asking a model to restate known facts invites
  * it to invent them.
  *
- * It *does* ask for name, threat, affiliations and stamina even though Cerebro
- * supplies those — precisely so the two can be compared. Those four fields are
- * the cross-check that tells you whether an extraction is trustworthy, and they
- * only work as a check if the model reads them independently.
+ * It *does* ask for name, threat and stamina even though other sources supply
+ * them — precisely so the two can be compared. Those fields are the cross-check
+ * that tells you whether an extraction is trustworthy, and they only work as a
+ * check if the model reads them independently.
+ *
+ * Affiliations are deliberately absent: they are not printed on character
+ * cards at all, they are set by the rules body. Asking a model to read
+ * something that is not there invites it to invent one.
  */
 
 /*
@@ -61,7 +65,6 @@ export const ExtractedStatBlock = z.object({
 export const ExtractedCard = z.object({
   name: z.string().min(1),
   alterEgo: z.string().nullable(),
-  affiliations: z.array(z.string()),
   threat: z.number().int().min(0).max(20),
   healthy: ExtractedStatBlock,
   injured: ExtractedStatBlock,
@@ -113,12 +116,10 @@ Bold trigger names (Pierce, Momentum, Cleave) stay as <b>Name</b>.
   similar). These are often printed together on one line; they are still
   separate superpowers. Never combine several into one entry, and never leave
   an entry's text empty because you merged the names into its title.
-- "alterEgo" is the civilian or secondary name printed under the character
-  name. If the card shows no separate alter ego, or it simply repeats the
-  character name, use null.
-- "affiliations" are the affiliation icons or names on the card. Some scans
-  crop or obscure them — return an empty list rather than guessing, and say so
-  in "notes".
+- "alterEgo" is the civilian name printed under the character name. For some
+  characters it is the same text as the character name — that is correct, so
+  transcribe it rather than treating the repetition as absent. Use null only
+  when the card prints no alter ego at all.
 - "movement" is the speed template: S (short), M (medium), or L (long).
 - Both sides of the card share the same attacks and superpowers unless the
   injured side prints a different set. If a side is not legible, still return
@@ -195,16 +196,15 @@ export function parseStaminaErrata(
  * Compare an extraction against what Cerebro already told us.
  *
  * This is the whole reason the model is asked to read fields we know: an
- * extraction that agrees on name, threat, affiliations and stamina probably got
- * the rules text right too, and one that disagrees needs a human. Cheap,
- * independent, and it needs no second model call.
+ * extraction that agrees on name, threat and stamina probably got the rules
+ * text right too, and one that disagrees needs a human. Cheap, independent, and
+ * it needs no second model call.
  */
 export function crossCheck(
   extracted: ExtractedCard,
   known: {
     name?: string;
     threat?: number;
-    affiliations?: string[];
     healthyStamina?: number;
     injuredStamina?: number;
     /** Errata text, so a pre-errata scan is not mistaken for a misread. */
@@ -261,28 +261,5 @@ export function crossCheck(
 
   checkStamina('healthy.stamina', extracted.healthy.stamina, known.healthyStamina, 0);
   checkStamina('injured.stamina', extracted.injured.stamina, known.injuredStamina, 1);
-  /*
-   * An empty affiliation list means the model could not see them — scans often
-   * crop the icons — not that the character has none. Treating that as a
-   * disagreement forces review on cards that were read correctly, and we get
-   * affiliations from Jarvis and Cerebro anyway.
-   */
-  if (
-    known.affiliations &&
-    known.affiliations.length > 0 &&
-    extracted.affiliations.length > 0
-  ) {
-    const a = new Set(known.affiliations.map(norm));
-    const b = new Set(extracted.affiliations.map(norm));
-    const same = a.size === b.size && [...a].every(x => b.has(x));
-    if (!same) {
-      out.push({
-        field: 'affiliations',
-        extracted: extracted.affiliations,
-        known: known.affiliations,
-      });
-    }
-  }
-
   return out;
 }
