@@ -29,6 +29,7 @@ import {
   type TerrainVolume,
 } from '@danger-room/rules';
 
+import { characterName, inches } from '../lib/format.js';
 import { selectGame, useStore } from '../store.js';
 
 const TABLE_COLOR = '#1d2432';
@@ -37,14 +38,17 @@ const PLAYER_COLORS: Record<string, string> = {
   p2: '#e23636',
 };
 
-/** Table (x, y, elevation) → three.js (x, up, z). Confined to this file. */
-const toScene = (x: number, y: number, z = 0): [number, number, number] => [x, z, y];
-
-const titleCase = (id: string) =>
-  id
-    .split('-')
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
+/**
+ * Table (x, y, elevation) → three.js (x, up, z). Confined to this file.
+ *
+ * Note the negated y. Looking straight down flips handedness, so a naive
+ * mapping renders the board mirrored: with the camera above and `up` = +Z,
+ * camera-right works out to world −X, and a model at x=16 draws to the *left*
+ * of one at x=12. Negating y here (with `up` = −Z below) is what buys both
+ * "+x runs right" and "+y runs up" at once — a single flip can only ever fix
+ * one of the two.
+ */
+const toScene = (x: number, y: number, z = 0): [number, number, number] => [x, z, -y];
 
 /**
  * Pin the top-down camera's orientation.
@@ -67,12 +71,15 @@ const titleCase = (id: string) =>
 function TopDownLock({ active }: { active: boolean }) {
   const camera = useThree(state => state.camera);
   const controls = useThree(state => state.controls) as { target?: Vector3 } | null;
-  const fallback = useMemo(() => new Vector3(TABLE_SIZE.width / 2, 0, TABLE_SIZE.depth / 2), []);
+  const fallback = useMemo(
+    () => new Vector3(...toScene(TABLE_SIZE.width / 2, TABLE_SIZE.depth / 2)),
+    [],
+  );
 
   useFrame(() => {
     if (!active) return;
-    // World +Z is screen-up, so table +y runs up the screen.
-    camera.up.set(0, 0, 1);
+    // Pairs with toScene's negated y: -Z screen-up puts table +y up.
+    camera.up.set(0, 0, -1);
     camera.lookAt(controls?.target ?? fallback);
     camera.updateMatrixWorld();
   });
@@ -220,25 +227,37 @@ function ModelToken({
         <meshStandardMaterial color={color} opacity={dimmed ? 0.15 : 0.8} transparent />
       </mesh>
 
-      {/* Label. DOM rather than 3D text, so no webfont has to load. */}
+      {/*
+        Label. DOM rather than 3D text, so no webfont has to load.
+
+        Labels are constant screen size, so at 4" apart two full stat lines
+        collide. Only the selected model shows its detail; everything else shows
+        a name and, when relevant, its distance from the selection.
+      */}
       <Html center position={[0, model.height + 0.6, 0]} zIndexRange={[10, 0]}>
         <div className="pointer-events-none select-none whitespace-nowrap text-center">
           <div
-            className="rounded px-1.5 py-0.5 text-[10px] font-semibold leading-tight"
+            className="rounded px-1 py-px text-[9px] font-semibold leading-tight"
             style={{
-              background: 'rgba(15,17,23,0.85)',
+              background: 'rgba(15,17,23,0.88)',
               color,
               border: `1px solid ${color}55`,
             }}
           >
-            {titleCase(model.characterId)}
-          </div>
-          <div className="mt-0.5 text-[9px] leading-tight text-slate-400">
-            {model.health === 'ko' ? 'KO' : `${model.health} · ${model.damage} dmg · ${model.power}p`}
+            {characterName(model.characterId)}
             {distanceFromSelected !== null && (
-              <span className="ml-1 text-[#4ab3c7]">{distanceFromSelected.toFixed(1)}"</span>
+              <span className="ml-1 font-normal text-[#4ab3c7]">
+                {inches(distanceFromSelected)}
+              </span>
             )}
           </div>
+          {(selected || model.health !== 'healthy' || model.damage > 0) && (
+            <div className="mt-px text-[9px] leading-tight text-slate-400">
+              {model.health === 'ko'
+                ? 'KO'
+                : `${model.health} · ${model.damage} dmg · ${model.power}p`}
+            </div>
+          )}
         </div>
       </Html>
     </group>
@@ -264,12 +283,12 @@ function Scene() {
           near={0.1}
           far={200}
           /*
-           * World +Z up the screen, so table +y does too. Deliberately no
-           * `rotation` prop: OrbitControls calls lookAt every frame and would
-           * silently overwrite it. TopDownLock below is what actually
-           * guarantees the orientation.
+           * -Z up the screen which, with toScene's negated y, puts table +y
+           * up. Deliberately no `rotation` prop: OrbitControls calls lookAt
+           * every frame and would silently overwrite it. TopDownLock below is
+           * what actually guarantees the orientation.
            */
-          up={[0, 0, 1]}
+          up={[0, 0, -1]}
         />
       ) : (
         <PerspectiveCamera

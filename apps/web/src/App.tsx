@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { edgeDistance, hasLineOfSight, rangeBandTo } from '@danger-room/rules';
 
 import { Board } from './components/Board.js';
+import { characterName, inches } from './lib/format.js';
 import { GameLog } from './components/GameLog.js';
 import { RosterBuilder } from './components/RosterBuilder.js';
 import { selectActionCount, selectGame, useStore } from './store.js';
@@ -44,7 +45,7 @@ function GameView() {
           </h3>
           {model ? (
             <div className="space-y-2 text-sm">
-              <p className="font-semibold text-slate-100">{model.characterId}</p>
+              <p className="font-semibold text-slate-100">{characterName(model.characterId)}</p>
               <dl className="grid grid-cols-2 gap-1 text-xs text-slate-400">
                 <dt>Health</dt>
                 <dd className="text-right text-slate-200">{model.health}</dd>
@@ -80,9 +81,9 @@ function GameView() {
                       const los = hasLineOfSight(model, other, game.terrain);
                       return (
                         <li key={other.id} className="flex items-baseline justify-between gap-2">
-                          <span className="truncate text-slate-400">{other.characterId}</span>
+                          <span className="truncate text-slate-400">{characterName(other.characterId)}</span>
                           <span className="flex shrink-0 items-center gap-1.5 tabular-nums">
-                            <span className="text-slate-300">{gap.toFixed(1)}"</span>
+                            <span className="text-slate-300">{inches(gap)}</span>
                             <span className="text-[#4ab3c7]">{band ? `R${band}` : '—'}</span>
                             <span
                               title={
