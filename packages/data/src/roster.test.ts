@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  DEFAULT_ROSTER_SIZE,
   enumerateSquads,
   indexCharacters,
   validateRoster,
@@ -9,13 +10,14 @@ import {
 } from './roster.js';
 import type { Character } from './schema.js';
 
-const stub = (id: string, cp: number, threat: number): Character =>
+const stub = (id: string, threat: number): Character =>
   ({
     id,
     name: id,
     alterEgo: null,
     affiliations: [],
-    cp,
+    packCode: null,
+    packName: null,
     threat,
     baseMm: 40,
     source: 'manual',
@@ -40,26 +42,46 @@ const stub = (id: string, cp: number, threat: number): Character =>
     },
   }) satisfies Character;
 
-const lookup = indexCharacters([stub('a', 40, 3), stub('b', 50, 4), stub('c', 30, 2)]);
+const lookup = indexCharacters([stub('a', 3), stub('b', 4), stub('c', 2)]);
 
 const roster: Roster = { id: 'r1', name: 'Test', characterIds: ['a', 'b', 'c'] };
 
 describe('roster validation', () => {
-  it('accepts a roster within budget', () => {
-    const result = validateRoster(roster, lookup, 200);
+  it('accepts a roster within the size limit', () => {
+    const result = validateRoster(roster, lookup);
     expect(result.valid).toBe(true);
-    expect(result.totals.cp).toBe(120);
+    expect(result.totals.threat).toBe(9);
   });
 
-  it('flags going over the CP budget', () => {
-    const result = validateRoster(roster, lookup, 100);
-    expect(result.valid).toBe(false);
-    expect(result.violations.map(v => v.code)).toContain('OVER_CP_BUDGET');
+  // Regression: this module used to validate rosters against a "Character
+  // Points" budget. That is not a rule in this game — the number it read was a
+  // product pack identifier. Threat is the only character cost.
+  it('reports threat and nothing else as a total', () => {
+    const result = validateRoster(roster, lookup);
+    expect(Object.keys(result.totals)).toEqual(['threat']);
+  });
+
+  it('never rejects a roster for its total threat', () => {
+    const huge: Roster = { ...roster, characterIds: ['a', 'b', 'c'] };
+    const result = validateRoster(huge, lookup, null);
+    expect(result.valid).toBe(true);
+  });
+
+  it('flags a roster over the size limit', () => {
+    const ids = Array.from({ length: DEFAULT_ROSTER_SIZE + 1 }, (_, i) => (i === 0 ? 'a' : `x${i}`));
+    const result = validateRoster({ ...roster, characterIds: ids }, lookup);
+    expect(result.violations.map(v => v.code)).toContain('ROSTER_TOO_LARGE');
+  });
+
+  it('allows an unbounded roster when maxSize is null', () => {
+    const ids = Array.from({ length: 30 }, (_, i) => (i === 0 ? 'a' : `x${i}`));
+    const result = validateRoster({ ...roster, characterIds: ids }, lookup, null);
+    expect(result.violations.map(v => v.code)).not.toContain('ROSTER_TOO_LARGE');
   });
 
   it('flags duplicates', () => {
     const dupes: Roster = { ...roster, characterIds: ['a', 'a'] };
-    expect(validateRoster(dupes, lookup, 500).violations.map(v => v.code)).toContain(
+    expect(validateRoster(dupes, lookup).violations.map(v => v.code)).toContain(
       'DUPLICATE_CHARACTER',
     );
   });

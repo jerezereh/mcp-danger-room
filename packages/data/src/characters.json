@@ -8,7 +8,8 @@
         "Defenders",
         "Web Warriors"
       ],
-      "cp": 37,
+      "packCode": "CP37",
+      "packName": null,
       "threat": 5,
       "baseMm": 40,
       "healthy": {
@@ -156,7 +157,8 @@
         "Convocation",
         "Defenders"
       ],
-      "cp": 64,
+      "packCode": "CP64",
+      "packName": null,
       "threat": 4,
       "baseMm": 40,
       "healthy": {
@@ -315,7 +317,8 @@
         "Asgard",
         "Guardians of the Galaxy"
       ],
-      "cp": 28,
+      "packCode": "CP28",
+      "packName": null,
       "threat": 5,
       "baseMm": 40,
       "healthy": {
@@ -483,7 +486,8 @@
         "Wakanda",
         "Avengers"
       ],
-      "cp": 7,
+      "packCode": "CP7",
+      "packName": null,
       "threat": 4,
       "baseMm": 40,
       "healthy": {

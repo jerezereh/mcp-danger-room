@@ -9,7 +9,7 @@
 
 import { useMemo, useState } from 'react';
 import {
-  DEFAULT_CP_BUDGET,
+  DEFAULT_ROSTER_SIZE,
   characters as allCharacters,
   enumerateSquads,
   indexCharacters,
@@ -42,7 +42,7 @@ export function RosterBuilder() {
   );
 
   const validation = useMemo(
-    () => validateRoster(roster, lookup, DEFAULT_CP_BUDGET),
+    () => validateRoster(roster, lookup, DEFAULT_ROSTER_SIZE),
     [roster, lookup],
   );
 
@@ -79,8 +79,7 @@ export function RosterBuilder() {
                 <th className="px-3 py-2 font-medium">Name</th>
                 <th className="px-3 py-2 font-medium">Affiliations</th>
                 <th className="px-3 py-2 text-right font-medium">Threat</th>
-                <th className="px-3 py-2 text-right font-medium">CP</th>
-              </tr>
+                              </tr>
             </thead>
             <tbody>
               {filtered.map(character => {
@@ -99,7 +98,6 @@ export function RosterBuilder() {
                       {character.affiliations.join(', ')}
                     </td>
                     <td className="px-3 py-2 text-right tabular-nums">{character.threat}</td>
-                    <td className="px-3 py-2 text-right tabular-nums">{character.cp}</td>
                   </tr>
                 );
               })}
@@ -126,7 +124,8 @@ export function RosterBuilder() {
                 validation.valid ? 'text-slate-400' : 'text-accent'
               }`}
             >
-              {validation.totals.cp} / {DEFAULT_CP_BUDGET} CP
+              {rosterIds.length} / {DEFAULT_ROSTER_SIZE} characters ·{' '}
+              {validation.totals.threat} threat
             </span>
           </div>
 
@@ -153,7 +152,7 @@ export function RosterBuilder() {
                     </button>
                     <span className="flex shrink-0 items-center gap-2 text-xs text-slate-500">
                       <span className="tabular-nums">
-                        {character.threat}T / {character.cp}CP
+                        {character.threat} threat
                       </span>
                       <button
                         type="button"

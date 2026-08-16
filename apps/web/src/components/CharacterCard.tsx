@@ -86,10 +86,12 @@ export function CharacterCard({ character }: { character: Character }) {
             <div className="text-[10px] uppercase text-slate-500">Threat</div>
             <div className="text-sm font-semibold text-slate-200">{character.threat}</div>
           </div>
-          <div className="rounded bg-surface-raised px-2 py-1">
-            <div className="text-[10px] uppercase text-slate-500">CP</div>
-            <div className="text-sm font-semibold text-slate-200">{character.cp}</div>
-          </div>
+          {character.packCode && (
+            <div className="rounded bg-surface-raised px-2 py-1">
+              <div className="text-[10px] uppercase text-slate-500">Pack</div>
+              <div className="text-sm font-semibold text-slate-200">{character.packCode}</div>
+            </div>
+          )}
         </div>
       </header>
 

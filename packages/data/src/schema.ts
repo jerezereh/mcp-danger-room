@@ -78,9 +78,17 @@ export const Character = z.object({
   name: z.string().min(1),
   alterEgo: z.string().nullable(),
   affiliations: z.array(z.string()).default([]),
-  /** Roster cost in Character Points. */
-  cp: z.number().int().min(0),
-  /** Squad cost in Threat. */
+  /**
+   * The product pack this character was released in, e.g. "CP162".
+   *
+   * NOT a cost. The prototype stored this as a numeric `cp` field described as
+   * "Character Points" and the roster builder validated squads against a CP
+   * budget — a rule this game does not have. The number is a pack identifier,
+   * which doubles as a character id on some community sources.
+   */
+  packCode: z.string().nullable().default(null),
+  packName: z.string().nullable().default(null),
+  /** Squad cost in Threat. The game's only character cost. */
   threat: z.number().int().min(0),
   /** Base diameter in mm. */
   baseMm: z.number().int().default(40),
