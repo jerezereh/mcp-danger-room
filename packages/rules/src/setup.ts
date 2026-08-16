@@ -91,9 +91,51 @@ export function createGame(spec: GameSpec): GameState {
   };
 }
 
-/** A bare two-model position, handy in tests. */
-export function createSparringGame(seed = 1): GameState {
-  return createGame({
+/**
+ * Terrain for the sparring position.
+ *
+ * Deliberately placed so at least one pairing is blocked and another is clear —
+ * an empty table cannot show whether line of sight works at all.
+ */
+export const SPARRING_TERRAIN: TerrainVolume[] = [
+  {
+    id: 'crate-a',
+    pos: vec3(18, 12, 0),
+    radius: 1.8,
+    height: 4,
+    size: 3,
+    blocksLineOfSight: true,
+  },
+  {
+    id: 'wall-b',
+    pos: vec3(22, 22, 0),
+    radius: 2.4,
+    height: 6,
+    size: 4,
+    blocksLineOfSight: true,
+  },
+  {
+    id: 'rubble-c',
+    pos: vec3(9, 25, 0),
+    radius: 2,
+    height: 1,
+    size: 1,
+    // Low scatter: present on the table, but never blocks a trace.
+    blocksLineOfSight: false,
+  },
+];
+
+/**
+ * The default opening position.
+ *
+ * Exported as a spec rather than a built state so the client, the server, and
+ * the tests all start from literally the same setup — a save produced by one
+ * loads in the others.
+ *
+ * TODO(squads): replaced by the players' drafted squads once drafting exists.
+ */
+export function sparringSpec(seed = 1): GameSpec {
+  return {
     seed,
     players: [
       { id: 'p1' as PlayerId, displayName: 'Player One' },
@@ -112,6 +154,24 @@ export function createSparringGame(seed = 1): GameState {
         owner: 'p2' as PlayerId,
         pos: vec3(16, 18, 0),
       },
+      {
+        id: 'm3' as ModelId,
+        characterId: 'ancient-one' as CharacterId,
+        owner: 'p1' as PlayerId,
+        pos: vec3(14, 8, 0),
+      },
+      {
+        id: 'm4' as ModelId,
+        characterId: 'angela' as CharacterId,
+        owner: 'p2' as PlayerId,
+        pos: vec3(26, 24, 0),
+      },
     ],
-  });
+    terrain: SPARRING_TERRAIN,
+  };
+}
+
+/** A small position with terrain, used by tests and by the client's local game. */
+export function createSparringGame(seed = 1): GameState {
+  return createGame(sparringSpec(seed));
 }

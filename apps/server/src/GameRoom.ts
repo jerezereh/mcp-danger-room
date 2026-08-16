@@ -18,16 +18,12 @@ import { Room, type Client } from '@colyseus/core';
 import {
   record,
   save,
+  sparringSpec,
   startSession,
-  vec3,
   type Action,
-  type CharacterId,
   type GameEvent,
   type GameSession,
-  type GameSpec,
   type GameState,
-  type ModelId,
-  type PlayerId,
   type SavedGame,
 } from '@danger-room/rules';
 import {
@@ -49,31 +45,6 @@ interface SeatAssignment {
 /** How long a dropped player keeps their seat. TODO(tune) with real play. */
 const RECONNECT_WINDOW_SECONDS = 120;
 
-/** TODO(squads): built from the players' chosen squads once drafting exists. */
-function openingPosition(seed: number): GameSpec {
-  return {
-    seed,
-    players: [
-      { id: 'p1' as PlayerId, displayName: 'Player One' },
-      { id: 'p2' as PlayerId, displayName: 'Player Two' },
-    ],
-    models: [
-      {
-        id: 'm1' as ModelId,
-        characterId: 'amazing-spider-man' as CharacterId,
-        owner: 'p1' as PlayerId,
-        pos: vec3(12, 18, 0),
-      },
-      {
-        id: 'm2' as ModelId,
-        characterId: 'black-panther' as CharacterId,
-        owner: 'p2' as PlayerId,
-        pos: vec3(16, 18, 0),
-      },
-    ],
-  };
-}
-
 export class GameRoom extends Room {
   override maxClients = 8; // two players plus spectators
 
@@ -83,7 +54,7 @@ export class GameRoom extends Room {
    * can be persisted, resumed after a restart, and handed to a bug report as a
    * complete reproduction.
    */
-  private session: GameSession = startSession(openingPosition(Date.now()));
+  private session: GameSession = startSession(sparringSpec(Date.now()));
 
   private seats = new Map<string, SeatAssignment>();
   private history: GameEvent[] = [];

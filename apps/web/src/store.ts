@@ -17,45 +17,20 @@ import {
   deserialize,
   record,
   serialize,
+  sparringSpec,
   startSession,
   type Action,
   type GameEvent,
   type GameSession,
-  type GameSpec,
   type GameState,
   type LoadError,
   type ModelId,
   type Rejection,
 } from '@danger-room/rules';
-import { vec3 } from '@danger-room/rules';
 
 export type CameraMode = 'top-down' | 'perspective';
 
 const STORAGE_KEY = 'danger-room:current-game';
-
-function defaultSpec(seed: number): GameSpec {
-  return {
-    seed,
-    players: [
-      { id: 'p1' as never, displayName: 'Player One' },
-      { id: 'p2' as never, displayName: 'Player Two' },
-    ],
-    models: [
-      {
-        id: 'm1' as never,
-        characterId: 'amazing-spider-man' as never,
-        owner: 'p1' as never,
-        pos: vec3(12, 18, 0),
-      },
-      {
-        id: 'm2' as never,
-        characterId: 'black-panther' as never,
-        owner: 'p2' as never,
-        pos: vec3(16, 18, 0),
-      },
-    ],
-  };
-}
 
 interface AppState {
   session: GameSession;
@@ -79,7 +54,7 @@ interface AppState {
 }
 
 export const useStore = create<AppState>((set, get) => ({
-  session: startSession(defaultSpec(Date.now())),
+  session: startSession(sparringSpec(Date.now())),
   events: [],
   selectedModel: null,
   cameraMode: 'top-down',
@@ -115,7 +90,7 @@ export const useStore = create<AppState>((set, get) => ({
 
   newGame: seed =>
     set({
-      session: startSession(defaultSpec(seed ?? Date.now())),
+      session: startSession(sparringSpec(seed ?? Date.now())),
       events: [],
       selectedModel: null,
       lastRejection: null,

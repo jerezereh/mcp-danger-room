@@ -7,6 +7,7 @@
  */
 
 import { useState } from 'react';
+import { edgeDistance, hasLineOfSight, rangeBandTo } from '@danger-room/rules';
 
 import { Board } from './components/Board.js';
 import { GameLog } from './components/GameLog.js';
@@ -55,7 +56,50 @@ function GameView() {
                 <dd className="text-right text-slate-200">
                   {model.activatedThisRound ? 'yes' : 'no'}
                 </dd>
+                <dt>Position</dt>
+                <dd className="text-right tabular-nums text-slate-200">
+                  {model.pos.x.toFixed(1)}, {model.pos.y.toFixed(1)}
+                </dd>
               </dl>
+
+              {/*
+                The numeric counterpart to the rings and sight lines on the
+                board. If a ring says a model is inside R2 and this says R3,
+                the geometry is wrong — which is the point of showing both.
+              */}
+              <div className="border-t border-surface-border pt-2">
+                <h4 className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                  Measured to
+                </h4>
+                <ul className="space-y-1 text-xs">
+                  {Object.values(game.models)
+                    .filter(other => other.id !== model.id)
+                    .map(other => {
+                      const gap = edgeDistance(model, other);
+                      const band = rangeBandTo(model, other);
+                      const los = hasLineOfSight(model, other, game.terrain);
+                      return (
+                        <li key={other.id} className="flex items-baseline justify-between gap-2">
+                          <span className="truncate text-slate-400">{other.characterId}</span>
+                          <span className="flex shrink-0 items-center gap-1.5 tabular-nums">
+                            <span className="text-slate-300">{gap.toFixed(1)}"</span>
+                            <span className="text-[#4ab3c7]">{band ? `R${band}` : '—'}</span>
+                            <span
+                              title={
+                                los.clear
+                                  ? 'Line of sight clear'
+                                  : `Blocked by ${los.blockedBy.join(', ')}`
+                              }
+                              className={los.clear ? 'text-emerald-400' : 'text-accent'}
+                            >
+                              {los.clear ? 'LOS' : 'blocked'}
+                            </span>
+                          </span>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
 
               <div className="flex gap-2 pt-1">
                 <button
