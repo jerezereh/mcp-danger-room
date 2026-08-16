@@ -297,6 +297,9 @@ interface Extraction {
   disagreements: ReturnType<typeof crossCheck>;
 }
 
+let totalIn = 0;
+let totalOut = 0;
+
 async function runSync(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
   const out: Extraction[] = [];
 
@@ -310,9 +313,17 @@ async function runSync(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
     }
     const disagreements = crossCheck(response.parsed_output, job.known);
     out.push({ id: job.id, card: response.parsed_output, disagreements });
+
+    // Report usage so the cost of the full batch is predictable from one card
+    // rather than guessed at.
+    const { input_tokens: inTok, output_tokens: outTok } = response.usage;
+    totalIn += inTok;
+    totalOut += outTok;
+
+    const unexplained = disagreements.filter(d => !d.explained).length;
     console.log(
-      `${response.parsed_output.legibility}` +
-        (disagreements.length ? ` · ${disagreements.length} disagreements` : ''),
+      `${response.parsed_output.legibility} · ${inTok}in/${outTok}out` +
+        (unexplained ? ` · ${unexplained} to review` : ''),
     );
   }
   return out;
@@ -433,6 +444,16 @@ async function main() {
       2,
     ) + '\n',
   );
+
+  if (totalIn > 0) {
+    // Sonnet 5 introductory pricing; batch halves it.
+    const cost = (totalIn / 1e6) * 2 + (totalOut / 1e6) * 10;
+    const per = cost / Math.max(1, results.length);
+    console.log(
+      `\nTokens: ${totalIn} in / ${totalOut} out · ~$${cost.toFixed(3)} ` +
+        `(~$${per.toFixed(3)}/card, about $${(per * 41 * 0.5).toFixed(2)} for all 41 via batch)`,
+    );
+  }
 
   console.log(`\n✓ ${results.length} extracted → .import/extracted.json`);
   console.log(`  ${flagged.length} need review → .import/extraction-review.json`);

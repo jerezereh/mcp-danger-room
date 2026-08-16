@@ -108,6 +108,17 @@ Bold trigger names (Pierce, Momentum, Cleave) stay as <b>Name</b>.
 - Attack "range" is the range band 1-5. Melee attacks are range 1.
 - Superpower "type" is Active, Reactive, Innate, Leadership, or Affiliation as
   labelled on the card. Innate powers usually show no cost — report cost 0.
+- List each superpower as its own entry, including keyword-only Innate powers
+  that carry no rules text (Flight, Peerless, Gem Bearer, Martial Artist, and
+  similar). These are often printed together on one line; they are still
+  separate superpowers. Never combine several into one entry, and never leave
+  an entry's text empty because you merged the names into its title.
+- "alterEgo" is the civilian or secondary name printed under the character
+  name. If the card shows no separate alter ego, or it simply repeats the
+  character name, use null.
+- "affiliations" are the affiliation icons or names on the card. Some scans
+  crop or obscure them — return an empty list rather than guessing, and say so
+  in "notes".
 - "movement" is the speed template: S (short), M (medium), or L (long).
 - Both sides of the card share the same attacks and superpowers unless the
   injured side prints a different set. If a side is not legible, still return
@@ -250,7 +261,17 @@ export function crossCheck(
 
   checkStamina('healthy.stamina', extracted.healthy.stamina, known.healthyStamina, 0);
   checkStamina('injured.stamina', extracted.injured.stamina, known.injuredStamina, 1);
-  if (known.affiliations && known.affiliations.length > 0) {
+  /*
+   * An empty affiliation list means the model could not see them — scans often
+   * crop the icons — not that the character has none. Treating that as a
+   * disagreement forces review on cards that were read correctly, and we get
+   * affiliations from Jarvis and Cerebro anyway.
+   */
+  if (
+    known.affiliations &&
+    known.affiliations.length > 0 &&
+    extracted.affiliations.length > 0
+  ) {
     const a = new Set(known.affiliations.map(norm));
     const b = new Set(extracted.affiliations.map(norm));
     const same = a.size === b.size && [...a].every(x => b.has(x));
