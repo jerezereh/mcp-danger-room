@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc --build",
     "typecheck": "tsc --build",
-    "import:legacy": "node --experimental-strip-types scripts/import-legacy.ts"
+    "import:legacy": "node scripts/import-legacy.mjs"
   },
   "dependencies": {
     "zod": "^3.23.8"

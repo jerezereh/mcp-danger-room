@@ -13,7 +13,7 @@
  * intended shape but stops short of the full sequence — see NOT_IMPLEMENTED.
  */
 
-import type { Action, Rejection } from './actions.js';
+import type { Action, ActionType, Rejection } from './actions.js';
 import { roll } from './dice.js';
 import type { GameEvent, GameEventInput } from './events.js';
 import { hasLineOfSight } from './geometry/los.js';
@@ -27,6 +27,7 @@ import {
   type Frame,
   type GameState,
   type Model,
+  type Prompt,
 } from './state.js';
 
 export interface Success {
@@ -386,6 +387,23 @@ function advanceAttack(draft: Draft, frame: Extract<Frame, { kind: 'attack' }>):
 // Helpers
 // ---------------------------------------------------------------------------
 
+/**
+ * Which actions are legal answers to each kind of prompt.
+ *
+ * Checking only the player is not enough. Without this table, a second
+ * ACTIVATE could be submitted while an activation was already in flight,
+ * pushing a second activation frame and leaving two on the stack — the
+ * alternating-activation loop then has no single "current" model.
+ */
+const ANSWERS: Record<Prompt['kind'], readonly ActionType[]> = {
+  chooseActivation: ['ACTIVATE'],
+  // Mid-activation: act with the activating model or end its activation.
+  // Notably *not* ACTIVATE — that is what starts a second one.
+  chooseAction: ['MOVE', 'ATTACK', 'USE_SUPERPOWER', 'PLAY_TACTIC', 'END_ACTIVATION'],
+  declareReaction: ['DECLARE_REACTION', 'PASS_REACTION'],
+  rollPriority: ['ROLL_PRIORITY'],
+};
+
 function checkPrompt(state: GameState, action: Action): Failure | null {
   const prompt = state.prompt;
   if (!prompt) return null;
@@ -394,6 +412,30 @@ function checkPrompt(state: GameState, action: Action): Failure | null {
   if (actor !== null && 'player' in prompt && prompt.player !== actor) {
     return reject('NOT_YOUR_TURN', 'Waiting on the other player.');
   }
+
+  const allowed = ANSWERS[prompt.kind];
+  if (!allowed.includes(action.type)) {
+    return reject(
+      'UNEXPECTED_ACTION',
+      `${action.type} does not answer the pending ${prompt.kind} prompt.`,
+    );
+  }
+
+  // The activating model is the only one that may act during its activation.
+  if (prompt.kind === 'chooseAction') {
+    const acting = actingModel(action);
+    if (acting !== null && acting !== prompt.modelId) {
+      return reject('UNEXPECTED_ACTION', 'Another model is mid-activation.');
+    }
+  }
+
+  return null;
+}
+
+/** The model an action operates on, where there is one. */
+function actingModel(action: Action): ModelId | null {
+  if ('modelId' in action) return action.modelId;
+  if ('attackerId' in action) return action.attackerId;
   return null;
 }
 

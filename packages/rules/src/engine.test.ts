@@ -10,6 +10,7 @@ const p1 = 'p1' as PlayerId;
 const p2 = 'p2' as PlayerId;
 const m1 = 'm1' as ModelId;
 const m2 = 'm2' as ModelId;
+const m3 = 'm3' as ModelId;
 
 describe('determinism', () => {
   // This is the property the entire architecture rests on. If it ever fails,
@@ -72,6 +73,52 @@ describe('activation', () => {
   });
 
   it('rejects activating the same model twice in a round', () => {
+    // Ends the first activation before retrying, so this exercises the
+    // once-per-round rule rather than the pending-prompt gate — which would
+    // reject any ACTIVATE mid-activation for a different reason.
+    const played = applyAll(createSparringGame(), [
+      { type: 'ACTIVATE', player: p1, modelId: m1 },
+      { type: 'END_ACTIVATION', player: p1 },
+    ]);
+    expect(played.ok).toBe(true);
+    if (!played.ok) return;
+    expect(played.state.stack).toHaveLength(0);
+
+    const again = applyAction(played.state, { type: 'ACTIVATE', player: p1, modelId: m1 });
+    expect(again.ok).toBe(false);
+    if (again.ok) return;
+    expect(again.rejection.code).toBe('MODEL_ALREADY_ACTIVATED');
+  });
+
+  it('allows a new activation once the previous one has ended', () => {
+    const played = applyAll(createSparringGame(), [
+      { type: 'ACTIVATE', player: p1, modelId: m1 },
+      { type: 'END_ACTIVATION', player: p1 },
+      { type: 'ACTIVATE', player: p1, modelId: m3 },
+    ]);
+    expect(played.ok).toBe(true);
+  });
+
+  // Regression: checkPrompt only verified the player, so a second ACTIVATE was
+  // accepted mid-activation and left two activation frames on the stack, with
+  // no single "current" model for the alternating-activation loop.
+  it('rejects activating a second model while one is mid-activation', () => {
+    const first = applyAction(createSparringGame(), {
+      type: 'ACTIVATE',
+      player: p1,
+      modelId: m1,
+    });
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+    expect(first.state.stack).toHaveLength(1);
+
+    const second = applyAction(first.state, { type: 'ACTIVATE', player: p1, modelId: m3 });
+    expect(second.ok).toBe(false);
+    if (second.ok) return;
+    expect(second.rejection.code).toBe('UNEXPECTED_ACTION');
+  });
+
+  it('rejects a different model acting during someone else’s activation', () => {
     const first = applyAction(createSparringGame(), {
       type: 'ACTIVATE',
       player: p1,
@@ -80,10 +127,35 @@ describe('activation', () => {
     expect(first.ok).toBe(true);
     if (!first.ok) return;
 
-    const second = applyAction(first.state, { type: 'ACTIVATE', player: p1, modelId: m1 });
-    expect(second.ok).toBe(false);
-    if (second.ok) return;
-    expect(second.rejection.code).toBe('MODEL_ALREADY_ACTIVATED');
+    const wrongModel = applyAction(first.state, {
+      type: 'MOVE',
+      player: p1,
+      modelId: m3,
+      template: 'S',
+      path: [vec3(14, 8, 0), vec3(14, 10, 0)],
+    });
+    expect(wrongModel.ok).toBe(false);
+    if (wrongModel.ok) return;
+    expect(wrongModel.rejection.code).toBe('UNEXPECTED_ACTION');
+  });
+
+  it('lets the activating model act during its own activation', () => {
+    const first = applyAction(createSparringGame(), {
+      type: 'ACTIVATE',
+      player: p1,
+      modelId: m1,
+    });
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+
+    const move = applyAction(first.state, {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'M',
+      path: [vec3(12, 18, 0), vec3(12, 21, 0)],
+    });
+    expect(move.ok).toBe(true);
   });
 
   it('parks a prompt for the activating player', () => {

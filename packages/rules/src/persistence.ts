@@ -105,8 +105,47 @@ export type LoadResult =
 export interface LoadError {
   readonly code: 'UNSUPPORTED_VERSION' | 'MALFORMED' | 'DIVERGED';
   readonly message: string;
-  /** For DIVERGED: how many actions replayed before the log stopped matching. */
+  /** Index of the offending action, for DIVERGED and for MALFORMED entries. */
   readonly atAction?: number;
+}
+
+const isObject = (v: unknown): v is Record<string, unknown> =>
+  typeof v === 'object' && v !== null && !Array.isArray(v);
+
+/**
+ * Structural validation of a save, before any of it is trusted.
+ *
+ * Deliberately shallow — it checks the shape the engine will actually
+ * dereference, not every field of every action. Anything deeper than this
+ * belongs in a Zod schema, and would duplicate the `Action` union in a second
+ * place that could drift from the first.
+ */
+function checkShape(saved: SavedGame): LoadError | null {
+  const setup = saved.setup as unknown;
+  if (!isObject(setup)) {
+    return { code: 'MALFORMED', message: 'Save setup is not an object.' };
+  }
+  if (typeof setup['seed'] !== 'number' || !Number.isFinite(setup['seed'])) {
+    return { code: 'MALFORMED', message: 'Save setup has no usable seed.' };
+  }
+  if (!Array.isArray(setup['players']) || !Array.isArray(setup['models'])) {
+    return { code: 'MALFORMED', message: 'Save setup is missing players or models.' };
+  }
+  if (setup['terrain'] !== undefined && !Array.isArray(setup['terrain'])) {
+    return { code: 'MALFORMED', message: 'Save setup has malformed terrain.' };
+  }
+
+  for (const [index, action] of saved.actions.entries()) {
+    if (!isObject(action) || typeof action['type'] !== 'string') {
+      return {
+        code: 'MALFORMED',
+        atAction: index,
+        message: `Action ${index} is not a well-formed action.`,
+      };
+    }
+  }
+
+  return null;
 }
 
 /**
@@ -138,6 +177,13 @@ export function load(saved: SavedGame): LoadResult {
   if (!saved.setup || !Array.isArray(saved.actions)) {
     return { ok: false, error: { code: 'MALFORMED', message: 'Save is missing setup or actions.' } };
   }
+
+  // `startSession` and `applyAction` both trust their input, so the shape has
+  // to be established here. A truthy `setup` is not enough — one missing array
+  // and `createGame` throws "spec.players is not iterable" straight past the
+  // caller, which is not a failure mode a Load button should have.
+  const shape = checkShape(saved);
+  if (shape) return { ok: false, error: shape };
 
   let session = startSession(saved.setup);
 

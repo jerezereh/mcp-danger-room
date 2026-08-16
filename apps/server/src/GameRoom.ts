@@ -45,6 +45,31 @@ interface SeatAssignment {
 /** How long a dropped player keeps their seat. TODO(tune) with real play. */
 const RECONNECT_WINDOW_SECONDS = 120;
 
+const CLIENT_MESSAGE_TYPES: ReadonlySet<string> = new Set<ClientMessage['type']>([
+  'JOIN',
+  'SUBMIT_ACTION',
+  'RESYNC',
+  'SET_READY',
+  'CHAT',
+  'CONCEDE',
+]);
+
+/**
+ * Minimal runtime guard for inbound messages.
+ *
+ * Only establishes what the room dereferences before dispatch; per-message
+ * payload validation happens in the individual handlers, and the rules engine
+ * rejects any action it does not like regardless.
+ */
+export function isClientMessage(value: unknown): value is ClientMessage {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    !Array.isArray(value) &&
+    CLIENT_MESSAGE_TYPES.has((value as { type?: unknown }).type as string)
+  );
+}
+
 export class GameRoom extends Room {
   override maxClients = 8; // two players plus spectators
 
@@ -75,7 +100,19 @@ export class GameRoom extends Room {
     });
 
     this.onMessage('*', (client, type, message) => {
-      this.handle(client, message as ClientMessage);
+      // Inbound payloads are attacker-controlled. Casting straight to
+      // ClientMessage and reading `.type` means a bare `null` throws inside the
+      // room — one malformed frame from any connected socket, and the game dies
+      // for everyone in it.
+      if (!isClientMessage(message)) {
+        this.sendTo(client, {
+          type: 'ERROR',
+          code: 'MALFORMED_MESSAGE',
+          message: 'Message was not understood.',
+        });
+        return;
+      }
+      this.handle(client, message);
     });
   }
 

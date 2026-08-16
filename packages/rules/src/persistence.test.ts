@@ -155,6 +155,53 @@ describe('load failures', () => {
     expect(() => load(null as never)).not.toThrow();
   });
 
+  // Regression: `setup` being truthy was the only check, so a missing array
+  // reached createGame and threw "spec.players is not iterable" past the
+  // caller. A malformed action entry threw the same way inside applyAction.
+  describe.each([
+    ['setup missing players', { seed: 1, models: [] }, []],
+    ['setup missing models', { seed: 1, players: [] }, []],
+    ['setup with no seed', { players: [], models: [] }, []],
+    ['setup is a string', 'nope', []],
+    ['terrain is not an array', { seed: 1, players: [], models: [], terrain: 5 }, []],
+  ])('malformed setup: %s', (_label, setup, actions) => {
+    it('returns MALFORMED instead of throwing', () => {
+      const attempt = () => load({ formatVersion: SAVE_FORMAT_VERSION, setup, actions } as never);
+      expect(attempt).not.toThrow();
+
+      const loaded = attempt();
+      expect(loaded.ok).toBe(false);
+      if (loaded.ok) return;
+      expect(loaded.error.code).toBe('MALFORMED');
+    });
+  });
+
+  it.each([['a string'], [null], [42], [{ noType: true }]])(
+    'returns MALFORMED for a bad action entry: %s',
+    bad => {
+      const attempt = () =>
+        load({ formatVersion: SAVE_FORMAT_VERSION, setup: spec, actions: [bad] } as never);
+      expect(attempt).not.toThrow();
+
+      const loaded = attempt();
+      expect(loaded.ok).toBe(false);
+      if (loaded.ok) return;
+      expect(loaded.error.code).toBe('MALFORMED');
+      expect(loaded.error.atAction).toBe(0);
+    },
+  );
+
+  it('reports which action was malformed', () => {
+    const loaded = load({
+      formatVersion: SAVE_FORMAT_VERSION,
+      setup: spec,
+      actions: [script[0], null],
+    } as never);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.atAction).toBe(1);
+  });
+
   it('reports divergence with the offending index instead of truncating', () => {
     // A half-replayed game looks valid and is not, so a rejection mid-replay
     // must be an error rather than a silent stop.
