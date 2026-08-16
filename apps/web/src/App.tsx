@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { Board } from './components/Board.js';
 import { GameLog } from './components/GameLog.js';
 import { RosterBuilder } from './components/RosterBuilder.js';
-import { useStore } from './store.js';
+import { selectActionCount, selectGame, useStore } from './store.js';
 
 type View = 'roster' | 'play';
 
@@ -23,8 +23,12 @@ const TABS: { id: View; label: string }[] = [
 function GameView() {
   const dispatch = useStore(s => s.dispatch);
   const selected = useStore(s => s.selectedModel);
-  const game = useStore(s => s.game);
+  const game = useStore(selectGame);
   const newGame = useStore(s => s.newGame);
+  const actionCount = useStore(selectActionCount);
+  const saveToStorage = useStore(s => s.saveToStorage);
+  const loadFromStorage = useStore(s => s.loadFromStorage);
+  const loadError = useStore(s => s.lastLoadError);
 
   const model = selected ? game.models[selected] : undefined;
 
@@ -75,13 +79,35 @@ function GameView() {
           <GameLog />
         </div>
 
-        <button
-          type="button"
-          onClick={() => newGame()}
-          className="border-t border-surface-border px-3 py-2 text-xs text-slate-500 transition hover:text-slate-300"
-        >
-          New local game
-        </button>
+        {loadError && (
+          <p className="border-t border-accent/30 bg-accent/10 px-3 py-2 text-xs text-accent">
+            {loadError.message}
+          </p>
+        )}
+
+        <div className="flex items-center gap-1 border-t border-surface-border px-3 py-2 text-xs text-slate-500">
+          <button type="button" onClick={() => newGame()} className="transition hover:text-slate-300">
+            New
+          </button>
+          <span className="text-slate-700">·</span>
+          <button
+            type="button"
+            onClick={saveToStorage}
+            className="transition hover:text-slate-300"
+          >
+            Save
+          </button>
+          <span className="text-slate-700">·</span>
+          <button
+            type="button"
+            onClick={loadFromStorage}
+            className="transition hover:text-slate-300"
+          >
+            Load
+          </button>
+          {/* The save file is this number of actions plus a seed — nothing else. */}
+          <span className="ml-auto tabular-nums text-slate-600">{actionCount} actions</span>
+        </div>
       </aside>
     </div>
   );

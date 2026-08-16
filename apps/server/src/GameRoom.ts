@@ -16,11 +16,19 @@
 // is CommonJS and its named exports do not resolve under ESM.
 import { Room, type Client } from '@colyseus/core';
 import {
-  applyAction,
-  createSparringGame,
+  record,
+  save,
+  startSession,
+  vec3,
   type Action,
+  type CharacterId,
   type GameEvent,
+  type GameSession,
+  type GameSpec,
   type GameState,
+  type ModelId,
+  type PlayerId,
+  type SavedGame,
 } from '@danger-room/rules';
 import {
   PROTOCOL_VERSION,
@@ -36,14 +44,53 @@ interface SeatAssignment {
   ready: boolean;
 }
 
+/** TODO(squads): built from the players' chosen squads once drafting exists. */
+function openingPosition(seed: number): GameSpec {
+  return {
+    seed,
+    players: [
+      { id: 'p1' as PlayerId, displayName: 'Player One' },
+      { id: 'p2' as PlayerId, displayName: 'Player Two' },
+    ],
+    models: [
+      {
+        id: 'm1' as ModelId,
+        characterId: 'amazing-spider-man' as CharacterId,
+        owner: 'p1' as PlayerId,
+        pos: vec3(12, 18, 0),
+      },
+      {
+        id: 'm2' as ModelId,
+        characterId: 'black-panther' as CharacterId,
+        owner: 'p2' as PlayerId,
+        pos: vec3(16, 18, 0),
+      },
+    ],
+  };
+}
+
 export class GameRoom extends Room {
   override maxClients = 8; // two players plus spectators
 
-  /** Authoritative state. Never sent from a client. */
-  private game: GameState = createSparringGame(Date.now());
+  /**
+   * Authoritative session — state plus the action log that produced it. Never
+   * sent from a client. Holding the log rather than bare state means the room
+   * can be persisted, resumed after a restart, and handed to a bug report as a
+   * complete reproduction.
+   */
+  private session: GameSession = startSession(openingPosition(Date.now()));
 
   private seats = new Map<string, SeatAssignment>();
   private history: GameEvent[] = [];
+
+  private get game(): GameState {
+    return this.session.state;
+  }
+
+  /** The durable form of this room. Small — a seed plus a list of actions. */
+  snapshotForStorage(): SavedGame {
+    return save(this.session, this.roomId);
+  }
 
   override onCreate(options: { name?: string; isPrivate?: boolean }): void {
     this.setMetadata({
@@ -148,19 +195,18 @@ export class GameRoom extends Room {
     // this connection so a forged `player` field cannot move enemy models.
     const authenticated = { ...action, player: this.playerIdFor(seat.seat) } as Action;
 
-    const result = applyAction(this.game, authenticated);
-    if (!result.ok) {
-      this.sendTo(client, { type: 'ACTION_REJECTED', rejection: result.rejection });
+    const step = record(this.session, authenticated);
+    if (!step.ok) {
+      if (!step.result.ok) {
+        this.sendTo(client, { type: 'ACTION_REJECTED', rejection: step.result.rejection });
+      }
       return;
     }
 
-    this.game = result.state;
-    this.history.push(...result.events);
-    this.broadcastMessage({
-      type: 'EVENTS',
-      events: result.events,
-      sequence: this.game.sequence,
-    });
+    this.session = step.session;
+    const events = step.result.ok ? step.result.events : [];
+    this.history.push(...events);
+    this.broadcastMessage({ type: 'EVENTS', events, sequence: this.game.sequence });
   }
 
   // -------------------------------------------------------------------------

@@ -17,7 +17,7 @@ import { Grid, OrbitControls, OrthographicCamera, PerspectiveCamera } from '@rea
 import { useMemo } from 'react';
 import { TABLE_SIZE, type Model, type TerrainVolume } from '@danger-room/rules';
 
-import { useStore } from '../store.js';
+import { selectGame, useStore } from '../store.js';
 
 const TABLE_COLOR = '#1d2432';
 const PLAYER_COLORS: Record<string, string> = {
@@ -89,7 +89,7 @@ function ModelToken({ model, selected }: { model: Model; selected: boolean }) {
 }
 
 function Scene() {
-  const game = useStore(s => s.game);
+  const game = useStore(selectGame);
   const selected = useStore(s => s.selectedModel);
   const cameraMode = useStore(s => s.cameraMode);
 

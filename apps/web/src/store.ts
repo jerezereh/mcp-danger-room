@@ -2,63 +2,145 @@
  * Client state.
  *
  * The distinction that keeps this small: *game* state belongs to the rules
- * engine and is replaced wholesale by `applyAction`. This store holds only what
- * the engine has no opinion about — what is selected, which camera we are in,
- * whether we are connected. Mixing the two is how client-side rules divergence
- * starts.
+ * engine and is replaced wholesale by the engine's own reducers. This store
+ * holds only what the engine has no opinion about — what is selected, which
+ * camera we are in, whether we are connected. Mixing the two is how client-side
+ * rules divergence starts.
+ *
+ * The game is held as a `GameSession` (state plus the action log that produced
+ * it) rather than a bare `GameState`, so saving is always possible and the log
+ * cannot drift out of step with the state it describes.
  */
 
 import { create } from 'zustand';
 import {
-  applyAction,
-  createSparringGame,
+  deserialize,
+  record,
+  serialize,
+  startSession,
   type Action,
   type GameEvent,
+  type GameSession,
+  type GameSpec,
   type GameState,
+  type LoadError,
   type ModelId,
   type Rejection,
 } from '@danger-room/rules';
+import { vec3 } from '@danger-room/rules';
 
 export type CameraMode = 'top-down' | 'perspective';
 
+const STORAGE_KEY = 'danger-room:current-game';
+
+function defaultSpec(seed: number): GameSpec {
+  return {
+    seed,
+    players: [
+      { id: 'p1' as never, displayName: 'Player One' },
+      { id: 'p2' as never, displayName: 'Player Two' },
+    ],
+    models: [
+      {
+        id: 'm1' as never,
+        characterId: 'amazing-spider-man' as never,
+        owner: 'p1' as never,
+        pos: vec3(12, 18, 0),
+      },
+      {
+        id: 'm2' as never,
+        characterId: 'black-panther' as never,
+        owner: 'p2' as never,
+        pos: vec3(16, 18, 0),
+      },
+    ],
+  };
+}
+
 interface AppState {
-  game: GameState;
+  session: GameSession;
   events: GameEvent[];
   selectedModel: ModelId | null;
   cameraMode: CameraMode;
   lastRejection: Rejection | null;
+  lastLoadError: LoadError | null;
 
-  /** Local play path: the engine runs in this tab, no server involved. */
+  /** Local play: the engine runs in this tab, no server involved. */
   dispatch: (action: Action) => void;
   select: (id: ModelId | null) => void;
   setCameraMode: (mode: CameraMode) => void;
-  /** Online play path: authoritative state arriving from the server. */
+  /** Online play: authoritative state arriving from the server. */
   applySnapshot: (state: GameState) => void;
   newGame: (seed?: number) => void;
+
+  saveToStorage: () => void;
+  loadFromStorage: () => void;
+  exportSave: () => string;
 }
 
 export const useStore = create<AppState>((set, get) => ({
-  game: createSparringGame(Date.now()),
+  session: startSession(defaultSpec(Date.now())),
   events: [],
   selectedModel: null,
   cameraMode: 'top-down',
   lastRejection: null,
+  lastLoadError: null,
 
   dispatch: action => {
-    const result = applyAction(get().game, action);
-    if (!result.ok) {
-      set({ lastRejection: result.rejection });
+    const step = record(get().session, action);
+    if (!step.ok) {
+      set({ lastRejection: step.result.ok ? null : step.result.rejection });
       return;
     }
     set(state => ({
-      game: result.state,
-      events: [...state.events, ...result.events],
+      session: step.session,
+      events: [...state.events, ...(step.result.ok ? step.result.events : [])],
       lastRejection: null,
     }));
   },
 
   select: id => set({ selectedModel: id }),
   setCameraMode: mode => set({ cameraMode: mode }),
-  applySnapshot: game => set({ game, lastRejection: null }),
-  newGame: seed => set({ game: createSparringGame(seed ?? Date.now()), events: [] }),
+
+  /**
+   * Server snapshots replace state but cannot replace the log — the client
+   * never saw the actions of a game it joined mid-way. The log is reset rather
+   * than left stale, so a save taken now is honestly empty instead of wrong.
+   */
+  applySnapshot: state =>
+    set(current => ({
+      session: { setup: current.session.setup, state, actions: [] },
+      lastRejection: null,
+    })),
+
+  newGame: seed =>
+    set({
+      session: startSession(defaultSpec(seed ?? Date.now())),
+      events: [],
+      selectedModel: null,
+      lastRejection: null,
+      lastLoadError: null,
+    }),
+
+  saveToStorage: () => {
+    localStorage.setItem(STORAGE_KEY, serialize(get().session));
+  },
+
+  loadFromStorage: () => {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+
+    const loaded = deserialize(raw);
+    if (!loaded.ok) {
+      set({ lastLoadError: loaded.error });
+      return;
+    }
+    set({ session: loaded.session, events: [], lastLoadError: null, selectedModel: null });
+  },
+
+  exportSave: () => serialize(get().session),
 }));
+
+/** Convenience selectors, so components never reach past the session. */
+export const selectGame = (s: AppState): GameState => s.session.state;
+export const selectActionCount = (s: AppState): number => s.session.actions.length;
