@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Authoritative game server. Owns the rules engine; clients only send intent.",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch --conditions=development src/index.ts",
     "build": "tsc --build",
     "start": "node dist/index.js",
     "typecheck": "tsc --build"

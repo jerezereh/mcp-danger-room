@@ -26,8 +26,15 @@ const PLAYER_COLORS: Record<string, string> = {
 };
 
 function Table() {
+  // planeGeometry is centred on its own origin, so it must be offset by half
+  // the table to line up with the engine's 0..36 coordinate space. At [0,0,0]
+  // it would span -18..18 and sit almost entirely off the playable area.
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+    <mesh
+      rotation={[-Math.PI / 2, 0, 0]}
+      position={[TABLE_SIZE.width / 2, 0, TABLE_SIZE.depth / 2]}
+      receiveShadow
+    >
       <planeGeometry args={[TABLE_SIZE.width, TABLE_SIZE.depth]} />
       <meshStandardMaterial color={TABLE_COLOR} />
     </mesh>

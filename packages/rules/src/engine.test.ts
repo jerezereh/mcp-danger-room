@@ -138,6 +138,72 @@ describe('movement', () => {
     expect(result.rejection.code).toBe('ILLEGAL_MOVE');
   });
 
+  // Regression: a one-point path measured zero, so the server accepted it as a
+  // free move and teleported the model anywhere on the table. Distance must be
+  // measured from where the model actually is.
+  it('rejects a single-point path that teleports the model', () => {
+    const result = applyAction(createSparringGame(), {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'S',
+      path: [vec3(35, 35, 0)],
+    });
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.rejection.code).toBe('ILLEGAL_MOVE');
+  });
+
+  it('rejects a path that does not start at the model', () => {
+    const result = applyAction(createSparringGame(), {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'S',
+      path: [vec3(30, 30, 0), vec3(31, 30, 0)],
+    });
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.rejection.code).toBe('ILLEGAL_MOVE');
+  });
+
+  it('counts the leading segment from the model against the budget', () => {
+    // 2" from the model, then 2" more — 4" total, over a 3" Short move, even
+    // though each individual segment is within budget.
+    const result = applyAction(createSparringGame(), {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'S',
+      path: [vec3(12, 20, 0), vec3(12, 22, 0)],
+    });
+    expect(result.ok).toBe(false);
+  });
+
+  it('rejects a destination off the table', () => {
+    const result = applyAction(createSparringGame(), {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'L',
+      path: [vec3(12, 18, 0), vec3(12, -2, 0)],
+    });
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.rejection.code).toBe('ILLEGAL_MOVE');
+  });
+
+  it('rejects an empty path', () => {
+    const result = applyAction(createSparringGame(), {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'S',
+      path: [],
+    });
+    expect(result.ok).toBe(false);
+  });
+
   it('accepts a legal move and emits MODEL_MOVED', () => {
     const result = applyAction(createSparringGame(), {
       type: 'MOVE',

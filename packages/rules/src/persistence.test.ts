@@ -138,6 +138,23 @@ describe('load failures', () => {
     expect(loaded.error.code).toBe('MALFORMED');
   });
 
+  // Regression: valid JSON that isn't an object reached the field access and
+  // threw past the caller. A hand-edited localStorage value is ordinary input
+  // and has to come back as a typed error, not an exception.
+  it.each(['null', '42', '"a string"', '[]', 'true'])(
+    'returns MALFORMED rather than throwing on %s',
+    json => {
+      const loaded = deserialize(json);
+      expect(loaded.ok).toBe(false);
+      if (loaded.ok) return;
+      expect(loaded.error.code).toBe('MALFORMED');
+    },
+  );
+
+  it('does not throw when load is called with null directly', () => {
+    expect(() => load(null as never)).not.toThrow();
+  });
+
   it('reports divergence with the offending index instead of truncating', () => {
     // A half-replayed game looks valid and is not, so a rejection mid-replay
     // must be an error rather than a silent stop.

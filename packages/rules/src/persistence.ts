@@ -118,6 +118,13 @@ export interface LoadError {
  * game looks valid and is not.
  */
 export function load(saved: SavedGame): LoadResult {
+  // Guard the shape before touching any field. `load` is public and the input
+  // is untrusted — a hand-edited localStorage value or a truncated file is
+  // ordinary, and it must return MALFORMED rather than throw past the caller.
+  if (typeof saved !== 'object' || saved === null || Array.isArray(saved)) {
+    return { ok: false, error: { code: 'MALFORMED', message: 'Save is not an object.' } };
+  }
+
   if (saved.formatVersion !== SAVE_FORMAT_VERSION) {
     return {
       ok: false,

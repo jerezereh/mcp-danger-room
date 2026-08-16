@@ -42,7 +42,12 @@ interface SeatAssignment {
   readonly seat: Seat;
   readonly displayName: string;
   ready: boolean;
+  /** False while the player is dropped but still inside the reconnect window. */
+  connected: boolean;
 }
+
+/** How long a dropped player keeps their seat. TODO(tune) with real play. */
+const RECONNECT_WINDOW_SECONDS = 120;
 
 /** TODO(squads): built from the players' chosen squads once drafting exists. */
 function openingPosition(seed: number): GameSpec {
@@ -119,6 +124,7 @@ export class GameRoom extends Room {
       seat,
       displayName: options.displayName ?? 'Anonymous',
       ready: false,
+      connected: true,
     });
 
     this.sendTo(client, { type: 'JOINED', seat, room: this.summary() });
@@ -127,10 +133,44 @@ export class GameRoom extends Room {
     this.broadcastMessage({ type: 'ROOM_UPDATED', room: this.summary() });
   }
 
-  override onLeave(client: Client): void {
-    // Deliberately not deleting the seat: allowReconnection lets a dropped
-    // player resume the same seat rather than losing the game to a flaky train.
+  /**
+   * Hold the seat open for a dropped player.
+   *
+   * `allowReconnection` has to be awaited here — that is what issues the
+   * reconnection token in the first place. Without it a dropped player can only
+   * rejoin as a brand new session, land in `onJoin`, find both seats still
+   * occupied by their own stale entry, and get assigned spectator in their own
+   * game. Leaving on purpose (or timing out) releases the seat so it does not
+   * block the room forever.
+   */
+  override async onLeave(client: Client, consented?: boolean): Promise<void> {
+    const seat = this.seats.get(client.sessionId);
+    if (!seat) return;
+
+    if (consented || seat.seat === 'spectator') {
+      this.seats.delete(client.sessionId);
+      this.broadcastMessage({ type: 'ROOM_UPDATED', room: this.summary() });
+      return;
+    }
+
+    seat.connected = false;
     this.broadcastMessage({ type: 'ROOM_UPDATED', room: this.summary() });
+
+    try {
+      const returning = await this.allowReconnection(client, RECONNECT_WINDOW_SECONDS);
+
+      // Re-key onto whatever session the player comes back on, so the seat
+      // follows the person rather than the socket.
+      this.seats.delete(client.sessionId);
+      this.seats.set(returning.sessionId, { ...seat, connected: true });
+
+      this.sendTo(returning, { type: 'SNAPSHOT', state: this.game });
+      this.broadcastMessage({ type: 'ROOM_UPDATED', room: this.summary() });
+    } catch {
+      // Window expired — free the seat for someone else.
+      this.seats.delete(client.sessionId);
+      this.broadcastMessage({ type: 'ROOM_UPDATED', room: this.summary() });
+    }
   }
 
   // -------------------------------------------------------------------------

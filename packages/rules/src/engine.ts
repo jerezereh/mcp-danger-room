@@ -19,7 +19,7 @@ import type { GameEvent, GameEventInput } from './events.js';
 import { hasLineOfSight } from './geometry/los.js';
 import { edgeDistance, type Footprint } from './geometry/measure.js';
 import { distanceHorizontal, type Vec3 } from './geometry/vec.js';
-import { MOVEMENT_INCHES } from './constants.js';
+import { MOVEMENT_INCHES, TABLE_SIZE } from './constants.js';
 import type { ModelId } from './ids.js';
 import {
   activatableModels,
@@ -121,8 +121,15 @@ export function applyAction(state: GameState, action: Action): Result {
       if (model.owner !== action.player)
         return reject('NOT_YOUR_TURN', 'That model belongs to your opponent.');
 
+      const destination = action.path[action.path.length - 1];
+      if (!destination) return reject('ILLEGAL_MOVE', 'Move path is empty.');
+
+      // Measure from where the model actually is, not from wherever the client
+      // chose to start the path. Without this a one-point path measures zero
+      // and the server happily teleports the model anywhere on the table — on
+      // the authoritative path, which is precisely what it exists to prevent.
       const budget = MOVEMENT_INCHES[action.template];
-      const travelled = pathLength(action.path);
+      const travelled = pathLength([model.pos, ...action.path]);
       if (travelled > budget + 1e-6) {
         return reject(
           'ILLEGAL_MOVE',
@@ -130,8 +137,9 @@ export function applyAction(state: GameState, action: Action): Result {
         );
       }
 
-      const destination = action.path[action.path.length - 1];
-      if (!destination) return reject('ILLEGAL_MOVE', 'Move path is empty.');
+      if (!onTable(destination)) {
+        return reject('ILLEGAL_MOVE', 'Destination is off the table.');
+      }
 
       const blocker = findOverlap(draft.state, model, destination);
       if (blocker) return reject('ILLEGAL_MOVE', `Destination overlaps ${blocker}.`);
@@ -393,6 +401,16 @@ function mustOwner(state: GameState, id: ModelId) {
   const model = getModel(state, id);
   if (!model) throw new Error(`Model ${id} vanished mid-resolution.`);
   return model.owner;
+}
+
+/**
+ * Is this point on the 36"x36" table?
+ *
+ * TODO(verify): treats the model's centre, not its base. The rulebook's answer
+ * to "may a base overhang the edge?" needs checking.
+ */
+function onTable(p: Vec3): boolean {
+  return p.x >= 0 && p.x <= TABLE_SIZE.width && p.y >= 0 && p.y <= TABLE_SIZE.depth;
 }
 
 function pathLength(path: readonly Vec3[]): number {
