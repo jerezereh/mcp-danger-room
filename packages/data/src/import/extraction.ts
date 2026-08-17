@@ -132,11 +132,38 @@ unbroken, and the six lines are cuts across the disc, not points sticking out
 of it. On an attack or superpower bar, the cost printed at the right-hand end
 is always Power.
 
-If an icon is genuinely not in this list, transcribe it as {UNKNOWN} and say
-what it looked like in "notes". Do not omit it and do not substitute the
-nearest token — a dropped icon changes what the rule says and leaves nothing
-behind to show that it happened. {UNKNOWN} is collected automatically, so
-flagging one is cheap and guessing is not.
+Inline icons are printed as white glyphs inside a small black circular badge,
+not as bare black line art. Read the shape inside the badge; the badge itself
+is not part of the symbol.
+
+### Trigger icons
+
+A bullet under an attack usually begins with one or more icons followed by a
+trigger name — "{WILD} <b>Stun</b>:", "{CRIT} {HIT} <b>Ricochet</b>:". These
+are always dice results, and always come from these five and nothing else:
+
+  {CRIT}  {WILD}  {HIT}  {BLOCK}  {FAIL}
+
+Across 720 such bullets in a reference corpus, no other symbol has ever
+appeared in that position, and {WILD} alone accounts for about three quarters
+of them. So when you see icons leading a bullet, the question is only *which*
+of those five, never whether it might be something else. The same holds for an
+icon inside a sentence counting results, as in "for each {WILD} in the attack
+roll".
+
+Note that a trigger name does not fix its icons — the same trigger takes
+different dice on different cards, so read them, do not recall them.
+
+### When you cannot tell
+
+If an icon is genuinely not identifiable, transcribe it as {UNKNOWN} and say
+what it looked like in "notes". Do not omit it — a dropped icon changes what
+the rule says and leaves nothing behind to show that it happened. {UNKNOWN} is
+collected automatically, so flagging one is cheap.
+
+But prefer a considered reading to a flag when the position tells you the
+answer, as it does for the five dice results above. {UNKNOWN} is for an icon
+you cannot place at all, not for one you can narrow to a small set.
 
 Bold trigger names (Pierce, Momentum, Cleave) stay as <b>Name</b>.
 
