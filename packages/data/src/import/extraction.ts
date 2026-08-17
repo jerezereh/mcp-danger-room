@@ -125,9 +125,11 @@ invent a token, and never write the icon's name as a plain word instead.
 ${glyphs}
 
 Two of these appear both in the stat box and inline, and are the pair most
-often confused: Threat is six thin lines radiating from a centre point, Power
-is a filled six-pointed star. On an attack or superpower bar, the cost printed
-at the right-hand end is always Power.
+often confused. Both radiate from a centre point, so tell them apart by what
+is at that centre: Power is a six-pointed star with a black circle punched out
+of its middle; Threat is six bare lines with no star body and nothing at the
+centre. On an attack or superpower bar, the cost printed at the right-hand end
+is always Power.
 
 If an icon is genuinely not in this list, transcribe it as {UNKNOWN} and say
 what it looked like in "notes". Do not omit it and do not substitute the
@@ -148,8 +150,8 @@ nothing to catch it. The layout below is a guide to where to look:
           yellow swirl   Energy defense
           blue eye       Mystic defense
   Row 2   pulse / EKG    Stamina
-          six thin lines Threat (radiating from a centre point — this is the
-                         Threat icon, not the filled Power star)
+          six thin lines Threat (bare lines radiating from a centre point — not
+                         the Power star, which has a circle at its centre)
   Row 3   I-beam         Size (1-5; 5 exists and is rare)
           triple chevron Movement (S, M or L)
 

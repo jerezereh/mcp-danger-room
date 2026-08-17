@@ -126,9 +126,19 @@ describe('the glyph table', () => {
   });
 
   it('keeps Threat and Power distinguishable', () => {
-    // The pair the extractor confuses: both radiate from a centre point.
+    // The pair the extractor confuses: both radiate from a centre point, so
+    // the descriptions have to name what differs there, not just the outline.
     expect(SYMBOL_GLYPHS.threat).toContain('thin lines');
     expect(SYMBOL_GLYPHS.power).toContain('six-pointed star');
+    expect(SYMBOL_GLYPHS.power).toContain('circle');
+    expect(SYMBOL_GLYPHS.threat).toContain('no circle');
+  });
+
+  it('keeps Energy and Wild distinguishable', () => {
+    // The other confusable pair: both are swirls, and colour is what separates
+    // them. A description of either that omits its colour is not enough.
+    expect(SYMBOL_GLYPHS.energy).toContain('yellow');
+    expect(SYMBOL_GLYPHS.wild).toContain('white');
   });
 });
 

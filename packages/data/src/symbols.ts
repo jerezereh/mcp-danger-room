@@ -76,7 +76,7 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   // differ in colour and in construction, so the description gives both.
   energy: 'a yellow-and-black swirl, symmetric about its centre',
   mystic: 'a blue eye',
-  power: 'a six-pointed star',
+  power: 'a six-pointed star with a black circle at its centre',
   damage: 'three slightly curved parallel lines',
   range: 'a target or crosshair',
   short: 'a distance template marked S',
@@ -91,8 +91,9 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   reactive: 'a pair of lightning bolts',
   innate: 'an infinity sign',
   // The two are easy to swap: both radiate from a centre point, and both appear
-  // in the stat box and inline. Threat is thin lines, Power is a filled star.
-  threat: 'six thin lines extending from the centre — not the Power star',
+  // in the stat box and inline. Both radiate from a centre point; Threat is
+  // bare lines, Power is a star body with a circle punched out of its middle.
+  threat: 'six thin lines extending from the centre, with no star body and no circle',
   size: 'an I-beam, the same icon the stat box uses for Size',
 };
 
