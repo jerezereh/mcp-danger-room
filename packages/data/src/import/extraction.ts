@@ -36,7 +36,12 @@
  */
 import { z } from 'zod/v4';
 
-import { CANONICAL_TOKENS, SYMBOL_LABELS, type SymbolKey } from '../symbols.js';
+import {
+  CANONICAL_TOKENS,
+  SYMBOL_GLYPHS,
+  SYMBOL_LABELS,
+  type SymbolKey,
+} from '../symbols.js';
 
 /** Mirrors `PowerCost` in schema.ts — a number, or "X" when the player chooses. */
 const ExtractedCost = z.union([z.number().int().min(0), z.literal('X')]);
@@ -93,8 +98,15 @@ export type ExtractedCard = z.infer<typeof ExtractedCard>;
  * UI for every card that used it.
  */
 export function buildSystemPrompt(): string {
+  const width = Math.max(
+    ...(Object.keys(SYMBOL_LABELS) as SymbolKey[]).map(k => CANONICAL_TOKENS[k].length),
+  );
   const glyphs = (Object.keys(SYMBOL_LABELS) as SymbolKey[])
-    .map(key => `  ${CANONICAL_TOKENS[key]} = ${SYMBOL_LABELS[key]}`)
+    .map(
+      key =>
+        `  ${CANONICAL_TOKENS[key].padEnd(width)}  ${SYMBOL_LABELS[key].padEnd(10)}` +
+        `${SYMBOL_GLYPHS[key]}`,
+    )
     .join('\n');
 
   return `You transcribe Marvel: Crisis Protocol character cards into structured data.
@@ -107,9 +119,21 @@ Stamina of 6, report 6 even if you believe the character has 7.
 ## Symbols
 
 Card text uses inline icons. Transcribe each one as its token below, preserving
-its position in the sentence. Use these exact spellings and no others:
+its position in the sentence. Use these exact spellings and no others — never
+invent a token, and never write the icon's name as a plain word instead.
 
 ${glyphs}
+
+Two of these appear both in the stat box and inline, and are the pair most
+often confused: Threat is six thin lines radiating from a centre point, Power
+is a filled six-pointed star. On an attack or superpower bar, the cost printed
+at the right-hand end is always Power.
+
+If an icon is genuinely not in this list, transcribe it as {UNKNOWN} and say
+what it looked like in "notes". Do not omit it and do not substitute the
+nearest token — a dropped icon changes what the rule says and leaves nothing
+behind to show that it happened. {UNKNOWN} is collected automatically, so
+flagging one is cheap and guessing is not.
 
 Bold trigger names (Pierce, Momentum, Cleave) stay as <b>Name</b>.
 
@@ -124,7 +148,8 @@ nothing to catch it. The layout below is a guide to where to look:
           yellow swirl   Energy defense
           blue eye       Mystic defense
   Row 2   pulse / EKG    Stamina
-          6-point star   Threat
+          six thin lines Threat (radiating from a centre point — this is the
+                         Threat icon, not the filled Power star)
   Row 3   I-beam         Size (1-5; 5 exists and is rare)
           triple chevron Movement (S, M or L)
 
@@ -157,8 +182,12 @@ and never fold it into the number.
 
 - Attack "dice" is the number of dice in the attack pool, printed on the card
   as the attack's strength or weight.
-- Superpower "type" is Active, Reactive, Innate, Leadership, or Affiliation as
-  labelled on the card. Innate powers usually show no cost — report cost 0.
+- Superpower "type" is Active, Reactive, Innate, Leadership, or Affiliation.
+  The icon at the *left* head of the bar gives the type — four outward arrows
+  for Active, lightning bolts for Reactive, an infinity sign for Innate, a
+  solid star for Affiliation (its name also carries "(Affiliation: ...)"). Any
+  cost is at the *right* end of the same bar, so an icon's side tells you which
+  of the two you are looking at. Innate powers usually show no cost — report 0.
 - A cost printed as "X" is a variable cost: the player chooses how much Power to
   spend, and the rules text gives the limit ("spend up to 3"). Report the string
   "X", never 0 — 0 would mean the power is free, which is a different rule.

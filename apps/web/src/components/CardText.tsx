@@ -35,6 +35,8 @@ const SYMBOL_STYLES: Record<SymbolKey, string> = {
   active: 'bg-teal-500/20 text-teal-300',
   reactive: 'bg-teal-500/20 text-teal-300',
   innate: 'bg-slate-500/20 text-slate-300',
+  threat: 'bg-fuchsia-500/20 text-fuchsia-300',
+  size: 'bg-slate-500/20 text-slate-300',
 };
 
 const SYMBOL_GLYPHS: Partial<Record<SymbolKey, string>> = {
@@ -51,10 +53,12 @@ const SYMBOL_GLYPHS: Partial<Record<SymbolKey, string>> = {
   wild: '✷',
   hit: '✱',
   block: '⛊',
-  fail: '○',
+  fail: '☠',
   active: '▶',
   reactive: '↺',
   innate: '∞',
+  threat: '✳',
+  size: 'I',
 };
 
 function Glyph({ symbolKey }: { symbolKey: SymbolKey }) {

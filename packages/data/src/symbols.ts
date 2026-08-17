@@ -33,7 +33,9 @@ export type SymbolKey =
   | 'fail'
   | 'active'
   | 'reactive'
-  | 'innate';
+  | 'innate'
+  | 'threat'
+  | 'size';
 
 export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
   physical: 'Physical',
@@ -49,10 +51,47 @@ export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
   wild: 'Wild',
   hit: 'Hit',
   block: 'Block',
-  fail: 'Blank',
+  // The skull face. Distinct from Blank, which is a separate die result that
+  // prints no glyph at all — labelling this one "Blank" conflated the two.
+  fail: 'Failure',
   active: 'Active',
   reactive: 'Reactive',
   innate: 'Innate',
+  threat: 'Threat',
+  size: 'Size',
+};
+
+/**
+ * What each glyph looks like on the card.
+ *
+ * Written for the vision extractor, which sees pictures and has to name them.
+ * Without this it was told `{CRIT} = Critical` and left to work out which of
+ * several small black-on-white icons that was — and it said so, on 34 of 41
+ * cards. Where two glyphs are easy to confuse the description says how they
+ * differ rather than describing each in isolation.
+ */
+export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
+  physical: 'a red clenched fist',
+  energy: 'a yellow swirl',
+  mystic: 'a blue eye',
+  power: 'a six-pointed star',
+  damage: 'three slightly curved parallel lines',
+  range: 'a target or crosshair',
+  short: 'a distance template marked S',
+  medium: 'a distance template marked M',
+  long: 'a distance template marked L',
+  critical: 'an exclamation mark with jagged lines around it',
+  wild: 'a swirl',
+  hit: 'a jagged centre with a jagged line off it',
+  block: 'a shield with a spot on it',
+  fail: 'a skull',
+  active: 'four arrows pointing outward from a centre',
+  reactive: 'a pair of lightning bolts',
+  innate: 'an infinity sign',
+  // The two are easy to swap: both radiate from a centre point, and both appear
+  // in the stat box and inline. Threat is thin lines, Power is a filled star.
+  threat: 'six thin lines extending from the centre — not the Power star',
+  size: 'an I-beam, the same icon the stat box uses for Size',
 };
 
 /**
@@ -98,6 +137,9 @@ const ALIASES: Readonly<Record<string, SymbolKey>> = {
   block: 'block',
   a: 'fail',
   fail: 'fail',
+  failure: 'fail',
+  // Legacy spelling. The Blank die face prints no glyph, so nothing inline can
+  // legitimately mean it — a `{BLANK}` in the corpus is the skull.
   blank: 'fail',
   active: 'active',
   activated: 'active',
@@ -105,6 +147,9 @@ const ALIASES: Readonly<Record<string, SymbolKey>> = {
   react: 'reactive',
   reaction: 'reactive',
   innate: 'innate',
+  threat: 'threat',
+  t: 'threat',
+  size: 'size',
 };
 
 /** The canonical spelling to emit when writing new card text. */
@@ -126,6 +171,8 @@ export const CANONICAL_TOKENS: Readonly<Record<SymbolKey, string>> = {
   active: '{ACTIVE}',
   reactive: '{REACTIVE}',
   innate: '{INNATE}',
+  threat: '{THREAT}',
+  size: '{SIZE}',
 };
 
 export type TextToken =
