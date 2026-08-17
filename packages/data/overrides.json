@@ -1,4 +1,11 @@
 {
-  "_comment": "Human corrections applied after the merge. Every entry needs a reason. Setting verified:true asserts a person compared this against a printed card.",
-  "overrides": []
+  "_comment": "Human corrections applied after the merge, beating every source. Every entry needs a reason. Setting verified:true asserts a person compared this against a printed card.",
+  "overrides": [
+    {
+      "id": "nova",
+      "reason": "Card reads 7/8; Cerebro has injured 7. OCR read 8 off the card and this was confirmed against the printed card. Injured stamina above healthy is normal in MCP — six other characters show the same pattern and all agree with their sources.",
+      "verified": true,
+      "injured": { "stamina": 8 }
+    }
+  ]
 }

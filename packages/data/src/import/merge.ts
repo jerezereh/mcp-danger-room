@@ -41,9 +41,15 @@ export interface MergeInputs {
   readonly cerebro?: readonly CharacterDraft[];
   readonly bsdata?: readonly CharacterDraft[];
   readonly jarvis?: readonly CharacterDraft[];
+  readonly ocr?: readonly CharacterDraft[];
 }
 
-type Slot = { cerebro?: CharacterDraft; bsdata?: CharacterDraft; jarvis?: CharacterDraft };
+type Slot = {
+  cerebro?: CharacterDraft;
+  bsdata?: CharacterDraft;
+  jarvis?: CharacterDraft;
+  ocr?: CharacterDraft;
+};
 type Pairing = Map<string, Slot>;
 
 const groupBy = (drafts: readonly CharacterDraft[]): Map<string, CharacterDraft[]> => {
@@ -71,6 +77,7 @@ function pairBySlug(inputs: MergeInputs): Pairing {
     ['cerebro', groupBy(inputs.cerebro ?? [])],
     ['bsdata', groupBy(inputs.bsdata ?? [])],
     ['jarvis', groupBy(inputs.jarvis ?? [])],
+    ['ocr', groupBy(inputs.ocr ?? [])],
   ];
 
   const slugs = new Set(grouped.flatMap(([, g]) => [...g.keys()]));
@@ -175,7 +182,7 @@ const mentionsStamina = (errata: string | null | undefined): boolean =>
 function pickStamina(
   id: string,
   label: string,
-  values: { jarvis?: number; cerebro?: number; bsdata?: number },
+  values: { jarvis?: number; cerebro?: number; bsdata?: number; ocr?: number },
   hasStaminaErrata: boolean,
   conflicts: Conflict[],
 ): number | undefined {
@@ -185,6 +192,7 @@ function pickStamina(
     { source: 'jarvis', value: usable(values.jarvis) },
     { source: 'cerebro', value: usable(values.cerebro) },
     { source: 'bsdata', value: usable(values.bsdata) },
+    { source: 'ocr', value: usable(values.ocr) },
   ];
 
   const present = ordered.filter(c => c.value !== undefined);
@@ -216,25 +224,30 @@ function mergeSide(
   const c = slot.cerebro?.[side];
   const b = slot.bsdata?.[side];
   const j = slot.jarvis?.[side];
-  if (!c && !b && !j) return undefined;
+  const o = slot.ocr?.[side];
+  if (!c && !b && !j && !o) return undefined;
 
   return {
     // Only Cerebro carries image filenames.
     cardImage: c?.cardImage ?? b?.cardImage ?? null,
+    /*
+     * OCR is last everywhere. It reads the physical card and is therefore
+     * blind to errata, and it is the only source that can hallucinate — so it
+     * fills gaps and never overrides a curated source.
+     */
     stamina: pickStamina(
       id,
       label,
-      { jarvis: j?.stamina, cerebro: c?.stamina, bsdata: b?.stamina },
+      { jarvis: j?.stamina, cerebro: c?.stamina, bsdata: b?.stamina, ocr: o?.stamina },
       hasStaminaErrata,
       conflicts,
     ),
-    // Jarvis is current for the stat line; BSData is the fallback.
-    movement: j?.movement ?? b?.movement ?? c?.movement,
-    size: j?.size ?? b?.size ?? c?.size,
-    defense: j?.defense ?? b?.defense ?? c?.defense,
-    // Only BSData has rules text.
-    attacks: b?.attacks ?? c?.attacks,
-    superpowers: b?.superpowers ?? c?.superpowers,
+    movement: j?.movement ?? b?.movement ?? c?.movement ?? o?.movement,
+    size: j?.size ?? b?.size ?? c?.size ?? o?.size,
+    defense: j?.defense ?? b?.defense ?? c?.defense ?? o?.defense,
+    // BSData is the curated rules text; OCR covers the characters it predates.
+    attacks: b?.attacks ?? o?.attacks ?? c?.attacks,
+    superpowers: b?.superpowers ?? o?.superpowers ?? c?.superpowers,
   };
 }
 
@@ -256,10 +269,10 @@ export function mergeDrafts(inputs: MergeInputs): MergeResult {
 
   const drafts: CharacterDraft[] = [];
   let matched = 0;
-  const onlyIn: Record<string, number> = { cerebro: 0, bsdata: 0, jarvis: 0 };
+  const onlyIn: Record<string, number> = { cerebro: 0, bsdata: 0, jarvis: 0, ocr: 0 };
 
   for (const [id, slot] of [...paired.entries()].sort()) {
-    const sources = (['cerebro', 'bsdata', 'jarvis'] as const).filter(s => slot[s]);
+    const sources = (['cerebro', 'bsdata', 'jarvis', 'ocr'] as const).filter(s => slot[s]);
     if (sources.length > 1) matched++;
     else if (sources[0]) onlyIn[sources[0]] = (onlyIn[sources[0]] ?? 0) + 1;
 
@@ -282,8 +295,9 @@ export function mergeDrafts(inputs: MergeInputs): MergeResult {
     drafts.push({
       id,
       // Cerebro and Jarvis both use proper casing; BSData uppercases.
-      name: cerebro?.name ?? jarvis?.name ?? bsdata?.name,
-      alterEgo: cerebro?.alterEgo ?? jarvis?.alterEgo ?? bsdata?.alterEgo ?? null,
+      name: cerebro?.name ?? jarvis?.name ?? bsdata?.name ?? slot.ocr?.name,
+      alterEgo:
+        cerebro?.alterEgo ?? jarvis?.alterEgo ?? bsdata?.alterEgo ?? slot.ocr?.alterEgo ?? null,
       /*
        * Affiliations come from Jarvis or Cerebro only. BSData is excluded
        * because it is both stale (missing affiliations added after 2024) and

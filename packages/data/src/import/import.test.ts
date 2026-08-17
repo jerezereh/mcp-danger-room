@@ -5,6 +5,7 @@ import type { CharacterDraft } from './draft.js';
 import { finalize } from './draft.js';
 import { mergeDrafts } from './merge.js';
 import { applyOverrides, Override } from './overrides.js';
+import { ocrToDraft } from './ocr.js';
 import { qualifiedSlug, slugify, splitName } from './slug.js';
 import {
   crossCheck,
@@ -514,5 +515,86 @@ describe('manual overrides', () => {
     expect(
       Override.safeParse({ id: 'toad', reason: 'x', stamina: 5 }).success,
     ).toBe(false);
+  });
+});
+
+describe('OCR as a merge source', () => {
+  const cerebro: CharacterDraft = {
+    id: 'angela',
+    name: 'Angela',
+    threat: 5,
+    healthy: { cardImage: 'ANGELA_healthy.png', stamina: 7 },
+    sources: ['cerebro'],
+  };
+  const bsdata: CharacterDraft = {
+    id: 'angela',
+    name: 'ANGELA',
+    threat: 5,
+    healthy: {
+      stamina: 6,
+      movement: 'L',
+      size: 2,
+      defense: { physical: 4, energy: 4, mystic: 4 },
+      attacks: [],
+      superpowers: [],
+    },
+    sources: ['bsdata'],
+  };
+
+  const ocr = ocrToDraft({
+    id: 'angela',
+    card: {
+      name: 'ANGELA',
+      alterEgo: null,
+      healthy: {
+        stamina: 99,
+        movement: 'S',
+        size: 4,
+        defense: { physical: 9, energy: 9, mystic: 9 },
+        attacks: [
+          { name: 'OCR Attack', type: 'physical', range: 2, dice: 5, cost: 0, text: ['read off the card'] },
+        ],
+        superpowers: [{ name: 'OCR Power', type: 'innate', cost: 0, text: '' }],
+      },
+      injured: {
+        stamina: 99,
+        movement: 'S',
+        size: 4,
+        defense: { physical: 9, energy: 9, mystic: 9 },
+        attacks: [],
+        superpowers: [],
+      },
+      legibility: 'clear',
+      notes: '',
+    },
+  });
+
+  /*
+   * OCR reads the physical card, so it is blind to errata, and it is the only
+   * source that can hallucinate. It must never win against a curated source —
+   * these deliberately absurd values would be visible immediately if it did.
+   */
+  it('never overrides a curated source', () => {
+    const { drafts } = mergeDrafts({ cerebro: [cerebro], bsdata: [bsdata], ocr: [ocr] });
+    const merged = drafts[0];
+
+    expect(merged?.healthy?.stamina).toBe(7); // Cerebro, not OCR's 99
+    expect(merged?.healthy?.movement).toBe('L'); // BSData, not OCR's 'S'
+    expect(merged?.healthy?.size).toBe(2); // BSData, not OCR's 4
+    expect(merged?.healthy?.defense).toEqual({ physical: 4, energy: 4, mystic: 4 });
+  });
+
+  it('supplies rules text where no other source has any', () => {
+    // The whole reason OCR exists: characters released after BSData froze.
+    const { drafts } = mergeDrafts({ cerebro: [cerebro], ocr: [ocr] });
+
+    expect(drafts[0]?.healthy?.attacks?.[0]?.name).toBe('OCR Attack');
+    expect(drafts[0]?.healthy?.superpowers?.[0]?.name).toBe('OCR Power');
+    expect(drafts[0]?.sources).toContain('ocr');
+  });
+
+  it('yields to BSData for rules text when both have it', () => {
+    const { drafts } = mergeDrafts({ bsdata: [bsdata], ocr: [ocr] });
+    expect(drafts[0]?.healthy?.attacks).toEqual([]);
   });
 });

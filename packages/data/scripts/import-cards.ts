@@ -28,6 +28,7 @@ import {
   type CharacterDraft,
 } from '../src/import/index.js';
 import { fetchJarvisCharacters, jarvisToDraft } from '../src/import/jarvis.js';
+import { ocrToDraft, type ExtractionRecord } from '../src/import/ocr.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = resolve(here, '..');
@@ -95,8 +96,18 @@ async function main() {
     console.log(`  unavailable (${(error as Error).message.split('.')[0]}) — continuing without it`);
   }
 
+  // OCR extractions, if any have been run. These are the only source of rules
+  // text for characters released after BSData stopped updating.
+  const extractedPath = resolve(OUT_DIR, 'extracted.json');
+  let ocr: CharacterDraft[] = [];
+  if (existsSync(extractedPath)) {
+    const records = JSON.parse(readFileSync(extractedPath, 'utf8')).results as ExtractionRecord[];
+    ocr = records.map(ocrToDraft);
+    console.log(`OCR extractions: ${ocr.length}`);
+  }
+
   console.log('Merging…');
-  const merged = mergeDrafts({ cerebro, bsdata: bsdata.drafts, jarvis });
+  const merged = mergeDrafts({ cerebro, bsdata: bsdata.drafts, jarvis, ocr });
   console.log(
     `  ${merged.stats.total} total · ${merged.stats.matched} in both · ` +
       `${merged.stats.onlyIn['cerebro'] ?? 0} Cerebro-only · ` +
