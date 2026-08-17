@@ -23727,9 +23727,9 @@
           },
           {
             "name": "DEATH SPORES",
-            "type": "passive",
+            "type": "innate",
             "cost": 0,
-            "text": ""
+            "text": "Enemy characters that end their activation within {RNG} 2 of this character gain the Poison special condition.\nAdditionally, at the end of this character's activation, enemy characters within {RNG} 2 of it gain the Poison special condition."
           },
           {
             "name": "IMMUNITY [POISON]",
@@ -23796,9 +23796,9 @@
           },
           {
             "name": "DEATH SPORES",
-            "type": "passive",
+            "type": "innate",
             "cost": 0,
-            "text": ""
+            "text": "Enemy characters that end their activation within {RNG} 2 of this character gain the Poison special condition.\nAdditionally, at the end of this character's activation, enemy characters within {RNG} 2 of it gain the Poison special condition."
           },
           {
             "name": "IMMUNITY [POISON]",
@@ -25697,7 +25697,7 @@
         "superpowers": [
           {
             "name": "FOCUSED REPULSION FIELD",
-            "type": "reactive",
+            "type": "active",
             "cost": 2,
             "text": "When this character is targeted by a {PHYS} or {ENRG} attack, it may use this superpower. This character adds blanks in its defense roll to its total successes."
           },
@@ -25760,7 +25760,7 @@
         "superpowers": [
           {
             "name": "FOCUSED REPULSION FIELD",
-            "type": "reactive",
+            "type": "active",
             "cost": 2,
             "text": "When this character is targeted by a {PHYS} or {ENRG} attack, it may use this superpower. This character adds blanks in its defense roll to its total successes."
           },

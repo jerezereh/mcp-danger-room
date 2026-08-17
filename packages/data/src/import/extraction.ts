@@ -59,7 +59,7 @@ const ExtractedAttack = z.object({
 
 const ExtractedSuperpower = z.object({
   name: z.string().min(1),
-  type: z.enum(['active', 'reactive', 'passive', 'innate', 'leadership']),
+  type: z.enum(['active', 'reactive', 'innate', 'leadership']),
   cost: ExtractedCost,
   text: z.string(),
 });

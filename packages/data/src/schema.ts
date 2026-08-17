@@ -25,7 +25,7 @@ export const MovementTemplate = z.enum(['S', 'M', 'L']);
 export type MovementTemplate = z.infer<typeof MovementTemplate>;
 
 /**
- * No 'affiliation'.
+ * The four types a card prints. No 'affiliation', and no 'passive'.
  *
  * Character cards do not carry an affiliation superpower — affiliation is set
  * by the rules body, not printed. What looks like one is a Leadership ability
@@ -35,14 +35,15 @@ export type MovementTemplate = z.infer<typeof MovementTemplate>;
  * Having both values let the same power be typed two ways depending on which
  * source read it: all 46 from BSData came back 'leadership' and all 5 the OCR
  * extractor saw came back 'affiliation', with identical name patterns.
+ *
+ * 'passive' is gone for a related reason. It was never a printed type — it was
+ * the BSData parser's fallback for a type it could not read, so the one power
+ * that ever carried it (Omega Red's DEATH SPORES, Innate on the card) was
+ * mistyped by a default rather than by a source. A fallback that lands on a
+ * legal value hides the failure; the parser now reads the profile's own type
+ * and warns when it has to guess.
  */
-export const SuperpowerType = z.enum([
-  'active',
-  'reactive',
-  'passive',
-  'innate',
-  'leadership',
-]);
+export const SuperpowerType = z.enum(['active', 'reactive', 'innate', 'leadership']);
 export type SuperpowerType = z.infer<typeof SuperpowerType>;
 
 /**

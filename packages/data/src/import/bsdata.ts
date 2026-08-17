@@ -148,11 +148,26 @@ const SUPERPOWER_TYPES: Record<string, Superpower['type']> = {
   reactive: 'reactive',
   reaction: 'reactive',
   innate: 'innate',
-  passive: 'passive',
   // Not a distinct type — see the note on SuperpowerType. BSData has never
   // actually emitted this, but the mapping existed and would have been wrong.
   affiliation: 'leadership',
   leadership: 'leadership',
+};
+
+/**
+ * The profile's `typeName` attribute — the structural, authoritative answer.
+ *
+ * Every superpower profile carries one, and unlike the `Type` characteristic it
+ * cannot be filled in wrong by a contributor typing in the wrong box. That is
+ * not hypothetical: Omega Red's DEATH SPORES has its entire rules text pasted
+ * into `Type` and an empty `Special Rules`, which made it the corpus's only
+ * "passive" power and left it with no text at all.
+ */
+const SUPERPOWER_TYPE_BY_PROFILE: Record<string, Superpower['type']> = {
+  'Active Superpowers': 'active',
+  'Reactive Superpowers': 'reactive',
+  'Innate Superpowers': 'innate',
+  Leadership: 'leadership',
 };
 
 const MOVEMENT: Record<string, StatBlock['movement']> = {
@@ -259,20 +274,42 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
       const powerName = (attr(p, 'name') ?? '').trim();
       if (!powerName) return null;
 
-      const declared = (c['Type'] ?? '').trim().toLowerCase();
-      // Leadership profiles carry no Type characteristic — infer from typeName.
-      const inferred = typeName(p) === 'Leadership' ? 'leadership' : declared;
-      const type = SUPERPOWER_TYPES[inferred];
+      const declared = (c['Type'] ?? '').trim();
+      // The profile's own type wins; the Type characteristic only fills gaps.
+      // Leadership profiles never carry one at all.
+      const type =
+        SUPERPOWER_TYPE_BY_PROFILE[typeName(p)] ?? SUPERPOWER_TYPES[declared.toLowerCase()];
       if (!type) {
-        warnings.push({ character: rawName, message: `unknown superpower type "${c['Type']}" on ${powerName}` });
+        warnings.push({
+          character: rawName,
+          message: `unknown superpower type "${declared}" on ${powerName} — assuming innate`,
+        });
+      }
+
+      /*
+       * Recover rules text from the Type field when it holds prose.
+       *
+       * A contributor filled the wrong box for DEATH SPORES: its rules text is
+       * in `Type` and `Special Rules` is empty. Taking the text as printed and
+       * saying so is better than shipping a superpower with no text, which is
+       * what the corpus did.
+       */
+      const rules = clean(c['Special Rules'] ?? '');
+      const misplaced =
+        rules === '' && declared !== '' && SUPERPOWER_TYPES[declared.toLowerCase()] === undefined;
+      if (misplaced) {
+        warnings.push({
+          character: rawName,
+          message: `rules text found in the Type field on ${powerName} — using it as the text`,
+        });
       }
 
       return {
         name: powerName,
-        type: type ?? 'passive',
+        type: type ?? 'innate',
         // Innate powers use "-" to mean no cost; "X" means the player chooses.
         cost: parseCost(c['Cost']),
-        text: clean(c['Special Rules'] ?? ''),
+        text: misplaced ? clean(declared) : rules,
       };
     };
 
