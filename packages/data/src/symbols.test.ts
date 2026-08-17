@@ -126,12 +126,12 @@ describe('the glyph table', () => {
   });
 
   it('keeps Threat and Power distinguishable', () => {
-    // The pair the extractor confuses: both radiate from a centre point, so
-    // the descriptions have to name what differs there, not just the outline.
-    expect(SYMBOL_GLYPHS.threat).toContain('thin lines');
-    expect(SYMBOL_GLYPHS.power).toContain('six-pointed star');
-    expect(SYMBOL_GLYPHS.power).toContain('circle');
-    expect(SYMBOL_GLYPHS.threat).toContain('no circle');
+    // The pair the extractor confuses. Both radiate from a centre and both
+    // have a dark dot there, so a description that leans on the centre
+    // separates nothing — the outline is the only reliable tell.
+    expect(SYMBOL_GLYPHS.power).toContain('spike');
+    expect(SYMBOL_GLYPHS.threat).toContain('no spikes');
+    expect(SYMBOL_GLYPHS.threat).toContain('circle');
   });
 
   it('keeps Energy and Wild distinguishable', () => {
