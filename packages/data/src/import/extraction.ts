@@ -6,14 +6,19 @@
  * are things we already know, and asking a model to restate known facts invites
  * it to invent them.
  *
- * It *does* ask for name, threat and stamina even though other sources supply
- * them — precisely so the two can be compared. Those fields are the cross-check
- * that tells you whether an extraction is trustworthy, and they only work as a
- * check if the model reads them independently.
+ * It *does* ask for name and stamina even though other sources supply them —
+ * precisely so the two can be compared. Those are the cross-check that tells
+ * you whether an extraction is trustworthy, and they only work as a check if
+ * the model reads them independently. Both are plainly printed on the card, and
+ * across 38 real extractions stamina disagreed exactly once.
  *
- * Affiliations are deliberately absent: they are not printed on character
- * cards at all, they are set by the rules body. Asking a model to read
- * something that is not there invites it to invent one.
+ * Affiliations and threat are deliberately absent. Affiliations are not on
+ * character cards at all — they are set by the rules body. Threat was on the
+ * schema initially and proved unreadable in practice: on 15 of 38 cards the
+ * model reported it could not see a threat value and emitted a placeholder,
+ * because a required field leaves it no way to say "not visible". Requiring a
+ * field a model cannot read does not get you the value, it gets you a
+ * confident guess.
  */
 
 /*
@@ -65,7 +70,6 @@ export const ExtractedStatBlock = z.object({
 export const ExtractedCard = z.object({
   name: z.string().min(1),
   alterEgo: z.string().nullable(),
-  threat: z.number().int().min(0).max(20),
   healthy: ExtractedStatBlock,
   injured: ExtractedStatBlock,
   /** The model's own assessment, so unreadable scans can be triaged. */
@@ -204,7 +208,6 @@ export function crossCheck(
   extracted: ExtractedCard,
   known: {
     name?: string;
-    threat?: number;
     healthyStamina?: number;
     injuredStamina?: number;
     /** Errata text, so a pre-errata scan is not mistaken for a misread. */
@@ -217,9 +220,6 @@ export function crossCheck(
 
   if (known.name && norm(known.name) !== norm(extracted.name)) {
     out.push({ field: 'name', extracted: extracted.name, known: known.name });
-  }
-  if (known.threat !== undefined && known.threat !== extracted.threat) {
-    out.push({ field: 'threat', extracted: extracted.threat, known: known.threat });
   }
 
   /*

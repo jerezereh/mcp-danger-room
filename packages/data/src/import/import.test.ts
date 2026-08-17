@@ -120,7 +120,6 @@ describe('merge precedence', () => {
     id: 'angela',
     name: 'ANGELA',
     affiliations: ['A-Force', 'Asgard', 'Guardians of the Galaxy'],
-    threat: 5,
     healthy: {
       stamina: 6,
       movement: 'L',
@@ -262,7 +261,6 @@ describe('OCR cross-check', () => {
   const extracted = (over: Partial<ExtractedCard> = {}): ExtractedCard => ({
     name: 'Angela',
     alterEgo: null,
-    threat: 5,
     healthy: {
       stamina: 6,
       movement: 'L',
@@ -286,13 +284,8 @@ describe('OCR cross-check', () => {
 
   it('is silent when the model agrees with what we already know', () => {
     expect(
-      crossCheck(extracted(), { name: 'Angela', threat: 5, healthyStamina: 6 }),
+      crossCheck(extracted(), { name: 'Angela', healthyStamina: 6 }),
     ).toEqual([]);
-  });
-
-  it('flags a misread stat with both values', () => {
-    const found = crossCheck(extracted(), { threat: 4 });
-    expect(found).toEqual([{ field: 'threat', extracted: 5, known: 4 }]);
   });
 
   it('checks nothing it was given nothing for', () => {
@@ -342,7 +335,6 @@ describe('errata-aware OCR cross-check', () => {
   const extracted = (h: number, i: number): ExtractedCard => ({
     name: 'Ancient One',
     alterEgo: null,
-    threat: 4,
     healthy: {
       stamina: h,
       movement: 'M',

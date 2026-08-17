@@ -9,6 +9,9 @@
  *   --sync           Run immediately instead of via the Batch API
  *   --all            Re-extract every character, not just the incomplete ones
  *   --model <id>     Override the model
+ *   --resume <id>    Re-retrieve a finished batch ("last" for the most recent)
+ *   --only <ids>     Comma-separated character ids, or "failed" to retry the
+ *                    ones that failed last run
  *   --dry-run        Resolve images and report the plan; call nothing
  *
  * Fills the gaps the Cerebro + BSData import cannot: characters released after
@@ -19,7 +22,7 @@
  * against the printed card.
  */
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -36,6 +39,12 @@ const pkgRoot = resolve(here, '..');
 const repoRoot = resolve(pkgRoot, '../..');
 const OUT_DIR = resolve(pkgRoot, '.import');
 const CACHE_DIR = resolve(OUT_DIR, 'card-images');
+const BATCH_ID_FILE = resolve(OUT_DIR, 'batch-id.txt');
+
+const readBatchId = (): string => {
+  if (!existsSync(BATCH_ID_FILE)) throw new Error('No .import/batch-id.txt to resume from.');
+  return readFileSync(BATCH_ID_FILE, 'utf8').trim();
+};
 
 // ---------------------------------------------------------------------------
 // Options
@@ -55,6 +64,15 @@ const DRY_RUN = flag('dry-run');
 const SYNC = flag('sync');
 const ALL = flag('all');
 const LOCAL_ONLY = flag('local-only');
+/** Batch id to re-retrieve, or "last" for the most recent. */
+const RESUME = option('resume');
+/**
+ * Restrict the run to specific characters, or to whatever failed last time.
+ *
+ * Without this, retrying three truncated cards means resubmitting all 41 and
+ * paying for the 38 that were already fine.
+ */
+const ONLY = option('only');
 
 // ---------------------------------------------------------------------------
 // Image resolution
@@ -160,7 +178,6 @@ interface Job {
   id: string;
   known: {
     name?: string;
-    threat?: number;
     affiliations?: string[];
     healthyStamina?: number;
     injuredStamina?: number;
@@ -204,7 +221,25 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
     }
   }
 
-  const needing = new Set(ALL ? known.keys() : worklist.map(e => e.id));
+  let needing = new Set(ALL ? known.keys() : worklist.map(e => e.id));
+
+  if (ONLY) {
+    const wanted =
+      ONLY === 'failed'
+        ? (() => {
+            const path = resolve(OUT_DIR, 'extraction-failures.json');
+            if (!existsSync(path)) throw new Error('No .import/extraction-failures.json to retry.');
+            return (JSON.parse(readFileSync(path, 'utf8')).failures as { id: string }[]).map(
+              f => f.id,
+            );
+          })()
+        : ONLY.split(',').map(x => x.trim()).filter(Boolean);
+
+    needing = new Set(wanted.filter(id => known.has(id) || needing.has(id)));
+    for (const id of wanted) {
+      if (!needing.has(id)) console.log(`  ⚠ "${id}" is not in the worklist — skipping`);
+    }
+  }
 
   if (needing.size === 0 && !ALL) {
     console.log('Nothing to extract — .import/needs-data.json is empty or missing.');
@@ -242,7 +277,6 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
       id,
       known: {
         ...(entry?.name ? { name: entry.name } : {}),
-        ...(entry?.threat !== undefined ? { threat: entry.threat } : {}),
         ...(entry?.affiliations ? { affiliations: entry.affiliations } : {}),
         ...(entry?.healthyStamina !== undefined
           ? { healthyStamina: entry.healthyStamina }
@@ -268,7 +302,14 @@ function requestFor(job: Job) {
 
   return {
     model: MODEL,
-    max_tokens: 16000,
+    /*
+     * Generous because max_tokens covers thinking *and* the response, and
+     * Sonnet 5 thinks by default. At 16000, three of 41 cards ran out mid-JSON
+     * — one spent the entire budget thinking and emitted no text at all.
+     * A truncated card costs a full rerun, so headroom is far cheaper than
+     * the retry.
+     */
+    max_tokens: 32000,
     system: buildSystemPrompt(),
     output_config: { format: zodOutputFormat(ExtractedCard) },
     messages: [
@@ -297,6 +338,49 @@ interface Extraction {
   disagreements: ReturnType<typeof crossCheck>;
 }
 
+type ParseOutcome =
+  | { ok: true; card: ExtractedCard }
+  | { ok: false; error: string };
+
+/**
+ * Pull the structured output out of a finished message.
+ *
+ * Shared by both paths so a truncated or malformed response is handled
+ * identically whether it came back over a stream or out of a batch — the batch
+ * path learned this the hard way when one bad card threw and discarded 40 good
+ * results with it.
+ */
+function parseMessage(message: {
+  content: { type: string; text?: string }[];
+  stop_reason: string | null;
+  usage: { input_tokens: number; output_tokens: number };
+}): ParseOutcome {
+  const block = message.content.find(b => b.type === 'text');
+  const raw = block?.text ?? '';
+
+  if (message.stop_reason === 'max_tokens' || raw.trim() === '') {
+    return {
+      ok: false,
+      error: `hit max_tokens (${message.usage.output_tokens} output tokens); response was cut off`,
+    };
+  }
+
+  let json: unknown;
+  try {
+    json = JSON.parse(raw);
+  } catch (error) {
+    return { ok: false, error: `unparseable JSON: ${(error as Error).message}` };
+  }
+
+  const parsed = ExtractedCard.safeParse(json);
+  return parsed.success
+    ? { ok: true, card: parsed.data }
+    : {
+        ok: false,
+        error: parsed.error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join('; '),
+      };
+}
+
 let totalIn = 0;
 let totalOut = 0;
 const failures: { id: string; error: string }[] = [];
@@ -308,38 +392,43 @@ async function runSync(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
     process.stdout.write(`  [${i + 1}/${jobs.length}] ${job.id}… `);
 
     /*
-     * One card failing must not abandon the rest of the run. Overloads and
-     * rate limits are transient and were observed in practice; losing 40 good
-     * extractions to the 41st is the wrong trade, and the failures are
-     * reported at the end so nothing disappears quietly.
+     * Streamed, not a plain request. Above ~16k max_tokens the SDK refuses a
+     * non-streaming call outright ("Streaming is required for operations that
+     * may take longer than 10 minutes"), and these cards need the headroom.
+     *
+     * One card failing must not abandon the rest of the run: overloads and
+     * rate limits are transient and were observed in practice, and losing 40
+     * good extractions to the 41st is the wrong trade. Failures are recorded
+     * and reported rather than disappearing.
      */
-    let response;
+    let message;
     try {
-      response = await client.messages.parse(requestFor(job));
+      const stream = client.messages.stream(requestFor(job));
+      message = await stream.finalMessage();
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      console.log(`failed — ${message.split('\n')[0]?.slice(0, 70)}`);
-      failures.push({ id: job.id, error: message });
+      const detail = error instanceof Error ? error.message : String(error);
+      console.log(`failed — ${detail.split('\n')[0]?.slice(0, 70)}`);
+      failures.push({ id: job.id, error: detail });
       continue;
     }
 
-    if (!response.parsed_output) {
-      console.log('no structured output');
-      failures.push({ id: job.id, error: 'model returned no structured output' });
+    totalIn += message.usage.input_tokens;
+    totalOut += message.usage.output_tokens;
+
+    const outcome = parseMessage(message);
+    if (!outcome.ok) {
+      console.log(outcome.error.slice(0, 70));
+      failures.push({ id: job.id, error: outcome.error });
       continue;
     }
-    const disagreements = crossCheck(response.parsed_output, job.known);
-    out.push({ id: job.id, card: response.parsed_output, disagreements });
 
-    // Report usage so the cost of the full batch is predictable from one card
-    // rather than guessed at.
-    const { input_tokens: inTok, output_tokens: outTok } = response.usage;
-    totalIn += inTok;
-    totalOut += outTok;
+    const disagreements = crossCheck(outcome.card, job.known);
+    out.push({ id: job.id, card: outcome.card, disagreements });
 
     const unexplained = disagreements.filter(d => !d.explained).length;
     console.log(
-      `${response.parsed_output.legibility} · ${inTok}in/${outTok}out` +
+      `${outcome.card.legibility} · ` +
+        `${message.usage.input_tokens}in/${message.usage.output_tokens}out` +
         (unexplained ? ` · ${unexplained} to review` : ''),
     );
   }
@@ -353,11 +442,25 @@ async function runSync(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
  * in arbitrary order, so they are keyed by `custom_id` rather than position.
  */
 async function runBatch(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
-  const batch = await client.messages.batches.create({
-    requests: jobs.map(job => ({ custom_id: job.id, params: requestFor(job) })),
-  });
-  console.log(`  batch ${batch.id} submitted (${jobs.length} requests)`);
-  writeFileSync(resolve(OUT_DIR, 'batch-id.txt'), batch.id + '\n');
+  /*
+   * Resume an existing batch instead of submitting a new one.
+   *
+   * Results stay retrievable for 29 days, so a client-side crash after a batch
+   * completes must never mean paying for it twice. The id is written to disk
+   * the moment the batch is created, precisely so this is recoverable.
+   */
+  const resumeId = RESUME === 'last' ? readBatchId() : RESUME;
+  const batch = resumeId
+    ? await client.messages.batches.retrieve(resumeId)
+    : await client.messages.batches.create({
+        requests: jobs.map(job => ({ custom_id: job.id, params: requestFor(job) })),
+      });
+
+  if (resumeId) console.log(`  resuming batch ${batch.id}`);
+  else {
+    console.log(`  batch ${batch.id} submitted (${jobs.length} requests)`);
+    writeFileSync(resolve(OUT_DIR, 'batch-id.txt'), batch.id + '\n');
+  }
 
   let status = batch;
   while (status.processing_status !== 'ended') {
@@ -382,14 +485,48 @@ async function runBatch(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
       continue;
     }
 
-    const block = result.result.message.content.find(b => b.type === 'text');
-    if (!block || block.type !== 'text') continue;
+    /*
+     * Parse defensively. A card whose JSON is truncated — the model hit
+     * max_tokens mid-object — throws here, and an uncaught throw discards the
+     * whole retrieval including every result that was fine. That is the worst
+     * possible failure for a batch that has already been paid for.
+     */
+    const message = result.result.message;
+    const block = message.content.find(b => b.type === 'text');
+    const raw = block && block.type === 'text' ? block.text : '';
 
-    const parsed = ExtractedCard.safeParse(JSON.parse(block.text));
-    if (!parsed.success) {
-      console.log(`  ${result.custom_id}: output did not match schema`);
+    if (message.stop_reason === 'max_tokens' || raw.trim() === '') {
+      console.log(
+        `  ${result.custom_id}: truncated (stop=${message.stop_reason}, ` +
+          `${message.usage.output_tokens} output tokens) — needs a rerun`,
+      );
+      failures.push({
+        id: result.custom_id,
+        error: `hit max_tokens (${message.usage.output_tokens} output tokens); response was cut off`,
+      });
       continue;
     }
+
+    let json: unknown;
+    try {
+      json = JSON.parse(raw);
+    } catch (error) {
+      console.log(`  ${result.custom_id}: unparseable JSON`);
+      failures.push({ id: result.custom_id, error: (error as Error).message });
+      continue;
+    }
+
+    const parsed = ExtractedCard.safeParse(json);
+    if (!parsed.success) {
+      console.log(`  ${result.custom_id}: output did not match schema`);
+      failures.push({
+        id: result.custom_id,
+        error: parsed.error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join('; '),
+      });
+      continue;
+    }
+    totalIn += message.usage.input_tokens;
+    totalOut += message.usage.output_tokens;
     out.push({
       id: job.id,
       card: parsed.data,
@@ -440,15 +577,40 @@ async function main() {
   // Only *unexplained* disagreements warrant review — a pre-errata scan
   // reading the printed value is expected, and flagging 136 of those would
   // bury the real misreads.
-  const flagged = results.filter(
+
+
+  /*
+   * Accumulate rather than replace.
+   *
+   * A partial run — retrying three failures with --only — must not delete the
+   * thirty-eight extractions already paid for. Results are keyed by id so a
+   * rerun of the same character supersedes its previous attempt, and everything
+   * else is carried forward untouched.
+   */
+  const extractedPath = resolve(OUT_DIR, 'extracted.json');
+  const previous: Extraction[] = existsSync(extractedPath)
+    ? ((JSON.parse(readFileSync(extractedPath, 'utf8')).results ?? []) as Extraction[])
+    : [];
+
+  const byId = new Map(previous.map(e => [e.id, e]));
+  for (const e of results) byId.set(e.id, e);
+  const all = [...byId.values()].sort((a, b) => a.id.localeCompare(b.id));
+
+  const carried = all.length - results.length;
+  if (carried > 0) console.log(`  (carried forward ${carried} from earlier runs)`);
+
+  writeFileSync(
+    extractedPath,
+    JSON.stringify(
+      { generatedAt: new Date().toISOString(), model: MODEL, results: all },
+      null,
+      2,
+    ) + '\n',
+  );
+  const flagged = all.filter(
     r => r.disagreements.some(d => !d.explained) || r.card.legibility !== 'clear',
   );
 
-  writeFileSync(
-    resolve(OUT_DIR, 'extracted.json'),
-    JSON.stringify({ generatedAt: new Date().toISOString(), model: MODEL, results }, null, 2) +
-      '\n',
-  );
   writeFileSync(
     resolve(OUT_DIR, 'extraction-review.json'),
     JSON.stringify(
@@ -472,6 +634,13 @@ async function main() {
     );
   }
 
+  const failuresPath = resolve(OUT_DIR, 'extraction-failures.json');
+  if (failures.length === 0 && existsSync(failuresPath)) {
+    // Everything this run attempted succeeded; don't leave a stale retry list
+    // that would make `--only failed` re-run cards that are already fine.
+    rmSync(failuresPath);
+  }
+
   if (failures.length > 0) {
     console.log(`\n⚠ ${failures.length} failed — rerun to retry just these:`);
     for (const f of failures.slice(0, 5)) console.log(`    ${f.id}: ${f.error.slice(0, 70)}`);
@@ -481,7 +650,7 @@ async function main() {
     );
   }
 
-  console.log(`\n✓ ${results.length} extracted → .import/extracted.json`);
+  console.log(`\n✓ ${all.length} extracted total → .import/extracted.json`);
   console.log(`  ${flagged.length} need review → .import/extraction-review.json`);
   console.log('\nNothing is merged into the corpus automatically — review first,');
   console.log('then fold the accepted extractions in.');
