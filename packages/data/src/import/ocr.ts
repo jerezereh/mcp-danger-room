@@ -13,6 +13,7 @@
  * superpowers at all.
  */
 
+import type { Superpower } from '../schema.js';
 import type { CharacterDraft } from './draft.js';
 import type { ExtractedCard } from './extraction.js';
 
@@ -24,6 +25,20 @@ export interface ExtractionRecord {
 export function ocrToDraft(record: ExtractionRecord): CharacterDraft {
   const { id, card } = record;
 
+  /*
+   * Migration shim for extractions taken before 'affiliation' was retired.
+   *
+   * The type no longer exists — what the model called an affiliation power is a
+   * Leadership ability with a qualified name. Without this, extractions already
+   * on disk fail validation and their characters drop out of the corpus, which
+   * is a worse outcome than relabelling a value whose meaning is unambiguous.
+   *
+   * Delete once every extraction on disk postdates that change; the stale-file
+   * warning in import-cards is what tells you when that is.
+   */
+  const superpowerType = (t: string): Superpower['type'] =>
+    t === 'affiliation' ? 'leadership' : (t as Superpower['type']);
+
   const side = (s: ExtractedCard['healthy'], cardImage: string | null) => ({
     cardImage,
     stamina: s.stamina,
@@ -31,7 +46,7 @@ export function ocrToDraft(record: ExtractionRecord): CharacterDraft {
     size: s.size,
     defense: s.defense,
     attacks: s.attacks,
-    superpowers: s.superpowers,
+    superpowers: s.superpowers.map(p => ({ ...p, type: superpowerType(p.type) })),
   });
 
   return {

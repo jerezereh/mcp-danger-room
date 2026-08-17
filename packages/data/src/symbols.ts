@@ -72,7 +72,9 @@ export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
  */
 export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   physical: 'a red clenched fist',
-  energy: 'a yellow swirl',
+  // Energy and Wild are both swirls and are the other confusable pair. They
+  // differ in colour and in construction, so the description gives both.
+  energy: 'a yellow-and-black swirl, symmetric about its centre',
   mystic: 'a blue eye',
   power: 'a six-pointed star',
   damage: 'three slightly curved parallel lines',
@@ -81,7 +83,7 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   medium: 'a distance template marked M',
   long: 'a distance template marked L',
   critical: 'an exclamation mark with jagged lines around it',
-  wild: 'a swirl',
+  wild: 'a white-and-black spiral winding out from its centre — never yellow',
   hit: 'a jagged centre with a jagged line off it',
   block: 'a shield with a spot on it',
   fail: 'a skull',

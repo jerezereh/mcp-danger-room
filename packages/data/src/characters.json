@@ -2680,7 +2680,7 @@
         "superpowers": [
           {
             "name": "Operation Zero Tolerance (Affiliation: Sentinels)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "When an allied character makes an attack, if the defender would gain {PWR} for {DMG} dealt by that attack, the defender gains 1 less {PWR}. If the defender has a greater Threat than the attacker, the defender gains 2 less {PWR} instead."
           },
@@ -2750,7 +2750,7 @@
         "superpowers": [
           {
             "name": "Operation Zero Tolerance (Affiliation: Sentinels)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "When an allied character makes an attack, if the defender would gain {PWR} for {DMG} dealt by that attack, the defender gains 1 less {PWR}. If the defender has a greater Threat than the attacker, the defender gains 2 less {PWR} instead."
           },
@@ -10809,7 +10809,7 @@
         "superpowers": [
           {
             "name": "Legion of Monsters (Affiliation: Midnight Sons)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "Once per Turn, when an allied character targets a character with an attack, it may pay 1 {PWR}. If it does, the attack gains your choice of 1 of the following effects:\n• Boom!: Before {DMG} is dealt, each other character within {RNG} 2 of the target character suffers 1 {DMG}.\n• Horrify: After this attack is resolved, the target character gains the Root special condition.\n• Silver Bullet: {DMG} caused by this attack cannot be reduced or prevented by superpowers or Team Tactic Cards."
           },
@@ -10873,7 +10873,7 @@
         "superpowers": [
           {
             "name": "Legion of Monsters (Affiliation: Midnight Sons)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "Once per Turn, when an allied character targets a character with an attack, it may pay 1 {PWR}. If it does, the attack gains your choice of 1 of the following effects:\n• Boom!: Before {DMG} is dealt, each other character within {RNG} 2 of the target character suffers 1 {DMG}.\n• Horrify: After this attack is resolved, the target character gains the Root special condition.\n• Silver Bullet: {DMG} caused by this attack cannot be reduced or prevented by superpowers or Team Tactic Cards."
           },
@@ -16359,7 +16359,7 @@
         "superpowers": [
           {
             "name": "The Kang Dynasty (Affiliation: Cabal)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "Once per Turn, each allied character may reroll 1 die in its attack roll. Additionally, allied characters can modify and reroll {SKULL} results while they are holding or Contesting an objective token."
           },
@@ -16445,7 +16445,7 @@
         "superpowers": [
           {
             "name": "The Kang Dynasty (Affiliation: Cabal)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "Once per Turn, each allied character may reroll 1 die in its attack roll. Additionally, allied characters can modify and reroll {SKULL} results while they are holding or Contesting an objective token."
           },
@@ -20050,7 +20050,7 @@
         "superpowers": [
           {
             "name": "Call Me Maximus the Magnificent! (Affiliation: Inhumans)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "The first time each Turn an allied character attacks or defends, during the Modify Dice step, it must use this {PWR} ability. Reroll 1 of its attack or defense dice. If the rerolled result is a {CRIT}, after the attack is resolved, your opponent Places the allied character within {RNG} 1 of its current position and this character gains 1 {PWR}."
           },
@@ -20119,7 +20119,7 @@
         "superpowers": [
           {
             "name": "Call Me Maximus the Magnificent! (Affiliation: Inhumans)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "The first time each Turn an allied character attacks or defends, during the Modify Dice step, it must use this {PWR} ability. Reroll 1 of its attack or defense dice. If the rerolled result is a {CRIT}, after the attack is resolved, your opponent Places the allied character within {RNG} 1 of its current position and this character gains 1 {PWR}."
           },
@@ -30629,7 +30629,7 @@
         "superpowers": [
           {
             "name": "Stronger Together Than Apart (Affiliation: Mighty Avengers)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "Once per Turn, when an allied character would gain 1 or more {PWR}, it may choose to gain 1 less {PWR}. If it does, after the effect is resolved, choose an allied character. The chosen character gains 1 {PWR}."
           },
@@ -30711,7 +30711,7 @@
         "superpowers": [
           {
             "name": "Stronger Together Than Apart (Affiliation: Mighty Avengers)",
-            "type": "affiliation",
+            "type": "leadership",
             "cost": 0,
             "text": "Once per Turn, when an allied character would gain 1 or more {PWR}, it may choose to gain 1 less {PWR}. If it does, after the effect is resolved, choose an allied character. The chosen character gains 1 {PWR}."
           },

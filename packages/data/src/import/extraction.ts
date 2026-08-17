@@ -59,7 +59,7 @@ const ExtractedAttack = z.object({
 
 const ExtractedSuperpower = z.object({
   name: z.string().min(1),
-  type: z.enum(['active', 'reactive', 'passive', 'innate', 'affiliation', 'leadership']),
+  type: z.enum(['active', 'reactive', 'passive', 'innate', 'leadership']),
   cost: ExtractedCost,
   text: z.string(),
 });
@@ -165,8 +165,9 @@ one of them.
 ## Attacks
 
 Each attack is one bar. Its type icon is at the left, its name on the bar, and
-three values at the right, in this order: a crosshair (range), a barbell
-(dice), and the power star (cost).
+three values at the right, in this order: the range icon (a crosshair), the
+Strength icon (a barbell) giving the number of dice, and the Power star giving
+the cost.
 
 The range value may carry a letter prefix, which is a rule and not decoration:
 
@@ -180,14 +181,18 @@ and never fold it into the number.
 
 ## Fields
 
-- Attack "dice" is the number of dice in the attack pool, printed on the card
-  as the attack's strength or weight.
-- Superpower "type" is Active, Reactive, Innate, Leadership, or Affiliation.
-  The icon at the *left* head of the bar gives the type — four outward arrows
-  for Active, lightning bolts for Reactive, an infinity sign for Innate, a
-  solid star for Affiliation (its name also carries "(Affiliation: ...)"). Any
-  cost is at the *right* end of the same bar, so an icon's side tells you which
-  of the two you are looking at. Innate powers usually show no cost — report 0.
+- Attack "dice" is the number of dice in the attack pool — the value beside the
+  barbell (Strength) icon.
+- Superpower "type" is Active, Reactive, Innate or Leadership. The icon at the
+  *left* head of the bar gives the type — four outward arrows for Active,
+  lightning bolts for Reactive, an infinity sign for Innate, a solid
+  five-pointed star for Leadership. Any cost is at the *right* end of the same
+  bar, so which side an icon sits on tells you which of the two it is. Innate
+  powers usually show no cost — report 0.
+- There is no "affiliation" type. A Leadership ability is often named
+  "Some Name (Affiliation: Hydra)", which qualifies when the Leadership
+  applies; it is still Leadership. Affiliation itself is not printed on
+  character cards at all.
 - A cost printed as "X" is a variable cost: the player chooses how much Power to
   spend, and the rules text gives the limit ("spend up to 3"). Report the string
   "X", never 0 — 0 would mean the power is free, which is a different rule.

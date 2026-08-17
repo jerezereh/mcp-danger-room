@@ -149,7 +149,9 @@ const SUPERPOWER_TYPES: Record<string, Superpower['type']> = {
   reaction: 'reactive',
   innate: 'innate',
   passive: 'passive',
-  affiliation: 'affiliation',
+  // Not a distinct type — see the note on SuperpowerType. BSData has never
+  // actually emitted this, but the mapping existed and would have been wrong.
+  affiliation: 'leadership',
   leadership: 'leadership',
 };
 

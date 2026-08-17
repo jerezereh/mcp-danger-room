@@ -24,12 +24,23 @@ export type DamageType = z.infer<typeof DamageType>;
 export const MovementTemplate = z.enum(['S', 'M', 'L']);
 export type MovementTemplate = z.infer<typeof MovementTemplate>;
 
+/**
+ * No 'affiliation'.
+ *
+ * Character cards do not carry an affiliation superpower — affiliation is set
+ * by the rules body, not printed. What looks like one is a Leadership ability
+ * whose *name* is qualified, "Army of Evil (Affiliation: Hydra)", meaning the
+ * Leadership applies while the squad is that affiliation.
+ *
+ * Having both values let the same power be typed two ways depending on which
+ * source read it: all 46 from BSData came back 'leadership' and all 5 the OCR
+ * extractor saw came back 'affiliation', with identical name patterns.
+ */
 export const SuperpowerType = z.enum([
   'active',
   'reactive',
   'passive',
   'innate',
-  'affiliation',
   'leadership',
 ]);
 export type SuperpowerType = z.infer<typeof SuperpowerType>;
