@@ -17,7 +17,14 @@
 
 import { XMLParser } from 'fast-xml-parser';
 
-import type { Attack, StatBlock, Superpower } from '../schema.js';
+import type {
+  Attack,
+  AttackShape,
+  PowerCost,
+  RangeBand,
+  StatBlock,
+  Superpower,
+} from '../schema.js';
 import type { CharacterDraft, StatBlockDraft } from './draft.js';
 import { slugify, splitName } from './slug.js';
 
@@ -79,6 +86,46 @@ const int = (v: string | undefined): number | undefined => {
   const n = Number.parseInt(v, 10);
   return Number.isFinite(n) ? n : undefined;
 };
+
+/**
+ * Split a printed range into its shape and its band.
+ *
+ * BSData writes what the card prints: "4", "B4" (Beam 4), "A2" (Area 2), and
+ * once "A*", an Area whose size its rules text defines.
+ *
+ * This used to be a bare `int()`, which returned undefined for every prefixed
+ * value and fell back to 1 — so all 46 Beam and Area attacks in the catalogue
+ * were stored as range-1 melee. Nothing flagged it, because 1 is a legal range.
+ */
+export function parseRange(raw: string | undefined): {
+  range: RangeBand;
+  shape: AttackShape;
+} | null {
+  const match = (raw ?? '').trim().match(/^([BA])?\s*(\d+|\*)$/i);
+  if (!match) return null;
+
+  const shape: AttackShape =
+    match[1]?.toUpperCase() === 'B' ? 'beam' : match[1]?.toUpperCase() === 'A' ? 'area' : 'range';
+
+  const band = match[2] as string;
+  if (band === '*') return { range: '*', shape };
+
+  const n = Number.parseInt(band, 10);
+  return n >= 1 && n <= 5 ? { range: n, shape } : null;
+}
+
+/**
+ * A printed power cost: a number, or "X" when the player chooses the amount.
+ *
+ * "-" means the power has no cost. Both used to parse as undefined and land on
+ * 0, which is right for "-" and wrong for "X" — it made 22 variable-cost powers
+ * read as free.
+ */
+export function parseCost(raw: string | undefined): PowerCost {
+  const v = (raw ?? '').trim();
+  if (v.toUpperCase() === 'X') return 'X';
+  return int(v) ?? 0;
+}
 
 /** BSData writes damage types as short codes; the schema uses full words. */
 const DAMAGE_TYPES: Record<string, Attack['type']> = {
@@ -183,12 +230,21 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
         warnings.push({ character: rawName, message: `unknown attack type "${c['Type']}" on ${attackName}` });
       }
 
+      const parsedRange = parseRange(c['Range']);
+      if (!parsedRange && c['Range'] !== undefined) {
+        warnings.push({
+          character: rawName,
+          message: `unreadable range "${c['Range']}" on ${attackName}`,
+        });
+      }
+
       return {
         name: attackName,
         type: type ?? 'physical',
-        range: Math.max(1, Math.min(5, int(c['Range']) ?? 1)),
+        range: parsedRange?.range ?? 1,
+        shape: parsedRange?.shape ?? 'range',
         dice: int(c['Strength']) ?? 0,
-        cost: int(c['Cost']) ?? 0,
+        cost: parseCost(c['Cost']),
         text: (c['Special Rules'] ?? '')
           .split('\n')
           .map(line => clean(line.replace(/^-\s*/, '')))
@@ -212,8 +268,8 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
       return {
         name: powerName,
         type: type ?? 'passive',
-        // Innate powers use "-" to mean no cost.
-        cost: int(c['Cost']) ?? 0,
+        // Innate powers use "-" to mean no cost; "X" means the player chooses.
+        cost: parseCost(c['Cost']),
         text: clean(c['Special Rules'] ?? ''),
       };
     };

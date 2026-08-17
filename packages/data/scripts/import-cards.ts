@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url';
 import { Character } from '../src/schema.js';
 import {
   applyOverrides,
+  ExtractedCard,
   fetchCerebroCharacters,
   finalize,
   mergeDrafts,
@@ -104,6 +105,29 @@ async function main() {
     const records = JSON.parse(readFileSync(extractedPath, 'utf8')).results as ExtractionRecord[];
     ocr = records.map(ocrToDraft);
     console.log(`OCR extractions: ${ocr.length}`);
+
+    /*
+     * Extractions are stored, not re-requested, so a file on disk can predate a
+     * change to the extraction contract. Validating it here is the only place
+     * that shows up.
+     *
+     * Stale records are still used — their rules text is the whole reason those
+     * characters are in the corpus — but silently accepting them would let a
+     * missing `shape` land on its schema default, which is exactly the
+     * everything-is-melee bug the field was added to fix.
+     */
+    const stale = records.filter(r => !ExtractedCard.safeParse(r.card).success);
+    if (stale.length > 0) {
+      console.log(
+        `  ⚠ ${stale.length} predate the current extraction schema — their attacks\n` +
+          `    cannot carry Beam/Area or variable costs. Re-run the extractor for\n` +
+          `    these to pick them up:\n` +
+          `      npm run extract:cards --workspace @danger-room/data -- --only ${stale
+            .slice(0, 3)
+            .map(r => r.id)
+            .join(',')}${stale.length > 3 ? ',…' : ''}`,
+      );
+    }
   }
 
   console.log('Merging…');

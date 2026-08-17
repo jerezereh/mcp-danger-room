@@ -34,15 +34,46 @@ export const SuperpowerType = z.enum([
 ]);
 export type SuperpowerType = z.infer<typeof SuperpowerType>;
 
+/**
+ * A printed power cost.
+ *
+ * Almost always a number, but 22 superpowers print "X": the player chooses how
+ * much Power to spend and the rules text supplies the bound ("spend up to 3").
+ * There is no numeric value to store.
+ *
+ * Modelling this as a plain number silently turned all 22 into cost 0 — free —
+ * because that is where a failed parse lands. The literal is preserved instead,
+ * so a consumer that cannot handle a variable cost fails loudly at the type
+ * level rather than quietly charging nothing.
+ */
+export const PowerCost = z.union([z.number().int().min(0), z.literal('X')]);
+export type PowerCost = z.infer<typeof PowerCost>;
+
+/**
+ * How an attack is delivered.
+ *
+ * Cards print this as a prefix on the range value: bare "4" is an ordinary
+ * attack, "B4" a Beam, "A2" an Area. The three resolve against different sets
+ * of targets, so the prefix is a rule, not decoration.
+ */
+export const AttackShape = z.enum(['range', 'beam', 'area']);
+export type AttackShape = z.infer<typeof AttackShape>;
+
+/** Range band 1–5, or "*" for the one Area attack whose size its text defines. */
+export const RangeBand = z.union([z.number().int().min(1).max(5), z.literal('*')]);
+export type RangeBand = z.infer<typeof RangeBand>;
+
 export const Attack = z.object({
   name: z.string().min(1),
   type: DamageType,
   /** Range band 1–5. Melee attacks use 1. */
-  range: z.number().int().min(1).max(5),
+  range: RangeBand,
+  /** Beam and Area attacks hit differently; the card prints B or A on `range`. */
+  shape: AttackShape.default('range'),
   /** Dice in the attack pool. */
   dice: z.number().int().min(0).max(12),
   /** Power cost to use. */
-  cost: z.number().int().min(0),
+  cost: PowerCost,
   /** Rules text, retaining {symbol} tokens for the renderer. */
   text: z.array(z.string()).default([]),
 });
@@ -51,7 +82,7 @@ export type Attack = z.infer<typeof Attack>;
 export const Superpower = z.object({
   name: z.string().min(1),
   type: SuperpowerType,
-  cost: z.number().int().min(0),
+  cost: PowerCost,
   text: z.string(),
 });
 export type Superpower = z.infer<typeof Superpower>;

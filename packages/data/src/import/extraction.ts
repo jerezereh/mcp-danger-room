@@ -38,19 +38,24 @@ import { z } from 'zod/v4';
 
 import { CANONICAL_TOKENS, SYMBOL_LABELS, type SymbolKey } from '../symbols.js';
 
+/** Mirrors `PowerCost` in schema.ts — a number, or "X" when the player chooses. */
+const ExtractedCost = z.union([z.number().int().min(0), z.literal('X')]);
+
 const ExtractedAttack = z.object({
   name: z.string().min(1),
   type: z.enum(['physical', 'energy', 'mystic']),
-  range: z.number().int().min(1).max(5),
+  range: z.union([z.number().int().min(1).max(5), z.literal('*')]),
+  /** The B or A printed before the range. See schema.ts `AttackShape`. */
+  shape: z.enum(['range', 'beam', 'area']),
   dice: z.number().int().min(0).max(12),
-  cost: z.number().int().min(0),
+  cost: ExtractedCost,
   text: z.array(z.string()),
 });
 
 const ExtractedSuperpower = z.object({
   name: z.string().min(1),
   type: z.enum(['active', 'reactive', 'passive', 'innate', 'affiliation', 'leadership']),
-  cost: z.number().int().min(0),
+  cost: ExtractedCost,
   text: z.string(),
 });
 
@@ -108,13 +113,55 @@ ${glyphs}
 
 Bold trigger names (Pierce, Momentum, Cleave) stay as <b>Name</b>.
 
+## The stat box
+
+A panel at the top left, below the character name and alter ego, holds seven
+values in three rows. Identify each by its icon, not by its position — the
+icons are what disambiguate, and a value read off the wrong row is wrong with
+nothing to catch it. The layout below is a guide to where to look:
+
+  Row 1   red fist       Physical defense
+          yellow swirl   Energy defense
+          blue eye       Mystic defense
+  Row 2   pulse / EKG    Stamina
+          6-point star   Threat
+  Row 3   I-beam         Size (1-5; 5 exists and is rare)
+          triple chevron Movement (S, M or L)
+
+The healthy and injured sides use the same layout. Only the colour differs —
+teal on the healthy side, orange on the injured one — so do not read the tint
+as meaning anything.
+
+Those same three defense icons mark attack types: an attack led by the red fist
+is physical, the yellow swirl energy, the blue eye mystic. If an attack's icon
+does not match one of the three defense icons you just read, you have misread
+one of them.
+
+## Attacks
+
+Each attack is one bar. Its type icon is at the left, its name on the bar, and
+three values at the right, in this order: a crosshair (range), a barbell
+(dice), and the power star (cost).
+
+The range value may carry a letter prefix, which is a rule and not decoration:
+
+  4    ordinary attack, range 4      -> range 4, shape "range"
+  B4   Beam, range 4                 -> range 4, shape "beam"
+  A2   Area, size 2                  -> range 2, shape "area"
+  A*   Area whose text defines it    -> range "*", shape "area"
+
+Report the number in "range" and the prefix in "shape". Never drop the prefix
+and never fold it into the number.
+
 ## Fields
 
 - Attack "dice" is the number of dice in the attack pool, printed on the card
   as the attack's strength or weight.
-- Attack "range" is the range band 1-5. Melee attacks are range 1.
 - Superpower "type" is Active, Reactive, Innate, Leadership, or Affiliation as
   labelled on the card. Innate powers usually show no cost — report cost 0.
+- A cost printed as "X" is a variable cost: the player chooses how much Power to
+  spend, and the rules text gives the limit ("spend up to 3"). Report the string
+  "X", never 0 — 0 would mean the power is free, which is a different rule.
 - List each superpower as its own entry, including keyword-only Innate powers
   that carry no rules text (Flight, Peerless, Gem Bearer, Martial Artist, and
   similar). These are often printed together on one line; they are still

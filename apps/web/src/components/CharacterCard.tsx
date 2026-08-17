@@ -8,9 +8,24 @@
  * impossible rather than merely unlikely.
  */
 
-import type { Character, StatBlock } from '@danger-room/data';
+import type { Attack, Character, PowerCost, StatBlock } from '@danger-room/data';
 
 import { CardText } from './CardText.js';
+
+/**
+ * "X" is a variable cost, not a free power — it must never render as absent.
+ * A numeric 0 genuinely means free and stays hidden.
+ */
+function costLabel(cost: PowerCost): string {
+  if (cost === 'X') return ' · X power';
+  return cost > 0 ? ` · ${cost} power` : '';
+}
+
+/** Beam and Area print their prefix on the card; keep it visible here too. */
+function rangeLabel(attack: Attack): string {
+  const prefix = attack.shape === 'beam' ? 'B' : attack.shape === 'area' ? 'A' : 'R';
+  return `${prefix}${attack.range}`;
+}
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
@@ -43,8 +58,8 @@ function Side({ block, title }: { block: StatBlock; title: string }) {
             <div className="flex items-baseline justify-between gap-2">
               <span className="text-sm font-semibold text-slate-100">{attack.name}</span>
               <span className="shrink-0 text-xs text-slate-400">
-                {attack.type} · R{attack.range} · {attack.dice} dice
-                {attack.cost > 0 ? ` · ${attack.cost} power` : ''}
+                {attack.type} · {rangeLabel(attack)} · {attack.dice} dice
+                {costLabel(attack.cost)}
               </span>
             </div>
             {attack.text.map((line, i) => (
@@ -59,7 +74,7 @@ function Side({ block, title }: { block: StatBlock; title: string }) {
               <span className="text-sm font-semibold text-slate-100">{power.name}</span>
               <span className="shrink-0 text-xs text-slate-400">
                 {power.type}
-                {power.cost > 0 ? ` · ${power.cost} power` : ''}
+                {costLabel(power.cost)}
               </span>
             </div>
             <CardText text={power.text} className="mt-1" />

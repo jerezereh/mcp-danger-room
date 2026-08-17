@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { parseCost, parseRange } from './bsdata.js';
 import { cerebroToDraft, parsePack } from './cerebro.js';
 import type { CharacterDraft } from './draft.js';
 import { finalize } from './draft.js';
@@ -212,7 +213,7 @@ describe('finalize', () => {
       movement: 'M',
       size: 2,
       defense: { physical: 3, energy: 3, mystic: 3 },
-      attacks: [{ name: 'Punch', type: 'physical', range: 1, dice: 5, cost: 0, text: [] }],
+      attacks: [{ name: 'Punch', type: 'physical', range: 1, shape: 'range' as const, dice: 5, cost: 0, text: [] }],
       superpowers: [],
     },
     injured: {
@@ -220,7 +221,7 @@ describe('finalize', () => {
       movement: 'M',
       size: 2,
       defense: { physical: 3, energy: 3, mystic: 3 },
-      attacks: [{ name: 'Punch', type: 'physical', range: 1, dice: 5, cost: 0, text: [] }],
+      attacks: [{ name: 'Punch', type: 'physical', range: 1, shape: 'range' as const, dice: 5, cost: 0, text: [] }],
       superpowers: [],
     },
     sources: ['bsdata'],
@@ -439,7 +440,7 @@ describe('manual overrides', () => {
       size: 2,
       defense: { physical: 3, energy: 2, mystic: 2 },
       attacks: [
-        { name: 'Kick', type: 'physical' as const, range: 1, dice: 4, cost: 0, text: [] },
+        { name: 'Kick', type: 'physical' as const, range: 1, shape: 'range' as const, dice: 4, cost: 0, text: [] },
       ],
       superpowers: [],
     },
@@ -450,7 +451,7 @@ describe('manual overrides', () => {
       size: 2,
       defense: { physical: 3, energy: 2, mystic: 2 },
       attacks: [
-        { name: 'Kick', type: 'physical' as const, range: 1, dice: 4, cost: 0, text: [] },
+        { name: 'Kick', type: 'physical' as const, range: 1, shape: 'range' as const, dice: 4, cost: 0, text: [] },
       ],
       superpowers: [],
     },
@@ -552,7 +553,7 @@ describe('OCR as a merge source', () => {
         size: 4,
         defense: { physical: 9, energy: 9, mystic: 9 },
         attacks: [
-          { name: 'OCR Attack', type: 'physical', range: 2, dice: 5, cost: 0, text: ['read off the card'] },
+          { name: 'OCR Attack', type: 'physical', range: 2, shape: 'range' as const, dice: 5, cost: 0, text: ['read off the card'] },
         ],
         superpowers: [{ name: 'OCR Power', type: 'innate', cost: 0, text: '' }],
       },
@@ -596,5 +597,60 @@ describe('OCR as a merge source', () => {
   it('yields to BSData for rules text when both have it', () => {
     const { drafts } = mergeDrafts({ bsdata: [bsdata], ocr: [ocr] });
     expect(drafts[0]?.healthy?.attacks).toEqual([]);
+  });
+});
+
+/*
+ * Beam, Area and variable costs.
+ *
+ * All three used to be parsed with a bare integer parse that returned undefined
+ * and fell through to a default. The defaults were legal values — range 1 and
+ * cost 0 — so 46 Beam/Area attacks became melee and 22 variable-cost powers
+ * became free, with nothing to flag either.
+ */
+describe('parseRange', () => {
+  it('reads an ordinary range', () => {
+    expect(parseRange('4')).toEqual({ range: 4, shape: 'range' });
+  });
+
+  it('reads a Beam', () => {
+    expect(parseRange('B4')).toEqual({ range: 4, shape: 'beam' });
+  });
+
+  it('reads an Area', () => {
+    expect(parseRange('A2')).toEqual({ range: 2, shape: 'area' });
+  });
+
+  it('keeps the literal for an Area whose size its text defines', () => {
+    expect(parseRange('A*')).toEqual({ range: '*', shape: 'area' });
+  });
+
+  it('does not silently turn a prefixed range into melee', () => {
+    // The exact regression: parseInt('B3') is NaN, which fell through to 1.
+    expect(parseRange('B3')?.range).toBe(3);
+    expect(parseRange('B3')?.shape).toBe('beam');
+  });
+
+  it('reports unreadable input rather than guessing', () => {
+    expect(parseRange('wat')).toBeNull();
+    expect(parseRange('')).toBeNull();
+    expect(parseRange(undefined)).toBeNull();
+    // Out of band — a real misparse, not a shape we do not know yet.
+    expect(parseRange('9')).toBeNull();
+  });
+});
+
+describe('parseCost', () => {
+  it('reads a number', () => {
+    expect(parseCost('3')).toBe(3);
+  });
+
+  it('treats "-" as no cost', () => {
+    expect(parseCost('-')).toBe(0);
+  });
+
+  it('preserves a variable cost rather than making it free', () => {
+    expect(parseCost('X')).toBe('X');
+    expect(parseCost('x')).toBe('X');
   });
 });
