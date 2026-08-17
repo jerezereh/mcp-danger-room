@@ -61,7 +61,11 @@ export const StatBlock = z.object({
   cardImage: z.string().nullable(),
   stamina: z.number().int().min(1),
   movement: MovementTemplate,
-  size: z.number().int().min(1).max(4),
+  /**
+   * Size class 1–5. 5 is real and rare — Dormammu and the two Sentinel MK4
+   * variants. Capping this at 4 kept all three out of the corpus entirely.
+   */
+  size: z.number().int().min(1).max(5),
   defense: z.object({
     physical: z.number().int().min(0),
     energy: z.number().int().min(0),

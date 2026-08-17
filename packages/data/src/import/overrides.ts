@@ -22,7 +22,7 @@ const StatOverride = z
   .object({
     stamina: z.number().int().min(1).optional(),
     movement: z.enum(['S', 'M', 'L']).optional(),
-    size: z.number().int().min(1).max(4).optional(),
+    size: z.number().int().min(1).max(5).optional(),
     defense: z
       .object({
         physical: z.number().int().min(0).optional(),

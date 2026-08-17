@@ -9329,6 +9329,170 @@
       "verified": false
     },
     {
+      "id": "dormammu",
+      "name": "Dormammu",
+      "alterEgo": "Dormammu",
+      "affiliations": [
+        "Dark Dimension"
+      ],
+      "packCode": "CP33",
+      "packName": "Dormammu",
+      "threat": 8,
+      "errata": null,
+      "baseMm": 65,
+      "healthy": {
+        "cardImage": "DORMAMMU_healthy.png",
+        "stamina": 10,
+        "movement": "M",
+        "size": 5,
+        "defense": {
+          "physical": 4,
+          "energy": 4,
+          "mystic": 5
+        },
+        "attacks": [
+          {
+            "name": "SHADOW BOLT",
+            "type": "energy",
+            "range": 4,
+            "dice": 6,
+            "cost": 0,
+            "text": [
+              "{WILD} Hex: After this attack is resolved, the target character gains the Hex special condition.",
+              "{WILD} Sap Power: Before damage is dealt, the target character loses 1 {PWR} for each {WILD} in the attack roll, and this character gains that amount of {PWR}."
+            ]
+          },
+          {
+            "name": "INCANTATION OF OBLITERATION",
+            "type": "mystic",
+            "range": 3,
+            "dice": 8,
+            "cost": 5,
+            "text": [
+              "{CRIT} {HIT} {BLOCK} {FAIL} Dark Miasma: After this attack is resolved, this character may make an additional Incantation of Obliteration attack without paying the {PWR} cost. The additional attack must target a character within {RNG} 2 of the original target character that has not been targeted by Incantation of Obliteration this round."
+            ]
+          }
+        ],
+        "superpowers": [
+          {
+            "name": "FLAMES OF THE FALTINE (AFFILIATION: DARK DIMENSION)",
+            "type": "leadership",
+            "cost": 0,
+            "text": "If Dormammu is included in a squad, that squad is affiliated with Dark Dimension and must use this Leadership ability. This character and each other character you control gains 1 additional {PWR} during the Power Phase. During the Power Phase, if another allied character has 6 or more {PWR} it suffers 1 {DMG}."
+          },
+          {
+            "name": "NOT OF THIS DIMENSION",
+            "type": "active",
+            "cost": 3,
+            "text": "Place this character within {RNG} 2 of its current position. This superpower can be used only once per turn."
+          },
+          {
+            "name": "FEEL THE POWER OF DARKNESS!",
+            "type": "reactive",
+            "cost": 2,
+            "text": "After an attack targeting this character is resolved, it may use this superpower. The attacking character is pushed away from this character {S} and gains the Hex special condition. If the attacking character already had the Hex special condition, it gains the Incinerate special condition."
+          },
+          {
+            "name": "MASTER OF THE REALM OF DARKNESS",
+            "type": "innate",
+            "cost": 0,
+            "text": "When this character suffers damage from an enemy effect it gains 1 {PWR} instead of {PWR} equal to the {DMG} suffered. When another allied character is damaged by an enemy effect or by Flames of the Faltine, this character gains 1 {PWR}.\nAdditionally, when calculating successes or failure of this character's attacks, this character adds the number of {FAIL} in both the attack and defense rolls to its total successes."
+          },
+          {
+            "name": "FLIGHT",
+            "type": "innate",
+            "cost": 0,
+            "text": "When placing the movement tool during an advance, this character counts as Size 5."
+          },
+          {
+            "name": "IMMUNITY [BLEED, INCINERATE, STAGGER]",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character can’t suffer the [BLEED], [INCINERATE], or [STAGGER] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+          }
+        ]
+      },
+      "injured": {
+        "cardImage": "DORMAMMU_injured.png",
+        "stamina": 12,
+        "movement": "M",
+        "size": 5,
+        "defense": {
+          "physical": 4,
+          "energy": 4,
+          "mystic": 5
+        },
+        "attacks": [
+          {
+            "name": "SHADOW BOLT",
+            "type": "energy",
+            "range": 4,
+            "dice": 6,
+            "cost": 0,
+            "text": [
+              "{WILD} Hex: After this attack is resolved, the target character gains the Hex special condition.",
+              "{WILD} Sap Power: Before damage is dealt, the target character loses 1 {PWR} for each {WILD} in the attack roll, and this character gains that amount of {PWR}."
+            ]
+          },
+          {
+            "name": "INCANTATION OF OBLITERATION",
+            "type": "mystic",
+            "range": 3,
+            "dice": 8,
+            "cost": 5,
+            "text": [
+              "{CRIT} {HIT} {BLOCK} {FAIL} Dark Miasma: After this attack is resolved, this character may make an additional Incantation of Obliteration attack without paying the {PWR} cost. The additional attack must target a character within {RNG} 2 of the original target character that has not been targeted by Incantation of Obliteration this round."
+            ]
+          }
+        ],
+        "superpowers": [
+          {
+            "name": "FLAMES OF THE FALTINE (AFFILIATION: DARK DIMENSION)",
+            "type": "leadership",
+            "cost": 0,
+            "text": "If Dormammu is included in a squad, that squad is affiliated with Dark Dimension and must use this Leadership ability. This character and each other character you control gains 1 additional {PWR} during the Power Phase. During the Power Phase, if another allied character has 6 or more {PWR} it suffers 1 {DMG}."
+          },
+          {
+            "name": "NOT OF THIS DIMENSION",
+            "type": "active",
+            "cost": 3,
+            "text": "Place this character within {RNG} 2 of its current position. This superpower can be used only once per turn."
+          },
+          {
+            "name": "FEEL THE POWER OF DARKNESS!",
+            "type": "reactive",
+            "cost": 2,
+            "text": "After an attack targeting this character is resolved, it may use this superpower. The attacking character is pushed away from this character {S} and gains the Hex special condition. If the attacking character already had the Hex special condition, it gains the Incinerate special condition."
+          },
+          {
+            "name": "MASTER OF THE REALM OF DARKNESS",
+            "type": "innate",
+            "cost": 0,
+            "text": "When this character suffers damage from an enemy effect it gains 1 {PWR} instead of {PWR} equal to the {DMG} suffered. When another allied character is damaged by an enemy effect or by Flames of the Faltine, this character gains 1 {PWR}.\nAdditionally, when calculating successes or failure of this character's attacks, this character adds the number of {FAIL} in both the attack and defense rolls to its total successes."
+          },
+          {
+            "name": "FLIGHT",
+            "type": "innate",
+            "cost": 0,
+            "text": "When placing the movement tool during an advance, this character counts as Size 5."
+          },
+          {
+            "name": "IMMUNITY [BLEED, INCINERATE, STAGGER]",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character can’t suffer the [BLEED], [INCINERATE], or [STAGGER] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+          }
+        ]
+      },
+      "sources": [
+        "cerebro",
+        "bsdata",
+        "jarvis",
+        "ocr"
+      ],
+      "verified": false
+    },
+    {
       "id": "dracula",
       "name": "Dracula",
       "alterEgo": "Vlad Dracula",
@@ -27123,6 +27287,392 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "verified": false
+    },
+    {
+      "id": "sentinel-mk4",
+      "name": "Sentinel MK4",
+      "alterEgo": "Sentinel MK4",
+      "affiliations": [
+        "Sentinels"
+      ],
+      "packCode": "CP51",
+      "packName": "Sentinels MK4,CP236: Sentinels Affiliation Pack",
+      "threat": 4,
+      "errata": null,
+      "baseMm": 65,
+      "healthy": {
+        "cardImage": "SENTINEL_MK4_healthy.png",
+        "stamina": 8,
+        "movement": "S",
+        "size": 5,
+        "defense": {
+          "physical": 4,
+          "energy": 4,
+          "mystic": 3
+        },
+        "attacks": [
+          {
+            "name": "PLASMA BLAST - Healthy",
+            "type": "energy",
+            "range": 3,
+            "dice": 4,
+            "cost": 0,
+            "text": [
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "When this attack is chosen, during the Pay {PWR} Cost step of the attack, this character may spend up to 3 additional {PWR}. Add one die to the attack for each {PWR} spent this way."
+            ]
+          },
+          {
+            "name": "PLASMA LEAK - Injured",
+            "type": "energy",
+            "range": 2,
+            "dice": 4,
+            "cost": 0,
+            "text": [
+              "Systems Overloading: When rolling additional dice for {CRIT} results during this attack, roll 2 additional dice instead of 1 for each {CRIT} in the attack roll.",
+              "Systems Critical: After this attack is resolved, this character suffers 1 {DMG} for each {CRIT} in the attack roll."
+            ]
+          },
+          {
+            "name": "SUPPRESSION PROTOCOLS",
+            "type": "physical",
+            "range": 3,
+            "dice": 8,
+            "cost": 3,
+            "text": [
+              "{WILD} Suppression: After this attack is resolved, for each {WILD} in the attack roll the defending character gains one of the following special conditions: Incinerate, Shock, or Slow."
+            ]
+          }
+        ],
+        "superpowers": [
+          {
+            "name": "RESTRAINT CABLES",
+            "type": "active",
+            "cost": 2,
+            "text": "Choose an enemy character within {RNG} 4 and in LOS. The chosen character is pushed toward this character {S}. This superpower can be used only once per turn."
+          },
+          {
+            "name": "DAMAGED POWER MATRIX - Injured",
+            "type": "innate",
+            "cost": 0,
+            "text": "At the end of this character's activation it gains 1 {PWR}."
+          },
+          {
+            "name": "MASTER MOLD",
+            "type": "innate",
+            "cost": 0,
+            "text": "When building a Roster or a Squad, a player may include 2 of this character instead of the normal 1."
+          },
+          {
+            "name": "POWER MATRIX - Healthy",
+            "type": "innate",
+            "cost": 0,
+            "text": "At the end of this character's activation it gains 2 {PWR}."
+          },
+          {
+            "name": "SENTINEL PROGRAMMING",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character cannot be advanced or pushed by {MYST} attacks or superpowers. When defending against {MYST} attacks this character counts {WILD} results in the defense roll as 2 successes."
+          },
+          {
+            "name": "FLIGHT",
+            "type": "innate",
+            "cost": 0,
+            "text": "When placing the movement tool during an advance, this character counts as Size 5."
+          },
+          {
+            "name": "IMMUNITY [BLEED, POISON]",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character can’t suffer the [BLEED] or [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+          }
+        ]
+      },
+      "injured": {
+        "cardImage": "SENTINEL_MK4_injured.png",
+        "stamina": 6,
+        "movement": "S",
+        "size": 5,
+        "defense": {
+          "physical": 4,
+          "energy": 4,
+          "mystic": 3
+        },
+        "attacks": [
+          {
+            "name": "PLASMA BLAST - Healthy",
+            "type": "energy",
+            "range": 3,
+            "dice": 4,
+            "cost": 0,
+            "text": [
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "When this attack is chosen, during the Pay {PWR} Cost step of the attack, this character may spend up to 3 additional {PWR}. Add one die to the attack for each {PWR} spent this way."
+            ]
+          },
+          {
+            "name": "PLASMA LEAK - Injured",
+            "type": "energy",
+            "range": 2,
+            "dice": 4,
+            "cost": 0,
+            "text": [
+              "Systems Overloading: When rolling additional dice for {CRIT} results during this attack, roll 2 additional dice instead of 1 for each {CRIT} in the attack roll.",
+              "Systems Critical: After this attack is resolved, this character suffers 1 {DMG} for each {CRIT} in the attack roll."
+            ]
+          },
+          {
+            "name": "SUPPRESSION PROTOCOLS",
+            "type": "physical",
+            "range": 3,
+            "dice": 8,
+            "cost": 3,
+            "text": [
+              "{WILD} Suppression: After this attack is resolved, for each {WILD} in the attack roll the defending character gains one of the following special conditions: Incinerate, Shock, or Slow."
+            ]
+          }
+        ],
+        "superpowers": [
+          {
+            "name": "RESTRAINT CABLES",
+            "type": "active",
+            "cost": 2,
+            "text": "Choose an enemy character within {RNG} 4 and in LOS. The chosen character is pushed toward this character {S}. This superpower can be used only once per turn."
+          },
+          {
+            "name": "DAMAGED POWER MATRIX - Injured",
+            "type": "innate",
+            "cost": 0,
+            "text": "At the end of this character's activation it gains 1 {PWR}."
+          },
+          {
+            "name": "MASTER MOLD",
+            "type": "innate",
+            "cost": 0,
+            "text": "When building a Roster or a Squad, a player may include 2 of this character instead of the normal 1."
+          },
+          {
+            "name": "POWER MATRIX - Healthy",
+            "type": "innate",
+            "cost": 0,
+            "text": "At the end of this character's activation it gains 2 {PWR}."
+          },
+          {
+            "name": "SENTINEL PROGRAMMING",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character cannot be advanced or pushed by {MYST} attacks or superpowers. When defending against {MYST} attacks this character counts {WILD} results in the defense roll as 2 successes."
+          },
+          {
+            "name": "FLIGHT",
+            "type": "innate",
+            "cost": 0,
+            "text": "When placing the movement tool during an advance, this character counts as Size 5."
+          },
+          {
+            "name": "IMMUNITY [BLEED, POISON]",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character can’t suffer the [BLEED] or [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+          }
+        ]
+      },
+      "sources": [
+        "cerebro",
+        "bsdata",
+        "jarvis",
+        "ocr"
+      ],
+      "verified": false
+    },
+    {
+      "id": "sentinel-prime-mk4",
+      "name": "Sentinel Prime MK4",
+      "alterEgo": "Sentinel Prime MK4",
+      "affiliations": [
+        "Sentinels"
+      ],
+      "packCode": "CP160",
+      "packName": "Sentinel Prime MK4,CP236: Sentinels Affiliation Pack",
+      "threat": 5,
+      "errata": null,
+      "baseMm": 65,
+      "healthy": {
+        "cardImage": "SENTINEL_PRIME_MK4_healthy.png",
+        "stamina": 9,
+        "movement": "S",
+        "size": 5,
+        "defense": {
+          "physical": 4,
+          "energy": 4,
+          "mystic": 3
+        },
+        "attacks": [
+          {
+            "name": "PLASMA BLAST MK 2",
+            "type": "energy",
+            "range": 3,
+            "dice": 5,
+            "cost": 0,
+            "text": [
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "When this attack is chosen, during the Pay {PWR} Cost step of the attack, this character may spend up to 3 additional {PWR}. Add one die to the attack for each {PWR} spent this way."
+            ]
+          },
+          {
+            "name": "SUPPRESSION PROTOCOLS MK 2",
+            "type": "physical",
+            "range": 3,
+            "dice": 9,
+            "cost": 4,
+            "text": [
+              "{WILD} Suppression: After this attack is resolved, for each {WILD} in the attack roll the defending character gains one of the following special conditions: Incinerate, Shock, or Slow."
+            ]
+          }
+        ],
+        "superpowers": [
+          {
+            "name": "MUTANT HUNTERS (AFFILIATION: SENTINELS)",
+            "type": "leadership",
+            "cost": 0,
+            "text": "When an enemy character is Dazed, after the effect is resolved, choose a number of allied characters up to the Dazed character's Threat Value. Each chosen character gains 1 {PWR}. A character cannot gain more than 1 {PWR} as a result of this Leadership ability each turn."
+          },
+          {
+            "name": "RESTRAINT CABLES",
+            "type": "active",
+            "cost": 2,
+            "text": "Choose an enemy character within {RNG} 4 and in LOS. The chosen character is pushed toward this character {S}. This superpower can be used only once per turn."
+          },
+          {
+            "name": "PATTERN ANALYSIS",
+            "type": "reactive",
+            "cost": 0,
+            "text": "While this character or an allied character within {RNG} 4 is attacking or defending, during the Modify Dice step of the attack, this character may spend up to 3 {PWR} to use this superpower. For each 1 {PWR} spent, this character or the allied character may reroll 1 die."
+          },
+          {
+            "name": "POWER MATRIX - Healthy",
+            "type": "innate",
+            "cost": 0,
+            "text": "At the end of this character's activation it gains 2 {PWR}."
+          },
+          {
+            "name": "OVERLOADING POWER CORE - Injured",
+            "type": "innate",
+            "cost": 0,
+            "text": "During the Power Phase, roll 5 dice. For each {CRIT}, and {HIT} rolled, this character gains 1 {PWR}. If at least 1 {FAIL} was rolled, this character suffers 1 {DMG}."
+          },
+          {
+            "name": "SENTINEL PROGRAMMING",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character cannot be advanced or pushed by {MYST} attacks or superpowers. When defending against {MYST} attacks this character counts {WILD} results in the defense roll as 2 successes."
+          },
+          {
+            "name": "FLIGHT",
+            "type": "innate",
+            "cost": 0,
+            "text": "When placing the movement tool during an advance, this character counts as Size 5."
+          },
+          {
+            "name": "IMMUNITY [BLEED, POISON]",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character can’t suffer the [BLEED] or [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+          }
+        ]
+      },
+      "injured": {
+        "cardImage": "SENTINEL_PRIME_MK4_injured.png",
+        "stamina": 7,
+        "movement": "S",
+        "size": 5,
+        "defense": {
+          "physical": 4,
+          "energy": 4,
+          "mystic": 3
+        },
+        "attacks": [
+          {
+            "name": "PLASMA BLAST MK 2",
+            "type": "energy",
+            "range": 3,
+            "dice": 5,
+            "cost": 0,
+            "text": [
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "When this attack is chosen, during the Pay {PWR} Cost step of the attack, this character may spend up to 3 additional {PWR}. Add one die to the attack for each {PWR} spent this way."
+            ]
+          },
+          {
+            "name": "SUPPRESSION PROTOCOLS MK 2",
+            "type": "physical",
+            "range": 3,
+            "dice": 9,
+            "cost": 4,
+            "text": [
+              "{WILD} Suppression: After this attack is resolved, for each {WILD} in the attack roll the defending character gains one of the following special conditions: Incinerate, Shock, or Slow."
+            ]
+          }
+        ],
+        "superpowers": [
+          {
+            "name": "MUTANT HUNTERS (AFFILIATION: SENTINELS)",
+            "type": "leadership",
+            "cost": 0,
+            "text": "When an enemy character is Dazed, after the effect is resolved, choose a number of allied characters up to the Dazed character's Threat Value. Each chosen character gains 1 {PWR}. A character cannot gain more than 1 {PWR} as a result of this Leadership ability each turn."
+          },
+          {
+            "name": "RESTRAINT CABLES",
+            "type": "active",
+            "cost": 2,
+            "text": "Choose an enemy character within {RNG} 4 and in LOS. The chosen character is pushed toward this character {S}. This superpower can be used only once per turn."
+          },
+          {
+            "name": "PATTERN ANALYSIS",
+            "type": "reactive",
+            "cost": 0,
+            "text": "While this character or an allied character within {RNG} 4 is attacking or defending, during the Modify Dice step of the attack, this character may spend up to 3 {PWR} to use this superpower. For each 1 {PWR} spent, this character or the allied character may reroll 1 die."
+          },
+          {
+            "name": "POWER MATRIX - Healthy",
+            "type": "innate",
+            "cost": 0,
+            "text": "At the end of this character's activation it gains 2 {PWR}."
+          },
+          {
+            "name": "OVERLOADING POWER CORE - Injured",
+            "type": "innate",
+            "cost": 0,
+            "text": "During the Power Phase, roll 5 dice. For each {CRIT}, and {HIT} rolled, this character gains 1 {PWR}. If at least 1 {FAIL} was rolled, this character suffers 1 {DMG}."
+          },
+          {
+            "name": "SENTINEL PROGRAMMING",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character cannot be advanced or pushed by {MYST} attacks or superpowers. When defending against {MYST} attacks this character counts {WILD} results in the defense roll as 2 successes."
+          },
+          {
+            "name": "FLIGHT",
+            "type": "innate",
+            "cost": 0,
+            "text": "When placing the movement tool during an advance, this character counts as Size 5."
+          },
+          {
+            "name": "IMMUNITY [BLEED, POISON]",
+            "type": "innate",
+            "cost": 0,
+            "text": "This character can’t suffer the [BLEED] or [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+          }
+        ]
+      },
+      "sources": [
+        "cerebro",
+        "bsdata",
+        "jarvis",
+        "ocr"
       ],
       "verified": false
     },
