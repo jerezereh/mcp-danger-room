@@ -145,14 +145,15 @@ are always dice results, and always come from these five and nothing else:
   {CRIT}  {WILD}  {HIT}  {BLOCK}  {FAIL}
 
 Across 720 such bullets in a reference corpus, no other symbol has ever
-appeared in that position, and {WILD} alone accounts for about three quarters
-of them. So when you see icons leading a bullet, the question is only *which*
-of those five, never whether it might be something else. The same holds for an
-icon inside a sentence counting results, as in "for each {WILD} in the attack
-roll".
+appeared in that position. So when you see icons leading a bullet, the
+question is only *which* of those five, never whether it might be something
+else. The same holds for an icon inside a sentence counting results, as in
+"for each {WILD} in the attack roll".
 
-Note that a trigger name does not fix its icons — the same trigger takes
-different dice on different cards, so read them, do not recall them.
+Which of the five it is can only be read off the card. A trigger name does not
+fix its icons — the same trigger takes different dice on different cards — and
+no one of the five is common enough to be a safe default. Read them; do not
+recall them and do not fall back on which one is usual.
 
 ### When you cannot tell
 
