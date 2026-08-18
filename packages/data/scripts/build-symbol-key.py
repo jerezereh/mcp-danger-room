@@ -59,6 +59,15 @@ ITEMS = [
     ('leadership', 'Leadership', B, (392, 349, 443, 399)),
 ]
 
+# Stat-box icons the tokenizer has no token for — they never appear inline, so
+# they are not SymbolKeys and are not in the key sheet the extractor is shown.
+# The app needs them to draw a stat box that looks like the printed one.
+EXTRAS = [
+    ('stamina',  B, (74, 179, 129, 232)),
+    ('movement', B, (200, 241, 255, 295)),
+    ('strength', B, (1222, 43, 1263, 84)),
+]
+
 CELL, COLS = 96, 4
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf'
 
@@ -114,6 +123,14 @@ def main() -> None:
         square.paste(glyph, ((side - glyph.width) // 2, (side - glyph.height) // 2))
         square.resize((GLYPH_PX, GLYPH_PX), Image.LANCZOS).save(GLYPH_DIR / name)
         written += 1
+    for key, card, box in EXTRAS:
+        glyph = cache[card].crop(box)
+        side = max(glyph.size)
+        square = Image.new('RGB', (side, side), _corner(glyph))
+        square.paste(glyph, ((side - glyph.width) // 2, (side - glyph.height) // 2))
+        square.resize((GLYPH_PX, GLYPH_PX), Image.LANCZOS).save(GLYPH_DIR / f'{key}.png')
+        written += 1
+
     print(f'{GLYPH_DIR.relative_to(ROOT.parent.parent)}  {written} glyphs at {GLYPH_PX}px')
 
 

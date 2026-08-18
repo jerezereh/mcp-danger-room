@@ -31,12 +31,21 @@ describe('symbol glyph files', () => {
     expect(files.has(key)).toBe(true);
   });
 
-  it('has no glyph that is not a symbol key', () => {
-    // 'leadership' is a superpower type rather than an inline glyph, and is
-    // emitted for the key sheet.
-    const expected: string[] = EXPECTED;
-    const unexpected = [...files].filter(f => !expected.includes(f) && f !== 'leadership');
-    expect(unexpected).toEqual([]);
+  /*
+   * Icons the cards print but the tokenizer has no token for, because they
+   * never appear inline: the stat box's stamina and movement, the attack bar's
+   * strength, and the Leadership star. The app draws them; card text cannot
+   * contain them.
+   */
+  const CARD_ONLY = ['leadership', 'stamina', 'movement', 'strength'];
+
+  it('has no glyph that is neither a symbol key nor a card-only icon', () => {
+    const allowed: string[] = [...EXPECTED, ...CARD_ONLY];
+    expect([...files].filter(f => !allowed.includes(f))).toEqual([]);
+  });
+
+  it('has every card-only icon the card layout draws', () => {
+    for (const name of CARD_ONLY) expect(files.has(name), name).toBe(true);
   });
 
   it('covers every symbol the tokenizer can produce, except Blank', () => {

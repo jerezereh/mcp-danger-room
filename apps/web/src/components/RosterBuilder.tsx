@@ -59,8 +59,13 @@ export function RosterBuilder() {
       current.includes(id) ? current.filter(x => x !== id) : [...current, id],
     );
 
+  /*
+   * The detail pane takes the largest share: a card laid out like the printed
+   * one is landscape, and at 400px it had to stack into a column that looked
+   * nothing like the card it is meant to mirror.
+   */
   return (
-    <div className="grid h-full grid-cols-[1fr_360px_400px] gap-4 overflow-hidden p-4">
+    <div className="grid h-full grid-cols-[minmax(220px,0.7fr)_320px_minmax(560px,1.8fr)] gap-4 overflow-hidden p-4">
       {/* Card pool */}
       <section className="flex flex-col overflow-hidden rounded-lg border border-surface-border bg-surface-raised">
         <div className="border-b border-surface-border p-3">
