@@ -97,17 +97,38 @@ export type ExtractedCard = z.infer<typeof ExtractedCard>;
  * the prompt teaches but the tokenizer rejects would render as an error in the
  * UI for every card that used it.
  */
-export function buildSystemPrompt(): string {
-  const width = Math.max(
-    ...(Object.keys(SYMBOL_LABELS) as SymbolKey[]).map(k => CANONICAL_TOKENS[k].length),
-  );
-  const glyphs = (Object.keys(SYMBOL_LABELS) as SymbolKey[])
+export function buildSystemPrompt({ symbolKeyImage = false } = {}): string {
+  const keys = Object.keys(SYMBOL_LABELS) as SymbolKey[];
+  const width = Math.max(...keys.map(k => CANONICAL_TOKENS[k].length));
+
+  /*
+   * With the key image attached, the prompt lists the tokens but not what they
+   * look like. Describing a small icon in a sentence is what produced the
+   * misreads this key exists to fix, and prose left alongside the picture could
+   * only contradict it.
+   */
+  const glyphs = keys
     .map(
       key =>
-        `  ${CANONICAL_TOKENS[key].padEnd(width)}  ${SYMBOL_LABELS[key].padEnd(10)}` +
-        `${SYMBOL_GLYPHS[key]}`,
+        `  ${CANONICAL_TOKENS[key].padEnd(width)}  ${SYMBOL_LABELS[key]}` +
+        (symbolKeyImage ? '' : `${' '.repeat(Math.max(1, 11 - SYMBOL_LABELS[key].length))}${SYMBOL_GLYPHS[key]}`),
     )
     .join('\n');
+
+  const appearance = symbolKeyImage
+    ? `The first image in this message is a key: every icon that appears on a
+card, each labelled with the token to write for it. Match what you see on the
+card against that key. It is the authority on what each icon looks like — if a
+card icon does not match any cell in the key, say so in "notes" rather than
+choosing the nearest one.`
+    : `Three of these are one confusable cluster: Power, Hit and Threat. All three
+radiate from a centre and all three have something dark at that centre, so the
+centre will not tell them apart. The outline will:
+
+  Power   long, even, sharply pointed spikes around a large round dark hole
+  Hit     a jagged, uneven burst — shorter and rougher — around a small dot
+  Threat  no spikes at all: a smooth unbroken circle, with the six lines cut
+          across the disc rather than sticking out of it`;
 
   return `You transcribe Marvel: Crisis Protocol character cards into structured data.
 
@@ -124,14 +145,7 @@ invent a token, and never write the icon's name as a plain word instead.
 
 ${glyphs}
 
-Three of these are one confusable cluster: Power, Hit and Threat. All three
-radiate from a centre and all three have something dark at that centre, so the
-centre will not tell them apart. The outline will:
-
-  Power   long, even, sharply pointed spikes around a large round dark hole
-  Hit     a jagged, uneven burst — shorter and rougher — around a small dot
-  Threat  no spikes at all: a smooth unbroken circle, with the six lines cut
-          across the disc rather than sticking out of it
+${appearance}
 
 Position helps confirm. On an attack or superpower bar, the cost printed at the
 right-hand end is always Power. An icon leading a bullet is always a dice

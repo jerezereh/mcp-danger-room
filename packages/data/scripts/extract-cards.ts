@@ -45,6 +45,7 @@ const repoRoot = resolve(pkgRoot, '../..');
 const OUT_DIR = resolve(pkgRoot, '.import');
 const CACHE_DIR = resolve(OUT_DIR, 'card-images');
 const BATCH_ID_FILE = resolve(OUT_DIR, 'batch-id.txt');
+const SYMBOL_KEY = resolve(pkgRoot, 'assets/symbol-key.png');
 
 const readBatchId = (): string => {
   if (!existsSync(BATCH_ID_FILE)) throw new Error('No .import/batch-id.txt to resume from.');
@@ -301,6 +302,22 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
   return { jobs: LIMIT > 0 ? jobs.slice(0, LIMIT) : jobs, noImages, fetched };
 }
 
+/**
+ * The symbol key, read once.
+ *
+ * Every request carries it, so it is also the only thing worth caching: the
+ * key plus the system prompt are byte-identical across all 41 cards, and the
+ * card images that follow are not.
+ */
+const symbolKey = (() => {
+  if (!existsSync(SYMBOL_KEY)) {
+    throw new Error(
+      `Missing ${SYMBOL_KEY}. Rebuild it with: python3 scripts/build-symbol-key.py`,
+    );
+  }
+  return encode(SYMBOL_KEY);
+})();
+
 function requestFor(job: Job) {
   const healthy = encode(job.healthyPath);
   const injured = encode(job.injuredPath);
@@ -315,12 +332,25 @@ function requestFor(job: Job) {
      * the retry.
      */
     max_tokens: 32000,
-    system: buildSystemPrompt(),
+    system: buildSystemPrompt({ symbolKeyImage: true }),
     output_config: { format: zodOutputFormat(ExtractedCard) },
     messages: [
       {
         role: 'user' as const,
         content: [
+          { type: 'text' as const, text: 'Symbol key:' },
+          {
+            type: 'image' as const,
+            source: { type: 'base64' as const, ...symbolKey },
+            /*
+             * Cache breakpoint. Caching is a prefix match over
+             * tools -> system -> messages, so marking the last shared block
+             * caches the system prompt and the key together and leaves the
+             * per-card images uncached. An hour, because a batch of this size
+             * spans well past the five-minute default.
+             */
+            cache_control: { type: 'ephemeral' as const, ttl: '1h' as const },
+          },
           { type: 'text' as const, text: 'Healthy side:' },
           { type: 'image' as const, source: { type: 'base64' as const, ...healthy } },
           { type: 'text' as const, text: 'Injured side:' },
