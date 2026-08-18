@@ -19,6 +19,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CARDS = ROOT / '.import' / 'card-images'
 OUT = ROOT / 'assets' / 'symbol-key.png'
+# Individual glyphs for the web client, so the app renders the real icons
+# rather than the unicode lookalikes it had been standing in with.
+GLYPH_DIR = ROOT.parent.parent / 'apps' / 'web' / 'src' / 'assets' / 'symbols'
+GLYPH_PX = 64
 
 B, D = 'BASTION_healthy.png', 'DORMAMMU_healthy.png'
 G, R, I = 'GLADIATOR_healthy.png', 'RONIN_healthy.png', 'IRON_LAD_healthy.png'
@@ -60,6 +64,18 @@ CELL, COLS = 96, 4
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf'
 
 
+def _corner(img: Image.Image) -> tuple[int, int, int]:
+    """The card background behind this glyph, sampled from its corners.
+
+    Squaring a crop needs a fill, and the badges sit on a pale card stock that
+    varies by card. Averaging the corners keeps the padding invisible instead
+    of ringing the icon in white.
+    """
+    w, h = img.size
+    pts = [img.getpixel(p) for p in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1))]
+    return tuple(sum(c[i] for c in pts) // len(pts) for i in range(3))  # type: ignore[return-value]
+
+
 def main() -> None:
     rows = (len(ITEMS) + COLS - 1) // COLS
     band = CELL + 26
@@ -83,6 +99,23 @@ def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     out.save(OUT)
     print(f'{OUT.relative_to(ROOT)}  {out.size[0]}x{out.size[1]}  {len(ITEMS)} glyphs')
+
+    # One file per token, squared and normalised so they sit on a text line at
+    # a consistent weight. Blank is skipped: it has no icon, and the app
+    # renders the word, which is what the cards do.
+    GLYPH_DIR.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for label, card, box in ITEMS:
+        if label in ('{BLANK}',):
+            continue
+        name = ('leadership' if label == 'Leadership' else label.strip('{}').lower()) + '.png'
+        glyph = cache[card].crop(box)
+        side = max(glyph.size)
+        square = Image.new('RGB', (side, side), _corner(glyph))
+        square.paste(glyph, ((side - glyph.width) // 2, (side - glyph.height) // 2))
+        square.resize((GLYPH_PX, GLYPH_PX), Image.LANCZOS).save(GLYPH_DIR / name)
+        written += 1
+    print(f'{GLYPH_DIR.relative_to(ROOT.parent.parent)}  {written} glyphs at {GLYPH_PX}px')
 
 
 if __name__ == '__main__':

@@ -5,6 +5,13 @@
  * only works once the glyphs are glyphs. The tokenizer lives in the data
  * package; this component is only concerned with how a token looks.
  *
+ * The glyphs are the real icons, cut from card scans by
+ * `packages/data/scripts/build-symbol-key.py` — the same crops the OCR
+ * extractor is shown as its key. Unicode lookalikes stood in for a while and
+ * were never right: there is no character for the Threat disc or the Wild
+ * coil, and the nearest ones (✳, ✷) are exactly the confusion the extractor
+ * kept making.
+ *
  * Unknown glyphs render visibly wrong on purpose. A corpus assembled by hand
  * over months will always have gaps, and a gap you can see gets fixed.
  */
@@ -12,66 +19,50 @@
 import { tokenize, SYMBOL_LABELS, type SymbolKey } from '@danger-room/data';
 
 /*
- * Colour groups the glyphs by what they mean: damage types warm, dice results
- * by their function, movement templates neutral. Sources spell these
- * differently ({P} vs {PWR}); the tokenizer normalizes to canonical keys, so
- * this table is keyed on identity rather than on any one source's spelling.
+ * One PNG per symbol, resolved at build time.
+ *
+ * Eager so there is no per-icon request waterfall — 20 files at a few KB each
+ * is smaller than the round trips would cost, and card text is dense with
+ * them.
  */
-const SYMBOL_STYLES: Record<SymbolKey, string> = {
-  physical: 'bg-orange-500/20 text-orange-300',
-  energy: 'bg-sky-500/20 text-sky-300',
-  mystic: 'bg-violet-500/20 text-violet-300',
-  power: 'bg-amber-500/20 text-amber-300',
-  damage: 'bg-rose-500/20 text-rose-300',
-  range: 'bg-slate-500/20 text-slate-300',
-  short: 'bg-slate-500/20 text-slate-300',
-  medium: 'bg-slate-500/20 text-slate-300',
-  long: 'bg-slate-500/20 text-slate-300',
-  critical: 'bg-yellow-500/20 text-yellow-300',
-  wild: 'bg-emerald-500/20 text-emerald-300',
-  hit: 'bg-orange-500/20 text-orange-300',
-  block: 'bg-blue-500/20 text-blue-300',
-  fail: 'bg-slate-700/40 text-slate-400',
-  blank: 'bg-slate-700/40 text-slate-400',
-  active: 'bg-teal-500/20 text-teal-300',
-  reactive: 'bg-teal-500/20 text-teal-300',
-  innate: 'bg-slate-500/20 text-slate-300',
-  threat: 'bg-fuchsia-500/20 text-fuchsia-300',
-  size: 'bg-slate-500/20 text-slate-300',
-};
+const GLYPHS = import.meta.glob<string>('../assets/symbols/*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 
-const SYMBOL_GLYPHS: Partial<Record<SymbolKey, string>> = {
-  physical: '✊',
-  energy: '⚡',
-  mystic: '✦',
-  power: '◆',
-  damage: '✸',
-  range: 'R',
-  short: 'S',
-  medium: 'M',
-  long: 'L',
-  critical: '★',
-  wild: '✷',
-  hit: '✱',
-  block: '⛊',
-  fail: '☠',
-  // No icon exists — the cards print the word, so the chip carries it.
-  blank: 'Blank',
-  active: '▶',
-  reactive: '↺',
-  innate: '∞',
-  threat: '✳',
-  size: 'I',
-};
+const glyphUrl = (key: SymbolKey): string | undefined =>
+  GLYPHS[`../assets/symbols/${key}.png`];
 
+/**
+ * Blank is the one die result with no icon — the cards print the word, so the
+ * app does too. Anything else without an image would be a build problem, and
+ * falls back to its label rather than rendering an empty box.
+ */
 function Glyph({ symbolKey }: { symbolKey: SymbolKey }) {
+  const label = SYMBOL_LABELS[symbolKey];
+  const url = glyphUrl(symbolKey);
+
+  if (!url) {
+    return (
+      <span
+        title={label}
+        className="mx-0.5 inline-flex h-5 items-center rounded bg-slate-700/40 px-1 align-middle text-xs font-semibold text-slate-300"
+      >
+        {label}
+      </span>
+    );
+  }
+
   return (
-    <span
-      title={SYMBOL_LABELS[symbolKey]}
-      className={`mx-0.5 inline-flex h-5 min-w-5 items-center justify-center rounded px-1 align-middle text-xs font-semibold ${SYMBOL_STYLES[symbolKey]}`}
-    >
-      {SYMBOL_GLYPHS[symbolKey] ?? symbolKey}
-    </span>
+    <img
+      src={url}
+      alt={label}
+      title={label}
+      // Sized in em so the icons track the surrounding text rather than
+      // needing a variant per context.
+      className="mx-0.5 inline-block h-[1.2em] w-[1.2em] rounded-[2px] align-text-bottom"
+    />
   );
 }
 
@@ -94,10 +85,10 @@ export function CardText({ text, className = '' }: { text: string; className?: s
             return (
               <span
                 key={i}
-                title="Unrecognized symbol — needs adding to the vocabulary"
-                className="mx-0.5 rounded bg-red-500/20 px-1 text-xs text-red-300"
+                title="Unrecognized glyph — the corpus has a gap here"
+                className="mx-0.5 rounded bg-rose-500/20 px-1 text-xs text-rose-300"
               >
-                ?{token.value}
+                {`{${token.value}}`}
               </span>
             );
         }
