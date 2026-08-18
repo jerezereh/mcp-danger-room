@@ -4,8 +4,14 @@
  * Landscape, with the identity and stat box in a left rail and the attacks and
  * superpowers as full-width bars on the right — the same arrangement as the
  * physical card, so a player who knows the card can find a value in the same
- * place. Each side of the card gets its own panel, because that is how the
- * cards are: healthy on one face, injured on the other.
+ * place.
+ *
+ * One side at a time, and the card flips. A physical card has a front and a
+ * back; showing both at once is a thing only software does, and it doubles the
+ * height of the tallest element on the screen. Clicking the card turns it over
+ * — the behaviour jarvis-protocol.com uses — and every printed value turns
+ * with it, so the stats on screen always describe the face you are looking
+ * at.
  *
  * The rendered data is primary and the scan is the reference. Data is
  * searchable, themeable and is what the engine acts on, so a discrepancy
@@ -123,24 +129,20 @@ function Value({ icon, label, children }: { icon: string; label: string; childre
 function Side({
   block,
   threat,
-  title,
   scan,
   alt,
+  onFlip,
   onScanMissing,
 }: {
   block: StatBlock;
   threat: number;
-  title: string;
   scan: string | null;
   alt: string;
+  onFlip: () => void;
   onScanMissing: () => void;
 }) {
   return (
     <section className="overflow-hidden rounded-lg border border-surface-border bg-surface-raised">
-      <h4 className="border-b border-surface-border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-        {title}
-      </h4>
-
       {/*
         The printed card gives roughly a quarter of its width to the stat rail
         and the rest to the abilities; this follows it, and collapses to a
@@ -149,7 +151,7 @@ function Side({
       <div className="grid gap-3 p-3 lg:grid-cols-[minmax(150px,0.28fr)_minmax(0,1fr)]">
         <div className="space-y-2">
           <StatBox block={block} threat={threat} />
-          <CardScan file={scan} alt={alt} onMissing={onScanMissing} />
+          <CardScan file={scan} alt={alt} onFlip={onFlip} onMissing={onScanMissing} />
         </div>
 
         <div className="min-w-0 space-y-2">
@@ -215,10 +217,12 @@ function Side({
 function CardScan({
   file,
   alt,
+  onFlip,
   onMissing,
 }: {
   file: string | null;
   alt: string;
+  onFlip: () => void;
   onMissing: () => void;
 }) {
   const [failed, setFailed] = useState(false);
@@ -226,29 +230,56 @@ function CardScan({
 
   const href = `/cards/${encodeURIComponent(file)}`;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="block overflow-hidden rounded border border-surface-border transition hover:border-slate-500"
-      title="Open the full-size scan"
-    >
-      <img
-        src={href}
-        alt={alt}
-        loading="lazy"
-        onError={() => {
-          setFailed(true);
-          onMissing();
-        }}
-        className="w-full"
-      />
-    </a>
+    <div className="group relative">
+      {/*
+        A button, not a bare click handler on the image: turning the card over
+        is an action, and it should be reachable from the keyboard like one.
+      */}
+      <button
+        type="button"
+        onClick={onFlip}
+        title="Turn the card over"
+        className="block w-full overflow-hidden rounded border border-surface-border transition hover:border-slate-500 focus:outline-none focus:ring-2 focus:ring-accent/60"
+      >
+        <img
+          src={href}
+          alt={alt}
+          loading="lazy"
+          onError={() => {
+            setFailed(true);
+            onMissing();
+          }}
+          className="w-full"
+        />
+      </button>
+
+      {/* Clicking flips, so opening the full scan needs its own affordance. */}
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        title="Open the full-size scan"
+        className="absolute right-1 top-1 rounded bg-slate-900/80 px-1.5 py-0.5 text-[11px] text-slate-300 opacity-0 transition group-hover:opacity-100 focus:opacity-100"
+      >
+        ↗
+      </a>
+    </div>
   );
 }
 
 export function CharacterCard({ character }: { character: Character }) {
   const [scansMissing, setScansMissing] = useState(false);
+  const [side, setSide] = useState<'healthy' | 'injured'>('healthy');
+  const flip = () => setSide(s => (s === 'healthy' ? 'injured' : 'healthy'));
+
+  // A new character starts on its healthy face, as it would out of the box.
+  const [shownId, setShownId] = useState(character.id);
+  if (shownId !== character.id) {
+    setShownId(character.id);
+    setSide('healthy');
+  }
+
+  const block = character[side];
 
   return (
     <article className="space-y-3">
@@ -263,6 +294,33 @@ export function CharacterCard({ character }: { character: Character }) {
           <p className="mt-1 text-xs text-slate-400">{character.affiliations.join(' · ')}</p>
         </div>
         <div className="flex shrink-0 items-center gap-3 text-right">
+          {/*
+            Both faces are always offered rather than a single "flip" toggle:
+            which side you are on is the thing worth showing, and a two-state
+            control that names both states says it without being read.
+          */}
+          <div
+            role="group"
+            aria-label="Card side"
+            className="flex overflow-hidden rounded border border-surface-border text-xs"
+          >
+            {(['healthy', 'injured'] as const).map(face => (
+              <button
+                key={face}
+                type="button"
+                onClick={() => setSide(face)}
+                aria-pressed={side === face}
+                className={`px-2 py-1 capitalize transition ${
+                  side === face
+                    ? 'bg-accent/20 font-semibold text-slate-100'
+                    : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                {face}
+              </button>
+            ))}
+          </div>
+
           <div className="flex items-center gap-1.5">
             <Glyph name="threat" label="Threat" className="h-6 w-6" />
             <span className="text-lg font-semibold tabular-nums text-slate-100">
@@ -308,19 +366,11 @@ export function CharacterCard({ character }: { character: Character }) {
       )}
 
       <Side
-        block={character.healthy}
+        block={block}
         threat={character.threat}
-        title="Healthy"
-        scan={character.healthy.cardImage}
-        alt={`${character.name}, healthy side`}
-        onScanMissing={() => setScansMissing(true)}
-      />
-      <Side
-        block={character.injured}
-        threat={character.threat}
-        title="Injured"
-        scan={character.injured.cardImage}
-        alt={`${character.name}, injured side`}
+        scan={block.cardImage}
+        alt={`${character.name}, ${side} side`}
+        onFlip={flip}
         onScanMissing={() => setScansMissing(true)}
       />
     </article>

@@ -60,12 +60,12 @@ export function RosterBuilder() {
     );
 
   /*
-   * The detail pane takes the largest share: a card laid out like the printed
-   * one is landscape, and at 400px it had to stack into a column that looked
-   * nothing like the card it is meant to mirror.
+   * The pool is the only portrait element — a long scrolling list wants to be
+   * tall and narrow. Everything else is landscape because the thing it
+   * describes is: the character card, and the roster it belongs to.
    */
   return (
-    <div className="grid h-full grid-cols-[minmax(220px,0.7fr)_320px_minmax(560px,1.8fr)] gap-4 overflow-hidden p-4">
+    <div className="grid h-full grid-cols-[320px_minmax(0,1fr)] gap-4 overflow-hidden p-4">
       {/* Card pool */}
       <section className="flex flex-col overflow-hidden rounded-lg border border-surface-border bg-surface-raised">
         <div className="border-b border-surface-border p-3">
@@ -119,11 +119,27 @@ export function RosterBuilder() {
         </p>
       </section>
 
-      {/* Roster + squad analysis */}
-      <section className="flex flex-col gap-3 overflow-hidden">
-        <div className="rounded-lg border border-surface-border bg-surface-raised p-3">
-          <div className="mb-2 flex items-baseline justify-between">
-            <h3 className="text-sm font-semibold text-slate-200">Roster</h3>
+      {/*
+        Detail above, roster below. The card is the thing being looked at, so
+        it gets the room; the roster is a working set and reads fine as a wide,
+        short strip.
+      */}
+      <div className="grid min-h-0 grid-rows-[minmax(0,1fr)_minmax(180px,0.5fr)] gap-4">
+        <section className="overflow-auto rounded-lg border border-surface-border bg-surface p-3">
+          {selected ? (
+            <CharacterCard character={selected} />
+          ) : (
+            <p className="pt-8 text-center text-sm text-slate-600">
+              Select a character to see its card.
+            </p>
+          )}
+        </section>
+
+        {/* Roster and the squads it can field, one pane, side by side. */}
+        <section className="grid min-h-0 grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-3 overflow-hidden rounded-lg border border-surface-border bg-surface-raised p-3">
+          <div className="flex min-h-0 flex-col">
+            <div className="mb-2 flex items-baseline justify-between">
+              <h3 className="text-sm font-semibold text-slate-200">Roster</h3>
             <span
               className={`text-xs tabular-nums ${
                 validation.valid ? 'text-slate-400' : 'text-accent'
@@ -134,12 +150,12 @@ export function RosterBuilder() {
             </span>
           </div>
 
-          {rosterIds.length === 0 ? (
-            <p className="py-4 text-center text-xs text-slate-600">
-              Double-click characters to build a roster.
-            </p>
-          ) : (
-            <ul className="space-y-1">
+            {rosterIds.length === 0 ? (
+              <p className="py-4 text-center text-xs text-slate-600">
+                Double-click characters to build a roster.
+              </p>
+            ) : (
+              <ul className="flex-1 space-y-1 overflow-auto">
               {rosterIds.map(id => {
                 const character = lookup.get(id);
                 if (!character) return null;
@@ -174,53 +190,44 @@ export function RosterBuilder() {
             </ul>
           )}
 
-          {validation.violations.map((v, i) => (
-            <p key={i} className="mt-2 text-xs text-accent">
-              {v.message}
-            </p>
-          ))}
-        </div>
-
-        <div className="flex flex-1 flex-col overflow-hidden rounded-lg border border-surface-border bg-surface-raised p-3">
-          <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-200">Legal squads</h3>
-            <label className="flex items-center gap-2 text-xs text-slate-500">
-              Threat
-              <input
-                type="number"
-                value={threatLimit}
-                min={0}
-                max={40}
-                onChange={e => setThreatLimit(Number(e.target.value))}
-                className="w-14 rounded bg-surface px-2 py-1 text-right tabular-nums text-slate-200 outline-none"
-              />
-            </label>
+            {validation.violations.map((v, i) => (
+              <p key={i} className="mt-2 text-xs text-accent">
+                {v.message}
+              </p>
+            ))}
           </div>
 
-          <p className="mb-2 text-xs text-slate-500">
-            {squads.length} squad{squads.length === 1 ? '' : 's'} fieldable at {threatLimit} threat
-          </p>
+          <div className="flex min-h-0 flex-col border-l border-surface-border pl-3">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-200">Legal squads</h3>
+              <label className="flex items-center gap-2 text-xs text-slate-500">
+                Threat
+                <input
+                  type="number"
+                  value={threatLimit}
+                  min={0}
+                  max={40}
+                  onChange={e => setThreatLimit(Number(e.target.value))}
+                  className="w-14 rounded bg-surface px-2 py-1 text-right tabular-nums text-slate-200 outline-none"
+                />
+              </label>
+            </div>
 
-          <ul className="flex-1 space-y-1 overflow-auto text-xs">
-            {squads.slice(0, 100).map((squad, i) => (
-              <li key={i} className="rounded bg-surface px-2 py-1 text-slate-400">
-                {squad.map(id => lookup.get(id)?.name ?? id).join(' · ')}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+            <p className="mb-2 text-xs text-slate-500">
+              {squads.length} squad{squads.length === 1 ? '' : 's'} fieldable at {threatLimit}{' '}
+              threat
+            </p>
 
-      {/* Detail */}
-      <section className="overflow-auto rounded-lg border border-surface-border bg-surface p-3">
-        {selected ? (
-          <CharacterCard character={selected} />
-        ) : (
-          <p className="pt-8 text-center text-sm text-slate-600">
-            Select a character to see its card.
-          </p>
-        )}
-      </section>
+            <ul className="min-h-0 flex-1 space-y-1 overflow-auto text-xs">
+              {squads.slice(0, 100).map((squad, i) => (
+                <li key={i} className="rounded bg-surface px-2 py-1 text-slate-400">
+                  {squad.map(id => lookup.get(id)?.name ?? id).join(' · ')}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
