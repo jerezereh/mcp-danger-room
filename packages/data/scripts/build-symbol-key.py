@@ -21,7 +21,7 @@ CARDS = ROOT / '.import' / 'card-images'
 OUT = ROOT / 'assets' / 'symbol-key.png'
 
 B, D = 'BASTION_healthy.png', 'DORMAMMU_healthy.png'
-G, R, E = 'GLADIATOR_healthy.png', 'RONIN_healthy.png', 'ECHO_healthy.png'
+G, R, I = 'GLADIATOR_healthy.png', 'RONIN_healthy.png', 'IRON_LAD_healthy.png'
 
 # (label, source card, crop box). Order groups related glyphs together.
 ITEMS = [
@@ -38,7 +38,10 @@ ITEMS = [
     ('{HIT}',      D, (626, 280, 656, 312)),
     ('{BLOCK}',    R, (1110, 154, 1142, 186)),
     ('{FAIL}',     D, (666, 280, 696, 312)),
+    # Blank is a die result with no icon — the cards spell it out.
+    ('{BLANK}',    R, (1274, 152, 1342, 190)),
     ('{S}',        G, (1456, 415, 1487, 447)),
+    ('{M}',        I, (1442, 757, 1474, 789)),
     ('{L}',        G, (1644, 675, 1675, 707)),
     ('{ACTIVE}',   B, (392, 489, 443, 539)),
     ('{REACTIVE}', B, (394, 602, 445, 652)),

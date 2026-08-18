@@ -14,6 +14,7 @@
  */
 
 import type { Superpower } from '../schema.js';
+import { linkBlankWord } from '../symbols.js';
 import type { CharacterDraft } from './draft.js';
 import type { ExtractedCard } from './extraction.js';
 
@@ -45,8 +46,14 @@ export function ocrToDraft(record: ExtractionRecord): CharacterDraft {
     movement: s.movement,
     size: s.size,
     defense: s.defense,
-    attacks: s.attacks,
-    superpowers: s.superpowers.map(p => ({ ...p, type: superpowerType(p.type) })),
+    // Safety net: the prompt asks for {BLANK}, but a spelled-out Blank that
+    // slips through must not reach the corpus as prose.
+    attacks: s.attacks.map(a => ({ ...a, text: a.text.map(linkBlankWord) })),
+    superpowers: s.superpowers.map(p => ({
+      ...p,
+      type: superpowerType(p.type),
+      text: linkBlankWord(p.text),
+    })),
   });
 
   return {

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  linkBlankWord,
   SYMBOL_GLYPHS,
   SYMBOL_LABELS,
   tokenize,
@@ -154,5 +155,36 @@ describe('unrecognized glyphs', () => {
     // The prompt tells the extractor to emit this instead of dropping an icon
     // it cannot name, so it has to reach the data-quality worklist.
     expect(unknownSymbols('deals {UNKNOWN} damage')).toEqual(['UNKNOWN']);
+  });
+});
+
+
+/*
+ * Blank is the only die result with no printed icon, so sources spell it out.
+ * It was previously aliased onto Failure, which conflated two different faces —
+ * and 60 occurrences sat in the corpus as prose, invisible to the renderer and
+ * to the engine.
+ */
+describe('the Blank die result', () => {
+  it('is its own symbol, not an alias of Failure', () => {
+    expect(tokenize('{BLANK}')).toEqual([{ kind: 'symbol', key: 'blank' }]);
+    expect(tokenize('{FAIL}')).toEqual([{ kind: 'symbol', key: 'fail' }]);
+    expect(SYMBOL_LABELS.blank).toBe('Blank');
+  });
+
+  it('links the spelled-out word', () => {
+    expect(linkBlankWord('change 1 result to a Blank.')).toBe('change 1 result to a {BLANK}.');
+  });
+
+  it('leaves an already-linked token alone', () => {
+    expect(linkBlankWord('a {BLANK} result')).toBe('a {BLANK} result');
+  });
+
+  it('does not touch the word inside a longer one', () => {
+    expect(linkBlankWord('Blankets and blanking')).toBe('Blankets and blanking');
+  });
+
+  it('has no glyph description, because it has no glyph', () => {
+    expect(SYMBOL_GLYPHS.blank).toContain('no icon');
   });
 });

@@ -137,6 +137,10 @@ Position helps confirm. On an attack or superpower bar, the cost printed at the
 right-hand end is always Power. An icon leading a bullet is always a dice
 result, so it is Hit and never Power or Threat.
 
+One result has no icon: Blank. Cards spell it out as the word "Blank" in the
+sentence. Transcribe that word as {BLANK} — it is a die result like the others
+and has to be readable as one, not left as prose.
+
 Inline icons are printed as white glyphs inside a small black circular badge.
 Read only the shape inside the badge. The badge is never part of the symbol —
 in particular, a round badge does not make an icon the Range crosshair.

@@ -26,6 +26,7 @@ import type {
   Superpower,
 } from '../schema.js';
 import type { CharacterDraft, StatBlockDraft } from './draft.js';
+import { linkBlankWord } from '../symbols.js';
 import { slugify, splitName } from './slug.js';
 
 const parser = new XMLParser({
@@ -179,7 +180,9 @@ const MOVEMENT: Record<string, StatBlock['movement']> = {
   long: 'L',
 };
 
-const clean = (raw: string): string => raw.replace(/\{.*?\}/g, m => m).trim();
+// Blank is the one die result with no icon, so BSData spells it out. Linking
+// it here is what makes it a die result downstream rather than prose.
+const clean = (raw: string): string => linkBlankWord(raw.replace(/\{.*?\}/g, m => m).trim());
 
 export interface BsdataWarning {
   readonly character: string;

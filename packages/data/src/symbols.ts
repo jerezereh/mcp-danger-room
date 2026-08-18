@@ -31,6 +31,7 @@ export type SymbolKey =
   | 'hit'
   | 'block'
   | 'fail'
+  | 'blank'
   | 'active'
   | 'reactive'
   | 'innate'
@@ -54,6 +55,7 @@ export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
   // The skull face. Distinct from Blank, which is a separate die result that
   // prints no glyph at all — labelling this one "Blank" conflated the two.
   fail: 'Failure',
+  blank: 'Blank',
   active: 'Active',
   reactive: 'Reactive',
   innate: 'Innate',
@@ -88,6 +90,9 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   hit: 'a jagged, uneven impact burst with a small dark dot at its centre',
   block: 'a shield with a spot on it',
   fail: 'a skull',
+  // The only entry with no picture. Cards print the word, and it has to be
+  // linked anyway so the renderer and the engine see a die result, not prose.
+  blank: 'no icon at all — the cards print the word "Blank"',
   active: 'four arrows pointing outward from a centre',
   reactive: 'a pair of lightning bolts',
   innate: 'an infinity sign',
@@ -143,9 +148,7 @@ const ALIASES: Readonly<Record<string, SymbolKey>> = {
   a: 'fail',
   fail: 'fail',
   failure: 'fail',
-  // Legacy spelling. The Blank die face prints no glyph, so nothing inline can
-  // legitimately mean it — a `{BLANK}` in the corpus is the skull.
-  blank: 'fail',
+  blank: 'blank',
   active: 'active',
   activated: 'active',
   reactive: 'reactive',
@@ -173,6 +176,7 @@ export const CANONICAL_TOKENS: Readonly<Record<SymbolKey, string>> = {
   hit: '{HIT}',
   block: '{BLOCK}',
   fail: '{FAIL}',
+  blank: '{BLANK}',
   active: '{ACTIVE}',
   reactive: '{REACTIVE}',
   innate: '{INNATE}',
@@ -237,6 +241,18 @@ export function toPlainText(text: string): string {
       }
     })
     .join('');
+}
+
+/**
+ * Link the spelled-out Blank die result.
+ *
+ * Blank is the one result with no printed icon, so sources write the word.
+ * Left as prose it is invisible to everything downstream — it cannot be styled
+ * as a die result, searched alongside the other five, or read by the engine.
+ * The corpus carried 60 of these as plain text.
+ */
+export function linkBlankWord(text: string): string {
+  return text.replace(/(?<![{\w])Blank(?![}\w])/g, CANONICAL_TOKENS.blank);
 }
 
 /** Every unrecognized glyph in a body of text — the data-quality worklist. */

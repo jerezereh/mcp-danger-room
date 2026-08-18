@@ -216,7 +216,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Sap Power: Before {DMG} is dealt, the defender loses 1 {PWR} for each {CRIT} result in the attack roll and this character gains that amount of {PWR}."
+              "{WILD} <b>Sap Power</b>: Before {DMG} is dealt, the defender loses 1 {PWR} for each {WILD} result in the attack roll and this character gains that amount of {PWR}."
             ]
           },
           {
@@ -227,8 +227,8 @@
             "dice": 9,
             "cost": 5,
             "text": [
-              "After this attack is resolved, if the defender is {S} 4 or less, this character may Throw it Away {M}.",
-              "{CRIT} Avatar of Life: After this attack is resolved, for each {CRIT} result in the attack roll, this character may choose another allied character within {RNG} 4. Each chosen character may remove 1 {DMG} or 1 special condition from itself."
+              "After this attack is resolved, if the defender is {SIZE} 4 or less, this character may Throw it Away {M}.",
+              "{WILD} <b>Avatar of Life</b>: After this attack is resolved, for each {WILD} result in the attack roll, this character may choose another allied character within {RNG} 4. Each chosen character may remove 1 {DMG} or 1 special condition from itself."
             ]
           }
         ],
@@ -243,7 +243,7 @@
             "name": "Cosmic Energy Construct",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character or another allied character within {RNG} 4 is targeted by an attack, this character may use this superpower. Add 2 dice to that character\\u2019s defense roll against that attack."
+            "text": "When this character or another allied character within {RNG} 4 is targeted by an attack, this character may use this superpower. Add 2 dice to that character's defense roll against that attack."
           },
           {
             "name": "Chronokinesis",
@@ -297,7 +297,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Sap Power: Before {DMG} is dealt, the defender loses 1 {PWR} for each {CRIT} result in the attack roll and this character gains that amount of {PWR}."
+              "{WILD} <b>Sap Power</b>: Before {DMG} is dealt, the defender loses 1 {PWR} for each {WILD} result in the attack roll and this character gains that amount of {PWR}."
             ]
           },
           {
@@ -308,8 +308,8 @@
             "dice": 9,
             "cost": 5,
             "text": [
-              "After this attack is resolved, if the defender is {S} 4 or less, this character may Throw it Away {M}.",
-              "{CRIT} Avatar of Life: After this attack is resolved, for each {CRIT} result in the attack roll, this character may choose another allied character within {RNG} 4. Each chosen character may remove 1 {DMG} or 1 special condition from itself."
+              "After this attack is resolved, if the defender is {SIZE} 4 or less, this character may Throw it Away {M}.",
+              "{WILD} <b>Avatar of Life</b>: After this attack is resolved, for each {WILD} result in the attack roll, this character may choose another allied character within {RNG} 4. Each chosen character may remove 1 {DMG} or 1 special condition from itself."
             ]
           }
         ],
@@ -324,7 +324,7 @@
             "name": "Cosmic Energy Construct",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character or another allied character within {RNG} 4 is targeted by an attack, this character may use this superpower. Add 2 dice to that character\\u2019s defense roll against that attack."
+            "text": "When this character or another allied character within {RNG} 4 is targeted by an attack, this character may use this superpower. Add 2 dice to that character's defense roll against that attack."
           },
           {
             "name": "Chronokinesis",
@@ -1887,7 +1887,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "Stun: After each attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After each attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -1907,13 +1907,13 @@
             "name": "Landslide",
             "type": "active",
             "cost": 2,
-            "text": "Choose an enemy character of {INNATE} 4 or less within {RNG} 3. Push the chosen character Away {S}. This superpower can be used only once per Turn."
+            "text": "Choose an enemy character of {THREAT} 4 or less within {RNG} 3. Push the chosen character Away {S}. This superpower can be used only once per Turn."
           },
           {
             "name": "Beware Falling Debris",
             "type": "reactive",
             "cost": 3,
-            "text": "When an enemy character ends an Advance within {RNG} 3 of this character, this character may use this superpower. Choose an interactive terrain feature of {INNATE} 3 or less within {RNG} 2 of the enemy character that was Advanced. Destroy that terrain feature. The enemy character suffers a collision as if the terrain feature had collided with it."
+            "text": "When an enemy character ends an Advance within {RNG} 3 of this character, this character may use this superpower. Choose an interactive terrain feature of {THREAT} 3 or less within {RNG} 2 of the enemy character that was Advanced. Destroy that terrain feature. The enemy character suffers a collision as if the terrain feature had collided with it."
           }
         ]
       },
@@ -1937,7 +1937,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "Stun: After each attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After each attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -1957,13 +1957,13 @@
             "name": "Landslide",
             "type": "active",
             "cost": 2,
-            "text": "Choose an enemy character of {INNATE} 4 or less within {RNG} 3. Push the chosen character Away {S}. This superpower can be used only once per Turn."
+            "text": "Choose an enemy character of {THREAT} 4 or less within {RNG} 3. Push the chosen character Away {S}. This superpower can be used only once per Turn."
           },
           {
             "name": "Beware Falling Debris",
             "type": "reactive",
             "cost": 3,
-            "text": "When an enemy character ends an Advance within {RNG} 3 of this character, this character may use this superpower. Choose an interactive terrain feature of {INNATE} 3 or less within {RNG} 2 of the enemy character that was Advanced. Destroy that terrain feature. The enemy character suffers a collision as if the terrain feature had collided with it."
+            "text": "When an enemy character ends an Advance within {RNG} 3 of this character, this character may use this superpower. Choose an interactive terrain feature of {THREAT} 3 or less within {RNG} 2 of the enemy character that was Advanced. Destroy that terrain feature. The enemy character suffers a collision as if the terrain feature had collided with it."
           }
         ]
       },
@@ -2007,7 +2007,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{CRIT} {WILD} Dancing Strike: After this attack is resolved, this character may Advance {S}."
             ]
           },
@@ -2083,7 +2083,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{CRIT} {WILD} Dancing Strike: After this attack is resolved, this character may Advance {S}."
             ]
           },
@@ -2660,7 +2660,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "Degeneration: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
+              "{ENRG} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
             ]
           },
           {
@@ -2671,9 +2671,9 @@
             "dice": 8,
             "cost": 5,
             "text": [
-              "Degeneration: After each attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round.",
-              "Suppression: After each attack is resolved, the defender loses 1 {PWR} for each {CRIT} in the attack roll.",
-              "Nanotech: After each attack is resolved, the defender gains the Root special condition."
+              "{ENRG} <b>Degeneration</b>: After each attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round.",
+              "{ENRG} <b>Suppression</b>: After each attack is resolved, the defender loses 1 {PWR} for each {CRIT} in the attack roll.",
+              "{ENRG} <b>Nanotech</b>: After each attack is resolved, the defender gains the Root special condition."
             ]
           }
         ],
@@ -2682,19 +2682,19 @@
             "name": "Operation Zero Tolerance (Affiliation: Sentinels)",
             "type": "leadership",
             "cost": 0,
-            "text": "When an allied character makes an attack, if the defender would gain {PWR} for {DMG} dealt by that attack, the defender gains 1 less {PWR}. If the defender has a greater Threat than the attacker, the defender gains 2 less {PWR} instead."
+            "text": "When an allied character makes an attack, if the defender would gain {PWR} for {DMG} dealt by that attack, the defender gains 1 less {PWR}. If the defender has a greater {THREAT} than the attacker, the defender gains 2 less {PWR} instead."
           },
           {
             "name": "Advanced Teleportation Matrix",
             "type": "active",
             "cost": 2,
-            "text": "Choose this character or another allied character within {RNG} 2. Place the chosen character within {RNG} 2 of its current position. A character can be Placed by this superpower only once per Turn."
+            "text": "Choose this character or another allied character within {RNG}2. Place the chosen character within {RNG}2 of its current position. A character can be Placed by this superpower only once per Turn."
           },
           {
             "name": "Prime Nano-Virus Reanimation Protocols",
             "type": "reactive",
             "cost": 1,
-            "text": "When another allied non-Grunt character within {RNG} 5 is Dazed or KO'd by an enemy effect, after the effect is resolved, this character may use this superpower. Choose 1 enemy character that caused the effect. The chosen character gains the Root special condition and suffers 1 {DMG}."
+            "text": "When another allied non-Grunt character within {RNG}5 is Dazed or KO'd by an enemy effect, after the effect is resolved, this character may use this superpower. Choose 1 enemy character that caused the effect. The chosen character gains the Root special condition and suffers 1 {DMG}."
           },
           {
             "name": "Enhanced Sentinel Cybernetics",
@@ -2730,7 +2730,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "Degeneration: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
+              "{ENRG} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
             ]
           },
           {
@@ -2741,9 +2741,9 @@
             "dice": 8,
             "cost": 5,
             "text": [
-              "Degeneration: After each attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round.",
-              "Suppression: After each attack is resolved, the defender loses 1 {PWR} for each {CRIT} in the attack roll.",
-              "Nanotech: After each attack is resolved, the defender gains the Root special condition."
+              "{ENRG} <b>Degeneration</b>: After each attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round.",
+              "{ENRG} <b>Suppression</b>: After each attack is resolved, the defender loses 1 {PWR} for each {CRIT} in the attack roll.",
+              "{ENRG} <b>Nanotech</b>: After each attack is resolved, the defender gains the Root special condition."
             ]
           }
         ],
@@ -2752,19 +2752,19 @@
             "name": "Operation Zero Tolerance (Affiliation: Sentinels)",
             "type": "leadership",
             "cost": 0,
-            "text": "When an allied character makes an attack, if the defender would gain {PWR} for {DMG} dealt by that attack, the defender gains 1 less {PWR}. If the defender has a greater Threat than the attacker, the defender gains 2 less {PWR} instead."
+            "text": "When an allied character makes an attack, if the defender would gain {PWR} for {DMG} dealt by that attack, the defender gains 1 less {PWR}. If the defender has a greater {THREAT} than the attacker, the defender gains 2 less {PWR} instead."
           },
           {
             "name": "Advanced Teleportation Matrix",
             "type": "active",
             "cost": 2,
-            "text": "Choose this character or another allied character within {RNG} 2. Place the chosen character within {RNG} 2 of its current position. A character can be Placed by this superpower only once per Turn."
+            "text": "Choose this character or another allied character within {RNG}2. Place the chosen character within {RNG}2 of its current position. A character can be Placed by this superpower only once per Turn."
           },
           {
             "name": "Prime Nano-Virus Reanimation Protocols",
             "type": "reactive",
             "cost": 1,
-            "text": "When another allied non-Grunt character within {RNG} 5 is Dazed or KO'd by an enemy effect, after the effect is resolved, this character may use this superpower. Choose 1 enemy character that caused the effect. The chosen character gains the Root special condition and suffers 1 {DMG}."
+            "text": "When another allied non-Grunt character within {RNG}5 is Dazed or KO'd by an enemy effect, after the effect is resolved, this character may use this superpower. Choose 1 enemy character that caused the effect. The chosen character gains the Root special condition and suffers 1 {DMG}."
           },
           {
             "name": "Enhanced Sentinel Cybernetics",
@@ -3192,7 +3192,7 @@
             "name": "MUTANT ENERGY ABSORPTION",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an attack, for each {WILD} in the defense roll, it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a Blank. This character gains 1 {PWR} for each die changed this way."
+            "text": "When this character is defending against an attack, for each {WILD} in the defense roll, it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed this way."
           },
           {
             "name": "OVERLOAD",
@@ -3256,7 +3256,7 @@
             "name": "MUTANT ENERGY ABSORPTION",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an attack, for each {WILD} in the defense roll, it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a Blank. This character gains 1 {PWR} for each die changed this way."
+            "text": "When this character is defending against an attack, for each {WILD} in the defense roll, it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed this way."
           },
           {
             "name": "OVERLOAD",
@@ -3522,7 +3522,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, if it dealt {DMG}, the target character gains the Bleed special condition.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -3587,7 +3587,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, if it dealt {DMG}, the target character gains the Bleed special condition.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -4801,7 +4801,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Stun: After the attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After the attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -4812,7 +4812,7 @@
             "dice": 8,
             "cost": 5,
             "text": [
-              "{WILD}{CRIT} <b>Energy Pulse</b>: After each attack is resolved, deal 1 {DMG} to each other enemy character within {RNG} 2 of this character. Then this character loses 1 {PWR}."
+              "{REACTIVE}{WILD} <b>Energy Pulse</b>: After each attack is resolved, deal 1 {DMG} to each other enemy character within {RNG} 2 of this character. Then this character loses 1 {PWR}."
             ]
           }
         ],
@@ -4821,7 +4821,7 @@
             "name": "Time's Up",
             "type": "active",
             "cost": 3,
-            "text": "Choose an interactive terrain feature or an enemy character, both of {size} 4 or less and within {RNG} 3, and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature or an enemy character, both of {SIZE} 4 or less and within {RNG} 3, and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Anti-Matter Barrier",
@@ -4875,7 +4875,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Stun: After the attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After the attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -4886,7 +4886,7 @@
             "dice": 8,
             "cost": 5,
             "text": [
-              "{WILD}{CRIT} <b>Energy Pulse</b>: After each attack is resolved, deal 1 {DMG} to each other enemy character within {RNG} 2 of this character. Then this character loses 1 {PWR}."
+              "{REACTIVE}{WILD} <b>Energy Pulse</b>: After each attack is resolved, deal 1 {DMG} to each other enemy character within {RNG} 2 of this character. Then this character loses 1 {PWR}."
             ]
           }
         ],
@@ -4895,7 +4895,7 @@
             "name": "Time's Up",
             "type": "active",
             "cost": 3,
-            "text": "Choose an interactive terrain feature or an enemy character, both of {size} 4 or less and within {RNG} 3, and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature or an enemy character, both of {SIZE} 4 or less and within {RNG} 3, and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Anti-Matter Barrier",
@@ -6148,7 +6148,7 @@
             "name": "ENHANCED ENERGY ABSORPTION",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a Blank. This character gains 1 {PWR} for each die changed in this way."
+            "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
           },
           {
             "name": "NORMAL - HIGHER, FURTHER, FASTER",
@@ -6266,7 +6266,7 @@
             "name": "ENHANCED ENERGY ABSORPTION",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a Blank. This character gains 1 {PWR} for each die changed in this way."
+            "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
           },
           {
             "name": "NORMAL - HIGHER, FURTHER, FASTER",
@@ -7659,7 +7659,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} {FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} {FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -7715,7 +7715,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} {FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} {FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -10358,7 +10358,7 @@
             "name": "On the Prowl",
             "type": "innate",
             "cost": 0,
-            "text": "While this character is within {RNG} 1 of a terrain feature of {S} 2 or more, this character gains the Stealth {INNATE} superpower."
+            "text": "While this character is within {RNG} 1 of a terrain feature of {SIZE} 2 or more, this character gains the Stealth {INNATE} superpower."
           },
           {
             "name": "Wallcrawler",
@@ -10433,7 +10433,7 @@
             "name": "On the Prowl",
             "type": "innate",
             "cost": 0,
-            "text": "While this character is within {RNG} 1 of a terrain feature of {S} 2 or more, this character gains the Stealth {INNATE} superpower."
+            "text": "While this character is within {RNG} 1 of a terrain feature of {SIZE} 2 or more, this character gains the Stealth {INNATE} superpower."
           },
           {
             "name": "Wallcrawler",
@@ -10639,7 +10639,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "After this attack is resolved, if there is not an allied Hand Ninjas character in play, Place it in play within {RNG} 1 of this character with an Activated token. It is part of your squad."
             ]
           },
@@ -10704,7 +10704,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "After this attack is resolved, if there is not an allied Hand Ninjas character in play, Place it in play within {RNG} 1 of this character with an Activated token. It is part of your squad."
             ]
           },
@@ -10790,7 +10790,7 @@
             "text": [
               "Before choosing a target, this character chooses whether the attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "Hellfire: After this attack is resolved, the defender gains the Incinerate and Slow special conditions."
+              "{RNG} <b>Hellfire</b>: After this attack is resolved, the defender gains the Incinerate and Slow special conditions."
             ]
           },
           {
@@ -10802,7 +10802,7 @@
             "cost": 1,
             "text": [
               "During the Pay {PWR} step of this attack, this character may spend up to three additional {PWR}. Add 1 die to this attack for each {PWR} spent in this way.",
-              "Degeneration: After this attack is resolved, the defender cannot have {DMG} removed from it during this Activation Phase."
+              "{RNG} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it during this Activation Phase."
             ]
           }
         ],
@@ -10811,7 +10811,7 @@
             "name": "Legion of Monsters (Affiliation: Midnight Sons)",
             "type": "leadership",
             "cost": 0,
-            "text": "Once per Turn, when an allied character targets a character with an attack, it may pay 1 {PWR}. If it does, the attack gains your choice of 1 of the following effects:\n• Boom!: Before {DMG} is dealt, each other character within {RNG} 2 of the target character suffers 1 {DMG}.\n• Horrify: After this attack is resolved, the target character gains the Root special condition.\n• Silver Bullet: {DMG} caused by this attack cannot be reduced or prevented by superpowers or Team Tactic Cards."
+            "text": "Once per Turn, when an allied character targets a character with an attack, it may pay 1 {PWR}. If it does, the attack gains your choice of 1 of the following effects:\n• <b>Boom!</b>: Before {DMG} is dealt, each other character within {RNG} 2 of the target character suffers 1 {DMG}.\n• <b>Horrify</b>: After this attack is resolved, the target character gains the Root special condition.\n• <b>Silver Bullet</b>: {DMG} caused by this attack cannot be reduced or prevented by superpowers or Team Tactic Cards."
           },
           {
             "name": "Run and Gun",
@@ -10854,7 +10854,7 @@
             "text": [
               "Before choosing a target, this character chooses whether the attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "Hellfire: After this attack is resolved, the defender gains the Incinerate and Slow special conditions."
+              "{RNG} <b>Hellfire</b>: After this attack is resolved, the defender gains the Incinerate and Slow special conditions."
             ]
           },
           {
@@ -10866,7 +10866,7 @@
             "cost": 1,
             "text": [
               "During the Pay {PWR} step of this attack, this character may spend up to three additional {PWR}. Add 1 die to this attack for each {PWR} spent in this way.",
-              "Degeneration: After this attack is resolved, the defender cannot have {DMG} removed from it during this Activation Phase."
+              "{RNG} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it during this Activation Phase."
             ]
           }
         ],
@@ -10875,7 +10875,7 @@
             "name": "Legion of Monsters (Affiliation: Midnight Sons)",
             "type": "leadership",
             "cost": 0,
-            "text": "Once per Turn, when an allied character targets a character with an attack, it may pay 1 {PWR}. If it does, the attack gains your choice of 1 of the following effects:\n• Boom!: Before {DMG} is dealt, each other character within {RNG} 2 of the target character suffers 1 {DMG}.\n• Horrify: After this attack is resolved, the target character gains the Root special condition.\n• Silver Bullet: {DMG} caused by this attack cannot be reduced or prevented by superpowers or Team Tactic Cards."
+            "text": "Once per Turn, when an allied character targets a character with an attack, it may pay 1 {PWR}. If it does, the attack gains your choice of 1 of the following effects:\n• <b>Boom!</b>: Before {DMG} is dealt, each other character within {RNG} 2 of the target character suffers 1 {DMG}.\n• <b>Horrify</b>: After this attack is resolved, the target character gains the Root special condition.\n• <b>Silver Bullet</b>: {DMG} caused by this attack cannot be reduced or prevented by superpowers or Team Tactic Cards."
           },
           {
             "name": "Run and Gun",
@@ -11106,7 +11106,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -11117,7 +11117,7 @@
             "dice": 7,
             "cost": 6,
             "text": [
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "After all attacks are resolved, this character may transform into Emma Frost (Normal)."
             ]
           }
@@ -11169,7 +11169,7 @@
             "name": "DIAMOND - PSYCHIC IMMUNITY",
             "type": "innate",
             "cost": 0,
-            "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts Blank results in its defense roll as successes."
+            "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
           },
           {
             "name": "DIAMOND - IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
@@ -11223,7 +11223,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -11234,7 +11234,7 @@
             "dice": 7,
             "cost": 6,
             "text": [
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "After all attacks are resolved, this character may transform into Emma Frost (Normal)."
             ]
           }
@@ -11286,7 +11286,7 @@
             "name": "DIAMOND - PSYCHIC IMMUNITY",
             "type": "innate",
             "cost": 0,
-            "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts Blank results in its defense roll as successes."
+            "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
           },
           {
             "name": "DIAMOND - IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
@@ -11508,7 +11508,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, this character removes 1 {DMG} from itself.",
-              "{CRIT} <b>Sap Power</b>: Before {DMG} is dealt, the defender loses 1 {PWR} for each {CRIT} in the attack roll, and this character gains that amount of {PWR}."
+              "{UNKNOWN} <b>Sap Power</b>: Before {DMG} is dealt, the defender loses 1 {PWR} for each {UNKNOWN} in the attack roll, and this character gains that amount of {PWR}."
             ]
           },
           {
@@ -11520,7 +11520,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} <b>Pull</b>: After this attack is resolved, if {DMG} was dealt and the defender is {SIZE} 4 or less, this character may Push it Toward this character {S}."
+              "{UNKNOWN} <b>Pull</b>: After this attack is resolved, if {DMG} was dealt and the defender is {SIZE} 4 or less, this character may Push it Toward this character {S}."
             ]
           },
           {
@@ -11564,19 +11564,19 @@
             "name": "Flight",
             "type": "innate",
             "cost": 0,
-            "text": "Flight"
+            "text": ""
           },
           {
             "name": "Healing Factor [1]",
             "type": "innate",
             "cost": 0,
-            "text": "Healing Factor [1]"
+            "text": ""
           },
           {
             "name": "Immunity [Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Poison]"
+            "text": ""
           }
         ]
       },
@@ -11601,7 +11601,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, this character removes 1 {DMG} from itself.",
-              "{CRIT} <b>Sap Power</b>: Before {DMG} is dealt, the defender loses 1 {PWR} for each {CRIT} in the attack roll, and this character gains that amount of {PWR}."
+              "{UNKNOWN} <b>Sap Power</b>: Before {DMG} is dealt, the defender loses 1 {PWR} for each {UNKNOWN} in the attack roll, and this character gains that amount of {PWR}."
             ]
           },
           {
@@ -11613,7 +11613,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} <b>Pull</b>: After this attack is resolved, if {DMG} was dealt and the defender is {SIZE} 4 or less, this character may Push it Toward this character {S}."
+              "{UNKNOWN} <b>Pull</b>: After this attack is resolved, if {DMG} was dealt and the defender is {SIZE} 4 or less, this character may Push it Toward this character {S}."
             ]
           },
           {
@@ -11657,19 +11657,19 @@
             "name": "Flight",
             "type": "innate",
             "cost": 0,
-            "text": "Flight"
+            "text": ""
           },
           {
             "name": "Healing Factor [1]",
             "type": "innate",
             "cost": 0,
-            "text": "Healing Factor [1]"
+            "text": ""
           },
           {
             "name": "Immunity [Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Poison]"
+            "text": ""
           }
         ]
       },
@@ -12537,19 +12537,19 @@
             "name": "For the Empress and Empire!",
             "type": "active",
             "cost": 3,
-            "text": "Action: This character immediately makes a move action followed by a <b>Praetor Punch</b> attack. If this attack deals {DMG}, this character gains 1 Confidence token. This superpower can be used only once per Turn."
+            "text": "Action: This character immediately makes a move action followed by a Praetor Punch attack. If this attack deals {DMG}, this character gains 1 Confidence token. This superpower can be used only once per Turn."
           },
           {
             "name": "Imperial Authority",
             "type": "active",
             "cost": 3,
-            "text": "Choose an interactive terrain feature of Size 4 or less within {RNG} 2 of this character and Throw it {L}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of Size 4 or less within {PWR} 2 of this character and Throw it {L}. This superpower can be used only once per Turn."
           },
           {
             "name": "The Majestor's Bravado",
             "type": "innate",
             "cost": 0,
-            "text": "When this character deals {DMG} with a <b>Praetor Punch</b> attack, after the attack is resolved this character gains 1 Confidence token. When this character suffers {DMG}, it loses 1 Confidence token. This character may have a maximum of 5 Confidence tokens at any time.\nWhen this character makes an attack, it adds 1 die to the attack roll for each Confidence token it has."
+            "text": "When this character deals {DMG} with a Praetor Punch attack, after the attack is resolved this character gains 1 Confidence token. When this character suffers {DMG}, it loses 1 Confidence token. This character may have a maximum of 5 Confidence tokens at any time.\nWhen this character makes an attack, it adds 1 die to the attack roll for each Confidence token it has."
           },
           {
             "name": "Alpha Strontian Physiology",
@@ -12617,19 +12617,19 @@
             "name": "For the Empress and Empire!",
             "type": "active",
             "cost": 3,
-            "text": "Action: This character immediately makes a move action followed by a <b>Praetor Punch</b> attack. If this attack deals {DMG}, this character gains 1 Confidence token. This superpower can be used only once per Turn."
+            "text": "Action: This character immediately makes a move action followed by a Praetor Punch attack. If this attack deals {DMG}, this character gains 1 Confidence token. This superpower can be used only once per Turn."
           },
           {
             "name": "Imperial Authority",
             "type": "active",
             "cost": 3,
-            "text": "Choose an interactive terrain feature of Size 4 or less within {RNG} 2 of this character and Throw it {L}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of Size 4 or less within {PWR} 2 of this character and Throw it {L}. This superpower can be used only once per Turn."
           },
           {
             "name": "The Majestor's Bravado",
             "type": "innate",
             "cost": 0,
-            "text": "When this character deals {DMG} with a <b>Praetor Punch</b> attack, after the attack is resolved this character gains 1 Confidence token. When this character suffers {DMG}, it loses 1 Confidence token. This character may have a maximum of 5 Confidence tokens at any time.\nWhen this character makes an attack, it adds 1 die to the attack roll for each Confidence token it has."
+            "text": "When this character deals {DMG} with a Praetor Punch attack, after the attack is resolved this character gains 1 Confidence token. When this character suffers {DMG}, it loses 1 Confidence token. This character may have a maximum of 5 Confidence tokens at any time.\nWhen this character makes an attack, it adds 1 die to the attack roll for each Confidence token it has."
           },
           {
             "name": "Alpha Strontian Physiology",
@@ -12683,8 +12683,8 @@
             "dice": 5,
             "cost": 0,
             "text": [
-              "After this attack is resolved, this character gains {BLOCK} equal to the {CRIT} dealt.",
-              "{HIT} Stun: After this attack is resolved, the defender gains the Stun special condition."
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "{CRIT} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -12695,7 +12695,7 @@
             "dice": 4,
             "cost": 0,
             "text": [
-              "{HIT} Shock: After each attack is resolved, the defender gains the Shock special condition."
+              "{CRIT} <b>Shock</b>: After each attack is resolved, the defender gains the Shock special condition."
             ]
           },
           {
@@ -12706,8 +12706,8 @@
             "dice": 8,
             "cost": 4,
             "text": [
-              "After this attack is resolved, if the defender is {S} 4 or less, this character may Throw it Away {S}.",
-              "{HIT} Stagger: After this attack is resolved, the defender gains the Stagger special condition."
+              "After this attack is resolved, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}.",
+              "{CRIT} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -12757,8 +12757,8 @@
             "dice": 5,
             "cost": 0,
             "text": [
-              "After this attack is resolved, this character gains {BLOCK} equal to the {CRIT} dealt.",
-              "{HIT} Stun: After this attack is resolved, the defender gains the Stun special condition."
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "{CRIT} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -12769,7 +12769,7 @@
             "dice": 4,
             "cost": 0,
             "text": [
-              "{HIT} Shock: After each attack is resolved, the defender gains the Shock special condition."
+              "{CRIT} <b>Shock</b>: After each attack is resolved, the defender gains the Shock special condition."
             ]
           },
           {
@@ -12780,8 +12780,8 @@
             "dice": 8,
             "cost": 4,
             "text": [
-              "After this attack is resolved, if the defender is {S} 4 or less, this character may Throw it Away {S}.",
-              "{HIT} Stagger: After this attack is resolved, the defender gains the Stagger special condition."
+              "After this attack is resolved, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}.",
+              "{CRIT} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -13353,7 +13353,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -13422,7 +13422,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -15416,7 +15416,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} <b>Push</b>: After this attack is resolved, if the defender is Size 3 or less, Push it Away {S}."
+              "{WILD} <b>Push</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, Push it Away {S}."
             ]
           },
           {
@@ -15442,7 +15442,7 @@
             "name": "Strength Actuators",
             "type": "active",
             "cost": 2,
-            "text": "Choose an interactive terrain feature of Size 2 or less within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of {SIZE} 2 or less within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Temporal Divergence",
@@ -15490,7 +15490,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} <b>Push</b>: After this attack is resolved, if the defender is Size 3 or less, Push it Away {S}."
+              "{WILD} <b>Push</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, Push it Away {S}."
             ]
           },
           {
@@ -15516,7 +15516,7 @@
             "name": "Strength Actuators",
             "type": "active",
             "cost": 2,
-            "text": "Choose an interactive terrain feature of Size 2 or less within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of {SIZE} 2 or less within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Temporal Divergence",
@@ -15740,8 +15740,8 @@
             "dice": 7,
             "cost": 4,
             "text": [
-              "Throw: After this attack is resolved, if the defender is {S} 3 or less, this character may Throw it Away {M}.",
-              "Hostile Takeover: After this attack is resolved, move 1 Asset or Civilian token the defender is holding to this character. This character is now holding that token. This character cannot hold more tokens than the Crisis specifies."
+              "{UNKNOWN} <b>Throw</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, this character may Throw it Away {M}.",
+              "{UNKNOWN} {PWR} <b>Hostile Takeover</b>: After this attack is resolved, move 1 Asset or Civilian token the defender is holding to this character. This character is now holding that token. This character cannot hold more tokens than the Crisis specifies."
             ]
           }
         ],
@@ -15756,7 +15756,7 @@
             "name": "Onboard Tactical Computer",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character is attacking or defending, during the Modify Dice step, this character may use this superpower. This character may reroll 2 of its attack or defense dice. This superpower can be used only once per Turn."
+            "text": "When this character is attacking or defending, during the Modify Dice step, this character may use this superpower. This character may reroll 2 of its attack or defense dice.  This superpower can be used only once per Turn."
           },
           {
             "name": "Reinforced Armor Plating",
@@ -15803,8 +15803,8 @@
             "dice": 7,
             "cost": 4,
             "text": [
-              "Throw: After this attack is resolved, if the defender is {S} 3 or less, this character may Throw it Away {M}.",
-              "Hostile Takeover: After this attack is resolved, move 1 Asset or Civilian token the defender is holding to this character. This character is now holding that token. This character cannot hold more tokens than the Crisis specifies."
+              "{UNKNOWN} <b>Throw</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, this character may Throw it Away {M}.",
+              "{UNKNOWN} {PWR} <b>Hostile Takeover</b>: After this attack is resolved, move 1 Asset or Civilian token the defender is holding to this character. This character is now holding that token. This character cannot hold more tokens than the Crisis specifies."
             ]
           }
         ],
@@ -15819,7 +15819,7 @@
             "name": "Onboard Tactical Computer",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character is attacking or defending, during the Modify Dice step, this character may use this superpower. This character may reroll 2 of its attack or defense dice. This superpower can be used only once per Turn."
+            "text": "When this character is attacking or defending, during the Modify Dice step, this character may use this superpower. This character may reroll 2 of its attack or defense dice.  This superpower can be used only once per Turn."
           },
           {
             "name": "Reinforced Armor Plating",
@@ -15875,7 +15875,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Sap Power: Before {DMG} is dealt, the target character loses 1 {PWR} for each {WILD} in the attack roll, and this character gains that amount of {PWR}.",
-              "{FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -15945,7 +15945,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Sap Power: Before {DMG} is dealt, the target character loses 1 {PWR} for each {WILD} in the attack roll, and this character gains that amount of {PWR}.",
-              "{FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{FAIL} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -16031,7 +16031,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} {PWR} Stun: After this attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -16042,7 +16042,7 @@
             "dice": 6,
             "cost": 4,
             "text": [
-              "{CRIT} {PWR} Rapid Fire: After this attack is resolved, this character may make an additional Princess of Pyrotechnics attack without paying the {PWR} cost. This additional attack must target the original defender and does not have the Rapid Fire special rule."
+              "{CRIT} <b>Rapid Fire</b>: After this attack is resolved, this character may make an additional Princess of Pyrotechnics attack without paying the {PWR} cost. This additional attack must target the original defender and does not have the Rapid Fire special rule."
             ]
           }
         ],
@@ -16087,7 +16087,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} {PWR} Stun: After this attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -16098,7 +16098,7 @@
             "dice": 6,
             "cost": 4,
             "text": [
-              "{CRIT} {PWR} Rapid Fire: After this attack is resolved, this character may make an additional Princess of Pyrotechnics attack without paying the {PWR} cost. This additional attack must target the original defender and does not have the Rapid Fire special rule."
+              "{CRIT} <b>Rapid Fire</b>: After this attack is resolved, this character may make an additional Princess of Pyrotechnics attack without paying the {PWR} cost. This additional attack must target the original defender and does not have the Rapid Fire special rule."
             ]
           }
         ],
@@ -16330,7 +16330,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "If the defender is within {RNG} 2, this character may reroll 1 die in the attack roll.",
-              "Future Tech: After this attack is resolved, the defender gains 1 of the following special conditions: Incinerate, Bleed, Hex, or Slow."
+              "{UNKNOWN} <b>Future Tech</b>: After this attack is resolved, the defender gains 1 of the following special conditions: Incinerate, Bleed, Hex, or Slow."
             ]
           },
           {
@@ -16361,7 +16361,7 @@
             "name": "The Kang Dynasty (Affiliation: Cabal)",
             "type": "leadership",
             "cost": 0,
-            "text": "Once per Turn, each allied character may reroll 1 die in its attack roll. Additionally, allied characters can modify and reroll {SKULL} results while they are holding or Contesting an objective token."
+            "text": "Once per Turn, each allied character may reroll 1 die in its attack roll. Additionally, allied characters can modify and reroll {FAIL} results while they are holding or Contesting an objective token."
           },
           {
             "name": "Anti-Gravity Device",
@@ -16373,7 +16373,7 @@
             "name": "Temporal Rewind",
             "type": "reactive",
             "cost": 4,
-            "text": "When this character is attacking or defending, at the end of the Modify Dice step or after the Temporal Rewind superpower has been resolved, this character may use this superpower. The attacking and defending characters reroll all their attack and defense dice."
+            "text": "When this character is attacking or defending, at the end of the Modify Dice step or after the Temporal Rewind {REACTIVE} superpower has been resolved, this character may use this superpower. The attacking and defending characters reroll all their attack and defense dice."
           },
           {
             "name": "Neurokinetic Chronal Armor",
@@ -16416,7 +16416,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "If the defender is within {RNG} 2, this character may reroll 1 die in the attack roll.",
-              "Future Tech: After this attack is resolved, the defender gains 1 of the following special conditions: Incinerate, Bleed, Hex, or Slow."
+              "{UNKNOWN} <b>Future Tech</b>: After this attack is resolved, the defender gains 1 of the following special conditions: Incinerate, Bleed, Hex, or Slow."
             ]
           },
           {
@@ -16447,7 +16447,7 @@
             "name": "The Kang Dynasty (Affiliation: Cabal)",
             "type": "leadership",
             "cost": 0,
-            "text": "Once per Turn, each allied character may reroll 1 die in its attack roll. Additionally, allied characters can modify and reroll {SKULL} results while they are holding or Contesting an objective token."
+            "text": "Once per Turn, each allied character may reroll 1 die in its attack roll. Additionally, allied characters can modify and reroll {FAIL} results while they are holding or Contesting an objective token."
           },
           {
             "name": "Anti-Gravity Device",
@@ -16459,7 +16459,7 @@
             "name": "Temporal Rewind",
             "type": "reactive",
             "cost": 4,
-            "text": "When this character is attacking or defending, at the end of the Modify Dice step or after the Temporal Rewind superpower has been resolved, this character may use this superpower. The attacking and defending characters reroll all their attack and defense dice."
+            "text": "When this character is attacking or defending, at the end of the Modify Dice step or after the Temporal Rewind {REACTIVE} superpower has been resolved, this character may use this superpower. The attacking and defending characters reroll all their attack and defense dice."
           },
           {
             "name": "Neurokinetic Chronal Armor",
@@ -16520,7 +16520,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Push</b>: After this attack is resolved, Push the defender Away {S}."
+              "{UNKNOWN} <b>Push</b>: After this attack is resolved, Push the defender Away {S}."
             ]
           },
           {
@@ -16531,7 +16531,7 @@
             "dice": 7,
             "cost": 4,
             "text": [
-              "When calculating successes for this attack, this character adds the number of {CRIT} in both the attack and defense rolls to its total successes."
+              "When calculating successes for this attack, this character adds the number of {FAIL} in both the attack and defense rolls to its total successes."
             ]
           }
         ],
@@ -16552,7 +16552,7 @@
             "name": "Teachings of the Three Worlds",
             "type": "reactive",
             "cost": 4,
-            "text": "After another allied character within {RNG} 3 makes an attack or defense roll, during the Calculate Success step, this character may use this superpower. The allied character may add up to 2 of their {CRIT} results to its total successes."
+            "text": "After another allied character within {RNG} 3 makes an attack or defense roll, during the Calculate Success step, this character may use this superpower. The allied character may add up to 2 of their {FAIL} results to its total successes."
           },
           {
             "name": "Analyzing Strike",
@@ -16594,7 +16594,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Push</b>: After this attack is resolved, Push the defender Away {S}."
+              "{UNKNOWN} <b>Push</b>: After this attack is resolved, Push the defender Away {S}."
             ]
           },
           {
@@ -16605,7 +16605,7 @@
             "dice": 7,
             "cost": 4,
             "text": [
-              "When calculating successes for this attack, this character adds the number of {CRIT} in both the attack and defense rolls to its total successes."
+              "When calculating successes for this attack, this character adds the number of {FAIL} in both the attack and defense rolls to its total successes."
             ]
           }
         ],
@@ -16626,7 +16626,7 @@
             "name": "Teachings of the Three Worlds",
             "type": "reactive",
             "cost": 4,
-            "text": "After another allied character within {RNG} 3 makes an attack or defense roll, during the Calculate Success step, this character may use this superpower. The allied character may add up to 2 of their {CRIT} results to its total successes."
+            "text": "After another allied character within {RNG} 3 makes an attack or defense roll, during the Calculate Success step, this character may use this superpower. The allied character may add up to 2 of their {FAIL} results to its total successes."
           },
           {
             "name": "Analyzing Strike",
@@ -16835,7 +16835,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -16904,7 +16904,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -16992,7 +16992,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "{REACTIVE} <b>Push</b>: After each attack is resolved, if the defender is Size 3 or less, this character may Push it Away {S}."
+              "{REACTIVE} <b>Push</b>: After each attack is resolved, if the defender is {THREAT} 3 or less, this character may Push it Away {S}."
             ]
           },
           {
@@ -17085,7 +17085,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "{REACTIVE} <b>Push</b>: After each attack is resolved, if the defender is Size 3 or less, this character may Push it Away {S}."
+              "{REACTIVE} <b>Push</b>: After each attack is resolved, if the defender is {THREAT} 3 or less, this character may Push it Away {S}."
             ]
           },
           {
@@ -17527,7 +17527,7 @@
             "dice": 7,
             "cost": 5,
             "text": [
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "After the Range Tool is placed for this attack, destroy all Size 2 or smaller interactive terrain features it overlaps."
             ]
           }
@@ -17597,7 +17597,7 @@
             "dice": 7,
             "cost": 5,
             "text": [
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "After the Range Tool is placed for this attack, destroy all Size 2 or smaller interactive terrain features it overlaps."
             ]
           }
@@ -17813,8 +17813,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "If this attack would deal 1 or more {CRIT}, it deals 1 {CRIT} instead.",
-              "<b>Mind Over Matter</b>: Before {CRIT} is dealt, this character may remove 2 special conditions from the defender. If it does, the defender suffers 2 {CRIT}.",
+              "If this attack would deal 1 or more {DMG}, it deals 1 {DMG} instead.",
+              "<b>Mind Over Matter</b>: Before {DMG} is dealt, this character may remove 2 special conditions from the defender. If it does, the defender suffers 2 {DMG}.",
               "{WILD} <b>Psychosomatic Effects</b>: After this attack is resolved, for each {WILD} in the attack roll, the defender gains 1 of the following special conditions: Bleed, Poison, Shock, or Incinerate."
             ]
           },
@@ -17835,13 +17835,13 @@
             "name": "Your Reality Is Whatever I Want it to Be",
             "type": "active",
             "cost": "X",
-            "text": "This character may spend any amount of {PWR} to use this superpower. Choose an enemy character within {RNG} 5 of this character that has a {MYST} Defense equal to or less than the amount of {PWR} spent to use this superpower. Then this character may make an attack targeting a different enemy character with a {RNG}, {DMG}, and type equal to 1 of the chosen character's attacks that has a {PWR} cost of 0. {RNG} and LOS are measured from the chosen enemy character instead of Lady Mastermind during this attack. This superpower can be used only once per Turn."
+            "text": "This character may spend any amount of {PWR} to use this superpower. Choose an enemy character within {RNG} 5 of this character that has a {MYST} Defense equal to or less than the amount of {PWR} spent to use this superpower. Then this character may make an attack targeting a different enemy character with a {RNG}, {UNKNOWN}, and type equal to 1 of the chosen character's attacks that has a {PWR} cost of 0. {RNG} and LOS are measured from the chosen enemy character instead of Lady Mastermind during this attack. This superpower can be used only once per Turn."
           },
           {
             "name": "Brain Fog",
             "type": "innate",
             "cost": 0,
-            "text": "During this character's Activation, enemy characters cannot use {ACTIVE} superpowers or Reactive Team Tactic Cards."
+            "text": "During this character's Activation, enemy characters cannot use {REACTIVE} superpowers or Reactive Team Tactic Cards."
           },
           {
             "name": "Mental Lock",
@@ -17853,7 +17853,7 @@
             "name": "Try a Little Harder Next Time",
             "type": "innate",
             "cost": 0,
-            "text": "When an enemy character within {RNG} 3 of this character rolls 1 or more {CRIT} in any roll, after the effect is resolved, this character gains 1 {PWR}."
+            "text": "When an enemy character within {RNG} 3 of this character rolls 1 or more {FAIL} in any roll, after the effect is resolved, this character gains 1 {PWR}."
           }
         ]
       },
@@ -17877,8 +17877,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "If this attack would deal 1 or more {CRIT}, it deals 1 {CRIT} instead.",
-              "<b>Mind Over Matter</b>: Before {CRIT} is dealt, this character may remove 2 special conditions from the defender. If it does, the defender suffers 2 {CRIT}.",
+              "If this attack would deal 1 or more {DMG}, it deals 1 {DMG} instead.",
+              "<b>Mind Over Matter</b>: Before {DMG} is dealt, this character may remove 2 special conditions from the defender. If it does, the defender suffers 2 {DMG}.",
               "{WILD} <b>Psychosomatic Effects</b>: After this attack is resolved, for each {WILD} in the attack roll, the defender gains 1 of the following special conditions: Bleed, Poison, Shock, or Incinerate."
             ]
           },
@@ -17899,13 +17899,13 @@
             "name": "Your Reality Is Whatever I Want it to Be",
             "type": "active",
             "cost": "X",
-            "text": "This character may spend any amount of {PWR} to use this superpower. Choose an enemy character within {RNG} 5 of this character that has a {MYST} Defense equal to or less than the amount of {PWR} spent to use this superpower. Then this character may make an attack targeting a different enemy character with a {RNG}, {DMG}, and type equal to 1 of the chosen character's attacks that has a {PWR} cost of 0. {RNG} and LOS are measured from the chosen enemy character instead of Lady Mastermind during this attack. This superpower can be used only once per Turn."
+            "text": "This character may spend any amount of {PWR} to use this superpower. Choose an enemy character within {RNG} 5 of this character that has a {MYST} Defense equal to or less than the amount of {PWR} spent to use this superpower. Then this character may make an attack targeting a different enemy character with a {RNG}, {UNKNOWN}, and type equal to 1 of the chosen character's attacks that has a {PWR} cost of 0. {RNG} and LOS are measured from the chosen enemy character instead of Lady Mastermind during this attack. This superpower can be used only once per Turn."
           },
           {
             "name": "Brain Fog",
             "type": "innate",
             "cost": 0,
-            "text": "During this character's Activation, enemy characters cannot use {ACTIVE} superpowers or Reactive Team Tactic Cards."
+            "text": "During this character's Activation, enemy characters cannot use {REACTIVE} superpowers or Reactive Team Tactic Cards."
           },
           {
             "name": "Mental Lock",
@@ -17917,7 +17917,7 @@
             "name": "Try a Little Harder Next Time",
             "type": "innate",
             "cost": 0,
-            "text": "When an enemy character within {RNG} 3 of this character rolls 1 or more {CRIT} in any roll, after the effect is resolved, this character gains 1 {PWR}."
+            "text": "When an enemy character within {RNG} 3 of this character rolls 1 or more {FAIL} in any roll, after the effect is resolved, this character gains 1 {PWR}."
           }
         ]
       },
@@ -18395,7 +18395,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, Place this character within {RNG} 1 of the target character.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -18407,7 +18407,7 @@
             "cost": 4,
             "text": [
               "After all attacks generated by this attack have been resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition."
             ]
           }
@@ -18472,7 +18472,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, Place this character within {RNG} 1 of the target character.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -18484,7 +18484,7 @@
             "cost": 4,
             "text": [
               "After all attacks generated by this attack have been resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition."
             ]
           }
@@ -19558,7 +19558,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} {PWR} <b>Reel In</b>: After this attack is resolved, if the defender is Size 3 or less, this character may Push the defender Toward this character {S}."
+              "{WILD} {UNKNOWN} <b>Reel In</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, This character may Push the defender Toward this character {S}."
             ]
           },
           {
@@ -19590,7 +19590,7 @@
             "name": "Moss and Mud and Swamp",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending, enemy characters do not roll additional dice for {CRIT} results in their attack rolls."
+            "text": "When this character is defending, enemy characters do not roll additional dice for {WILD} results in their attack rolls."
           },
           {
             "name": "Healing Factor [2]",
@@ -19626,7 +19626,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} {PWR} <b>Reel In</b>: After this attack is resolved, if the defender is Size 3 or less, this character may Push the defender Toward this character {S}."
+              "{WILD} {UNKNOWN} <b>Reel In</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, This character may Push the defender Toward this character {S}."
             ]
           },
           {
@@ -19658,7 +19658,7 @@
             "name": "Moss and Mud and Swamp",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending, enemy characters do not roll additional dice for {CRIT} results in their attack rolls."
+            "text": "When this character is defending, enemy characters do not roll additional dice for {WILD} results in their attack rolls."
           },
           {
             "name": "Healing Factor [2]",
@@ -20031,7 +20031,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Suppressive</b>: After this attack is resolved, the defender loses 1 {PWR} for each {DMG} in the attack roll."
+              "{WILD} <b>Suppressive</b>: After this attack is resolved, the defender loses 1 {PWR} for each {WILD} in the attack roll."
             ]
           },
           {
@@ -20043,7 +20043,7 @@
             "cost": 5,
             "text": [
               "The defender cannot add additional dice to its defense roll or modify its defense dice.",
-              "<b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
+              "{WILD} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -20052,7 +20052,7 @@
             "name": "Call Me Maximus the Magnificent! (Affiliation: Inhumans)",
             "type": "leadership",
             "cost": 0,
-            "text": "The first time each Turn an allied character attacks or defends, during the Modify Dice step, it must use this {PWR} ability. Reroll 1 of its attack or defense dice. If the rerolled result is a {CRIT}, after the attack is resolved, your opponent Places the allied character within {RNG} 1 of its current position and this character gains 1 {PWR}."
+            "text": "The first time each Turn an allied character attacks or defends, during the Modify Dice step, it must use this {PWR} ability. Reroll 1 of its attack or defense dice. If the rerolled result is a {FAIL}, after the attack is resolved, your opponent Places the allied character within {RNG} 1 of its current position and this character gains 1 {PWR}."
           },
           {
             "name": "Did You Forget Why You're Here?",
@@ -20076,7 +20076,7 @@
             "name": "Immunity [Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Poison]"
+            "text": ""
           }
         ]
       },
@@ -20100,7 +20100,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Suppressive</b>: After this attack is resolved, the defender loses 1 {PWR} for each {DMG} in the attack roll."
+              "{WILD} <b>Suppressive</b>: After this attack is resolved, the defender loses 1 {PWR} for each {WILD} in the attack roll."
             ]
           },
           {
@@ -20112,7 +20112,7 @@
             "cost": 5,
             "text": [
               "The defender cannot add additional dice to its defense roll or modify its defense dice.",
-              "<b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
+              "{WILD} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -20121,7 +20121,7 @@
             "name": "Call Me Maximus the Magnificent! (Affiliation: Inhumans)",
             "type": "leadership",
             "cost": 0,
-            "text": "The first time each Turn an allied character attacks or defends, during the Modify Dice step, it must use this {PWR} ability. Reroll 1 of its attack or defense dice. If the rerolled result is a {CRIT}, after the attack is resolved, your opponent Places the allied character within {RNG} 1 of its current position and this character gains 1 {PWR}."
+            "text": "The first time each Turn an allied character attacks or defends, during the Modify Dice step, it must use this {PWR} ability. Reroll 1 of its attack or defense dice. If the rerolled result is a {FAIL}, after the attack is resolved, your opponent Places the allied character within {RNG} 1 of its current position and this character gains 1 {PWR}."
           },
           {
             "name": "Did You Forget Why You're Here?",
@@ -20145,7 +20145,7 @@
             "name": "Immunity [Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Poison]"
+            "text": ""
           }
         ]
       },
@@ -21375,7 +21375,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} Rapid Fire: After this attack is resolved, this character may make 1 additional Psionic Barrage attack targeting the original target character. This additional attack does not have the Rapid Fire special rule."
+              "{UNKNOWN} <b>Rapid Fire</b>: After this attack is resolved, this character may make 1 additional Psionic Barrage attack targeting the original target character. This additional attack does not have the Rapid Fire special rule."
             ]
           },
           {
@@ -21387,7 +21387,7 @@
             "cost": 3,
             "text": [
               "Add {FAIL} results in the defender's roll to this attack's total successes.",
-              "{CRIT} Hex: After this attack is resolved, the defender gains the Hex special condition."
+              "{UNKNOWN} <b>Hex</b>: After this attack is resolved, the defender gains the Hex special condition."
             ]
           }
         ],
@@ -21402,19 +21402,19 @@
             "name": "Distracting Illusions",
             "type": "reactive",
             "cost": 1,
-            "text": "When an enemy character within {RNG} 3 makes an attack, during the Modify Dice step, this character may use this superpower. This character rerolls 1 of the attacker's dice. This superpower can be used only once per Turn."
+            "text": "When an enemy character within {PWR} 3 makes an attack, during the Modify Dice step, this character may use this superpower. This character rerolls 1 of the attacker's dice. This superpower can be used only once per Turn."
           },
           {
             "name": "Shield Mind",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character or another allied character within {RNG} 4 would be Advanced, Placed, or Pushed by the effect of an enemy {MYST} attack or enemy superpower, this character may use this superpower. That character is not Advanced, Placed, or Pushed."
+            "text": "When this character or another allied character within {PWR} 4 would be Advanced, Placed, or Pushed by the effect of an enemy {MYST} attack or enemy superpower, this character may use this superpower. That character is not Advanced, Placed, or Pushed."
           },
           {
             "name": "Shao-Lom Martial Artist",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an attack targeting it from within {RNG} 2, this character adds Blanks in its defense roll to its total successes."
+            "text": "When this character is defending against an attack targeting it from within {PWR} 2, this character adds Blanks in its defense roll to its total successes."
           },
           {
             "name": "Flight",
@@ -21423,7 +21423,7 @@
             "text": ""
           },
           {
-            "name": "Gem Bearer [Mind]",
+            "name": "Gem Bearer (Mind)",
             "type": "innate",
             "cost": 0,
             "text": ""
@@ -21450,7 +21450,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} Rapid Fire: After this attack is resolved, this character may make 1 additional Psionic Barrage attack targeting the original target character. This additional attack does not have the Rapid Fire special rule."
+              "{UNKNOWN} <b>Rapid Fire</b>: After this attack is resolved, this character may make 1 additional Psionic Barrage attack targeting the original target character. This additional attack does not have the Rapid Fire special rule."
             ]
           },
           {
@@ -21462,7 +21462,7 @@
             "cost": 3,
             "text": [
               "Add {FAIL} results in the defender's roll to this attack's total successes.",
-              "{CRIT} Hex: After this attack is resolved, the defender gains the Hex special condition."
+              "{UNKNOWN} <b>Hex</b>: After this attack is resolved, the defender gains the Hex special condition."
             ]
           }
         ],
@@ -21477,19 +21477,19 @@
             "name": "Distracting Illusions",
             "type": "reactive",
             "cost": 1,
-            "text": "When an enemy character within {RNG} 3 makes an attack, during the Modify Dice step, this character may use this superpower. This character rerolls 1 of the attacker's dice. This superpower can be used only once per Turn."
+            "text": "When an enemy character within {PWR} 3 makes an attack, during the Modify Dice step, this character may use this superpower. This character rerolls 1 of the attacker's dice. This superpower can be used only once per Turn."
           },
           {
             "name": "Shield Mind",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character or another allied character within {RNG} 4 would be Advanced, Placed, or Pushed by the effect of an enemy {MYST} attack or enemy superpower, this character may use this superpower. That character is not Advanced, Placed, or Pushed."
+            "text": "When this character or another allied character within {PWR} 4 would be Advanced, Placed, or Pushed by the effect of an enemy {MYST} attack or enemy superpower, this character may use this superpower. That character is not Advanced, Placed, or Pushed."
           },
           {
             "name": "Shao-Lom Martial Artist",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an attack targeting it from within {RNG} 2, this character adds Blanks in its defense roll to its total successes."
+            "text": "When this character is defending against an attack targeting it from within {PWR} 2, this character adds Blanks in its defense roll to its total successes."
           },
           {
             "name": "Flight",
@@ -21498,7 +21498,7 @@
             "text": ""
           },
           {
-            "name": "Gem Bearer [Mind]",
+            "name": "Gem Bearer (Mind)",
             "type": "innate",
             "cost": 0,
             "text": ""
@@ -22815,7 +22815,7 @@
             "text": [
               "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Countermeasures</b>: After this attack is resolved, if its attack's type is {ENRG}, the defender gains the Incinerate special condition. Otherwise, the defender gains the Root special condition."
+              "{REACTIVE} <b>Countermeasures</b>: After this attack is resolved, if its attack's type is {ENRG}, the defender gains the Incinerate special condition. Otherwise, the defender gains the Root special condition."
             ]
           },
           {
@@ -22837,8 +22837,8 @@
             "dice": 8,
             "cost": 4,
             "text": [
-              "Before {DMG} is dealt, if the defender is Size 4 or less, this character may Throw it Away {S}.",
-              "<b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
+              "Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}.",
+              "{REACTIVE} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
             ]
           }
         ],
@@ -22847,7 +22847,7 @@
             "name": "Magnetokinesis",
             "type": "active",
             "cost": 3,
-            "text": "Choose an interactive terrain feature of Size 4 or less within {RNG} 3 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of {SIZE} 4 or less within {RNG} 3 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Teleportation Matrix",
@@ -22871,19 +22871,19 @@
             "name": "Flight",
             "type": "innate",
             "cost": 0,
-            "text": "Flight"
+            "text": ""
           },
           {
             "name": "Healing Factor [2]",
             "type": "innate",
             "cost": 0,
-            "text": "Healing Factor [2]"
+            "text": ""
           },
           {
             "name": "Immunity [Bleed, Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Bleed, Poison]"
+            "text": ""
           }
         ]
       },
@@ -22908,7 +22908,7 @@
             "text": [
               "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Countermeasures</b>: After this attack is resolved, if its attack's type is {ENRG}, the defender gains the Incinerate special condition. Otherwise, the defender gains the Root special condition."
+              "{REACTIVE} <b>Countermeasures</b>: After this attack is resolved, if its attack's type is {ENRG}, the defender gains the Incinerate special condition. Otherwise, the defender gains the Root special condition."
             ]
           },
           {
@@ -22930,8 +22930,8 @@
             "dice": 8,
             "cost": 4,
             "text": [
-              "Before {DMG} is dealt, if the defender is Size 4 or less, this character may Throw it Away {S}.",
-              "<b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
+              "Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}.",
+              "{REACTIVE} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
             ]
           }
         ],
@@ -22940,7 +22940,7 @@
             "name": "Magnetokinesis",
             "type": "active",
             "cost": 3,
-            "text": "Choose an interactive terrain feature of Size 4 or less within {RNG} 3 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of {SIZE} 4 or less within {RNG} 3 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Teleportation Matrix",
@@ -22964,19 +22964,19 @@
             "name": "Flight",
             "type": "innate",
             "cost": 0,
-            "text": "Flight"
+            "text": ""
           },
           {
             "name": "Healing Factor [2]",
             "type": "innate",
             "cost": 0,
-            "text": "Healing Factor [2]"
+            "text": ""
           },
           {
             "name": "Immunity [Bleed, Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Bleed, Poison]"
+            "text": ""
           }
         ]
       },
@@ -23175,7 +23175,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "<b>Throw</b>: After this attack is resolved, if the defender is Size 4 or less, this character may Throw it Away {S}."
+              "{RNG} <b>Throw</b>: After this attack is resolved, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}."
             ]
           },
           {
@@ -23188,7 +23188,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "<b>Push</b>: After this attack is resolved, if it dealt {DMG}, Push the defender Away {S}.",
-              "<b>Judgment</b>: After this attack is resolved, the defender gains the Judgment special condition."
+              "{RNG}{UNKNOWN} <b>Judgment</b>: After this attack is resolved, the defender gains the Judgment special condition."
             ]
           },
           {
@@ -23199,8 +23199,8 @@
             "dice": 7,
             "cost": 5,
             "text": [
-              "After all attacks generated by this attack are resolved, Place this character within {RNG}1 of the last character targeted by this attack.",
-              "<b>Push</b>: After each attack is resolved, Push the defender Away {S}."
+              "After all attacks generated by this attack are resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
+              "{RNG} <b>Push</b>: After each attack is resolved, Push the defender Away {S}."
             ]
           }
         ],
@@ -23209,19 +23209,19 @@
             "name": "Faster Than Light",
             "type": "active",
             "cost": 2,
-            "text": "<b>Action</b>: This character makes an attack action. After the attack is resolved, Place this character within {RNG}2 of its current position. This superpower can be used only once per Turn."
+            "text": "Action: This character makes an attack action. After the attack is resolved, Place this character within {RNG} 2 of its current position. This superpower can be used only once per Turn."
           },
           {
             "name": "Xandarian Worldmind",
             "type": "reactive",
             "cost": "X",
-            "text": "When this character or an allied character within {RNG}3 makes a defense or dodge roll, during the <b>Modify Dice</b> step, this character may spend up to 3 {PWR} to use this superpower. For each {PWR} spent, the allied character may reroll 1 of its defense or dodge dice. This superpower can be used only once per Turn."
+            "text": "When this character or an allied character within {RNG} 3 makes a defense or dodge roll, during the Modify Dice step, this character may spend up to 3 {PWR} to use this superpower. For each {PWR} spent, the allied character may reroll 1 of its defense or dodge dice. This superpower can be used only once per Turn."
           },
           {
             "name": "Nova Force",
             "type": "innate",
             "cost": 0,
-            "text": "When this character makes a move action during its Activation, after the effect is resolved, it gains 2 {PWR} and may remove all special conditions from itself. Add 3 dice to the next attack roll made as part of a <b>Nova Burst</b> or <b>Lightspeed Lance</b> attack made by this character this Activation. This character can be affected by this superpower only once per Turn."
+            "text": "When this character makes a move action during its Activation, after the effect is resolved, it gains 2 {PWR} and may remove all special conditions from itself. Add 3 dice to the next attack roll made as part of a Nova Burst or Lightspeed Lance attack made by this character this Activation. This character can be affected by this superpower only once per Turn."
           },
           {
             "name": "Flight",
@@ -23257,7 +23257,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "<b>Throw</b>: After this attack is resolved, if the defender is Size 4 or less, this character may Throw it Away {S}."
+              "{RNG} <b>Throw</b>: After this attack is resolved, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}."
             ]
           },
           {
@@ -23270,7 +23270,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "<b>Push</b>: After this attack is resolved, if it dealt {DMG}, Push the defender Away {S}.",
-              "<b>Judgment</b>: After this attack is resolved, the defender gains the Judgment special condition."
+              "{RNG}{UNKNOWN} <b>Judgment</b>: After this attack is resolved, the defender gains the Judgment special condition."
             ]
           },
           {
@@ -23281,8 +23281,8 @@
             "dice": 7,
             "cost": 5,
             "text": [
-              "After all attacks generated by this attack are resolved, Place this character within {RNG}1 of the last character targeted by this attack.",
-              "<b>Push</b>: After each attack is resolved, Push the defender Away {S}."
+              "After all attacks generated by this attack are resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
+              "{RNG} <b>Push</b>: After each attack is resolved, Push the defender Away {S}."
             ]
           }
         ],
@@ -23291,19 +23291,19 @@
             "name": "Faster Than Light",
             "type": "active",
             "cost": 2,
-            "text": "<b>Action</b>: This character makes an attack action. After the attack is resolved, Place this character within {RNG}2 of its current position. This superpower can be used only once per Turn."
+            "text": "Action: This character makes an attack action. After the attack is resolved, Place this character within {RNG} 2 of its current position. This superpower can be used only once per Turn."
           },
           {
             "name": "Xandarian Worldmind",
             "type": "reactive",
             "cost": "X",
-            "text": "When this character or an allied character within {RNG}3 makes a defense or dodge roll, during the <b>Modify Dice</b> step, this character may spend up to 3 {PWR} to use this superpower. For each {PWR} spent, the allied character may reroll 1 of its defense or dodge dice. This superpower can be used only once per Turn."
+            "text": "When this character or an allied character within {RNG} 3 makes a defense or dodge roll, during the Modify Dice step, this character may spend up to 3 {PWR} to use this superpower. For each {PWR} spent, the allied character may reroll 1 of its defense or dodge dice. This superpower can be used only once per Turn."
           },
           {
             "name": "Nova Force",
             "type": "innate",
             "cost": 0,
-            "text": "When this character makes a move action during its Activation, after the effect is resolved, it gains 2 {PWR} and may remove all special conditions from itself. Add 3 dice to the next attack roll made as part of a <b>Nova Burst</b> or <b>Lightspeed Lance</b> attack made by this character this Activation. This character can be affected by this superpower only once per Turn."
+            "text": "When this character makes a move action during its Activation, after the effect is resolved, it gains 2 {PWR} and may remove all special conditions from itself. Add 3 dice to the next attack roll made as part of a Nova Burst or Lightspeed Lance attack made by this character this Activation. This character can be affected by this superpower only once per Turn."
           },
           {
             "name": "Flight",
@@ -23848,7 +23848,7 @@
             "text": [
               "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Suppression</b>: After this attack is resolved, the defender loses 1 {PWR} for each {CRIT} in the attack roll."
+              "{WILD} <b>Suppression</b>: After this attack is resolved, the defender loses 1 {PWR} for each {WILD} in the attack roll."
             ]
           },
           {
@@ -23860,7 +23860,7 @@
             "cost": 4,
             "text": [
               "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
-              "Before {DMG} is dealt, if the defender is Size 4 or less, Throw it {S}."
+              "Before {DMG} is dealt, if the defender is {SIZE} 4 or less, Throw it {S}."
             ]
           }
         ],
@@ -23893,13 +23893,13 @@
             "name": "Flight",
             "type": "innate",
             "cost": 0,
-            "text": "Flight"
+            "text": ""
           },
           {
             "name": "Immunity [Bleed, Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Bleed, Poison]"
+            "text": ""
           }
         ]
       },
@@ -23924,7 +23924,7 @@
             "text": [
               "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Suppression</b>: After this attack is resolved, the defender loses 1 {PWR} for each {CRIT} in the attack roll."
+              "{WILD} <b>Suppression</b>: After this attack is resolved, the defender loses 1 {PWR} for each {WILD} in the attack roll."
             ]
           },
           {
@@ -23936,7 +23936,7 @@
             "cost": 4,
             "text": [
               "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
-              "Before {DMG} is dealt, if the defender is Size 4 or less, Throw it {S}."
+              "Before {DMG} is dealt, if the defender is {SIZE} 4 or less, Throw it {S}."
             ]
           }
         ],
@@ -23969,13 +23969,13 @@
             "name": "Flight",
             "type": "innate",
             "cost": 0,
-            "text": "Flight"
+            "text": ""
           },
           {
             "name": "Immunity [Bleed, Poison]",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity [Bleed, Poison]"
+            "text": ""
           }
         ]
       },
@@ -24018,7 +24018,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "Incinerate: After this attack is resolved, the defender gains the Incinerate special condition."
+              "{UNKNOWN} <b>Incinerate</b>: After this attack is resolved, the defender gains the Incinerate special condition."
             ]
           },
           {
@@ -24030,7 +24030,7 @@
             "cost": 6,
             "text": [
               "Allied characters within {RNG} of this attack may remove 1 {DMG}.",
-              "Incinerate: After this attack is resolved, the defender gains the Incinerate special condition."
+              "{UNKNOWN} <b>Incinerate</b>: After this attack is resolved, the defender gains the Incinerate special condition."
             ]
           }
         ],
@@ -24039,7 +24039,7 @@
             "name": "Cosmically Empowered Telekinesis",
             "type": "active",
             "cost": 3,
-            "text": "Choose an enemy character of Size 5 or less or an interactive terrain feature of Size 4 or less within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an enemy character of {SIZE} 5 or less or an interactive terrain feature of {SIZE} 4 or less within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Rejuvenating Flames",
@@ -24057,7 +24057,7 @@
             "name": "I Am Fire and Life Incarnate",
             "type": "innate",
             "cost": 0,
-            "text": "Whenever an allied non-Grunt character is Dazed or KO’d, this character gains 1 Phoenix token. When this character would be Dazed, it gains 3 Phoenix tokens. If this character has 3 or more Phoenix tokens at the start of your Turn, or if this character would flip its Stat Card to the Injured side, Place Phoenix Unleashed within {RNG} 2 of it. Phoenix Unleashed is now part of your Squad. Move all {PWR}, all Activated tokens, and all Phoenix tokens from this character to Phoenix Unleashed. Then, remove this character from the battlefield."
+            "text": "Whenever an allied non-Grunt character is Dazed or KO'd, this character gains 1 Phoenix token. When this character would be Dazed, it gains 3 Phoenix tokens. If this character has 3 or more Phoenix tokens at the start of your Turn, or if this character would flip its Stat Card to the Injured side, Place Phoenix Unleashed within {RNG} 2 of it. Phoenix Unleashed is now part of your Squad. Move all {PWR}, all Activated tokens, and all Phoenix tokens from this character to Phoenix Unleashed. Then, remove this character from the battlefield."
           },
           {
             "name": "Psionic Nexus",
@@ -24072,7 +24072,7 @@
             "text": ""
           },
           {
-            "name": "Immune (Incinerate, Poison)",
+            "name": "Immune [Incinerate, Poison]",
             "type": "innate",
             "cost": 0,
             "text": ""
@@ -24104,7 +24104,7 @@
             "dice": 6,
             "cost": 0,
             "text": [
-              "Destructive Force: When creating the dice pool for this attack, this character may choose an interactive terrain feature of Size 2, 3, or 4 within {RNG} 4 and destroy it. Add a number of dice to the attack pool equal to the Size of the terrain feature destroyed. Then, if there are fewer than 2 of this character's Flame Pillars in play, Place 1 Flame Pillar within {RNG} 4 of this character. It is a Size 1 interactive terrain feature.",
+              "<b>Destructive Force</b>: When creating the dice pool for this attack, this character may choose an interactive terrain feature of {SIZE} 2, 3, or 4 within {RNG} 4 and destroy it. Add a number of dice to the attack pool equal to the {SIZE} of the terrain feature destroyed. Then, if there are fewer than 2 of this character's Flame Pillars in play, Place 1 Flame Pillar within {RNG} 4 of this character. It is a {SIZE} 1 interactive terrain feature.",
               "After this attack is resolved, this character gains 1 Phoenix token."
             ]
           },
@@ -24116,7 +24116,7 @@
             "dice": 8,
             "cost": 6,
             "text": [
-              "After each attack is resolved, if the defender is not Dazed or KO’d, this character loses 1 Phoenix token."
+              "After each attack is resolved, if the defender is not Dazed or KO'd, this character loses 1 Phoenix token."
             ]
           }
         ],
@@ -24137,7 +24137,7 @@
             "name": "Untamed Cosmic Entity",
             "type": "innate",
             "cost": 0,
-            "text": "During the Power Phase, this character gains 1 additional {PWR} for each Phoenix token it has. When this character Dazes or KO’s an enemy character, this character loses 1 Phoenix token. When another allied non-Grunt character is Dazed or KO’d, this character gains 1 Phoenix token. Additionally, if this character would flip its Stat Card to the Injured side, or if it has 5 or more Phoenix tokens at the end of its Activation, roll dice equal to the number of Phoenix tokens this character has. Each character within {RNG} 5 of this character suffers 1 {DMG} for each {CRIT}, {HIT}, and {WILD} result rolled. Destroy each terrain feature within {RNG} 5 of this character with a Size equal to or less than the number of {CRIT}, {HIT}, and {WILD} results rolled. Then this character is KO’d."
+            "text": "During the Power Phase, this character gains 1 additional {PWR} for each Phoenix token it has. When this character Dazes or KO's an enemy character, this character loses 1 Phoenix token. When another allied non-Grunt character is Dazed or KO'd, this character gains 1 Phoenix token. Additionally, if this character would flip its Stat Card to the Injured side, or if it has 5 or more Phoenix tokens at the end of its Activation, roll dice equal to the number of Phoenix tokens this character has. Each character within {RNG} 5 of this character suffers 1 {DMG} for each {CRIT}, {WILD}, and {HIT} result rolled. Destroy each terrain feature within {RNG} 5 of this character with a {SIZE} equal to or less than the number of {CRIT}, {WILD}, and {HIT} results rolled. Then this character is KO'd."
           },
           {
             "name": "Flight",
@@ -24146,7 +24146,7 @@
             "text": ""
           },
           {
-            "name": "Immune (Incinerate, Poison, Stagger, Stun)",
+            "name": "Immune [Incinerate, Poison, Stagger, Stun]",
             "type": "innate",
             "cost": 0,
             "text": ""
@@ -24204,7 +24204,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} <b>Nanotech</b>: After this attack is resolved, the defender gains the Root special condition."
+              "{UNKNOWN} <b>Nanotech</b>: After this attack is resolved, the defender gains the Root special condition."
             ]
           },
           {
@@ -24278,7 +24278,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} <b>Nanotech</b>: After this attack is resolved, the defender gains the Root special condition."
+              "{UNKNOWN} <b>Nanotech</b>: After this attack is resolved, the defender gains the Root special condition."
             ]
           },
           {
@@ -24538,8 +24538,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Pierce: Change 1 of the defender's {HIT}, {DMG}, or {CRIT} results to a Blank.",
-              "{CRIT} Suppressive: Before {DMG} is dealt, for each {CRIT} in the attack roll, the defender loses 1 {PWR}."
+              "{HIT} <b>Pierce</b>: Change 1 of the defender's {BLOCK}, {WILD}, or {CRIT} results to a {BLANK}.",
+              "{HIT} <b>Suppressive</b>: Before {DMG} is dealt, for each {HIT} in the attack roll, the defender loses 1 {PWR}."
             ]
           },
           {
@@ -24563,7 +24563,7 @@
             "cost": 4,
             "text": [
               "After this attack is resolved, this character may Advance {M}.",
-              "{CRIT} Throw: Before {DMG} is dealt, if the defender is {S} 3 or less, this character may Throw it {S}."
+              "{HIT} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 3 or less, this character may Throw it {S}."
             ]
           }
         ],
@@ -24620,8 +24620,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Pierce: Change 1 of the defender's {HIT}, {DMG}, or {CRIT} results to a Blank.",
-              "{CRIT} Suppressive: Before {DMG} is dealt, for each {CRIT} in the attack roll, the defender loses 1 {PWR}."
+              "{HIT} <b>Pierce</b>: Change 1 of the defender's {BLOCK}, {WILD}, or {CRIT} results to a {BLANK}.",
+              "{HIT} <b>Suppressive</b>: Before {DMG} is dealt, for each {HIT} in the attack roll, the defender loses 1 {PWR}."
             ]
           },
           {
@@ -24645,7 +24645,7 @@
             "cost": 4,
             "text": [
               "After this attack is resolved, this character may Advance {M}.",
-              "{CRIT} Throw: Before {DMG} is dealt, if the defender is {S} 3 or less, this character may Throw it {S}."
+              "{HIT} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 3 or less, this character may Throw it {S}."
             ]
           }
         ],
@@ -25350,7 +25350,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a {BLANK}."
             ]
           },
           {
@@ -25361,8 +25361,8 @@
             "dice": 8,
             "cost": 5,
             "text": [
-              "<b>Incinerate</b>: After each attack is resolved, the defender gains the Incinerate special condition.",
-              "<b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank."
+              "{WILD} <b>Incinerate</b>: After each attack is resolved, the defender gains the Incinerate special condition.",
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a {BLANK}."
             ]
           }
         ],
@@ -25398,10 +25398,10 @@
             "text": ""
           },
           {
-            "name": "Immunity",
+            "name": "Immunity (Poison, Stun)",
             "type": "innate",
             "cost": 0,
-            "text": "Poison, Stun"
+            "text": ""
           }
         ]
       },
@@ -25425,7 +25425,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a {BLANK}."
             ]
           },
           {
@@ -25436,8 +25436,8 @@
             "dice": 8,
             "cost": 5,
             "text": [
-              "<b>Incinerate</b>: After each attack is resolved, the defender gains the Incinerate special condition.",
-              "<b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank."
+              "{WILD} <b>Incinerate</b>: After each attack is resolved, the defender gains the Incinerate special condition.",
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a {BLANK}."
             ]
           }
         ],
@@ -25473,10 +25473,10 @@
             "text": ""
           },
           {
-            "name": "Immunity",
+            "name": "Immunity (Poison, Stun)",
             "type": "innate",
             "cost": 0,
-            "text": "Poison, Stun"
+            "text": ""
           }
         ]
       },
@@ -26288,7 +26288,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "If this attack would deal more than 1 {DMG}, it deals 1 {DMG} instead.",
-              "{WILD} Medic: After this attack is resolved, choose up to 1 other allied character within {RNG} 3. Remove 1 special condition from the chosen character or remove 1 {DMG} for each {WILD} in the attack roll from the chosen character."
+              "{PWR} <b>Medic</b>: After this attack is resolved, choose up to 1 other allied character within {RNG} 3. Remove 1 special condition from the chosen character or remove 1 {DMG} for each {PWR} in the attack roll from the chosen character."
             ]
           },
           {
@@ -26299,7 +26299,7 @@
             "dice": 7,
             "cost": 4,
             "text": [
-              "{WILD} Stun: After each attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After each attack is resolved, the defender gains the Stun special condition."
             ]
           }
         ],
@@ -26357,7 +26357,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "If this attack would deal more than 1 {DMG}, it deals 1 {DMG} instead.",
-              "{WILD} Medic: After this attack is resolved, choose up to 1 other allied character within {RNG} 3. Remove 1 special condition from the chosen character or remove 1 {DMG} for each {WILD} in the attack roll from the chosen character."
+              "{PWR} <b>Medic</b>: After this attack is resolved, choose up to 1 other allied character within {RNG} 3. Remove 1 special condition from the chosen character or remove 1 {DMG} for each {PWR} in the attack roll from the chosen character."
             ]
           },
           {
@@ -26368,7 +26368,7 @@
             "dice": 7,
             "cost": 4,
             "text": [
-              "{WILD} Stun: After each attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After each attack is resolved, the defender gains the Stun special condition."
             ]
           }
         ],
@@ -27060,8 +27060,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Pierce: Change 1 of the defender's {HIT}, {BLOCK}, or {WILD} results to a Blank.",
-              "{CRIT} Bleed: After this attack is resolved, the defender gains the Bleed special condition."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {HIT}, or {BLOCK} results to a {BLANK}.",
+              "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
             ]
           },
           {
@@ -27073,8 +27073,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} Pursuit: Before {DMG} is dealt, this character may Advance Toward the defender {S}.",
-              "{CRIT} Bleed: After this attack is resolved, the defender gains the Bleed special condition."
+              "{WILD} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}.",
+              "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
             ]
           },
           {
@@ -27086,7 +27086,7 @@
             "cost": 4,
             "text": [
               "After all attacks generated by this attack are resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
-              "{CRIT} Pierce: Change 1 of the defender's {HIT}, {BLOCK}, or {WILD} results to a Blank."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {HIT}, or {BLOCK} results to a {BLANK}."
             ]
           }
         ],
@@ -27101,7 +27101,7 @@
             "name": "Specter of Death",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character targets a character with an attack, this character may use this superpower. During the Modify Dice step, this character may change 1 of its attack dice to a {WILD} for each {HIT} or {CRIT} in its attack roll."
+            "text": "When this character targets a character with an attack, this character may use this superpower. During the Modify Dice step, this character may change 1 of its attack dice to a {WILD} for each {CRIT} or {HIT} in its attack roll."
           },
           {
             "name": "Martial Artist",
@@ -27137,8 +27137,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Pierce: Change 1 of the defender's {HIT}, {BLOCK}, or {WILD} results to a Blank.",
-              "{CRIT} Bleed: After this attack is resolved, the defender gains the Bleed special condition."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {HIT}, or {BLOCK} results to a {BLANK}.",
+              "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
             ]
           },
           {
@@ -27150,8 +27150,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} Pursuit: Before {DMG} is dealt, this character may Advance Toward the defender {S}.",
-              "{CRIT} Bleed: After this attack is resolved, the defender gains the Bleed special condition."
+              "{WILD} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}.",
+              "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
             ]
           },
           {
@@ -27163,7 +27163,7 @@
             "cost": 4,
             "text": [
               "After all attacks generated by this attack are resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
-              "{CRIT} Pierce: Change 1 of the defender's {HIT}, {BLOCK}, or {WILD} results to a Blank."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {HIT}, or {BLOCK} results to a {BLANK}."
             ]
           }
         ],
@@ -27178,7 +27178,7 @@
             "name": "Specter of Death",
             "type": "reactive",
             "cost": 2,
-            "text": "When this character targets a character with an attack, this character may use this superpower. During the Modify Dice step, this character may change 1 of its attack dice to a {WILD} for each {HIT} or {CRIT} in its attack roll."
+            "text": "When this character targets a character with an attack, this character may use this superpower. During the Modify Dice step, this character may change 1 of its attack dice to a {WILD} for each {CRIT} or {HIT} in its attack roll."
           },
           {
             "name": "Martial Artist",
@@ -27382,7 +27382,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition."
             ]
           },
@@ -27395,7 +27395,7 @@
             "cost": 2,
             "text": [
               "After this attack is resolved, Place this character within {RNG} 1 of the target character.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition."
             ]
           }
@@ -27447,7 +27447,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition."
             ]
           },
@@ -27460,7 +27460,7 @@
             "cost": 2,
             "text": [
               "After this attack is resolved, Place this character within {RNG} 1 of the target character.",
-              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank.",
+              "{WILD} Pierce: Change one of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition."
             ]
           }
@@ -29796,7 +29796,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Push</b>: After this attack is resolved, if the defender is Size 2 or less, this character may Push it {S}."
+              "{BLOCK} <b>Push</b>: After this attack is resolved, if the defender is {SIZE} 2 or less, this character may Push it {S}."
             ]
           },
           {
@@ -29808,7 +29808,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "<b>Slow</b>: After each attack is resolved, the defender gains the Slow special condition."
+              "{BLOCK} <b>Slow</b>: After each attack is resolved, the defender gains the Slow special condition."
             ]
           },
           {
@@ -29829,7 +29829,7 @@
             "name": "Caught in the Web",
             "type": "reactive",
             "cost": 2,
-            "text": "When an enemy character ends a movement within {RNG} 3 of this character, this character may use this superpower. Roll 4 dice. The enemy character suffers 1 {DMG} for each {WILD} and {HIT} result rolled. Then, if this superpower dealt 1 or more {DMG}, this character may Advance {S}."
+            "text": "When an enemy character ends a movement within {RNG} 3 of this character, this character may use this superpower. Roll 4 dice. The enemy character suffers 1 {DMG} for each {WILD} and {BLOCK} result rolled. Then, if this superpower dealt 1 or more {DMG}, this character may Advance {S}."
           },
           {
             "name": "Silk Sense",
@@ -29871,7 +29871,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "<b>Push</b>: After this attack is resolved, if the defender is Size 2 or less, this character may Push it {S}."
+              "{BLOCK} <b>Push</b>: After this attack is resolved, if the defender is {SIZE} 2 or less, this character may Push it {S}."
             ]
           },
           {
@@ -29883,7 +29883,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "<b>Slow</b>: After each attack is resolved, the defender gains the Slow special condition."
+              "{BLOCK} <b>Slow</b>: After each attack is resolved, the defender gains the Slow special condition."
             ]
           },
           {
@@ -29904,7 +29904,7 @@
             "name": "Caught in the Web",
             "type": "reactive",
             "cost": 2,
-            "text": "When an enemy character ends a movement within {RNG} 3 of this character, this character may use this superpower. Roll 4 dice. The enemy character suffers 1 {DMG} for each {WILD} and {HIT} result rolled. Then, if this superpower dealt 1 or more {DMG}, this character may Advance {S}."
+            "text": "When an enemy character ends a movement within {RNG} 3 of this character, this character may use this superpower. Roll 4 dice. The enemy character suffers 1 {DMG} for each {WILD} and {BLOCK} result rolled. Then, if this superpower dealt 1 or more {DMG}, this character may Advance {S}."
           },
           {
             "name": "Silk Sense",
@@ -30597,7 +30597,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{HIT} Stun: After this attack is resolved, the defender gains the Stun special condition."
+              "{CRIT} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -30620,9 +30620,9 @@
             "dice": 8,
             "cost": 4,
             "text": [
-              "Before choosing a target, this character chooses whether this attack's type is {ENRG} or {MYST}.",
+              "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, Place this character within {RNG} 1 of its current position.",
-              "{HIT} Throw: Before {DMG} is dealt, if the defender is {S} 4 or less, this character may Throw it Away {M}."
+              "{CRIT} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {M}."
             ]
           }
         ],
@@ -30643,7 +30643,7 @@
             "name": "Multi-Spectrum Energy Absorption",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an attack, for each {HIT} in the defense roll, it may change 1 of the attacker's {CRIT}, {HIT}, or {PWR} results to a Blank. This character gains 1 {PWR} for each die changed in this way."
+            "text": "When this character is defending against an attack, for each {CRIT} in the defense roll, it may change 1 of the attacker's {WILD}, {CRIT}, or {PWR} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
           },
           {
             "name": "Flight",
@@ -30652,10 +30652,10 @@
             "text": "Flight"
           },
           {
-            "name": "Immunity [Bleed, Incinerate, Poison]",
+            "name": "Immunity (Bleed, Incinerate, Poison)",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity (Bleed, Incinerate, Poison)"
+            "text": "Immunity [Bleed, Incinerate, Poison]"
           }
         ]
       },
@@ -30679,7 +30679,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{HIT} Stun: After this attack is resolved, the defender gains the Stun special condition."
+              "{CRIT} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -30702,9 +30702,9 @@
             "dice": 8,
             "cost": 4,
             "text": [
-              "Before choosing a target, this character chooses whether this attack's type is {ENRG} or {MYST}.",
+              "Before choosing a target, this character chooses whether this attack's type is {PHYS} or {ENRG}.",
               "After this attack is resolved, Place this character within {RNG} 1 of its current position.",
-              "{HIT} Throw: Before {DMG} is dealt, if the defender is {S} 4 or less, this character may Throw it Away {M}."
+              "{CRIT} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {M}."
             ]
           }
         ],
@@ -30725,7 +30725,7 @@
             "name": "Multi-Spectrum Energy Absorption",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against an attack, for each {HIT} in the defense roll, it may change 1 of the attacker's {CRIT}, {HIT}, or {PWR} results to a Blank. This character gains 1 {PWR} for each die changed in this way."
+            "text": "When this character is defending against an attack, for each {CRIT} in the defense roll, it may change 1 of the attacker's {WILD}, {CRIT}, or {PWR} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
           },
           {
             "name": "Flight",
@@ -30734,10 +30734,10 @@
             "text": "Flight"
           },
           {
-            "name": "Immunity [Bleed, Incinerate, Poison]",
+            "name": "Immunity (Bleed, Incinerate, Poison)",
             "type": "innate",
             "cost": 0,
-            "text": "Immunity (Bleed, Incinerate, Poison)"
+            "text": "Immunity [Bleed, Incinerate, Poison]"
           }
         ]
       },
@@ -30780,10 +30780,10 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} Slow: After this attack is resolved, the defender gains the Slow special condition.",
-              "{WILD} Stun: After this attack is resolved, the defender gains the Stun special condition.",
-              "{CRIT}{HIT}{HIT} Elusive: After this attack is resolved, this character may Advance {S}.",
-              "{WILD}{HIT}{HIT} Push: After this attack is resolved, Push the defender {S}."
+              "{WILD} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition.",
+              "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition.",
+              "{CRIT}{WILD}{HIT} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}.",
+              "{FAIL}{WILD}{HIT} <b>Push</b>: After this attack is resolved, Push the defender {S}."
             ]
           },
           {
@@ -30794,7 +30794,7 @@
             "dice": 4,
             "cost": 0,
             "text": [
-              "{CRIT} Shock: After this attack is resolved, the defender gains the Shock special condition."
+              "{WILD} <b>Shock</b>: After this attack is resolved, the defender gains the Shock special condition."
             ]
           },
           {
@@ -30814,7 +30814,7 @@
             "name": "Web Yoink",
             "type": "active",
             "cost": 2,
-            "text": "Choose an enemy character within {RNG} 4 and roll a die. On a {CRIT}, {WILD}, or {HIT} result, if the chosen character is Size 3 or less, Push it Toward this character {S}. On any other result, Push this character Toward the chosen character {S}. This superpower can be used only once per Turn."
+            "text": "Choose an enemy character within {RNG}4 and roll a die. On a {BLOCK}, {WILD}, or {CRIT} result, if the chosen character is {SIZE}3 or less, Push it Toward this character {S}. On any other result, Push this character Toward the chosen character {S}. This superpower can be used only once per Turn."
           },
           {
             "name": "Animation Domination",
@@ -30826,7 +30826,7 @@
             "name": "Spider-Nonsense",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against a Range or Beam attack or making a dodge roll, it may reroll up to 2 of its defense or dodge dice. Additionally, when this character suffers {DMG}, after the effect is resolved, it drops any objective tokens it is holding."
+            "text": "When this character is defending against a {PHYS} or {ENRG} attack or making a dodge roll, it may reroll up to 2 of its defense or dodge dice. Additionally, when this character suffers {DMG}, after the effect is resolved, it drops any objective tokens it is holding."
           },
           {
             "name": "Wall Crawler",
@@ -30856,10 +30856,10 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} Slow: After this attack is resolved, the defender gains the Slow special condition.",
-              "{WILD} Stun: After this attack is resolved, the defender gains the Stun special condition.",
-              "{CRIT}{HIT}{HIT} Elusive: After this attack is resolved, this character may Advance {S}.",
-              "{WILD}{HIT}{HIT} Push: After this attack is resolved, Push the defender {S}."
+              "{WILD} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition.",
+              "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition.",
+              "{CRIT}{WILD}{HIT} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}.",
+              "{FAIL}{WILD}{HIT} <b>Push</b>: After this attack is resolved, Push the defender {S}."
             ]
           },
           {
@@ -30870,7 +30870,7 @@
             "dice": 4,
             "cost": 0,
             "text": [
-              "{CRIT} Shock: After this attack is resolved, the defender gains the Shock special condition."
+              "{WILD} <b>Shock</b>: After this attack is resolved, the defender gains the Shock special condition."
             ]
           },
           {
@@ -30890,7 +30890,7 @@
             "name": "Web Yoink",
             "type": "active",
             "cost": 2,
-            "text": "Choose an enemy character within {RNG} 4 and roll a die. On a {CRIT}, {WILD}, or {HIT} result, if the chosen character is Size 3 or less, Push it Toward this character {S}. On any other result, Push this character Toward the chosen character {S}. This superpower can be used only once per Turn."
+            "text": "Choose an enemy character within {RNG}4 and roll a die. On a {BLOCK}, {WILD}, or {CRIT} result, if the chosen character is {SIZE}3 or less, Push it Toward this character {S}. On any other result, Push this character Toward the chosen character {S}. This superpower can be used only once per Turn."
           },
           {
             "name": "Animation Domination",
@@ -30902,7 +30902,7 @@
             "name": "Spider-Nonsense",
             "type": "innate",
             "cost": 0,
-            "text": "When this character is defending against a Range or Beam attack or making a dodge roll, it may reroll up to 2 of its defense or dodge dice. Additionally, when this character suffers {DMG}, after the effect is resolved, it drops any objective tokens it is holding."
+            "text": "When this character is defending against a {PHYS} or {ENRG} attack or making a dodge roll, it may reroll up to 2 of its defense or dodge dice. Additionally, when this character suffers {DMG}, after the effect is resolved, it drops any objective tokens it is holding."
           },
           {
             "name": "Wall Crawler",
@@ -30951,8 +30951,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank.",
-              "{CRIT} <b>Heal</b>: After this attack is resolved, if it dealt 1 or more {DMG}, this character may remove 1 {DMG} from itself."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {HIT} results to a {BLANK}.",
+              "{WILD} <b>Heal</b>: After this attack is resolved, if it dealt 1 or more {DMG}, this character may remove 1 {DMG} from itself."
             ]
           },
           {
@@ -30964,7 +30964,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{PWR} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}."
+              "{WILD} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}."
             ]
           },
           {
@@ -30977,7 +30977,7 @@
             "text": [
               "Before {DMG} is dealt, the defender gains the Poison and Stun special conditions.",
               "After this attack is resolved, this character may Place itself within {RNG} 1 of the defender.",
-              "{CRIT} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}."
+              "{WILD} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}."
             ]
           }
         ],
@@ -30992,13 +30992,13 @@
             "name": "Acceleration Decoy",
             "type": "reactive",
             "cost": 3,
-            "text": "While this character is defending, during the Modify Dice step of the attack, it may use this superpower. This character may reroll any number of its defense dice, including {FAIL} results. After the attack is resolved, this character may Place itself within {RNG} 2 of its current position."
+            "text": "While this character is defending, during the Modify Dice step of the attack, it may use this superpower. This character may reroll any number of its defense dice, including {BLOCK} results. After the attack is resolved, this character may Place itself within {RNG} 2 of its current position."
           },
           {
             "name": "Future Tech Genius",
             "type": "innate",
             "cost": 0,
-            "text": "When this character rolls dice, after the effect is resolved, it gains 1 {PWR} if it rolled at least 1 {HIT}. When this character attacks, it ignores the Stealth {INNATE} superpower and the defender does not benefit from Cover."
+            "text": "When this character rolls dice, after the effect is resolved, it gains 1 {PWR} if it rolled at least 1 {CRIT}. When this character attacks, it ignores the Stealth {INNATE} superpower and the defender does not benefit from Cover."
           },
           {
             "name": "Healing Factor [1]",
@@ -31034,8 +31034,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank.",
-              "{CRIT} <b>Heal</b>: After this attack is resolved, if it dealt 1 or more {DMG}, this character may remove 1 {DMG} from itself."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {HIT} results to a {BLANK}.",
+              "{WILD} <b>Heal</b>: After this attack is resolved, if it dealt 1 or more {DMG}, this character may remove 1 {DMG} from itself."
             ]
           },
           {
@@ -31047,7 +31047,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{PWR} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}."
+              "{WILD} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}."
             ]
           },
           {
@@ -31060,7 +31060,7 @@
             "text": [
               "Before {DMG} is dealt, the defender gains the Poison and Stun special conditions.",
               "After this attack is resolved, this character may Place itself within {RNG} 1 of the defender.",
-              "{CRIT} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}."
+              "{WILD} <b>Throw</b>: Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}."
             ]
           }
         ],
@@ -31075,13 +31075,13 @@
             "name": "Acceleration Decoy",
             "type": "reactive",
             "cost": 3,
-            "text": "While this character is defending, during the Modify Dice step of the attack, it may use this superpower. This character may reroll any number of its defense dice, including {FAIL} results. After the attack is resolved, this character may Place itself within {RNG} 2 of its current position."
+            "text": "While this character is defending, during the Modify Dice step of the attack, it may use this superpower. This character may reroll any number of its defense dice, including {BLOCK} results. After the attack is resolved, this character may Place itself within {RNG} 2 of its current position."
           },
           {
             "name": "Future Tech Genius",
             "type": "innate",
             "cost": 0,
-            "text": "When this character rolls dice, after the effect is resolved, it gains 1 {PWR} if it rolled at least 1 {HIT}. When this character attacks, it ignores the Stealth {INNATE} superpower and the defender does not benefit from Cover."
+            "text": "When this character rolls dice, after the effect is resolved, it gains 1 {PWR} if it rolled at least 1 {CRIT}. When this character attacks, it ignores the Stealth {INNATE} superpower and the defender does not benefit from Cover."
           },
           {
             "name": "Healing Factor [1]",
@@ -31312,7 +31312,7 @@
             "name": "Hit the Pavement",
             "type": "active",
             "cost": 2,
-            "text": "Choose an interactive terrain feature of {S}2 or less and within {RNG}3 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of {SIZE} 2 or less and within {RNG} 3 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Inured to Pain",
@@ -31375,7 +31375,7 @@
             "name": "Hit the Pavement",
             "type": "active",
             "cost": 2,
-            "text": "Choose an interactive terrain feature of {S}2 or less and within {RNG}3 and Throw it {M}. This superpower can be used only once per Turn."
+            "text": "Choose an interactive terrain feature of {SIZE} 2 or less and within {RNG} 3 and Throw it {M}. This superpower can be used only once per Turn."
           },
           {
             "name": "Inured to Pain",
@@ -34412,9 +34412,9 @@
             "dice": 5,
             "cost": 0,
             "text": [
-              "After this attack is resolved, this character gains {WILD} equal to the {DMG} dealt.",
-              "{CRIT} <b>Pierce</b>: Change 1 of the defender's {BLOCK}, {CRIT}, or {WILD} results to a Blank.",
-              "{CRIT}{WILD} Hex: After this attack is resolved, the defender gains the Hex special condition."
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {WILD}, {CRIT}, or {HIT} results to a {BLANK}.",
+              "{WILD} {CRIT} <b>Hex</b>: After this attack is resolved, the defender gains the Hex special condition."
             ]
           },
           {
@@ -34426,7 +34426,7 @@
             "cost": 3,
             "text": [
               "After this attack is resolved, Place this character within {RNG} 3 of itself.",
-              "{CRIT} Stagger: After this attack is resolved, the defender gains the Stagger special condition."
+              "{WILD} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -34435,13 +34435,13 @@
             "name": "Ambush Predator",
             "type": "active",
             "cost": 3,
-            "text": "Throw this character {M}. It does not suffer {DMG} when colliding with another character or terrain feature. If this character began the Throw overlapping a terrain feature with a size larger than itself, ends the Throw no longer overlapping it, and collides with a character, that character suffers 4 collision {DMG} instead of 3. This superpower can be used only once per Turn."
+            "text": "Throw this character {M}. It does not suffer {DMG} when colliding with another character or terrain feature. If this character began the Throw overlapping a terrain feature with a {SIZE} larger than itself, ends the Throw no longer overlapping it, and collides with a character, that character suffers 4 collision {DMG} instead of 3. This superpower can be used only once per Turn."
           },
           {
             "name": "Mess With the Cat and You Get the Claws",
             "type": "reactive",
             "cost": 2,
-            "text": "After an attack targeting this character is resolved, if the attacker is within {RNG} 3, this character may use this superpower. Roll 4 dice. The attacker suffers 1 {DMG} for each {BLOCK} and {CRIT} in the result."
+            "text": "After an attack targeting this character is resolved, if the attacker is within {RNG} 3, this character may use this superpower. Roll 4 dice. The attacker suffers 1 {DMG} for each {WILD} and {CRIT} in the result."
           },
           {
             "name": "Empathetic Aura",
@@ -34453,7 +34453,7 @@
             "name": "On the Prowl",
             "type": "innate",
             "cost": 0,
-            "text": "While this character is within {RNG} 1 of a terrain feature of size 2 or more, this character gains the <b>Stealth</b> {INNATE} superpower."
+            "text": "While this character is within {RNG} 1 of a terrain feature of {SIZE} 2 or more, this character gains the Stealth {INNATE} superpower."
           },
           {
             "name": "Superior Agility",
@@ -34482,9 +34482,9 @@
             "dice": 5,
             "cost": 0,
             "text": [
-              "After this attack is resolved, this character gains {WILD} equal to the {DMG} dealt.",
-              "{CRIT} <b>Pierce</b>: Change 1 of the defender's {BLOCK}, {CRIT}, or {WILD} results to a Blank.",
-              "{CRIT}{WILD} Hex: After this attack is resolved, the defender gains the Hex special condition."
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {WILD}, {CRIT}, or {HIT} results to a {BLANK}.",
+              "{WILD} {CRIT} <b>Hex</b>: After this attack is resolved, the defender gains the Hex special condition."
             ]
           },
           {
@@ -34496,7 +34496,7 @@
             "cost": 3,
             "text": [
               "After this attack is resolved, Place this character within {RNG} 3 of itself.",
-              "{CRIT} Stagger: After this attack is resolved, the defender gains the Stagger special condition."
+              "{WILD} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -34505,13 +34505,13 @@
             "name": "Ambush Predator",
             "type": "active",
             "cost": 3,
-            "text": "Throw this character {M}. It does not suffer {DMG} when colliding with another character or terrain feature. If this character began the Throw overlapping a terrain feature with a size larger than itself, ends the Throw no longer overlapping it, and collides with a character, that character suffers 4 collision {DMG} instead of 3. This superpower can be used only once per Turn."
+            "text": "Throw this character {M}. It does not suffer {DMG} when colliding with another character or terrain feature. If this character began the Throw overlapping a terrain feature with a {SIZE} larger than itself, ends the Throw no longer overlapping it, and collides with a character, that character suffers 4 collision {DMG} instead of 3. This superpower can be used only once per Turn."
           },
           {
             "name": "Mess With the Cat and You Get the Claws",
             "type": "reactive",
             "cost": 2,
-            "text": "After an attack targeting this character is resolved, if the attacker is within {RNG} 3, this character may use this superpower. Roll 4 dice. The attacker suffers 1 {DMG} for each {BLOCK} and {CRIT} in the result."
+            "text": "After an attack targeting this character is resolved, if the attacker is within {RNG} 3, this character may use this superpower. Roll 4 dice. The attacker suffers 1 {DMG} for each {WILD} and {CRIT} in the result."
           },
           {
             "name": "Empathetic Aura",
@@ -34523,7 +34523,7 @@
             "name": "On the Prowl",
             "type": "innate",
             "cost": 0,
-            "text": "While this character is within {RNG} 1 of a terrain feature of size 2 or more, this character gains the <b>Stealth</b> {INNATE} superpower."
+            "text": "While this character is within {RNG} 1 of a terrain feature of {SIZE} 2 or more, this character gains the Stealth {INNATE} superpower."
           },
           {
             "name": "Superior Agility",
@@ -34862,7 +34862,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Web Up: After this attack is resolved, the defender gains the Slow special condition. Then, if the defender is Size 3 or less, this character may Push it Toward this character {S}."
+              "{WILD} <b>Web Up</b>: After this attack is resolved, the defender gains the Slow special condition. Then, if the defender is {SIZE} 3 or less, this character may Push it Toward this character {S}."
             ]
           },
           {
@@ -34886,7 +34886,7 @@
             "cost": 4,
             "text": [
               "Before {DMG} is dealt, the defender gains the Shock and Stun special conditions.",
-              "{CRIT} Electric Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the defender equal to or less than the number of {CRIT} results in the attack roll. The chosen characters suffer 2 {DMG}."
+              "{WILD} <b>Electric Arc</b>: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the defender equal to or less than the number of {WILD} results in the attack roll. The chosen characters suffer 2 {DMG}."
             ]
           }
         ],
@@ -34895,13 +34895,13 @@
             "name": "Web Swing",
             "type": "active",
             "cost": 2,
-            "text": "Place this character within {RNG} 3 of its current position. The next time it makes a <b>Swinging Strike</b> attack this Turn, add 2 dice to that attack roll. This superpower can be used only once per Turn."
+            "text": "Place this character within {RNG} 3 of its current position. The next time it makes a Swinging Strike attack this Turn, add 2 dice to that attack roll. This superpower can be used only once per Turn."
           },
           {
             "name": "You Did You. Now Imma Do My Thing.",
             "type": "reactive",
             "cost": 2,
-            "text": "After an attack targeting this character is resolved, this character may use this superpower. This character Advances Toward the attacker {S}. Then, if the attacker is within {RNG} 2, this character may make a <b>Swinging Strike</b> attack targeting it. This superpower can be used only once per Turn."
+            "text": "After an attack targeting this character is resolved, this character may use this superpower. This character Advances Toward the attacker {S}. Then, if the attacker is within {RNG} 2, this character may make a Swinging Strike attack targeting it. This superpower can be used only once per Turn."
           },
           {
             "name": "Ultimate Spider-Sense",
@@ -34943,7 +34943,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} Web Up: After this attack is resolved, the defender gains the Slow special condition. Then, if the defender is Size 3 or less, this character may Push it Toward this character {S}."
+              "{WILD} <b>Web Up</b>: After this attack is resolved, the defender gains the Slow special condition. Then, if the defender is {SIZE} 3 or less, this character may Push it Toward this character {S}."
             ]
           },
           {
@@ -34967,7 +34967,7 @@
             "cost": 4,
             "text": [
               "Before {DMG} is dealt, the defender gains the Shock and Stun special conditions.",
-              "{CRIT} Electric Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the defender equal to or less than the number of {CRIT} results in the attack roll. The chosen characters suffer 2 {DMG}."
+              "{WILD} <b>Electric Arc</b>: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the defender equal to or less than the number of {WILD} results in the attack roll. The chosen characters suffer 2 {DMG}."
             ]
           }
         ],
@@ -34976,13 +34976,13 @@
             "name": "Web Swing",
             "type": "active",
             "cost": 2,
-            "text": "Place this character within {RNG} 3 of its current position. The next time it makes a <b>Swinging Strike</b> attack this Turn, add 2 dice to that attack roll. This superpower can be used only once per Turn."
+            "text": "Place this character within {RNG} 3 of its current position. The next time it makes a Swinging Strike attack this Turn, add 2 dice to that attack roll. This superpower can be used only once per Turn."
           },
           {
             "name": "You Did You. Now Imma Do My Thing.",
             "type": "reactive",
             "cost": 2,
-            "text": "After an attack targeting this character is resolved, this character may use this superpower. This character Advances Toward the attacker {S}. Then, if the attacker is within {RNG} 2, this character may make a <b>Swinging Strike</b> attack targeting it. This superpower can be used only once per Turn."
+            "text": "After an attack targeting this character is resolved, this character may use this superpower. This character Advances Toward the attacker {S}. Then, if the attacker is within {RNG} 2, this character may make a Swinging Strike attack targeting it. This superpower can be used only once per Turn."
           },
           {
             "name": "Ultimate Spider-Sense",
@@ -35794,7 +35794,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{PWR} Elusive: After this attack is resolved, this character may Advance {S}."
+              "{PWR} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}."
             ]
           },
           {
@@ -35807,7 +35807,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "If this character has Advanced or been Placed this Turn, it may add 3 dice to this attack roll. This special rule can be used only once per Turn.",
-              "Vault: After this attack is resolved, Place this character within {RNG} 2 of the defender."
+              "<b>Vault</b>: After this attack is resolved, Place this character within {RNG} 2 of the defender."
             ]
           },
           {
@@ -35818,8 +35818,8 @@
             "dice": 5,
             "cost": 4,
             "text": [
-              "Add dice to this attack roll equal to the defender's {WILD}.",
-              "{PWR} {PWR} Stagger: After this attack is resolved, the defender gains the Stagger special condition."
+              "Add dice to this attack roll equal to the defender's {THREAT}.",
+              "{PWR} {PWR} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -35834,7 +35834,7 @@
             "name": "Need a Lift?",
             "type": "reactive",
             "cost": 2,
-            "text": "During its Activation, when this character begins a move action within {RNG} 2 of another allied character of {S} 3 or less, it may use this superpower. After that move action is resolved, Place that allied character within {RNG} 2 of its current position. This superpower can be used only once per Turn."
+            "text": "During its Activation, when this character begins a move action within {RNG} 2 of another allied character of {SIZE} 3 or less, it may use this superpower. After that move action is resolved, Place that allied character within {RNG} 2 of its current position. This superpower can be used only once per Turn."
           },
           {
             "name": "Guardian of Valhalla",
@@ -35876,7 +35876,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{PWR} Elusive: After this attack is resolved, this character may Advance {S}."
+              "{PWR} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}."
             ]
           },
           {
@@ -35889,7 +35889,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "If this character has Advanced or been Placed this Turn, it may add 3 dice to this attack roll. This special rule can be used only once per Turn.",
-              "Vault: After this attack is resolved, Place this character within {RNG} 2 of the defender."
+              "<b>Vault</b>: After this attack is resolved, Place this character within {RNG} 2 of the defender."
             ]
           },
           {
@@ -35900,8 +35900,8 @@
             "dice": 5,
             "cost": 4,
             "text": [
-              "Add dice to this attack roll equal to the defender's {WILD}.",
-              "{PWR} {PWR} Stagger: After this attack is resolved, the defender gains the Stagger special condition."
+              "Add dice to this attack roll equal to the defender's {THREAT}.",
+              "{PWR} {PWR} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
             ]
           }
         ],
@@ -35916,7 +35916,7 @@
             "name": "Need a Lift?",
             "type": "reactive",
             "cost": 2,
-            "text": "During its Activation, when this character begins a move action within {RNG} 2 of another allied character of {S} 3 or less, it may use this superpower. After that move action is resolved, Place that allied character within {RNG} 2 of its current position. This superpower can be used only once per Turn."
+            "text": "During its Activation, when this character begins a move action within {RNG} 2 of another allied character of {SIZE} 3 or less, it may use this superpower. After that move action is resolved, Place that allied character within {RNG} 2 of its current position. This superpower can be used only once per Turn."
           },
           {
             "name": "Guardian of Valhalla",
@@ -36916,7 +36916,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -36928,8 +36928,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition.",
-              "{CRIT} {PWR} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank."
+              "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition.",
+              "{WILD} {PWR} <b>Pierce</b>: Change 1 of the defender's {HIT}, {WILD}, or {CRIT} results to a {BLANK}."
             ]
           },
           {
@@ -36940,8 +36940,8 @@
             "dice": 4,
             "cost": 4,
             "text": [
-              "Add dice to this attack roll equal to the defender's Threat.",
-              "{CRIT} {WILD} {WILD} <b>Clumsy Warrior</b>: After this attack is resolved, the defender suffers 3 {DMG} and this character gains the Stagger special condition."
+              "Add dice to this attack roll equal to the defender's {THREAT}.",
+              "{WILD} {FAIL} {FAIL} <b>Clumsy Warrior</b>: After this attack is resolved, the defender suffers 3 {DMG} and this character gains the Stagger special condition."
             ]
           }
         ],
@@ -36950,13 +36950,13 @@
             "name": "Strike One for Volstagg!",
             "type": "active",
             "cost": 2,
-            "text": "This character may immediately make an attack with a {PWR} cost of 0 targeting an enemy character within {RNG} 2. After that attack is resolved, if the attack roll contains any {WILD} results, this character suffers 1 {DMG}. This superpower can be used only once per Turn."
+            "text": "This character may immediately make an attack with a {PWR} cost of 0 targeting an enemy character within {RNG} 2. After that attack is resolved, if the attack roll contains any {FAIL} results, this character suffers 1 {DMG}. This superpower can be used only once per Turn."
           },
           {
             "name": "My Steel Shall Strike for Thee!",
             "type": "reactive",
             "cost": 2,
-            "text": "After an attack targeting this character is resolved, this character may use this superpower. If the attacker is within {RNG} 3, this character may make a <b>Fimbuldraugr</b> attack targeting it."
+            "text": "After an attack targeting this character is resolved, this character may use this superpower. If the attacker is within {RNG} 3, this character may make a Fimbuldraugr attack targeting it."
           },
           {
             "name": "Grim Resolve",
@@ -36968,7 +36968,7 @@
             "name": "Asgardian",
             "type": "innate",
             "cost": 0,
-            "text": "During the <b>Power Phase</b>, this character gains 1 additional {PWR}."
+            "text": "During the Power Phase, this character gains 1 additional {PWR}."
           }
         ]
       },
@@ -36992,7 +36992,7 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{CRIT} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
+              "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition."
             ]
           },
           {
@@ -37004,8 +37004,8 @@
             "cost": 0,
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
-              "{CRIT} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition.",
-              "{CRIT} {PWR} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank."
+              "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition.",
+              "{WILD} {PWR} <b>Pierce</b>: Change 1 of the defender's {HIT}, {WILD}, or {CRIT} results to a {BLANK}."
             ]
           },
           {
@@ -37016,8 +37016,8 @@
             "dice": 4,
             "cost": 4,
             "text": [
-              "Add dice to this attack roll equal to the defender's Threat.",
-              "{CRIT} {WILD} {WILD} <b>Clumsy Warrior</b>: After this attack is resolved, the defender suffers 3 {DMG} and this character gains the Stagger special condition."
+              "Add dice to this attack roll equal to the defender's {THREAT}.",
+              "{WILD} {FAIL} {FAIL} <b>Clumsy Warrior</b>: After this attack is resolved, the defender suffers 3 {DMG} and this character gains the Stagger special condition."
             ]
           }
         ],
@@ -37026,13 +37026,13 @@
             "name": "Strike One for Volstagg!",
             "type": "active",
             "cost": 2,
-            "text": "This character may immediately make an attack with a {PWR} cost of 0 targeting an enemy character within {RNG} 2. After that attack is resolved, if the attack roll contains any {WILD} results, this character suffers 1 {DMG}. This superpower can be used only once per Turn."
+            "text": "This character may immediately make an attack with a {PWR} cost of 0 targeting an enemy character within {RNG} 2. After that attack is resolved, if the attack roll contains any {FAIL} results, this character suffers 1 {DMG}. This superpower can be used only once per Turn."
           },
           {
             "name": "My Steel Shall Strike for Thee!",
             "type": "reactive",
             "cost": 2,
-            "text": "After an attack targeting this character is resolved, this character may use this superpower. If the attacker is within {RNG} 3, this character may make a <b>Fimbuldraugr</b> attack targeting it."
+            "text": "After an attack targeting this character is resolved, this character may use this superpower. If the attacker is within {RNG} 3, this character may make a Fimbuldraugr attack targeting it."
           },
           {
             "name": "Grim Resolve",
@@ -37044,7 +37044,7 @@
             "name": "Asgardian",
             "type": "innate",
             "cost": 0,
-            "text": "During the <b>Power Phase</b>, this character gains 1 additional {PWR}."
+            "text": "During the Power Phase, this character gains 1 additional {PWR}."
           }
         ]
       },
@@ -37306,7 +37306,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "If this character has attacked the target character this Turn, it adds 1 die to its attack roll.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -37318,7 +37318,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -37394,7 +37394,7 @@
             "text": [
               "After this attack is resolved, this character gains 1 {PWR}.",
               "If this character has attacked the target character this Turn, it adds 1 die to its attack roll.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -37406,7 +37406,7 @@
             "cost": 0,
             "text": [
               "After each attack is resolved, this character gains 1 {PWR}.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -37968,7 +37968,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -38044,7 +38044,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
-              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
+              "{WILD} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
             ]
           },
           {
@@ -38422,7 +38422,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "The defender does not benefit from Cover.",
-              "{CRIT} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition."
+              "{WILD} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition."
             ]
           },
           {
@@ -38433,8 +38433,8 @@
             "dice": 6,
             "cost": 3,
             "text": [
-              "{CRIT} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank.",
-              "{CRIT} {PWR} <b>Yaka Mastery</b>: After this attack is resolved, this character may make a Whistle While You Work attack without paying the {PWR} cost. This attack must target another character within {RNG} 3 of the original target character and any distance from this character that has not been targeted by a Whistle While You Work attack this Round."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {HIT}, {BLOCK}, or {CRIT} results to a {BLANK}.",
+              "{WILD} {PWR} <b>Yaka Mastery</b>: After this attack is resolved, this character may make a <b>Whistle While You Work</b> attack without paying the {PWR} cost. This attack must target another character within {RNG} 3 of the original target character and any distance from this character that has not been targeted by a <b>Whistle While You Work</b> attack this Round."
             ]
           }
         ],
@@ -38486,7 +38486,7 @@
             "text": [
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "The defender does not benefit from Cover.",
-              "{CRIT} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition."
+              "{WILD} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition."
             ]
           },
           {
@@ -38497,8 +38497,8 @@
             "dice": 6,
             "cost": 3,
             "text": [
-              "{CRIT} <b>Pierce</b>: Change 1 of the defender's {HIT}, {CRIT}, or {WILD} results to a Blank.",
-              "{CRIT} {PWR} <b>Yaka Mastery</b>: After this attack is resolved, this character may make a Whistle While You Work attack without paying the {PWR} cost. This attack must target another character within {RNG} 3 of the original target character and any distance from this character that has not been targeted by a Whistle While You Work attack this Round."
+              "{WILD} <b>Pierce</b>: Change 1 of the defender's {HIT}, {BLOCK}, or {CRIT} results to a {BLANK}.",
+              "{WILD} {PWR} <b>Yaka Mastery</b>: After this attack is resolved, this character may make a <b>Whistle While You Work</b> attack without paying the {PWR} cost. This attack must target another character within {RNG} 3 of the original target character and any distance from this character that has not been targeted by a <b>Whistle While You Work</b> attack this Round."
             ]
           }
         ],

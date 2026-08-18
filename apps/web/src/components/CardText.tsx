@@ -32,6 +32,7 @@ const SYMBOL_STYLES: Record<SymbolKey, string> = {
   hit: 'bg-orange-500/20 text-orange-300',
   block: 'bg-blue-500/20 text-blue-300',
   fail: 'bg-slate-700/40 text-slate-400',
+  blank: 'bg-slate-700/40 text-slate-400',
   active: 'bg-teal-500/20 text-teal-300',
   reactive: 'bg-teal-500/20 text-teal-300',
   innate: 'bg-slate-500/20 text-slate-300',
@@ -54,6 +55,8 @@ const SYMBOL_GLYPHS: Partial<Record<SymbolKey, string>> = {
   hit: '✱',
   block: '⛊',
   fail: '☠',
+  // No icon exists — the cards print the word, so the chip carries it.
+  blank: 'Blank',
   active: '▶',
   reactive: '↺',
   innate: '∞',
