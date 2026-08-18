@@ -142,8 +142,10 @@ describe('the glyph table', () => {
   it('keeps Energy and Wild distinguishable', () => {
     // The other confusable pair: both are swirls, and colour is what separates
     // them. A description of either that omits its colour is not enough.
-    expect(SYMBOL_GLYPHS.energy).toContain('yellow');
-    expect(SYMBOL_GLYPHS.wild).toContain('white');
+    // Colour cannot separate them inline — both are white on black in rules
+    // text — so each description must name its construction.
+    expect(SYMBOL_GLYPHS.energy).toContain('blades');
+    expect(SYMBOL_GLYPHS.wild).toContain('single continuous coil');
   });
 });
 

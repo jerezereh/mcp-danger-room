@@ -72,9 +72,10 @@ export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
  */
 export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   physical: 'a red clenched fist',
-  // Energy and Wild are both swirls and are the other confusable pair. They
-  // differ in colour and in construction, so the description gives both.
-  energy: 'a yellow-and-black swirl, symmetric about its centre',
+  // Energy and Wild are the other confusable pair, and colour cannot separate
+  // them: inline in rules text both are white on black, and only the stat box
+  // and attack-type badges are coloured. The blade count is the real tell.
+  energy: 'a pinwheel of several curved blades around a centre, like a camera shutter (yellow in the stat box, white inline)',
   mystic: 'a blue eye',
   power: 'a star with long, even, sharply pointed spikes and a large round dark hole at its centre',
   damage: 'three slightly curved parallel lines',
@@ -83,7 +84,7 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   medium: 'a distance template marked M',
   long: 'a distance template marked L',
   critical: 'an exclamation mark with jagged lines around it',
-  wild: 'a white-and-black spiral winding out from its centre — never yellow',
+  wild: 'a single continuous coil spiralling outward from its centre, like the @ sign — one line, not several blades',
   hit: 'a jagged, uneven impact burst with a small dark dot at its centre',
   block: 'a shield with a spot on it',
   fail: 'a skull',

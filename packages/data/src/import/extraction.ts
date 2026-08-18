@@ -137,9 +137,15 @@ Position helps confirm. On an attack or superpower bar, the cost printed at the
 right-hand end is always Power. An icon leading a bullet is always a dice
 result, so it is Hit and never Power or Threat.
 
-Inline icons are printed as white glyphs inside a small black circular badge,
-not as bare black line art. Read the shape inside the badge; the badge itself
-is not part of the symbol.
+Inline icons are printed as white glyphs inside a small black circular badge.
+Read only the shape inside the badge. The badge is never part of the symbol —
+in particular, a round badge does not make an icon the Range crosshair.
+
+Colour is available in the stat box and on attack-type badges, but inline in
+rules text every icon is white on black. So Energy and Wild cannot be told
+apart by colour there, only by construction: Energy is a pinwheel of several
+separate curved blades, like a camera shutter; Wild is one continuous coil
+winding outward, like the @ sign. Count the strokes — several or one.
 
 ### Trigger icons
 
@@ -260,6 +266,47 @@ of rules text. Use "partial" when some text was cut off, blurred, or obscured,
 and "poor" when substantial content was unreadable. Put anything you were
 unsure about in "notes" — a wrong value reported confidently is far worse than
 a flagged uncertainty, because nothing downstream will catch it.`;
+}
+
+/**
+ * Trigger prefixes that contain a symbol no trigger can carry.
+ *
+ * A bullet's leading icons are always dice results. Anything else there is
+ * definitively a misread, so this needs no reference data and no second model
+ * call — it is a type error in the transcription.
+ *
+ * It catches the extractor's two standing confusions, both of which produce
+ * legal-looking tokens: the Wild coil read as Energy or as Range, and the Hit
+ * burst read as the Power star. Every one of those was invisible before,
+ * because a wrong-but-valid token looks exactly like a right one.
+ */
+const DICE_TOKENS = new Set(['CRIT', 'WILD', 'HIT', 'BLOCK', 'FAIL']);
+
+export interface TriggerProblem {
+  readonly side: 'healthy' | 'injured';
+  readonly attack: string;
+  readonly text: string;
+  /** The tokens that cannot appear before a trigger name. */
+  readonly offenders: string[];
+}
+
+export function checkTriggerIcons(card: ExtractedCard): TriggerProblem[] {
+  const out: TriggerProblem[] = [];
+
+  for (const side of ['healthy', 'injured'] as const) {
+    for (const attack of card[side].attacks) {
+      for (const text of attack.text) {
+        const lead = text.match(/^((?:\{[A-Za-z]+\}\s*)+)\s*(?:<b>)?[A-Za-z][A-Za-z '!-]{1,24}?(?:<\/b>)?\s*:/);
+        if (!lead) continue;
+
+        const tokens = [...(lead[1] as string).matchAll(/\{([A-Za-z]+)\}/g)].map(m => m[1] as string);
+        // {UNKNOWN} is an honest flag, not a misread — it is reported elsewhere.
+        const offenders = tokens.filter(t => !DICE_TOKENS.has(t) && t !== 'UNKNOWN');
+        if (offenders.length > 0) out.push({ side, attack: attack.name, text, offenders });
+      }
+    }
+  }
+  return out;
 }
 
 export interface CrossCheck {

@@ -9,6 +9,7 @@ import { applyOverrides, Override } from './overrides.js';
 import { ocrToDraft } from './ocr.js';
 import { qualifiedSlug, slugify, splitName } from './slug.js';
 import {
+  checkTriggerIcons,
   crossCheck,
   ExtractedCard as ExtractedCardSchema,
   parseStaminaErrata,
@@ -652,5 +653,47 @@ describe('parseCost', () => {
   it('preserves a variable cost rather than making it free', () => {
     expect(parseCost('X')).toBe('X');
     expect(parseCost('x')).toBe('X');
+  });
+});
+
+
+/*
+ * Trigger icons are always dice results, so a prefix carrying anything else is
+ * a misread that needs no reference data to spot. This matters because the
+ * misreads produce *valid* tokens — run 3 read the Wild coil as {ENRG} and
+ * {RNG}, and the Hit burst as {PWR}, 42 times — and a wrong-but-valid token is
+ * indistinguishable from a right one by eye.
+ */
+describe('checkTriggerIcons', () => {
+  const card = (text: string[]) =>
+    ({
+      healthy: { attacks: [{ name: 'Punch', text }], superpowers: [] },
+      injured: { attacks: [], superpowers: [] },
+    }) as unknown as Parameters<typeof checkTriggerIcons>[0];
+
+  it('accepts a prefix of dice results', () => {
+    expect(checkTriggerIcons(card(['{WILD} <b>Stun</b>: does a thing.']))).toEqual([]);
+    expect(checkTriggerIcons(card(['{CRIT} {HIT} <b>Ricochet</b>: does a thing.']))).toEqual([]);
+  });
+
+  it('catches the Wild coil misread as Energy or Range', () => {
+    expect(checkTriggerIcons(card(['{ENRG} <b>Degeneration</b>: x.']))[0]?.offenders).toEqual([
+      'ENRG',
+    ]);
+    expect(checkTriggerIcons(card(['{RNG} <b>Throw</b>: x.']))[0]?.offenders).toEqual(['RNG']);
+  });
+
+  it('catches the Hit burst misread as the Power star', () => {
+    expect(checkTriggerIcons(card(['{PWR} <b>Hostile Takeover</b>: x.']))[0]?.offenders).toEqual([
+      'PWR',
+    ]);
+  });
+
+  it('leaves {UNKNOWN} alone — an honest flag is not a misread', () => {
+    expect(checkTriggerIcons(card(['{UNKNOWN} <b>Push</b>: x.']))).toEqual([]);
+  });
+
+  it('ignores a bullet with no leading icons', () => {
+    expect(checkTriggerIcons(card(['After this attack is resolved, gains {PWR}.']))).toEqual([]);
   });
 });

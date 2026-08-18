@@ -31,7 +31,12 @@ import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 
 import { characters as corpus } from '../src/characters.js';
 import { cardImageUrl } from '../src/import/cerebro.js';
-import { buildSystemPrompt, crossCheck, ExtractedCard } from '../src/import/extraction.js';
+import {
+  buildSystemPrompt,
+  checkTriggerIcons,
+  crossCheck,
+  ExtractedCard,
+} from '../src/import/extraction.js';
 import { slugify } from '../src/import/slug.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -607,8 +612,35 @@ async function main() {
       2,
     ) + '\n',
   );
+  /*
+   * Structural check on trigger icons.
+   *
+   * A bullet's leading icons are always dice results, so anything else there
+   * is a misread that needs no reference data to detect. It matters because
+   * these misreads produce *valid* tokens — the Wild coil as {ENRG}, the Hit
+   * burst as {PWR} — and a wrong-but-valid token is indistinguishable from a
+   * right one by eye.
+   */
+  const triggerProblems = all.flatMap(r =>
+    checkTriggerIcons(r.card).map(p => ({ id: r.id, ...p })),
+  );
+  if (triggerProblems.length > 0) {
+    const byToken: Record<string, number> = {};
+    for (const p of triggerProblems) for (const o of p.offenders) byToken[o] = (byToken[o] ?? 0) + 1;
+    console.log(
+      `\n⚠ ${triggerProblems.length} trigger bullets lead with a symbol no trigger can carry:`,
+    );
+    for (const [token, n] of Object.entries(byToken).sort((a, b) => b[1] - a[1])) {
+      console.log(`    {${token}} x${n}`);
+    }
+    console.log('  These are misreads, not flags — see .import/extraction-review.json');
+  }
+
   const flagged = all.filter(
-    r => r.disagreements.some(d => !d.explained) || r.card.legibility !== 'clear',
+    r =>
+      r.disagreements.some(d => !d.explained) ||
+      r.card.legibility !== 'clear' ||
+      checkTriggerIcons(r.card).length > 0,
   );
 
   writeFileSync(
@@ -616,7 +648,8 @@ async function main() {
     JSON.stringify(
       {
         generatedAt: new Date().toISOString(),
-        note: 'Extractions that disagree with Cerebro or that the model flagged as hard to read. Check these against the printed card before setting verified: true.',
+        note: 'Extractions that disagree with Cerebro, that the model flagged as hard to read, or whose trigger bullets lead with a non-dice symbol. Check these against the printed card before setting verified: true.',
+        triggerProblems,
         flagged,
       },
       null,
