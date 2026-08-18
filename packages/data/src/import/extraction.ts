@@ -124,13 +124,18 @@ invent a token, and never write the icon's name as a plain word instead.
 
 ${glyphs}
 
-Two of these appear both in the stat box and inline, and are the pair most
-often confused. Both radiate from a centre and both have a dark dot there, so
-the centre will not tell them apart — the outline will. Power is a star: its
-edge is spiked, with sharp points. Threat is a circle: its edge is smooth and
-unbroken, and the six lines are cuts across the disc, not points sticking out
-of it. On an attack or superpower bar, the cost printed at the right-hand end
-is always Power.
+Three of these are one confusable cluster: Power, Hit and Threat. All three
+radiate from a centre and all three have something dark at that centre, so the
+centre will not tell them apart. The outline will:
+
+  Power   long, even, sharply pointed spikes around a large round dark hole
+  Hit     a jagged, uneven burst — shorter and rougher — around a small dot
+  Threat  no spikes at all: a smooth unbroken circle, with the six lines cut
+          across the disc rather than sticking out of it
+
+Position helps confirm. On an attack or superpower bar, the cost printed at the
+right-hand end is always Power. An icon leading a bullet is always a dice
+result, so it is Hit and never Power or Threat.
 
 Inline icons are printed as white glyphs inside a small black circular badge,
 not as bare black line art. Read the shape inside the badge; the badge itself

@@ -76,7 +76,7 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   // differ in colour and in construction, so the description gives both.
   energy: 'a yellow-and-black swirl, symmetric about its centre',
   mystic: 'a blue eye',
-  power: 'a spiked star with sharp points and a round dark hole at its centre',
+  power: 'a star with long, even, sharply pointed spikes and a large round dark hole at its centre',
   damage: 'three slightly curved parallel lines',
   range: 'a target or crosshair',
   short: 'a distance template marked S',
@@ -84,16 +84,16 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   long: 'a distance template marked L',
   critical: 'an exclamation mark with jagged lines around it',
   wild: 'a white-and-black spiral winding out from its centre — never yellow',
-  hit: 'a jagged centre with a jagged line off it',
+  hit: 'a jagged, uneven impact burst with a small dark dot at its centre',
   block: 'a shield with a spot on it',
   fail: 'a skull',
   active: 'four arrows pointing outward from a centre',
   reactive: 'a pair of lightning bolts',
   innate: 'an infinity sign',
-  // The two are easy to swap: both radiate from a centre point, and both appear
-  // in the stat box and inline. Both radiate from a centre and both have a
-  // dark dot there, so the centre does not separate them — the outline does.
-  // Power's edge is spiked; Threat's is a smooth, unbroken circle.
+  // Power, Threat and Hit are one confusable cluster: all three radiate from a
+  // centre and all three have something dark at that centre, so the centre
+  // separates nothing. The outline does. Power has long even spikes, Hit is an
+  // uneven burst, Threat has no spikes at all.
   threat: 'a smooth circle with no spikes, cut into six segments by thin lines from a dot at its centre',
   size: 'an I-beam, the same icon the stat box uses for Size',
 };

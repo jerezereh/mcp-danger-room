@@ -132,6 +132,11 @@ describe('the glyph table', () => {
     expect(SYMBOL_GLYPHS.power).toContain('spike');
     expect(SYMBOL_GLYPHS.threat).toContain('no spikes');
     expect(SYMBOL_GLYPHS.threat).toContain('circle');
+    // Hit belongs to the same cluster and was transposed with Wild once the
+    // other two were pinned down, so it has to say how its burst differs.
+    expect(SYMBOL_GLYPHS.hit).toContain('uneven');
+    expect(SYMBOL_GLYPHS.hit).toContain('small dark dot');
+    expect(SYMBOL_GLYPHS.power).toContain('large round dark hole');
   });
 
   it('keeps Energy and Wild distinguishable', () => {
