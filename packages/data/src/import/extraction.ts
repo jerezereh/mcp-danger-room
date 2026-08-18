@@ -115,12 +115,24 @@ export function buildSystemPrompt({ symbolKeyImage = false } = {}): string {
     )
     .join('\n');
 
+  /*
+   * Deliberately not phrased as a gate.
+   *
+   * An earlier wording made the key the authority and told the model to flag
+   * anything that "does not match any cell". Twenty-seven of forty-one cards
+   * then reported icons as unmatched, {UNKNOWN} tripled, and readings that had
+   * been right became flags. A reference invites recognition; a gate invites
+   * rejection.
+   */
   const appearance = symbolKeyImage
     ? `The first image in this message is a key: every icon that appears on a
-card, each labelled with the token to write for it. Match what you see on the
-card against that key. It is the authority on what each icon looks like — if a
-card icon does not match any cell in the key, say so in "notes" rather than
-choosing the nearest one.`
+card, each labelled with the token to write for it. The glyphs in it are cut
+from real cards at the size they print, so an icon on the card should look like
+its cell in the key. Use it to recognise what you see.
+
+Expect small differences — printing, scan quality and the surrounding text all
+vary — and identify the icon anyway. The key shows what each symbol is, not the
+only way it can appear.`
     : `Three of these are one confusable cluster: Power, Hit and Threat. All three
 radiate from a centre and all three have something dark at that centre, so the
 centre will not tell them apart. The outline will:
