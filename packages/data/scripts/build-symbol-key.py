@@ -27,39 +27,38 @@ GLYPH_PX = 64
 B, D = 'BASTION_healthy.png', 'DORMAMMU_healthy.png'
 G, R, I = 'GLADIATOR_healthy.png', 'RONIN_healthy.png', 'IRON_LAD_healthy.png'
 
-# (label, source card, crop box). Order groups related glyphs together.
+# (symbol key, printed token, source card, crop box).
+#
+# The key is the identity the code uses (`SymbolKey` in symbols.ts); the token
+# is what gets written into card text. They differ for half the symbols —
+# `power` is written `{PWR}` — and naming the emitted files after the token
+# meant the app looked up `power.png` and found `pwr.png`, so ten of nineteen
+# icons silently fell back to text. Files are named by key.
 ITEMS = [
-    ('{PHYS}',     B, (28, 121, 83, 174)),
-    ('{ENRG}',     B, (138, 121, 193, 174)),
-    ('{MYST}',     B, (248, 121, 301, 174)),
-    ('{DMG}',      D, (795, 104, 825, 136)),
-    ('{PWR}',      B, (1298, 43, 1339, 84)),
-    ('{RNG}',      B, (1146, 43, 1189, 84)),
-    ('{THREAT}',   B, (200, 179, 255, 232)),
-    ('{SIZE}',     B, (74, 242, 129, 295)),
-    ('{CRIT}',     D, (546, 280, 576, 312)),
-    ('{WILD}',     D, (586, 280, 616, 312)),
-    ('{HIT}',      D, (626, 280, 656, 312)),
-    ('{BLOCK}',    R, (1110, 154, 1142, 186)),
-    ('{FAIL}',     D, (666, 280, 696, 312)),
+    ('physical',   '{PHYS}',     B, (28, 121, 83, 174)),
+    ('energy',     '{ENRG}',     B, (138, 121, 193, 174)),
+    ('mystic',     '{MYST}',     B, (248, 121, 301, 174)),
+    ('damage',     '{DMG}',      D, (795, 104, 825, 136)),
+    ('power',      '{PWR}',      B, (1298, 43, 1339, 84)),
+    ('range',      '{RNG}',      B, (1146, 43, 1189, 84)),
+    ('threat',     '{THREAT}',   B, (200, 179, 255, 232)),
+    ('size',       '{SIZE}',     B, (74, 242, 129, 295)),
+    ('critical',   '{CRIT}',     D, (546, 280, 576, 312)),
+    ('wild',       '{WILD}',     D, (586, 280, 616, 312)),
+    ('hit',        '{HIT}',      D, (626, 280, 656, 312)),
+    ('block',      '{BLOCK}',    R, (1110, 154, 1142, 186)),
+    ('fail',       '{FAIL}',     D, (666, 280, 696, 312)),
     # Blank is a die result with no icon — the cards spell it out.
-    ('{BLANK}',    R, (1274, 152, 1342, 190)),
-    ('{S}',        G, (1456, 415, 1487, 447)),
-    ('{M}',        I, (1442, 757, 1474, 789)),
-    ('{L}',        G, (1644, 675, 1675, 707)),
-    ('{ACTIVE}',   B, (392, 489, 443, 539)),
-    ('{REACTIVE}', B, (394, 602, 445, 652)),
-    ('{INNATE}',   B, (392, 740, 443, 790)),
-    ('Leadership', B, (392, 349, 443, 399)),
+    ('blank',      '{BLANK}',    R, (1274, 152, 1342, 190)),
+    ('short',      '{S}',        G, (1456, 415, 1487, 447)),
+    ('medium',     '{M}',        I, (1442, 757, 1474, 789)),
+    ('long',       '{L}',        G, (1644, 675, 1675, 707)),
+    ('active',     '{ACTIVE}',   B, (392, 489, 443, 539)),
+    ('reactive',   '{REACTIVE}', B, (394, 602, 445, 652)),
+    ('innate',     '{INNATE}',   B, (392, 740, 443, 790)),
+    ('leadership', 'Leadership', B, (392, 349, 443, 399)),
 ]
 
-# Glyphs are pasted at native size, never upscaled.
-#
-# The first version blew each crop up to 108px. On the card the same icon is
-# about 30px in a line of text, so the model was matching a soft enlargement
-# against a crisp small glyph — and 27 of 41 extractions reported icons that
-# "did not cleanly match any icon in the provided key". Like-for-like is the
-# whole point of showing a picture instead of describing one.
 CELL, COLS = 96, 4
 FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf'
 
@@ -84,7 +83,7 @@ def main() -> None:
     font = ImageFont.truetype(FONT, 13)
     cache: dict[str, Image.Image] = {}
 
-    for i, (label, card, box) in enumerate(ITEMS):
+    for i, (_key, label, card, box) in enumerate(ITEMS):
         if card not in cache:
             cache[card] = Image.open(CARDS / card).convert('RGB')
         glyph = cache[card].crop(box)
@@ -105,10 +104,10 @@ def main() -> None:
     # renders the word, which is what the cards do.
     GLYPH_DIR.mkdir(parents=True, exist_ok=True)
     written = 0
-    for label, card, box in ITEMS:
-        if label in ('{BLANK}',):
+    for key, label, card, box in ITEMS:
+        if key == 'blank':
             continue
-        name = ('leadership' if label == 'Leadership' else label.strip('{}').lower()) + '.png'
+        name = f'{key}.png'
         glyph = cache[card].crop(box)
         side = max(glyph.size)
         square = Image.new('RGB', (side, side), _corner(glyph))
