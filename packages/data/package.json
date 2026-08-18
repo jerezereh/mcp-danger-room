@@ -18,7 +18,8 @@
     "typecheck": "tsc --build",
     "import:legacy": "node scripts/import-legacy.mjs",
     "import:cards": "tsx scripts/import-cards.ts",
-    "extract:cards": "tsx scripts/extract-cards.ts"
+    "extract:cards": "tsx scripts/extract-cards.ts",
+    "fetch:images": "tsx scripts/fetch-card-images.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.117.1",

@@ -1,16 +1,63 @@
 /**
  * A character's full stat block, both sides.
  *
- * Rendered from data rather than shown as a card image. Images are still worth
- * having as a reference view, but a data-driven card is searchable, themeable,
- * readable at any size, and — critically — the thing the engine actually acts
- * on, so a discrepancy between what you read and what the rules do becomes
- * impossible rather than merely unlikely.
+ * The rendered data is primary, not the scan: it is searchable, themeable,
+ * readable at any size, and it is what the engine acts on, so a discrepancy
+ * between what you read and what the rules do becomes impossible rather than
+ * merely unlikely.
+ *
+ * The scan sits beside it as the reference. Everything here is imported and
+ * only one record is human-verified, so being able to check a value against
+ * the printed card without leaving the app is what makes the data trustworthy.
  */
 
+import { useState } from 'react';
 import type { Attack, Character, PowerCost, StatBlock } from '@danger-room/data';
 
 import { CardText } from './CardText.js';
+
+/**
+ * A card scan, if one has been fetched.
+ *
+ * The images are ~440MB for the full corpus, so they are gitignored and
+ * fetched on demand — which means a fresh checkout has none. Missing scans
+ * resolve to nothing rather than a broken image, and the card says once how
+ * to get them instead of failing silently.
+ */
+function CardScan({
+  file,
+  alt,
+  onMissing,
+}: {
+  file: string | null;
+  alt: string;
+  onMissing: () => void;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (!file || failed) return null;
+
+  const href = `/cards/${encodeURIComponent(file)}`;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="block overflow-hidden rounded border border-surface-border transition hover:border-slate-500"
+      title="Open the full-size scan"
+    >
+      <img
+        src={href}
+        alt={alt}
+        loading="lazy"
+        onError={() => {
+          setFailed(true);
+          onMissing();
+        }}
+        className="w-full"
+      />
+    </a>
+  );
+}
 
 /**
  * "X" is a variable cost, not a free power — it must never render as absent.
@@ -86,6 +133,9 @@ function Side({ block, title }: { block: StatBlock; title: string }) {
 }
 
 export function CharacterCard({ character }: { character: Character }) {
+  const [scansMissing, setScansMissing] = useState(false);
+  const hasScans = Boolean(character.healthy.cardImage || character.injured.cardImage);
+
   return (
     <article className="space-y-3">
       <header className="flex items-start justify-between gap-3">
@@ -129,6 +179,28 @@ export function CharacterCard({ character }: { character: Character }) {
       {!character.verified && (
         <p className="rounded border border-amber-500/30 bg-amber-500/10 px-2 py-1 text-xs text-amber-300">
           Unverified data — imported, not yet checked against the printed card.
+        </p>
+      )}
+
+      {hasScans && !scansMissing && (
+        <div className="grid grid-cols-2 gap-2">
+          <CardScan
+            file={character.healthy.cardImage}
+            alt={`${character.name}, healthy side`}
+            onMissing={() => setScansMissing(true)}
+          />
+          <CardScan
+            file={character.injured.cardImage}
+            alt={`${character.name}, injured side`}
+            onMissing={() => setScansMissing(true)}
+          />
+        </div>
+      )}
+
+      {hasScans && scansMissing && (
+        <p className="rounded border border-surface-border bg-surface px-2 py-1.5 text-xs text-slate-500">
+          Card scans not downloaded.{' '}
+          <code className="text-slate-400">npm run fetch:images --workspace @danger-room/data</code>
         </p>
       )}
 

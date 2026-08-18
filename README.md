@@ -18,11 +18,22 @@ and Vite 6+ will require 20. Use [nvm](https://github.com/nvm-sh/nvm) or similar
 
 ```bash
 npm install
-npm test          # 37 tests across the rules and data packages
+npm test          # 211 tests across the rules and data packages
 npm run typecheck # all five projects
 npm run dev       # web client on http://localhost:5173
 npm run dev:server # game server on :2567 (only needed for online play)
 ```
+
+Card scans are optional and fetched separately — about 450 images, ~410MB, so
+they are gitignored rather than committed:
+
+```bash
+npm run fetch:images --workspace @danger-room/data
+```
+
+Without them the app works normally and each character card says how to get
+them. They are served from `assets/card-scans/` by the dev server, deliberately
+outside `apps/web/public` so they are not copied into the production build.
 
 ## Layout
 
