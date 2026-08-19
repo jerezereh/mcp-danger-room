@@ -36,7 +36,9 @@ export type SymbolKey =
   | 'reactive'
   | 'innate'
   | 'threat'
-  | 'size';
+  | 'size'
+  | 'strength'
+  | 'leadership';
 
 export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
   physical: 'Physical',
@@ -61,6 +63,8 @@ export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
   innate: 'Innate',
   threat: 'Threat',
   size: 'Size',
+  strength: 'Strength',
+  leadership: 'Leadership',
 };
 
 /**
@@ -102,6 +106,10 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   // uneven burst, Threat has no spikes at all.
   threat: 'a smooth circle with no spikes, cut into six segments by thin lines from a dot at its centre',
   size: 'an I-beam, the same icon the stat box uses for Size',
+  // Both appear on bars *and* inline in rules text — Lady Mastermind copies an
+  // attack's Strength, and Dormammu's Leadership refers to itself by its star.
+  strength: 'a barbell, the same icon an attack bar uses for its dice',
+  leadership: 'a solid five-pointed star',
 };
 
 /**
@@ -158,6 +166,10 @@ const ALIASES: Readonly<Record<string, SymbolKey>> = {
   threat: 'threat',
   t: 'threat',
   size: 'size',
+  strength: 'strength',
+  str: 'strength',
+  leadership: 'leadership',
+  lead: 'leadership',
 };
 
 /** The canonical spelling to emit when writing new card text. */
@@ -182,6 +194,8 @@ export const CANONICAL_TOKENS: Readonly<Record<SymbolKey, string>> = {
   innate: '{INNATE}',
   threat: '{THREAT}',
   size: '{SIZE}',
+  strength: '{STRENGTH}',
+  leadership: '{LEADERSHIP}',
 };
 
 export type TextToken =

@@ -221,8 +221,19 @@ async function main() {
 
   if (overrideFile.overrides.length > 0) {
     console.log(`\nOverrides: ${patched.applied.length} applied`);
+    if (patched.removed.length > 0) {
+      console.log(`  ${patched.removed.length} character(s) removed: ${patched.removed.join(', ')}`);
+    }
     for (const id of patched.unmatched) {
       console.log(`  ⚠ no character matched override id "${id}"`);
+    }
+    /*
+     * An ability patch keyed to a name that no longer exists is the same class
+     * of failure as a typo'd character id, and a worse one to miss: the
+     * override looks applied, so the data reads as checked when it was not.
+     */
+    for (const key of patched.unmatchedAbilities) {
+      console.log(`  ⚠ no ability matched "${key}"`);
     }
   }
 

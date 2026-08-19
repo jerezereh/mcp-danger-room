@@ -56,7 +56,8 @@ ITEMS = [
     ('active',     '{ACTIVE}',   B, (392, 489, 443, 539)),
     ('reactive',   '{REACTIVE}', B, (394, 602, 445, 652)),
     ('innate',     '{INNATE}',   B, (392, 740, 443, 790)),
-    ('leadership', 'Leadership', B, (392, 349, 443, 399)),
+    ('strength',   '{STRENGTH}', B, (1222, 43, 1263, 84)),
+    ('leadership', '{LEADERSHIP}', B, (392, 349, 443, 399)),
 ]
 
 # Stat-box icons the tokenizer has no token for — they never appear inline, so
@@ -65,7 +66,6 @@ ITEMS = [
 EXTRAS = [
     ('stamina',  B, (74, 179, 129, 232)),
     ('movement', B, (200, 241, 255, 295)),
-    ('strength', B, (1222, 43, 1263, 84)),
 ]
 
 CELL, COLS = 96, 4

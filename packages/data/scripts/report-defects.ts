@@ -22,10 +22,12 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { checkTriggerIcons, type ExtractedCard } from '../src/import/extraction.js';
+import { OverrideFile } from '../src/import/overrides.js';
 
 const pkgRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = resolve(pkgRoot, '.import');
 const SOURCE = resolve(OUT_DIR, 'extracted.json');
+const OVERRIDES = resolve(pkgRoot, 'overrides.json');
 
 interface Defect {
   readonly kind: 'impossible-trigger' | 'unreadable-icon' | 'legibility';
@@ -80,6 +82,19 @@ function main() {
     card: ExtractedCard;
   }[];
 
+  /*
+   * Corrections do not change the extraction — they are applied after it — so
+   * a character stays on this list forever once reviewed. Marking the ones
+   * already corrected is what keeps the list a worklist rather than a tally.
+   */
+  const corrected = new Set(
+    existsSync(OVERRIDES)
+      ? OverrideFile.parse(JSON.parse(readFileSync(OVERRIDES, 'utf8')))
+          .overrides.filter(o => o.verified)
+          .map(o => o.id)
+      : [],
+  );
+
   const lines: string[] = [];
   const totals: Record<string, number> = {
     'impossible-trigger': 0,
@@ -99,8 +114,9 @@ function main() {
       totals[d.kind] = (totals[d.kind] ?? 0) + 1;
     }
 
+    const mark = corrected.has(id) ? '  ✓ corrected by a verified override' : '';
     lines.push(
-      `${id}  [${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ')}]`,
+      `${id}  [${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ')}]${mark}`,
     );
     for (const d of defects) {
       lines.push(`      ${d.kind.padEnd(19)} ${d.side.padEnd(8)} ${d.where}  —  ${d.detail}`);
@@ -110,7 +126,11 @@ function main() {
 
   const report = lines.join('\n');
   console.log(report);
+  const outstanding = [...new Set(lines.filter(l => /^\S/.test(l)).map(l => l.split(' ')[0]))].filter(
+    id => !corrected.has(id),
+  );
   console.log(`${affected} of ${results.length} characters have at least one detectable defect`);
+  console.log(`  ${affected - outstanding.length} already corrected, ${outstanding.length} outstanding`);
   for (const [kind, n] of Object.entries(totals)) console.log(`  ${kind.padEnd(20)} ${n}`);
   console.log('\nNot listed: readings that are plausible but wrong — those need the scan.');
 

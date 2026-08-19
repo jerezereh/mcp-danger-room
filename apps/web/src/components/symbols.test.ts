@@ -33,11 +33,11 @@ describe('symbol glyph files', () => {
 
   /*
    * Icons the cards print but the tokenizer has no token for, because they
-   * never appear inline: the stat box's stamina and movement, the attack bar's
-   * strength, and the Leadership star. The app draws them; card text cannot
-   * contain them.
+   * never appear inline: the stat box's stamina and movement. The app draws
+   * them; card text cannot contain them. Strength and Leadership started here
+   * and were promoted once cards turned up that print them in a sentence.
    */
-  const CARD_ONLY = ['leadership', 'stamina', 'movement', 'strength'];
+  const CARD_ONLY = ['stamina', 'movement'];
 
   it('has no glyph that is neither a symbol key nor a card-only icon', () => {
     const allowed: string[] = [...EXPECTED, ...CARD_ONLY];

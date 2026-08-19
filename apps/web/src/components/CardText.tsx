@@ -13,6 +13,12 @@ import { tokenize, SYMBOL_LABELS } from '@danger-room/data';
 
 import { Glyph } from './Glyph.js';
 
+/**
+ * Superpower text can be several lines, and some of those lines are bullets —
+ * Elsa Bloodstone's Leadership offers three named effects. HTML collapses the
+ * newlines, so those ran together into one paragraph. Each line is rendered
+ * separately, and a line the card bullets keeps its bullet.
+ */
 export function CardText({
   text,
   className = '',
@@ -23,6 +29,24 @@ export function CardText({
   /** Attack rules text is bulleted on the card; superpower text is not. */
   bullet?: boolean;
 }) {
+  const lines = text.split('\n').filter(l => l.trim() !== '');
+  if (lines.length > 1) {
+    return (
+      <div className={`space-y-1 ${className}`}>
+        {lines.map((line, i) => {
+          const marked = line.trimStart().startsWith('•');
+          return (
+            <CardText
+              key={i}
+              text={marked ? line.trimStart().replace(/^•\s*/, '') : line}
+              bullet={marked || bullet}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+
   const body = tokenize(text).map((token, i) => {
     switch (token.kind) {
       case 'text':
