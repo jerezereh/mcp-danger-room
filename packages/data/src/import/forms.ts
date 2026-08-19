@@ -30,6 +30,17 @@ import type { Character, Form, StatBlock } from '../schema.js';
 export const formJobId = (characterId: string, formName: string) =>
   `${characterId}_${formName.replace(/[^A-Za-z0-9]/g, '')}`;
 
+/**
+ * Is this extraction an alternate mode rather than a character?
+ *
+ * Character ids match ^[a-z0-9-]+$, so an underscore can only have come from
+ * `formJobId`. Both the extractor and the importer ask this, because a form
+ * record that leaks into the character merge becomes a draft with no threat,
+ * fails to finalize, lands in needs-data, and gets resubmitted as paid work on
+ * the next run.
+ */
+export const isFormExtraction = (id: string) => id.includes('_');
+
 const PREFIX = /^([A-Z][A-Za-z' ]{2,20}) - /;
 const DEFAULT_MODE = 'NORMAL';
 

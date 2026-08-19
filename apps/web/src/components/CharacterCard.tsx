@@ -229,8 +229,16 @@ function CardScan({
   onFlip: () => void;
   onMissing: () => void;
 }) {
-  const [failed, setFailed] = useState(false);
-  if (!file || failed) return null;
+  /*
+   * Which scans failed, not whether one did.
+   *
+   * This component stays mounted while the card flips and while another
+   * character is selected — only `file` changes. A single boolean meant the
+   * first missing scan hid every scan afterwards for the life of the
+   * component, including ones that exist.
+   */
+  const [failed, setFailed] = useState<ReadonlySet<string>>(() => new Set());
+  if (!file || failed.has(file)) return null;
 
   const href = `/cards/${encodeURIComponent(file)}`;
   return (
@@ -250,7 +258,7 @@ function CardScan({
           alt={alt}
           loading="lazy"
           onError={() => {
-            setFailed(true);
+            setFailed(prev => new Set(prev).add(file));
             onMissing();
           }}
           className="w-full"

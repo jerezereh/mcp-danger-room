@@ -250,9 +250,8 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
     }
   }
 
-  const isForm = (id: string) => id.includes('_');
   let needing = new Set(
-    ALL ? [...known.keys()].filter(id => !isForm(id)) : worklist.map(e => e.id),
+    ALL ? [...known.keys()].filter(id => !isFormExtraction(id)) : worklist.map(e => e.id),
   );
 
   if (ONLY) {
@@ -542,7 +541,13 @@ async function runBatch(client: Anthropic, jobs: Job[]): Promise<Extraction[]> {
     if (!job) continue;
 
     if (result.result.type !== 'succeeded') {
+      /*
+       * Recorded, not just printed. An errored, cancelled or expired request
+       * left `failures` empty, which then deleted the retry file — so
+       * `--only failed` could not find the one extraction that did not arrive.
+       */
       console.log(`  ${result.custom_id}: ${result.result.type}`);
+      failures.push({ id: result.custom_id, error: `batch request ${result.result.type}` });
       continue;
     }
 

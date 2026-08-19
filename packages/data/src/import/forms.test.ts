@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import { characters } from '../characters.js';
-import { alternateMode, applyFormStats, formJobId, splitForms } from './forms.js';
+import {
+  alternateMode,
+  applyFormStats,
+  formJobId,
+  isFormExtraction,
+  splitForms,
+} from './forms.js';
 
 const block = (names: string[]) =>
   ({
@@ -153,5 +159,32 @@ describe('formJobId', () => {
 
   it('strips anything the Batch API would reject from the mode name', () => {
     expect(formJobId('x', 'Super Charged!')).toBe('x_SuperCharged');
+  });
+});
+
+/*
+ * A form extraction that leaks into the character merge becomes a draft with
+ * no threat, fails to finalize, and lands in needs-data — which is the list
+ * the extractor works from, so the next run pays to read six cards it has
+ * already read. It cost six requests once.
+ */
+describe('isFormExtraction', () => {
+  it('recognises an alternate mode', () => {
+    expect(isFormExtraction('ant-man_Tiny')).toBe(true);
+  });
+
+  it('does not mistake a character id for one', () => {
+    // Character ids match ^[a-z0-9-]+$, so an underscore cannot occur in one.
+    for (const id of ['ant-man', 'captain-marvel-cosmic-avenger', 'modok', 'sentinel-mk4']) {
+      expect(isFormExtraction(id), id).toBe(false);
+    }
+  });
+
+  it('agrees with formJobId', () => {
+    expect(isFormExtraction(formJobId('ant-man', 'Tiny'))).toBe(true);
+  });
+
+  it('holds for every id in the corpus', () => {
+    for (const c of characters) expect(isFormExtraction(c.id), c.id).toBe(false);
   });
 });

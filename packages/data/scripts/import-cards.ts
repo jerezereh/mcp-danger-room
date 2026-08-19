@@ -27,6 +27,7 @@ import {
   parseBsdata,
   applyFormStats,
   formJobId,
+  isFormExtraction,
   splitForms,
   boldableNames,
   normalizeRulesText,
@@ -108,9 +109,19 @@ async function main() {
   const extractedPath = resolve(OUT_DIR, 'extracted.json');
   let ocr: CharacterDraft[] = [];
   if (existsSync(extractedPath)) {
-    const records = JSON.parse(readFileSync(extractedPath, 'utf8')).results as ExtractionRecord[];
+    const all = JSON.parse(readFileSync(extractedPath, 'utf8')).results as ExtractionRecord[];
+    /*
+     * Alternate modes are read as their own cards but are not characters. Left
+     * in, each becomes a draft with no threat, fails to finalize, and sits in
+     * needs-data — which is the list the extractor works from, so the next run
+     * pays to read six cards it has already read.
+     */
+    const records = all.filter(r => !isFormExtraction(r.id));
     ocr = records.map(ocrToDraft);
-    console.log(`OCR extractions: ${ocr.length}`);
+    console.log(
+      `OCR extractions: ${records.length}` +
+        (all.length > records.length ? ` (+${all.length - records.length} alternate modes)` : ''),
+    );
 
     /*
      * Extractions are stored, not re-requested, so a file on disk can predate a
@@ -263,7 +274,7 @@ async function main() {
         }[])
       : []
     )
-      .filter(r => r.id.includes('_'))
+      .filter(r => isFormExtraction(r.id))
       .map(r => [r.id, { healthy: r.card.healthy, injured: r.card.injured }] as const),
   );
 
