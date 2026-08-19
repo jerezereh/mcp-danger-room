@@ -151,7 +151,10 @@ const characters = (legacy.Characters ?? []).map(c => {
     // The prototype repeated the name in Alter Ego when a character has none.
     alterEgo: alterEgo && alterEgo !== name ? alterEgo : null,
     affiliations: c.Affiliations ?? [],
-    cp: c.CP ?? 0,
+    // Legacy "CP" was a product pack number (Spider-Man 37 -> CP37), never a
+    // cost. This game has no Character Points; Threat is the only cost.
+    packCode: c.CP ? `CP${c.CP}` : null,
+    packName: null,
     threat: c.Cost ?? 0,
     baseMm: 40,
     healthy: statBlock(c.Healthy ?? {}, `${name} healthy`),

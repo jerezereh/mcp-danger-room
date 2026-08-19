@@ -9,7 +9,7 @@
 
 import { useMemo, useState } from 'react';
 import {
-  DEFAULT_CP_BUDGET,
+  DEFAULT_ROSTER_SIZE,
   characters as allCharacters,
   enumerateSquads,
   indexCharacters,
@@ -42,7 +42,7 @@ export function RosterBuilder() {
   );
 
   const validation = useMemo(
-    () => validateRoster(roster, lookup, DEFAULT_CP_BUDGET),
+    () => validateRoster(roster, lookup, DEFAULT_ROSTER_SIZE),
     [roster, lookup],
   );
 
@@ -59,14 +59,22 @@ export function RosterBuilder() {
       current.includes(id) ? current.filter(x => x !== id) : [...current, id],
     );
 
+  /*
+   * The pool is the only portrait element — a long scrolling list wants to be
+   * tall and narrow. Everything else is landscape because the thing it
+   * describes is: the character card, and the roster it belongs to.
+   */
   return (
-    <div className="grid h-full grid-cols-[1fr_360px_400px] gap-4 overflow-hidden p-4">
+    <div className="grid h-full grid-cols-[320px_minmax(0,1fr)] gap-4 overflow-hidden p-4">
       {/* Card pool */}
       <section className="flex flex-col overflow-hidden rounded-lg border border-surface-border bg-surface-raised">
         <div className="border-b border-surface-border p-3">
           <input
             value={query}
             onChange={e => setQuery(e.target.value)}
+            // Clearing on focus makes the common case — search for something
+            // else — one gesture instead of select-all-then-type.
+            onFocus={() => setQuery('')}
             placeholder="Search name or affiliation…"
             className="w-full rounded bg-surface px-3 py-2 text-sm text-slate-200 outline-none ring-accent/40 placeholder:text-slate-600 focus:ring-2"
           />
@@ -79,8 +87,7 @@ export function RosterBuilder() {
                 <th className="px-3 py-2 font-medium">Name</th>
                 <th className="px-3 py-2 font-medium">Affiliations</th>
                 <th className="px-3 py-2 text-right font-medium">Threat</th>
-                <th className="px-3 py-2 text-right font-medium">CP</th>
-              </tr>
+                              </tr>
             </thead>
             <tbody>
               {filtered.map(character => {
@@ -99,7 +106,6 @@ export function RosterBuilder() {
                       {character.affiliations.join(', ')}
                     </td>
                     <td className="px-3 py-2 text-right tabular-nums">{character.threat}</td>
-                    <td className="px-3 py-2 text-right tabular-nums">{character.cp}</td>
                   </tr>
                 );
               })}
@@ -116,26 +122,43 @@ export function RosterBuilder() {
         </p>
       </section>
 
-      {/* Roster + squad analysis */}
-      <section className="flex flex-col gap-3 overflow-hidden">
-        <div className="rounded-lg border border-surface-border bg-surface-raised p-3">
-          <div className="mb-2 flex items-baseline justify-between">
-            <h3 className="text-sm font-semibold text-slate-200">Roster</h3>
+      {/*
+        Detail above, roster below. The card is the thing being looked at, so
+        it gets the room; the roster is a working set and reads fine as a wide,
+        short strip.
+      */}
+      <div className="grid min-h-0 grid-rows-[minmax(0,1fr)_minmax(180px,0.5fr)] gap-4">
+        <section className="overflow-auto rounded-lg border border-surface-border bg-surface p-3">
+          {selected ? (
+            <CharacterCard character={selected} />
+          ) : (
+            <p className="pt-8 text-center text-sm text-slate-600">
+              Select a character to see its card.
+            </p>
+          )}
+        </section>
+
+        {/* Roster and the squads it can field, one pane, side by side. */}
+        <section className="grid min-h-0 grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-3 overflow-hidden rounded-lg border border-surface-border bg-surface-raised p-3">
+          <div className="flex min-h-0 flex-col">
+            <div className="mb-2 flex items-baseline justify-between">
+              <h3 className="text-sm font-semibold text-slate-200">Roster</h3>
             <span
               className={`text-xs tabular-nums ${
                 validation.valid ? 'text-slate-400' : 'text-accent'
               }`}
             >
-              {validation.totals.cp} / {DEFAULT_CP_BUDGET} CP
+              {rosterIds.length} / {DEFAULT_ROSTER_SIZE} characters ·{' '}
+              {validation.totals.threat} threat
             </span>
           </div>
 
-          {rosterIds.length === 0 ? (
-            <p className="py-4 text-center text-xs text-slate-600">
-              Double-click characters to build a roster.
-            </p>
-          ) : (
-            <ul className="space-y-1">
+            {rosterIds.length === 0 ? (
+              <p className="py-4 text-center text-xs text-slate-600">
+                Double-click characters to build a roster.
+              </p>
+            ) : (
+              <ul className="flex-1 space-y-1 overflow-auto">
               {rosterIds.map(id => {
                 const character = lookup.get(id);
                 if (!character) return null;
@@ -153,7 +176,7 @@ export function RosterBuilder() {
                     </button>
                     <span className="flex shrink-0 items-center gap-2 text-xs text-slate-500">
                       <span className="tabular-nums">
-                        {character.threat}T / {character.cp}CP
+                        {character.threat} threat
                       </span>
                       <button
                         type="button"
@@ -170,53 +193,44 @@ export function RosterBuilder() {
             </ul>
           )}
 
-          {validation.violations.map((v, i) => (
-            <p key={i} className="mt-2 text-xs text-accent">
-              {v.message}
-            </p>
-          ))}
-        </div>
-
-        <div className="flex flex-1 flex-col overflow-hidden rounded-lg border border-surface-border bg-surface-raised p-3">
-          <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-200">Legal squads</h3>
-            <label className="flex items-center gap-2 text-xs text-slate-500">
-              Threat
-              <input
-                type="number"
-                value={threatLimit}
-                min={0}
-                max={40}
-                onChange={e => setThreatLimit(Number(e.target.value))}
-                className="w-14 rounded bg-surface px-2 py-1 text-right tabular-nums text-slate-200 outline-none"
-              />
-            </label>
+            {validation.violations.map((v, i) => (
+              <p key={i} className="mt-2 text-xs text-accent">
+                {v.message}
+              </p>
+            ))}
           </div>
 
-          <p className="mb-2 text-xs text-slate-500">
-            {squads.length} squad{squads.length === 1 ? '' : 's'} fieldable at {threatLimit} threat
-          </p>
+          <div className="flex min-h-0 flex-col border-l border-surface-border pl-3">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-200">Legal squads</h3>
+              <label className="flex items-center gap-2 text-xs text-slate-500">
+                Threat
+                <input
+                  type="number"
+                  value={threatLimit}
+                  min={0}
+                  max={40}
+                  onChange={e => setThreatLimit(Number(e.target.value))}
+                  className="w-14 rounded bg-surface px-2 py-1 text-right tabular-nums text-slate-200 outline-none"
+                />
+              </label>
+            </div>
 
-          <ul className="flex-1 space-y-1 overflow-auto text-xs">
-            {squads.slice(0, 100).map((squad, i) => (
-              <li key={i} className="rounded bg-surface px-2 py-1 text-slate-400">
-                {squad.map(id => lookup.get(id)?.name ?? id).join(' · ')}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+            <p className="mb-2 text-xs text-slate-500">
+              {squads.length} squad{squads.length === 1 ? '' : 's'} fieldable at {threatLimit}{' '}
+              threat
+            </p>
 
-      {/* Detail */}
-      <section className="overflow-auto rounded-lg border border-surface-border bg-surface p-3">
-        {selected ? (
-          <CharacterCard character={selected} />
-        ) : (
-          <p className="pt-8 text-center text-sm text-slate-600">
-            Select a character to see its card.
-          </p>
-        )}
-      </section>
+            <ul className="min-h-0 flex-1 space-y-1 overflow-auto text-xs">
+              {squads.slice(0, 100).map((squad, i) => (
+                <li key={i} className="rounded bg-surface px-2 py-1 text-slate-400">
+                  {squad.map(id => lookup.get(id)?.name ?? id).join(' · ')}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

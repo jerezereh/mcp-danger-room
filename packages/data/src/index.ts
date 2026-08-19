@@ -8,4 +8,5 @@
 export * from './roster.js';
 export * from './schema.js';
 export * from './symbols.js';
+export * from './import/index.js';
 export { characters } from './characters.js';

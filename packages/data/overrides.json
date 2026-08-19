@@ -1,0 +1,432 @@
+{
+  "_comment": "Human corrections applied after the merge, beating every source. Every entry needs a reason. Setting verified:true asserts a person compared this against a printed card.",
+  "overrides": [
+    {
+      "id": "nova",
+      "reason": "Card reads 7/8; Cerebro has injured 7. OCR read 8 off the card and this was confirmed against the printed card. Injured stamina above healthy is normal in MCP — six other characters show the same pattern and all agree with their sources.",
+      "verified": true,
+      "injured": {
+        "stamina": 8
+      }
+    },
+    {
+      "id": "yondu-beta",
+      "reason": "A {BETA} playtest card duplicating Yondu. Not a fieldable character.",
+      "verified": true,
+      "remove": true
+    },
+    {
+      "id": "elsa-bloodstone-beta",
+      "reason": "A {BETA} playtest card duplicating Elsa Bloodstone. Not a fieldable character.",
+      "verified": true,
+      "remove": true
+    },
+    {
+      "id": "yondu",
+      "reason": "Trigger icons read against the card: both Whistle While You Work bullets lead with Wild, Yaka Mastery's second icon is Hit not Power, and Yaka Arrow's third bullet leads with Wild.",
+      "verified": true,
+      "attacks": {
+        "Yaka Arrow": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "The defender does not benefit from Cover.",
+            "{WILD} <b>Slow</b>: After this attack is resolved, the defender gains the Slow special condition."
+          ]
+        },
+        "Whistle While You Work": {
+          "text": [
+            "{WILD} <b>Pierce</b>: Change 1 of the defender's {BLOCK}, {WILD}, or {CRIT} results to a {BLANK}.",
+            "{WILD} {HIT} <b>Yaka Mastery</b>: After this attack is resolved, this character may make a Whistle While You Work attack without paying the {PWR} cost. This attack must target another character within {RNG} 3 of the original target character and any distance from this character that has not been targeted by a Whistle While You Work attack this Round."
+          ]
+        }
+      }
+    },
+    {
+      "id": "king-black-bolt",
+      "reason": "Both trigger icons are the Wild coil, read against the card; the extractor called them Reactive.",
+      "verified": true,
+      "attacks": {
+        "Sonic Blast": {
+          "text": [
+            "After each attack is resolved, this character gains 1 {PWR}.",
+            "{WILD} <b>Push</b>: After each attack is resolved, if the defender is {SIZE} 3 or less, this character may Push it Away {S}."
+          ]
+        },
+        "Wrath of the Midnight King": {
+          "text": [
+            "After this attack is resolved, this character may Advance {M}.",
+            "{WILD} <b>Throw</b>: Before {DMG} is dealt, this character may Throw the defender {S}."
+          ]
+        }
+      }
+    },
+    {
+      "id": "moondragon",
+      "reason": "Both trigger icons are Wild, read against the card; the extractor called them Range.",
+      "verified": true,
+      "attacks": {
+        "Psionic Barrage": {
+          "text": [
+            "After this attack is resolved, this character gains 1 {PWR}.",
+            "{WILD} <b>Rapid Fire</b>: After this attack is resolved, this character may make 1 additional Psionic Barrage attack targeting the original target character. This additional attack does not have the Rapid Fire special rule."
+          ]
+        },
+        "Dragon of the Moon": {
+          "text": [
+            "Add {FAIL} results in the defender's roll to this attack's total successes.",
+            "{WILD} <b>Hex</b>: After this attack is resolved, the defender gains the Hex special condition."
+          ]
+        }
+      }
+    },
+    {
+      "id": "nimrod-the-hunter",
+      "reason": "Both trigger icons are Wild rather than Range, and Countermeasures branches on Energy, not Mystic — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Adaptive Energy Blast": {
+          "text": [
+            "Before choosing a target, this character chooses whether this attack's type is {ENRG} or {MYST}.",
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{WILD} <b>Countermeasures</b>: After this attack is resolved, if its attack's type is {ENRG}, the defender gains the Incinerate special condition. Otherwise, the defender gains the Root special condition."
+          ]
+        },
+        "Total Annihilation": {
+          "text": [
+            "Before {DMG} is dealt, if the defender is {SIZE} 4 or less, this character may Throw it Away {S}.",
+            "{WILD} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it until the end of the Activation Phase this Round."
+          ]
+        }
+      }
+    },
+    {
+      "id": "valkyrie-and-elendil",
+      "reason": "Trigger icons read against the card: Elusive and Stagger are Hit, not Power, and Vault's leading Wild was dropped.",
+      "verified": true,
+      "attacks": {
+        "Dragonfang": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{HIT} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}."
+          ]
+        },
+        "Geirr": {
+          "text": [
+            "After this attack is resolved, this character gains 1 {PWR}.",
+            "If this character has Advanced or been Placed this Turn, it may add 3 dice to this attack roll. This special rule can be used only once per Turn.",
+            "{WILD} <b>Vault</b>: After this attack is resolved, Place this character within {RNG} 2 of the defender."
+          ]
+        },
+        "Fury of the Valkyrior": {
+          "text": [
+            "Add dice to this attack roll equal to the defender's {THREAT}.",
+            "{HIT} {HIT} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
+          ]
+        }
+      }
+    },
+    {
+      "id": "karnak",
+      "reason": "Push's trigger icon is the Wild coil, read against the card; the extractor called it Range.",
+      "verified": true,
+      "attacks": {
+        "Shattering Strike": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{WILD} <b>Push</b>: After this attack is resolved, Push the defender Away {S}."
+          ]
+        }
+      }
+    },
+    {
+      "id": "rescue",
+      "reason": "Medic's trigger and its counted result are both Hit, not Power, and Sonic Force Fields covers Energy attacks, not Mystic — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Triage": {
+          "text": [
+            "After this attack is resolved, this character gains 1 {PWR}.",
+            "If this attack would deal more than 1 {DMG}, it deals 1 {DMG} instead.",
+            "{HIT} <b>Medic</b>: After this attack is resolved, choose up to 1 other allied character within {RNG} 3. Remove 1 special condition from the chosen character or remove 1 {DMG} for each {HIT} in the attack roll from the chosen character."
+          ]
+        }
+      },
+      "superpowers": {
+        "Sonic Force Fields": {
+          "text": "When this character or another allied character within {RNG} 3 is targeted by a {PHYS} or {ENRG} attack or would make a dodge roll, this character may use this superpower. This character adds 2 dice to the defense or dodge roll."
+        }
+      }
+    },
+    {
+      "id": "quasar",
+      "reason": "All three unreadable icons are the Wild coil; both Pierce effects change Critical, Wild or Block results; Quantum Bands counts Critical, Wild and Hit in that order — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Quantum Sword": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+          ]
+        },
+        "Nega-Quantum Blast Wave": {
+          "text": [
+            "{WILD} <b>Incinerate</b>: After each attack is resolved, the defender gains the Incinerate special condition.",
+            "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+          ]
+        }
+      },
+      "superpowers": {
+        "Quantum Bands": {
+          "text": "Choose an enemy character within {RNG} 2 and roll 4 dice. The chosen character loses {PWR} equal to the number of {CRIT}, {WILD}, and {HIT} results. If the chosen character would lose more {PWR} than it has, it suffers 1 {DMG} for each {PWR} it could not lose. The chosen character does not gain {PWR} for {DMG} suffered in this way. This superpower can be used only once per Turn."
+        }
+      }
+    },
+    {
+      "id": "elsa-bloodstone",
+      "reason": "Both unreadable trigger icons are the Wild coil, read against the card.",
+      "verified": true,
+      "attacks": {
+        "Monster Hunting Weapons": {
+          "text": [
+            "Before choosing a target, this character chooses whether the attack's type is {PHYS} or {ENRG}.",
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{WILD} <b>Hellfire</b>: After this attack is resolved, the defender gains the Incinerate and Slow special conditions."
+          ]
+        },
+        "Bloodgem Blast": {
+          "text": [
+            "During the Pay {PWR} step of this attack, this character may spend up to three additional {PWR}. Add 1 die to this attack for each {PWR} spent in this way.",
+            "{WILD} <b>Degeneration</b>: After this attack is resolved, the defender cannot have {DMG} removed from it during this Activation Phase."
+          ]
+        }
+      }
+    },
+    {
+      "id": "iron-monger",
+      "reason": "Throw's trigger is Wild; Hostile Takeover's two icons are Critical and Hit — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Aggressive Acquisition": {
+          "text": [
+            "{WILD} <b>Throw</b>: After this attack is resolved, if the defender is {SIZE} 3 or less, this character may Throw it Away {M}.",
+            "{CRIT} {HIT} <b>Hostile Takeover</b>: After this attack is resolved, move 1 Asset or Civilian token the defender is holding to this character. This character is now holding that token. This character cannot hold more tokens than the Crisis specifies."
+          ]
+        }
+      }
+    },
+    {
+      "id": "kang-the-conqueror",
+      "reason": "Future Tech's trigger icon is the Wild coil, read against the card.",
+      "verified": true,
+      "attacks": {
+        "30th Century Arsenal": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "If the defender is within {RNG} 2, this character may reroll 1 die in the attack roll.",
+            "{WILD} <b>Future Tech</b>: After this attack is resolved, the defender gains 1 of the following special conditions: Incinerate, Bleed, Hex, or Slow."
+          ]
+        }
+      }
+    },
+    {
+      "id": "lady-mastermind",
+      "reason": "The unreadable icon is Strength — the copied attack matches the chosen character's range, dice and type.",
+      "verified": true,
+      "superpowers": {
+        "Your Reality Is Whatever I Want it to Be": {
+          "text": "This character may spend any amount of {PWR} to use this superpower. Choose an enemy character within {RNG} 5 of this character that has a {MYST} Defense equal to or less than the amount of {PWR} spent to use this superpower. Then this character may make an attack targeting a different enemy character with a {RNG}, {STRENGTH}, and type equal to 1 of the chosen character's attacks that has a {PWR} cost of 0. {RNG} and LOS are measured from the chosen enemy character instead of Lady Mastermind during this attack. This superpower can be used only once per Turn."
+        }
+      }
+    },
+    {
+      "id": "phoenix",
+      "reason": "Both unreadable trigger icons are the Wild coil, read against the card. Healthy side only — the injured face is Phoenix Unleashed and prints different attacks.",
+      "verified": true,
+      "healthy": {
+        "attacks": {
+          "Bolts of Flame": {
+            "text": [
+              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+              "{WILD} <b>Incinerate</b>: After this attack is resolved, the defender gains the Incinerate special condition."
+            ]
+          },
+          "Firestorm": {
+            "text": [
+              "Allied characters within {RNG} of this attack may remove 1 {DMG}.",
+              "{WILD} <b>Incinerate</b>: After this attack is resolved, the defender gains the Incinerate special condition."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "prime-sentinel",
+      "reason": "Nanotech's trigger icon is Critical, read against the card.",
+      "verified": true,
+      "attacks": {
+        "Nano Bio-Weapons": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{CRIT} <b>Nanotech</b>: After this attack is resolved, the defender gains the Root special condition."
+          ]
+        }
+      }
+    },
+    {
+      "id": "ronin",
+      "reason": "Pierce effects list Critical, Wild or Block in that order; Pursuit's trigger is Hit; Specter of Death changes a die to a Hit for each Critical or Wild — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Shadow Strike": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
+            "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
+          ]
+        },
+        "The Hawk's Blades": {
+          "text": [
+            "After this attack is resolved, this character gains 1 {PWR}.",
+            "{HIT} <b>Pursuit</b>: Before {DMG} is dealt, this character may Advance Toward the defender {S}.",
+            "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
+          ]
+        },
+        "The Cutting Wind": {
+          "text": [
+            "After all attacks generated by this attack are resolved, Place this character within {RNG} 1 of the last character targeted by this attack.",
+            "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+          ]
+        }
+      },
+      "superpowers": {
+        "Specter of Death": {
+          "text": "When this character targets a character with an attack, this character may use this superpower. During the Modify Dice step, this character may change 1 of its attack dice to a {HIT} for each {CRIT} or {WILD} in its attack roll."
+        }
+      }
+    },
+    {
+      "id": "tigra",
+      "reason": "Feline Slash's triggers are Wild and Wild+Hit, its Pierce effect lists Critical, Wild or Block, and Stagger's trigger is Wild — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Feline Slash": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "{WILD} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
+            "{WILD} {HIT} <b>Hex</b>: After this attack is resolved, the defender gains the Hex special condition."
+          ]
+        },
+        "Sorry, No Autographs": {
+          "text": [
+            "After this attack is resolved, Place this character within {RNG} 3 of itself.",
+            "{WILD} <b>Stagger</b>: After this attack is resolved, the defender gains the Stagger special condition."
+          ]
+        }
+      }
+    },
+    {
+      "id": "warriors-three",
+      "reason": "Fimbuldraugr's Pierce leads with Wild and lists Critical, Wild or Block; Brandrheid Undrsigr adds dice equal to Threat, not Power — read against the card.",
+      "verified": true,
+      "attacks": {
+        "Fimbuldraugr": {
+          "text": [
+            "After this attack is resolved, this character gains 1 {PWR}.",
+            "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition.",
+            "{WILD} {HIT} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+          ]
+        },
+        "Brandrheid Undrsigr": {
+          "text": [
+            "Add dice to this attack roll equal to the defender's {THREAT}.",
+            "{WILD} {FAIL} {FAIL} <b>Clumsy Warrior</b>: After this attack is resolved, the defender suffers 3 {DMG} and this character gains the Stagger special condition."
+          ]
+        }
+      }
+    },
+    {
+      "id": "dormammu",
+      "reason": "Read against the card. Shadow Bolt's bullets are in the reverse order and both lead with Failure; Dark Miasma's icons are Critical, Wild, Hit, Failure; Flames of the Faltine refers to itself by the Leadership star, fires in the Cleanup Phase, and triggers at 5 Power; Feel the Power of Darkness and Master of the Realm of Darkness were paraphrased; the three Immunities are separate keyword powers. Ability names were transcribed in the card's display capitals rather than in prose case as every other character has them.",
+      "verified": true,
+      "attacks": {
+        "SHADOW BOLT": {
+          "name": "Shadow Bolt",
+          "text": [
+            "{FAIL} <b>Sap Power</b>: Before {DMG} is dealt, the target character loses 1 {PWR} for each {FAIL} in the attack roll, and this character gains that amount of {PWR}.",
+            "{FAIL} <b>Hex</b>: After this attack is resolved, the target character gains the Hex special condition."
+          ]
+        },
+        "INCANTATION OF OBLITERATION": {
+          "name": "Incantation of Obliteration",
+          "text": [
+            "{CRIT} {WILD} {HIT} {FAIL} <b>Dark Miasma</b>: After this attack is resolved, this character may make an additional Incantation of Obliteration attack without paying the {PWR} cost. The additional attack must target a character within {RNG} 2 of the original target character that has not been targeted by Incantation of Obliteration this Round."
+          ]
+        }
+      },
+      "superpowers": {
+        "FLAMES OF THE FALTINE (AFFILIATION: DARK DIMENSION)": {
+          "name": "Flames of the Faltine (Affiliation: Dark Dimension)",
+          "text": "If Dormammu is included in a squad, that squad is affiliated with Dark Dimension and must use this {LEADERSHIP}. This character and each other character you control gains 1 additional {PWR} during the Power Phase. During the Cleanup Phase, if another allied character has 5 or more {PWR} it suffers 1 {DMG}."
+        },
+        "NOT OF THIS DIMENSION": {
+          "name": "Not of This Dimension"
+        },
+        "FEEL THE POWER OF DARKNESS!": {
+          "name": "Feel the Power of Darkness!",
+          "text": "After an attack targeting this character is resolved, it may use this superpower. The attacking character gains the Hex special condition and is Pushed Away from this character {S}. If the attacking character already had the Hex special condition, it gains the Incinerate special condition."
+        },
+        "MASTER OF THE REALM OF DARKNESS": {
+          "name": "Master of the Realm of Darkness",
+          "text": "When this character suffers {DMG} from an enemy effect it gains 1 {PWR} instead of {PWR} equal to the {DMG} suffered. When another allied character is damaged by an enemy effect or by Flames of the Faltine, this character gains 1 {PWR}.\nAdditionally, when attacking, at the end of the Modify Dice step, add 1 {FAIL} result to this character's roll for each {FAIL} in the defense roll. When attacking, this character adds {FAIL} results in its roll to its total successes."
+        },
+        "FLIGHT": {
+          "name": "Flight"
+        },
+        "IMMUNITY [BLEED, INCINERATE, STAGGER]": {
+          "name": "Immunity [Bleed]",
+          "text": ""
+        }
+      },
+      "addSuperpowers": [
+        {
+          "name": "Immunity [Incinerate]",
+          "type": "innate",
+          "cost": 0,
+          "text": ""
+        },
+        {
+          "name": "Immunity [Stagger]",
+          "type": "innate",
+          "cost": 0,
+          "text": ""
+        }
+      ]
+    },
+    {
+      "id": "man-thing-beta",
+      "reason": "A {BETA} playtest card duplicating Man-Thing. Not a fieldable character.",
+      "verified": true,
+      "remove": true
+    },
+    {
+      "id": "nova-beta",
+      "reason": "A {BETA} playtest card duplicating Nova. Not a fieldable character.",
+      "verified": true,
+      "remove": true
+    },
+    {
+      "id": "spider-man-noir",
+      "reason": "Elusive's trigger is Wild and Hit, read against the card. The injured face paraphrased the second bullet — both sides print the same wording, matched here to jarvis-protocol.com.",
+      "verified": true,
+      "attacks": {
+        "The Ol' One, Two": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "If this character has already attacked the defender during its Activation this Turn, it adds 3 dice to this attack roll.",
+            "{WILD} {HIT} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}."
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,26 +1,32 @@
 /**
  * Roster and squad rules.
  *
- * MCP squad building is two-tier and this distinction is the whole point of the
+ * MCP squad building is two-tier, and this distinction is the point of the
  * "playtest loadouts" feature:
  *
- *   Roster — a pool of characters bought with Character Points (CP). Built once,
- *            reused across games.
+ *   Roster — a pool of characters. Built once, reused across games.
  *   Squad  — the characters actually fielded for a given game, drawn from the
- *            roster and constrained by the Threat value the crisis cards set.
+ *            roster and constrained by the Threat the crisis cards set.
  *
- * A good loadout is one where a single roster produces strong squads across the
- * crisis cards you expect to face. That is a question this module can answer
- * and no amount of board rendering can.
+ * **Threat is the only character cost in this game.** An earlier version of
+ * this module also validated rosters against a "Character Points" budget,
+ * which is not a rule — the number it was reading is a product pack
+ * identifier, not a cost. Nothing here should reintroduce a second currency.
  *
- * TODO(verify): CP budget, squad size limits, and leadership restrictions are
- * placeholders pending a rulebook pass.
+ * A good loadout is one where a single roster produces strong squads across
+ * the crisis cards you expect to face. That is a question this module can
+ * answer and no amount of board rendering can.
  */
 
 import type { Character } from './schema.js';
 
-/** TODO(verify): standard roster budget in Character Points. */
-export const DEFAULT_CP_BUDGET = 100;
+/**
+ * Characters in a tournament roster.
+ *
+ * TODO(verify): 10 is the commonly cited organised-play size, unchecked
+ * against the current rules pack. Pass `null` for casual/unbounded rosters.
+ */
+export const DEFAULT_ROSTER_SIZE = 10;
 
 export interface Roster {
   readonly id: string;
@@ -37,7 +43,7 @@ export interface Squad {
 
 export interface Violation {
   readonly code:
-    | 'OVER_CP_BUDGET'
+    | 'ROSTER_TOO_LARGE'
     | 'OVER_THREAT_LIMIT'
     | 'DUPLICATE_CHARACTER'
     | 'NOT_IN_ROSTER'
@@ -49,7 +55,8 @@ export interface Violation {
 export interface Validation {
   readonly valid: boolean;
   readonly violations: readonly Violation[];
-  readonly totals: { readonly cp: number; readonly threat: number };
+  /** Threat only. There is no second currency. */
+  readonly totals: { readonly threat: number };
 }
 
 type Lookup = ReadonlyMap<string, Character>;
@@ -58,14 +65,17 @@ export function indexCharacters(characters: readonly Character[]): Lookup {
   return new Map(characters.map(c => [c.id, c]));
 }
 
+/**
+ * A roster is a pool, not a purchase. The only things that can be wrong with
+ * it are unknown characters, duplicates, and (in organised play) its size.
+ */
 export function validateRoster(
   roster: Roster,
   lookup: Lookup,
-  cpBudget = DEFAULT_CP_BUDGET,
+  maxSize: number | null = DEFAULT_ROSTER_SIZE,
 ): Validation {
   const violations: Violation[] = [];
   const seen = new Set<string>();
-  let cp = 0;
   let threat = 0;
 
   for (const id of roster.characterIds) {
@@ -81,25 +91,24 @@ export function validateRoster(
       });
     }
     seen.add(id);
-    cp += character.cp;
     threat += character.threat;
   }
 
-  if (cp > cpBudget) {
+  if (maxSize !== null && roster.characterIds.length > maxSize) {
     violations.push({
-      code: 'OVER_CP_BUDGET',
-      message: `Roster costs ${cp} CP but the budget is ${cpBudget}.`,
+      code: 'ROSTER_TOO_LARGE',
+      message: `Roster has ${roster.characterIds.length} characters; the limit is ${maxSize}.`,
     });
   }
 
-  return { valid: violations.length === 0, violations, totals: { cp, threat } };
+  // Reported for information only — a roster's total threat is never a limit.
+  return { valid: violations.length === 0, violations, totals: { threat } };
 }
 
 export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Validation {
   const violations: Violation[] = [];
   const inRoster = new Set(roster.characterIds);
   const seen = new Set<string>();
-  let cp = 0;
   let threat = 0;
 
   for (const id of squad.characterIds) {
@@ -121,7 +130,6 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
       });
     }
     seen.add(id);
-    cp += character.cp;
     threat += character.threat;
   }
 
@@ -132,16 +140,16 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
     });
   }
 
-  return { valid: violations.length === 0, violations, totals: { cp, threat } };
+  return { valid: violations.length === 0, violations, totals: { threat } };
 }
 
 /**
  * Every legal squad this roster can field at a given threat limit.
  *
  * This is the loadout-analysis primitive: run it across the crisis cards in
- * rotation and you can see which roster slots actually earn their CP and which
- * are dead weight. Exponential in roster size, but rosters are ~10 characters,
- * so 2^10 is nothing.
+ * rotation and you can see which roster slots actually earn their place and
+ * which are dead weight. Exponential in roster size, but rosters are ~10
+ * characters, so 2^10 is nothing.
  */
 export function enumerateSquads(
   roster: Roster,

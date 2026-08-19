@@ -1,42 +1,201 @@
 /**
  * The symbol vocabulary.
  *
- * MCP card text is dense with inline glyphs — `{Ph}` for physical damage, `{R}`
- * for range, `{P}` for power. The prototype stored these raw and rendered them
+ * MCP card text is dense with inline glyphs — `{PWR}` for power, `{DMG}` for
+ * damage, `{RNG}` for range. The prototype stored these raw and rendered them
  * as literal braces. Parsing them into tokens here means the React client can
  * render an icon, the AI can read the semantics, and a plain-text export can
  * substitute words — all from one source.
+ *
+ * Sources spell the same glyph differently: the hand-entered legacy corpus used
+ * short forms (`{P}`, `{D}`, `{R}`), BSData uses long ones (`{PWR}`, `{DMG}`,
+ * `{RNG}`). Rather than rewrite one corpus to match the other — which would
+ * have to be redone for every future source — the aliases below normalize to a
+ * canonical key at parse time. Matching is case-insensitive; the corpus
+ * contains a stray `{pwr}`.
  */
 
+/** Canonical glyph identities. Aliases below map onto these. */
 export type SymbolKey =
-  | 'Ph'
-  | 'En'
-  | 'My'
-  | 'P'
-  | 'D'
-  | 'R'
-  | 'S'
-  | 'M'
-  | 'L'
-  | 'C'
-  | 'W'
-  | 'B'
-  | 'A';
+  | 'physical'
+  | 'energy'
+  | 'mystic'
+  | 'power'
+  | 'damage'
+  | 'range'
+  | 'short'
+  | 'medium'
+  | 'long'
+  | 'critical'
+  | 'wild'
+  | 'hit'
+  | 'block'
+  | 'fail'
+  | 'blank'
+  | 'active'
+  | 'reactive'
+  | 'innate'
+  | 'threat'
+  | 'size'
+  | 'strength'
+  | 'leadership';
 
 export const SYMBOL_LABELS: Readonly<Record<SymbolKey, string>> = {
-  Ph: 'Physical',
-  En: 'Energy',
-  My: 'Mystic',
-  P: 'Power',
-  D: 'Damage',
-  R: 'Range',
-  S: 'Short',
-  M: 'Medium',
-  L: 'Long',
-  C: 'Critical',
-  W: 'Wild',
-  B: 'Block',
-  A: 'Blank',
+  physical: 'Physical',
+  energy: 'Energy',
+  mystic: 'Mystic',
+  power: 'Power',
+  damage: 'Damage',
+  range: 'Range',
+  short: 'Short',
+  medium: 'Medium',
+  long: 'Long',
+  critical: 'Critical',
+  wild: 'Wild',
+  hit: 'Hit',
+  block: 'Block',
+  // The skull face. Distinct from Blank, which is a separate die result that
+  // prints no glyph at all — labelling this one "Blank" conflated the two.
+  fail: 'Failure',
+  blank: 'Blank',
+  active: 'Active',
+  reactive: 'Reactive',
+  innate: 'Innate',
+  threat: 'Threat',
+  size: 'Size',
+  strength: 'Strength',
+  leadership: 'Leadership',
+};
+
+/**
+ * What each glyph looks like on the card.
+ *
+ * Written for the vision extractor, which sees pictures and has to name them.
+ * Without this it was told `{CRIT} = Critical` and left to work out which of
+ * several small black-on-white icons that was — and it said so, on 34 of 41
+ * cards. Where two glyphs are easy to confuse the description says how they
+ * differ rather than describing each in isolation.
+ */
+export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
+  physical: 'a red clenched fist',
+  // Energy and Wild are the other confusable pair, and colour cannot separate
+  // them: inline in rules text both are white on black, and only the stat box
+  // and attack-type badges are coloured. The blade count is the real tell.
+  energy: 'a pinwheel of several curved blades around a centre, like a camera shutter (yellow in the stat box, white inline)',
+  mystic: 'a blue eye',
+  power: 'a star with long, even, sharply pointed spikes and a large round dark hole at its centre',
+  damage: 'three slightly curved parallel lines',
+  range: 'a target or crosshair',
+  short: 'a distance template marked S',
+  medium: 'a distance template marked M',
+  long: 'a distance template marked L',
+  critical: 'an exclamation mark with jagged lines around it',
+  wild: 'a single continuous coil spiralling outward from its centre, like the @ sign — one line, not several blades',
+  hit: 'a jagged, uneven impact burst with a small dark dot at its centre',
+  block: 'a shield with a spot on it',
+  fail: 'a skull',
+  // The only entry with no picture. Cards print the word, and it has to be
+  // linked anyway so the renderer and the engine see a die result, not prose.
+  blank: 'no icon at all — the cards print the word "Blank"',
+  active: 'four arrows pointing outward from a centre',
+  reactive: 'a pair of lightning bolts',
+  innate: 'an infinity sign',
+  // Power, Threat and Hit are one confusable cluster: all three radiate from a
+  // centre and all three have something dark at that centre, so the centre
+  // separates nothing. The outline does. Power has long even spikes, Hit is an
+  // uneven burst, Threat has no spikes at all.
+  threat: 'a smooth circle with no spikes, cut into six segments by thin lines from a dot at its centre',
+  size: 'an I-beam, the same icon the stat box uses for Size',
+  // Both appear on bars *and* inline in rules text — Lady Mastermind copies an
+  // attack's Strength, and Dormammu's Leadership refers to itself by its star.
+  strength: 'a barbell, the same icon an attack bar uses for its dice',
+  leadership: 'a solid five-pointed star',
+};
+
+/**
+ * Every spelling seen across the sources, lowercased.
+ *
+ * Note `{M}` is Medium (a movement template) rather than Mystic — mystic damage
+ * is `{MYST}` or `{My}`. Getting that backwards would silently mistranslate
+ * hundreds of movement effects.
+ */
+const ALIASES: Readonly<Record<string, SymbolKey>> = {
+  ph: 'physical',
+  phys: 'physical',
+  physical: 'physical',
+  en: 'energy',
+  enrg: 'energy',
+  e: 'energy',
+  energy: 'energy',
+  my: 'mystic',
+  myst: 'mystic',
+  mystic: 'mystic',
+  p: 'power',
+  pwr: 'power',
+  power: 'power',
+  d: 'damage',
+  dmg: 'damage',
+  damage: 'damage',
+  r: 'range',
+  rng: 'range',
+  range: 'range',
+  s: 'short',
+  short: 'short',
+  m: 'medium',
+  medium: 'medium',
+  l: 'long',
+  long: 'long',
+  c: 'critical',
+  crit: 'critical',
+  critical: 'critical',
+  w: 'wild',
+  wild: 'wild',
+  hit: 'hit',
+  b: 'block',
+  block: 'block',
+  a: 'fail',
+  fail: 'fail',
+  failure: 'fail',
+  blank: 'blank',
+  active: 'active',
+  activated: 'active',
+  reactive: 'reactive',
+  react: 'reactive',
+  reaction: 'reactive',
+  innate: 'innate',
+  threat: 'threat',
+  t: 'threat',
+  size: 'size',
+  strength: 'strength',
+  str: 'strength',
+  leadership: 'leadership',
+  lead: 'leadership',
+};
+
+/** The canonical spelling to emit when writing new card text. */
+export const CANONICAL_TOKENS: Readonly<Record<SymbolKey, string>> = {
+  physical: '{PHYS}',
+  energy: '{ENRG}',
+  mystic: '{MYST}',
+  power: '{PWR}',
+  damage: '{DMG}',
+  range: '{RNG}',
+  short: '{S}',
+  medium: '{M}',
+  long: '{L}',
+  critical: '{CRIT}',
+  wild: '{WILD}',
+  hit: '{HIT}',
+  block: '{BLOCK}',
+  fail: '{FAIL}',
+  blank: '{BLANK}',
+  active: '{ACTIVE}',
+  reactive: '{REACTIVE}',
+  innate: '{INNATE}',
+  threat: '{THREAT}',
+  size: '{SIZE}',
+  strength: '{STRENGTH}',
+  leadership: '{LEADERSHIP}',
 };
 
 export type TextToken =
@@ -69,11 +228,8 @@ export function tokenize(text: string): TextToken[] {
     if (bold !== undefined) {
       tokens.push({ kind: 'bold', value: bold });
     } else if (symbol !== undefined) {
-      tokens.push(
-        symbol in SYMBOL_LABELS
-          ? { kind: 'symbol', key: symbol as SymbolKey }
-          : { kind: 'unknown', value: symbol },
-      );
+      const key = ALIASES[symbol.toLowerCase()];
+      tokens.push(key ? { kind: 'symbol', key } : { kind: 'unknown', value: symbol });
     }
     cursor = index + full.length;
   }
@@ -99,4 +255,23 @@ export function toPlainText(text: string): string {
       }
     })
     .join('');
+}
+
+/**
+ * Link the spelled-out Blank die result.
+ *
+ * Blank is the one result with no printed icon, so sources write the word.
+ * Left as prose it is invisible to everything downstream — it cannot be styled
+ * as a die result, searched alongside the other five, or read by the engine.
+ * The corpus carried 60 of these as plain text.
+ */
+export function linkBlankWord(text: string): string {
+  return text.replace(/(?<![{\w])Blank(?![}\w])/g, CANONICAL_TOKENS.blank);
+}
+
+/** Every unrecognized glyph in a body of text — the data-quality worklist. */
+export function unknownSymbols(text: string): string[] {
+  return tokenize(text)
+    .filter((t): t is Extract<TextToken, { kind: 'unknown' }> => t.kind === 'unknown')
+    .map(t => t.value);
 }

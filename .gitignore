@@ -10,3 +10,10 @@ coverage/
 .DS_Store
 .vscode/
 .idea/
+
+# Import pipeline scratch (cached BSData files, reports)
+packages/data/.import/
+
+# Card scans: ~450 files, ~410MB. Fetched with `npm run fetch:images`.
+# Outside apps/web/public on purpose — Vite copies public/ into dist.
+assets/card-scans/

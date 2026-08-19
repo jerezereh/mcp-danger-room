@@ -24,25 +24,68 @@ export type DamageType = z.infer<typeof DamageType>;
 export const MovementTemplate = z.enum(['S', 'M', 'L']);
 export type MovementTemplate = z.infer<typeof MovementTemplate>;
 
-export const SuperpowerType = z.enum([
-  'active',
-  'reactive',
-  'passive',
-  'innate',
-  'affiliation',
-  'leadership',
-]);
+/**
+ * The four types a card prints. No 'affiliation', and no 'passive'.
+ *
+ * Character cards do not carry an affiliation superpower — affiliation is set
+ * by the rules body, not printed. What looks like one is a Leadership ability
+ * whose *name* is qualified, "Army of Evil (Affiliation: Hydra)", meaning the
+ * Leadership applies while the squad is that affiliation.
+ *
+ * Having both values let the same power be typed two ways depending on which
+ * source read it: all 46 from BSData came back 'leadership' and all 5 the OCR
+ * extractor saw came back 'affiliation', with identical name patterns.
+ *
+ * 'passive' is gone for a related reason. It was never a printed type — it was
+ * the BSData parser's fallback for a type it could not read, so the one power
+ * that ever carried it (Omega Red's DEATH SPORES, Innate on the card) was
+ * mistyped by a default rather than by a source. A fallback that lands on a
+ * legal value hides the failure; the parser now reads the profile's own type
+ * and warns when it has to guess.
+ */
+export const SuperpowerType = z.enum(['active', 'reactive', 'innate', 'leadership']);
 export type SuperpowerType = z.infer<typeof SuperpowerType>;
+
+/**
+ * A printed power cost.
+ *
+ * Almost always a number, but 22 superpowers print "X": the player chooses how
+ * much Power to spend and the rules text supplies the bound ("spend up to 3").
+ * There is no numeric value to store.
+ *
+ * Modelling this as a plain number silently turned all 22 into cost 0 — free —
+ * because that is where a failed parse lands. The literal is preserved instead,
+ * so a consumer that cannot handle a variable cost fails loudly at the type
+ * level rather than quietly charging nothing.
+ */
+export const PowerCost = z.union([z.number().int().min(0), z.literal('X')]);
+export type PowerCost = z.infer<typeof PowerCost>;
+
+/**
+ * How an attack is delivered.
+ *
+ * Cards print this as a prefix on the range value: bare "4" is an ordinary
+ * attack, "B4" a Beam, "A2" an Area. The three resolve against different sets
+ * of targets, so the prefix is a rule, not decoration.
+ */
+export const AttackShape = z.enum(['range', 'beam', 'area']);
+export type AttackShape = z.infer<typeof AttackShape>;
+
+/** Range band 1–5, or "*" for the one Area attack whose size its text defines. */
+export const RangeBand = z.union([z.number().int().min(1).max(5), z.literal('*')]);
+export type RangeBand = z.infer<typeof RangeBand>;
 
 export const Attack = z.object({
   name: z.string().min(1),
   type: DamageType,
   /** Range band 1–5. Melee attacks use 1. */
-  range: z.number().int().min(1).max(5),
+  range: RangeBand,
+  /** Beam and Area attacks hit differently; the card prints B or A on `range`. */
+  shape: AttackShape.default('range'),
   /** Dice in the attack pool. */
   dice: z.number().int().min(0).max(12),
   /** Power cost to use. */
-  cost: z.number().int().min(0),
+  cost: PowerCost,
   /** Rules text, retaining {symbol} tokens for the renderer. */
   text: z.array(z.string()).default([]),
 });
@@ -51,7 +94,7 @@ export type Attack = z.infer<typeof Attack>;
 export const Superpower = z.object({
   name: z.string().min(1),
   type: SuperpowerType,
-  cost: z.number().int().min(0),
+  cost: PowerCost,
   text: z.string(),
 });
 export type Superpower = z.infer<typeof Superpower>;
@@ -61,7 +104,11 @@ export const StatBlock = z.object({
   cardImage: z.string().nullable(),
   stamina: z.number().int().min(1),
   movement: MovementTemplate,
-  size: z.number().int().min(1).max(4),
+  /**
+   * Size class 1–5. 5 is real and rare — Dormammu and the two Sentinel MK4
+   * variants. Capping this at 4 kept all three out of the corpus entirely.
+   */
+  size: z.number().int().min(1).max(5),
   defense: z.object({
     physical: z.number().int().min(0),
     energy: z.number().int().min(0),
@@ -72,22 +119,73 @@ export const StatBlock = z.object({
 });
 export type StatBlock = z.infer<typeof StatBlock>;
 
+/**
+ * An alternate mode a character can transform into.
+ *
+ * Six characters print four faces rather than two: Ant-Man and Wasp shrink,
+ * Emma Frost turns to diamond, Ms. Marvel embiggens, the Hood is possessed,
+ * and Captain Marvel goes Binary. Each mode is a full card with its own
+ * healthy and injured faces.
+ *
+ * The default mode stays on `healthy`/`injured` rather than becoming
+ * `forms[0]`, because a character is only ever in one mode to begin with and
+ * everything that reads a stat block — the engine, the roster, the board —
+ * wants the mode it starts in without asking which that is.
+ */
+export const Form = z.object({
+  /** The mode as the card labels it: "Tiny", "Diamond", "Binary". */
+  name: z.string().min(1),
+  healthy: StatBlock,
+  injured: StatBlock,
+});
+export type Form = z.infer<typeof Form>;
+
 export const Character = z.object({
   /** Stable kebab-case key. Never derived from display name at runtime. */
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(1),
   alterEgo: z.string().nullable(),
   affiliations: z.array(z.string()).default([]),
-  /** Roster cost in Character Points. */
-  cp: z.number().int().min(0),
-  /** Squad cost in Threat. */
+  /**
+   * The product pack this character was released in, e.g. "CP162".
+   *
+   * NOT a cost. The prototype stored this as a numeric `cp` field described as
+   * "Character Points" and the roster builder validated squads against a CP
+   * budget — a rule this game does not have. The number is a pack identifier,
+   * which doubles as a character id on some community sources.
+   */
+  packCode: z.string().nullable().default(null),
+  packName: z.string().nullable().default(null),
+  /** Squad cost in Threat. The game's only character cost. */
   threat: z.number().int().min(0),
+  /**
+   * Official errata, where the current stat line differs from the printed card.
+   *
+   * AMG revises stats after release. A card that reads Stamina 6 may currently
+   * be 7 — this records that, so a discrepancy between the corpus and a card in
+   * someone's hand is explainable rather than alarming.
+   */
+  errata: z.string().nullable().default(null),
   /** Base diameter in mm. */
   baseMm: z.number().int().default(40),
   healthy: StatBlock,
   injured: StatBlock,
-  /** Where this data came from, so gaps are auditable. */
-  source: z.enum(['legacy-import', 'manual', 'scraped']).default('manual'),
+  /**
+   * Every source that contributed to this record, so provenance is auditable.
+   *
+   * An array rather than one value, because a merged character genuinely comes
+   * from several: Jarvis for current stats, Cerebro for images and errata,
+   * BSData for rules text. A single label had to pick one and was misleading —
+   * it reported all 196 characters as "bsdata" when most of their stats came
+   * from Jarvis.
+   *
+   * None of these imply a human has checked the result; that is `verified`.
+   */
+  sources: z
+    .array(z.enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'jarvis', 'ocr']))
+    .default([]),
+  /** Alternate modes, empty for all but the six transforming characters. */
+  forms: z.array(Form).default([]),
   /** False until a human has checked it against the physical card. */
   verified: z.boolean().default(false),
 });
