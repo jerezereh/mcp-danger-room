@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CARDS = ROOT / '.import' / 'card-images'
+CARDS = ROOT.parent.parent / 'assets' / 'card-scans'
 OUT = ROOT / 'assets' / 'symbol-key.png'
 # Individual glyphs for the web client, so the app renders the real icons
 # rather than the unicode lookalikes it had been standing in with.

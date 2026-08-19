@@ -126,9 +126,14 @@ function main() {
 
   const report = lines.join('\n');
   console.log(report);
-  const outstanding = [...new Set(lines.filter(l => /^\S/.test(l)).map(l => l.split(' ')[0]))].filter(
-    id => !corrected.has(id),
-  );
+  const outstanding = [
+    ...new Set(
+      lines
+        .filter(l => /^\S/.test(l))
+        .map(l => l.split(' ')[0])
+        .filter((id): id is string => id !== undefined),
+    ),
+  ].filter(id => !corrected.has(id));
   console.log(`${affected} of ${results.length} characters have at least one detectable defect`);
   console.log(`  ${affected - outstanding.length} already corrected, ${outstanding.length} outstanding`);
   for (const [kind, n] of Object.entries(totals)) console.log(`  ${kind.padEnd(20)} ${n}`);

@@ -2,7 +2,7 @@
   "name": "mcp-danger-room",
   "private": true,
   "version": "0.1.0",
-  "description": "A digital client for Marvel: Crisis Protocol — roster building, local playtesting, and online play.",
+  "description": "A digital client for Marvel: Crisis Protocol \u2014 roster building, local playtesting, and online play.",
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
@@ -18,7 +18,7 @@
     "dev:server": "npm run dev --workspace @danger-room/server",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --build",
+    "typecheck": "tsc --build && tsc -p packages/data/tsconfig.scripts.json",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
