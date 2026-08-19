@@ -88,13 +88,21 @@ export function normalizeRulesText(text: string, names: readonly string[] = []):
 }
 
 /** Every name that should be bold inside one character's rules text. */
+type Side = { attacks: { name: string }[]; superpowers: { name: string }[] };
+
 export function boldableNames(character: {
   name: string;
-  healthy: { attacks: { name: string }[]; superpowers: { name: string }[] };
-  injured: { attacks: { name: string }[]; superpowers: { name: string }[] };
+  healthy: Side;
+  injured: Side;
+  forms?: { healthy: Side; injured: Side }[];
 }): string[] {
   const names = new Set<string>([character.name]);
-  for (const side of [character.healthy, character.injured]) {
+  const sides = [
+    character.healthy,
+    character.injured,
+    ...(character.forms ?? []).flatMap(f => [f.healthy, f.injured]),
+  ];
+  for (const side of sides) {
     for (const a of side.attacks) names.add(a.name);
     for (const p of side.superpowers) names.add(p.name);
   }

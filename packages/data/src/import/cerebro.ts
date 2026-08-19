@@ -48,6 +48,8 @@ export interface CerebroCharacter {
   CP?: string;
   Card_Healthy?: string;
   Card_Injured?: string;
+  /** The alternate form's injured face, on transforming characters. */
+  Alt_Card_Back?: string;
   front_health?: number | string;
   back_health?: number | string;
   thumbnail?: string;
@@ -123,6 +125,12 @@ export function cerebroToDraft(raw: CerebroCharacter): CharacterDraft {
       ...(num(raw.back_health) ? { stamina: num(raw.back_health) } : {}),
     },
     tags: list(raw.tags),
+    /*
+     * Transforming characters print a second pair of faces. Cerebro names only
+     * the alternate *back*; the front follows the same pattern, so the pair is
+     * derived from it downstream rather than guessed at here.
+     */
+    altCardImage: raw.Alt_Card_Back?.trim() || null,
     errata: raw.Errata?.trim() || null,
     sources: ['cerebro'],
   };

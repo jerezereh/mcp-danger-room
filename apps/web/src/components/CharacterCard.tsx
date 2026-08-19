@@ -6,6 +6,10 @@
  * physical card, so a player who knows the card can find a value in the same
  * place.
  *
+ * Six characters transform, and print a second full card for the other mode.
+ * Those get a mode selector beside the side selector, so Ant-Man is four
+ * cards — Normal and Tiny, each healthy and injured — reached from one place.
+ *
  * One side at a time, and the card flips. A physical card has a front and a
  * back; showing both at once is a thing only software does, and it doubles the
  * height of the tallest element on the screen. Clicking the card turns it over
@@ -270,16 +274,25 @@ function CardScan({
 export function CharacterCard({ character }: { character: Character }) {
   const [scansMissing, setScansMissing] = useState(false);
   const [side, setSide] = useState<'healthy' | 'injured'>('healthy');
+  const [mode, setMode] = useState(0);
   const flip = () => setSide(s => (s === 'healthy' ? 'injured' : 'healthy'));
 
-  // A new character starts on its healthy face, as it would out of the box.
+  // A new character starts healthy and untransformed, as it would out of the box.
   const [shownId, setShownId] = useState(character.id);
   if (shownId !== character.id) {
     setShownId(character.id);
     setSide('healthy');
+    setMode(0);
   }
 
-  const block = character[side];
+  /*
+   * Mode 0 is the character itself. The default mode is not stored as a form
+   * because everything outside this card wants the mode a character starts in
+   * without having to ask which that is; the cards label it Normal.
+   */
+  const modes = character.forms.length > 0 ? ['Normal', ...character.forms.map(f => f.name)] : [];
+  const active = mode === 0 ? character : (character.forms[mode - 1] ?? character);
+  const block = active[side];
 
   return (
     <article className="space-y-3">
@@ -294,6 +307,30 @@ export function CharacterCard({ character }: { character: Character }) {
           <p className="mt-1 text-xs text-slate-400">{character.affiliations.join(' · ')}</p>
         </div>
         <div className="flex shrink-0 items-center gap-3 text-right">
+          {modes.length > 0 && (
+            <div
+              role="group"
+              aria-label="Character mode"
+              className="flex overflow-hidden rounded border border-surface-border text-xs"
+            >
+              {modes.map((label, i) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => setMode(i)}
+                  aria-pressed={mode === i}
+                  className={`px-2 py-1 transition ${
+                    mode === i
+                      ? 'bg-sky-500/25 font-semibold text-slate-100'
+                      : 'text-slate-500 hover:text-slate-300'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/*
             Both faces are always offered rather than a single "flip" toggle:
             which side you are on is the thing worth showing, and a two-state
@@ -336,28 +373,6 @@ export function CharacterCard({ character }: { character: Character }) {
         </div>
       </header>
 
-      {/*
-        Errata is shown prominently because it explains a discrepancy the player
-        would otherwise hit at the table: the printed card in their hand says one
-        thing and these stats say another. Without this the app just looks wrong.
-      */}
-      {character.errata && (
-        <div className="rounded border border-sky-500/30 bg-sky-500/10 px-2 py-1.5">
-          <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-300">
-            Errata — differs from the printed card
-          </div>
-          <p className="whitespace-pre-line text-xs leading-relaxed text-sky-100/80">
-            {character.errata}
-          </p>
-        </div>
-      )}
-
-      {!character.verified && (
-        <p className="rounded border border-amber-500/30 bg-amber-500/10 px-2 py-1 text-xs text-amber-300">
-          Unverified data — imported, not yet checked against the printed card.
-        </p>
-      )}
-
       {scansMissing && (
         <p className="rounded border border-surface-border bg-surface px-2 py-1.5 text-xs text-slate-500">
           Card scans not downloaded.{' '}
@@ -369,10 +384,28 @@ export function CharacterCard({ character }: { character: Character }) {
         block={block}
         threat={character.threat}
         scan={block.cardImage}
-        alt={`${character.name}, ${side} side`}
+        alt={`${character.name}${mode > 0 ? ` (${modes[mode]})` : ''}, ${side} side`}
         onFlip={flip}
         onScanMissing={() => setScansMissing(true)}
       />
+
+      {/*
+        Errata sits under the card, where a footnote belongs. It explains a
+        discrepancy the player hits at the table — the printed card in their
+        hand says one thing and these stats say another — so it has to be
+        present, but it is an annotation on the card rather than a warning
+        about it.
+      */}
+      {character.errata && (
+        <div className="rounded border border-sky-500/30 bg-sky-500/10 px-2 py-1.5">
+          <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-300">
+            Errata — differs from the printed card
+          </div>
+          <p className="whitespace-pre-line text-xs leading-relaxed text-sky-100/80">
+            {character.errata}
+          </p>
+        </div>
+      )}
     </article>
   );
 }

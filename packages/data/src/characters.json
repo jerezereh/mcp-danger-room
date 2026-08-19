@@ -182,6 +182,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -363,6 +364,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -542,6 +544,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -700,6 +703,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -870,6 +874,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -1016,6 +1021,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -1197,6 +1203,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -1224,7 +1231,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - PYM PARTICLE PUNCH",
+            "name": "PYM PARTICLE PUNCH",
             "type": "physical",
             "range": 2,
             "shape": "range",
@@ -1236,7 +1243,7 @@
             ]
           },
           {
-            "name": "NORMAL - BULLET ANT BARRAGE",
+            "name": "BULLET ANT BARRAGE",
             "type": "physical",
             "range": 3,
             "shape": "beam",
@@ -1245,56 +1252,20 @@
             "text": [
               "If this attack deals {DMG}, after this attack is resolved the target character gains the Poison and Stun special conditions."
             ]
-          },
-          {
-            "name": "TINY - ANT-SIZED UPPERCUT",
-            "type": "physical",
-            "range": 1,
-            "shape": "range",
-            "dice": 6,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "After this attack is resolved, this character transforms into <b>Ant-Man</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - CHANGE SIZE",
+            "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
             "text": "This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny). The Change Size superpower can be used only once per Turn."
           },
           {
-            "name": "TINY - CHANGE SIZE",
-            "type": "active",
-            "cost": 1,
-            "text": "This character transforms into <b>Ant-Man</b> (Normal). The Change Size superpower can be used only once per Turn."
-          },
-          {
-            "name": "TINY - HITCH A RIDE",
-            "type": "active",
-            "cost": 0,
-            "text": "Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - PYM PARTICLE CONTROL",
+            "name": "PYM PARTICLE CONTROL",
             "type": "reactive",
             "cost": 1,
             "text": "When this character is targeted by an enemy attack or would suffer a collision you may use this superpower. This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny) before the attack or collision continues."
-          },
-          {
-            "name": "TINY - STEALTH",
-            "type": "innate",
-            "cost": 0,
-            "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
-          },
-          {
-            "name": "TINY - TINY SUPERHERO",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
           }
         ]
       },
@@ -1310,7 +1281,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - PYM PARTICLE PUNCH",
+            "name": "PYM PARTICLE PUNCH",
             "type": "physical",
             "range": 2,
             "shape": "range",
@@ -1322,7 +1293,7 @@
             ]
           },
           {
-            "name": "NORMAL - BULLET ANT BARRAGE",
+            "name": "BULLET ANT BARRAGE",
             "type": "physical",
             "range": 3,
             "shape": "beam",
@@ -1331,56 +1302,20 @@
             "text": [
               "If this attack deals {DMG}, after this attack is resolved the target character gains the Poison and Stun special conditions."
             ]
-          },
-          {
-            "name": "TINY - ANT-SIZED UPPERCUT",
-            "type": "physical",
-            "range": 1,
-            "shape": "range",
-            "dice": 6,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "After this attack is resolved, this character transforms into <b>Ant-Man</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - CHANGE SIZE",
+            "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
             "text": "This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny). The Change Size superpower can be used only once per Turn."
           },
           {
-            "name": "TINY - CHANGE SIZE",
-            "type": "active",
-            "cost": 1,
-            "text": "This character transforms into <b>Ant-Man</b> (Normal). The Change Size superpower can be used only once per Turn."
-          },
-          {
-            "name": "TINY - HITCH A RIDE",
-            "type": "active",
-            "cost": 0,
-            "text": "Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - PYM PARTICLE CONTROL",
+            "name": "PYM PARTICLE CONTROL",
             "type": "reactive",
             "cost": 1,
             "text": "When this character is targeted by an enemy attack or would suffer a collision you may use this superpower. This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny) before the attack or collision continues."
-          },
-          {
-            "name": "TINY - STEALTH",
-            "type": "innate",
-            "cost": 0,
-            "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
-          },
-          {
-            "name": "TINY - TINY SUPERHERO",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
           }
         ]
       },
@@ -1388,6 +1323,113 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "forms": [
+        {
+          "name": "Tiny",
+          "healthy": {
+            "cardImage": "ANT_MAN_TINY_healthy.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 3,
+              "energy": 2,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "ANT-SIZED UPPERCUT",
+                "type": "physical",
+                "range": 1,
+                "shape": "range",
+                "dice": 6,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "After this attack is resolved, this character transforms into <b>Ant-Man</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "CHANGE SIZE",
+                "type": "active",
+                "cost": 1,
+                "text": "This character transforms into <b>Ant-Man</b> (Normal). The Change Size superpower can be used only once per Turn."
+              },
+              {
+                "name": "HITCH A RIDE",
+                "type": "active",
+                "cost": 0,
+                "text": "Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "STEALTH",
+                "type": "innate",
+                "cost": 0,
+                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+              },
+              {
+                "name": "TINY SUPERHERO",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+              }
+            ]
+          },
+          "injured": {
+            "cardImage": "ANT_MAN_TINY_injured.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 3,
+              "energy": 2,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "ANT-SIZED UPPERCUT",
+                "type": "physical",
+                "range": 1,
+                "shape": "range",
+                "dice": 6,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "After this attack is resolved, this character transforms into <b>Ant-Man</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "CHANGE SIZE",
+                "type": "active",
+                "cost": 1,
+                "text": "This character transforms into <b>Ant-Man</b> (Normal). The Change Size superpower can be used only once per Turn."
+              },
+              {
+                "name": "HITCH A RIDE",
+                "type": "active",
+                "cost": 0,
+                "text": "Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "STEALTH",
+                "type": "innate",
+                "cost": 0,
+                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+              },
+              {
+                "name": "TINY SUPERHERO",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+              }
+            ]
+          }
+        }
       ],
       "verified": false
     },
@@ -1558,6 +1600,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -1705,6 +1748,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -1853,6 +1897,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -1972,6 +2017,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -2144,6 +2190,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -2324,6 +2371,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -2480,6 +2528,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -2626,6 +2675,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -2785,6 +2835,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -2935,6 +2986,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -3129,6 +3181,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -3277,6 +3330,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -3484,6 +3538,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -3636,6 +3691,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -3777,6 +3833,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -3935,6 +3992,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -4094,6 +4152,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -4275,6 +4334,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -4430,6 +4490,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -4589,6 +4650,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -4766,6 +4828,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -4934,6 +4997,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -5080,6 +5144,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -5218,6 +5283,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -5391,6 +5457,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -5539,6 +5606,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -5701,6 +5769,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -5870,6 +5939,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -6048,6 +6118,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -6076,7 +6147,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - PHOTON BLAST",
+            "name": "PHOTON BLAST",
             "type": "energy",
             "range": 4,
             "shape": "range",
@@ -6088,7 +6159,7 @@
             ]
           },
           {
-            "name": "NORMAL - SONIC BOOM",
+            "name": "SONIC BOOM",
             "type": "physical",
             "range": 3,
             "shape": "range",
@@ -6098,52 +6169,9 @@
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Concussive: After this attack is resolved, the target character loses 1 {PWR}."
             ]
-          },
-          {
-            "name": "BINARY - BINARY BLAST",
-            "type": "energy",
-            "range": 2,
-            "shape": "range",
-            "dice": 6,
-            "cost": 1,
-            "text": [
-              "After this attack is resolved, this character Pushes the target character {S}.",
-              "{WILD} Incinerate: After this attack is resolved, the target character gains the Incinerate special condition."
-            ]
-          },
-          {
-            "name": "BINARY - WARBIRD",
-            "type": "energy",
-            "range": 3,
-            "shape": "range",
-            "dice": 8,
-            "cost": 3,
-            "text": [
-              "After this attack is resolved, Place this character within {RNG} 2 of the target character.",
-              "{WILD} Throw: After this attack is resolved, this character may Throw the target character {S}.",
-              "{CRIT} {WILD} Explosive: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the target character suffer 1 {DMG}."
-            ]
           }
         ],
         "superpowers": [
-          {
-            "name": "BINARY - I'M JUST GETTING WARMED UP",
-            "type": "active",
-            "cost": 2,
-            "text": "Choose an interactive terrain feature or enemy character, both of Size 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "BINARY - READY OR NOT...",
-            "type": "active",
-            "cost": 0,
-            "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "BINARY - I DON'T NEED A POWERUP TO KICK YOUR BUTT",
-            "type": "reactive",
-            "cost": 0,
-            "text": "When this character spends or loses {PWR}, after the effect is resolved, if this character has 3 or less {PWR}, it may use this superpower. This character transforms into <b>Captain Marvel, Cosmic Avenger</b> (Normal)."
-          },
           {
             "name": "ENHANCED ENERGY ABSORPTION",
             "type": "innate",
@@ -6151,13 +6179,13 @@
             "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
           },
           {
-            "name": "NORMAL - HIGHER, FURTHER, FASTER",
+            "name": "HIGHER, FURTHER, FASTER",
             "type": "innate",
             "cost": 0,
             "text": "At the start of this character's Activation, if it has six or more {PWR}, it transforms into <b>Captain Marvel, Cosmic Avenger</b> (Binary)."
           },
           {
-            "name": "NORMAL - YOU CALL THAT A PUNCH?",
+            "name": "YOU CALL THAT A PUNCH?",
             "type": "innate",
             "cost": 0,
             "text": "When this character is dealt {DMG} by an enemy effect, after the effect is resolved, it gains 1 {PWR}."
@@ -6169,16 +6197,10 @@
             "text": "When placing the movement tool during an Advance, this character counts as Size 5."
           },
           {
-            "name": "NORMAL - IMMUNITY [INCINERATE, POISON]",
+            "name": "IMMUNITY [INCINERATE, POISON]",
             "type": "innate",
             "cost": 0,
             "text": "This character can’t suffer the [INCINERATE] or [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
-          },
-          {
-            "name": "BINARY - IMMUNITY [INCINERATE, POISON, STAGGER, STUN]",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character can’t suffer the [INCINERATE], [POISON], [STAGGER], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
           }
         ]
       },
@@ -6194,7 +6216,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - PHOTON BLAST",
+            "name": "PHOTON BLAST",
             "type": "energy",
             "range": 4,
             "shape": "range",
@@ -6206,7 +6228,7 @@
             ]
           },
           {
-            "name": "NORMAL - SONIC BOOM",
+            "name": "SONIC BOOM",
             "type": "physical",
             "range": 3,
             "shape": "range",
@@ -6216,52 +6238,9 @@
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "{WILD} Concussive: After this attack is resolved, the target character loses 1 {PWR}."
             ]
-          },
-          {
-            "name": "BINARY - BINARY BLAST",
-            "type": "energy",
-            "range": 2,
-            "shape": "range",
-            "dice": 6,
-            "cost": 1,
-            "text": [
-              "After this attack is resolved, this character Pushes the target character {S}.",
-              "{WILD} Incinerate: After this attack is resolved, the target character gains the Incinerate special condition."
-            ]
-          },
-          {
-            "name": "BINARY - WARBIRD",
-            "type": "energy",
-            "range": 3,
-            "shape": "range",
-            "dice": 8,
-            "cost": 3,
-            "text": [
-              "After this attack is resolved, Place this character within {RNG} 2 of the target character.",
-              "{WILD} Throw: After this attack is resolved, this character may Throw the target character {S}.",
-              "{CRIT} {WILD} Explosive: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the target character suffer 1 {DMG}."
-            ]
           }
         ],
         "superpowers": [
-          {
-            "name": "BINARY - I'M JUST GETTING WARMED UP",
-            "type": "active",
-            "cost": 2,
-            "text": "Choose an interactive terrain feature or enemy character, both of Size 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "BINARY - READY OR NOT...",
-            "type": "active",
-            "cost": 0,
-            "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "BINARY - I DON'T NEED A POWERUP TO KICK YOUR BUTT",
-            "type": "reactive",
-            "cost": 0,
-            "text": "When this character spends or loses {PWR}, after the effect is resolved, if this character has 3 or less {PWR}, it may use this superpower. This character transforms into <b>Captain Marvel, Cosmic Avenger</b> (Normal)."
-          },
           {
             "name": "ENHANCED ENERGY ABSORPTION",
             "type": "innate",
@@ -6269,13 +6248,13 @@
             "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
           },
           {
-            "name": "NORMAL - HIGHER, FURTHER, FASTER",
+            "name": "HIGHER, FURTHER, FASTER",
             "type": "innate",
             "cost": 0,
             "text": "At the start of this character's Activation, if it has six or more {PWR}, it transforms into <b>Captain Marvel, Cosmic Avenger</b> (Binary)."
           },
           {
-            "name": "NORMAL - YOU CALL THAT A PUNCH?",
+            "name": "YOU CALL THAT A PUNCH?",
             "type": "innate",
             "cost": 0,
             "text": "When this character is dealt {DMG} by an enemy effect, after the effect is resolved, it gains 1 {PWR}."
@@ -6287,16 +6266,10 @@
             "text": "When placing the movement tool during an Advance, this character counts as Size 5."
           },
           {
-            "name": "NORMAL - IMMUNITY [INCINERATE, POISON]",
+            "name": "IMMUNITY [INCINERATE, POISON]",
             "type": "innate",
             "cost": 0,
             "text": "This character can’t suffer the [INCINERATE] or [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
-          },
-          {
-            "name": "BINARY - IMMUNITY [INCINERATE, POISON, STAGGER, STUN]",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character can’t suffer the [INCINERATE], [POISON], [STAGGER], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
           }
         ]
       },
@@ -6304,6 +6277,163 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "forms": [
+        {
+          "name": "Binary",
+          "healthy": {
+            "cardImage": "CAPTAIN_MARVEL_COSMIC_AVENGER_BINARY_healthy.png",
+            "stamina": 7,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 4,
+              "energy": 4,
+              "mystic": 4
+            },
+            "attacks": [
+              {
+                "name": "BINARY BLAST",
+                "type": "energy",
+                "range": 2,
+                "shape": "range",
+                "dice": 6,
+                "cost": 1,
+                "text": [
+                  "After this attack is resolved, this character Pushes the target character {S}.",
+                  "{WILD} Incinerate: After this attack is resolved, the target character gains the Incinerate special condition."
+                ]
+              },
+              {
+                "name": "WARBIRD",
+                "type": "energy",
+                "range": 3,
+                "shape": "range",
+                "dice": 8,
+                "cost": 3,
+                "text": [
+                  "After this attack is resolved, Place this character within {RNG} 2 of the target character.",
+                  "{WILD} Throw: After this attack is resolved, this character may Throw the target character {S}.",
+                  "{CRIT} {WILD} Explosive: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the target character suffer 1 {DMG}."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "I'M JUST GETTING WARMED UP",
+                "type": "active",
+                "cost": 2,
+                "text": "Choose an interactive terrain feature or enemy character, both of Size 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "READY OR NOT...",
+                "type": "active",
+                "cost": 0,
+                "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "I DON'T NEED A POWERUP TO KICK YOUR BUTT",
+                "type": "reactive",
+                "cost": 0,
+                "text": "When this character spends or loses {PWR}, after the effect is resolved, if this character has 3 or less {PWR}, it may use this superpower. This character transforms into <b>Captain Marvel, Cosmic Avenger</b> (Normal)."
+              },
+              {
+                "name": "ENHANCED ENERGY ABSORPTION",
+                "type": "innate",
+                "cost": 0,
+                "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
+              },
+              {
+                "name": "FLIGHT",
+                "type": "innate",
+                "cost": 0,
+                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+              },
+              {
+                "name": "IMMUNITY [INCINERATE, POISON, STAGGER, STUN]",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character can’t suffer the [INCINERATE], [POISON], [STAGGER], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+              }
+            ]
+          },
+          "injured": {
+            "cardImage": "CAPTAIN_MARVEL_COSMIC_AVENGER_BINARY_injured.png",
+            "stamina": 8,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 4,
+              "energy": 4,
+              "mystic": 4
+            },
+            "attacks": [
+              {
+                "name": "BINARY BLAST",
+                "type": "energy",
+                "range": 2,
+                "shape": "range",
+                "dice": 6,
+                "cost": 1,
+                "text": [
+                  "After this attack is resolved, this character Pushes the target character {S}.",
+                  "{WILD} Incinerate: After this attack is resolved, the target character gains the Incinerate special condition."
+                ]
+              },
+              {
+                "name": "WARBIRD",
+                "type": "energy",
+                "range": 3,
+                "shape": "range",
+                "dice": 8,
+                "cost": 3,
+                "text": [
+                  "After this attack is resolved, Place this character within {RNG} 2 of the target character.",
+                  "{WILD} Throw: After this attack is resolved, this character may Throw the target character {S}.",
+                  "{CRIT} {WILD} Explosive: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the target character suffer 1 {DMG}."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "I'M JUST GETTING WARMED UP",
+                "type": "active",
+                "cost": 2,
+                "text": "Choose an interactive terrain feature or enemy character, both of Size 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "READY OR NOT...",
+                "type": "active",
+                "cost": 0,
+                "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "I DON'T NEED A POWERUP TO KICK YOUR BUTT",
+                "type": "reactive",
+                "cost": 0,
+                "text": "When this character spends or loses {PWR}, after the effect is resolved, if this character has 3 or less {PWR}, it may use this superpower. This character transforms into <b>Captain Marvel, Cosmic Avenger</b> (Normal)."
+              },
+              {
+                "name": "ENHANCED ENERGY ABSORPTION",
+                "type": "innate",
+                "cost": 0,
+                "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
+              },
+              {
+                "name": "FLIGHT",
+                "type": "innate",
+                "cost": 0,
+                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+              },
+              {
+                "name": "IMMUNITY [INCINERATE, POISON, STAGGER, STUN]",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character can’t suffer the [INCINERATE], [POISON], [STAGGER], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+              }
+            ]
+          }
+        }
       ],
       "verified": false
     },
@@ -6462,6 +6592,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -6654,6 +6785,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -6802,6 +6934,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -6974,6 +7107,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -7141,6 +7275,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -7321,6 +7456,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -7490,6 +7626,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -7623,6 +7760,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -7756,6 +7894,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -7962,6 +8101,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -8107,6 +8247,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -8289,6 +8430,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -8422,6 +8564,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -8638,6 +8781,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -8803,6 +8947,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -8936,6 +9081,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -9119,6 +9265,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -9303,6 +9450,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -9462,6 +9610,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -9612,6 +9761,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -9804,6 +9954,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -9974,6 +10125,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -10133,6 +10285,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -10302,6 +10455,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -10472,6 +10626,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -10628,6 +10783,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -10778,6 +10934,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -10926,6 +11083,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -10955,7 +11113,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - PSYCHIC SPIKE",
+            "name": "PSYCHIC SPIKE",
             "type": "mystic",
             "range": 4,
             "shape": "range",
@@ -10967,7 +11125,7 @@
             ]
           },
           {
-            "name": "NORMAL - HANDS OFF",
+            "name": "HANDS OFF",
             "type": "mystic",
             "range": 3,
             "shape": "range",
@@ -10976,87 +11134,32 @@
             "text": [
               "{WILD} Defenestrate: Before {DMG} is dealt, if the target character is Size 4 or less, this character may Throw the target character Away {S}."
             ]
-          },
-          {
-            "name": "DIAMOND - DIAMOND STRIKE",
-            "type": "physical",
-            "range": 2,
-            "shape": "range",
-            "dice": 5,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
-            ]
-          },
-          {
-            "name": "DIAMOND - SHATTER",
-            "type": "physical",
-            "range": 2,
-            "shape": "area",
-            "dice": 7,
-            "cost": 6,
-            "text": [
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
-              "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "DIAMOND - SOMETIMES ONE MUST GET THEIR HANDS DIRTY",
-            "type": "active",
-            "cost": 3,
-            "text": "Choose an interactive terrain feature of Size 3 or less and within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - DIAMOND FORM",
+            "name": "DIAMOND FORM",
             "type": "reactive",
             "cost": 1,
             "text": "When this character is targeted by an attack, it may use this superpower. This character transforms into <b>Emma Frost</b> (Diamond)."
           },
           {
-            "name": "NORMAL - SHIELD MIND",
+            "name": "SHIELD MIND",
             "type": "reactive",
             "cost": 2,
             "text": "When this character or an allied character within {RNG} 4 of it would be Advanced, Placed, or Pushed by the effects of an enemy {MYST} attack or enemy superpower, you may use this superpower. The allied character is not Advanced, Placed or Pushed."
           },
           {
-            "name": "NORMAL - TELEKINETIC DEFLECTION",
+            "name": "TELEKINETIC DEFLECTION",
             "type": "reactive",
             "cost": 2,
             "text": "If this character would suffer a collision, it may use this superpower. This character does not suffer {DMG} from this collision."
           },
           {
-            "name": "NORMAL - POWER INHIBITION",
+            "name": "POWER INHIBITION",
             "type": "innate",
             "cost": 0,
             "text": "During this character's Activation, enemy characters cannot use {REACT} superpowers or Reactive Team Tactic Cards."
-          },
-          {
-            "name": "DIAMOND - DIAMOND MIND",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character cannot play Team Tactic Cards."
-          },
-          {
-            "name": "DIAMOND - FAR FROM MY BEST LOOK",
-            "type": "innate",
-            "cost": 0,
-            "text": "If this character begins its Activation as <b>Emma Frost</b> (Diamond), at the end of that Activation, it transforms into <b>Emma Frost</b> (Normal)."
-          },
-          {
-            "name": "DIAMOND - PSYCHIC IMMUNITY",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
-          },
-          {
-            "name": "DIAMOND - IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character can’t suffer the [BLEED], [INCINERATE], [POISON], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
           }
         ]
       },
@@ -11072,7 +11175,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - PSYCHIC SPIKE",
+            "name": "PSYCHIC SPIKE",
             "type": "mystic",
             "range": 4,
             "shape": "range",
@@ -11084,7 +11187,7 @@
             ]
           },
           {
-            "name": "NORMAL - HANDS OFF",
+            "name": "HANDS OFF",
             "type": "mystic",
             "range": 3,
             "shape": "range",
@@ -11093,87 +11196,32 @@
             "text": [
               "{WILD} Defenestrate: Before {DMG} is dealt, if the target character is Size 4 or less, this character may Throw the target character Away {S}."
             ]
-          },
-          {
-            "name": "DIAMOND - DIAMOND STRIKE",
-            "type": "physical",
-            "range": 2,
-            "shape": "range",
-            "dice": 5,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
-            ]
-          },
-          {
-            "name": "DIAMOND - SHATTER",
-            "type": "physical",
-            "range": 2,
-            "shape": "area",
-            "dice": 7,
-            "cost": 6,
-            "text": [
-              "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
-              "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "DIAMOND - SOMETIMES ONE MUST GET THEIR HANDS DIRTY",
-            "type": "active",
-            "cost": 3,
-            "text": "Choose an interactive terrain feature of Size 3 or less and within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - DIAMOND FORM",
+            "name": "DIAMOND FORM",
             "type": "reactive",
             "cost": 1,
             "text": "When this character is targeted by an attack, it may use this superpower. This character transforms into <b>Emma Frost</b> (Diamond)."
           },
           {
-            "name": "NORMAL - SHIELD MIND",
+            "name": "SHIELD MIND",
             "type": "reactive",
             "cost": 2,
             "text": "When this character or an allied character within {RNG} 4 of it would be Advanced, Placed, or Pushed by the effects of an enemy {MYST} attack or enemy superpower, you may use this superpower. The allied character is not Advanced, Placed or Pushed."
           },
           {
-            "name": "NORMAL - TELEKINETIC DEFLECTION",
+            "name": "TELEKINETIC DEFLECTION",
             "type": "reactive",
             "cost": 2,
             "text": "If this character would suffer a collision, it may use this superpower. This character does not suffer {DMG} from this collision."
           },
           {
-            "name": "NORMAL - POWER INHIBITION",
+            "name": "POWER INHIBITION",
             "type": "innate",
             "cost": 0,
             "text": "During this character's Activation, enemy characters cannot use {REACT} superpowers or Reactive Team Tactic Cards."
-          },
-          {
-            "name": "DIAMOND - DIAMOND MIND",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character cannot play Team Tactic Cards."
-          },
-          {
-            "name": "DIAMOND - FAR FROM MY BEST LOOK",
-            "type": "innate",
-            "cost": 0,
-            "text": "If this character begins its Activation as <b>Emma Frost</b> (Diamond), at the end of that Activation, it transforms into <b>Emma Frost</b> (Normal)."
-          },
-          {
-            "name": "DIAMOND - PSYCHIC IMMUNITY",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
-          },
-          {
-            "name": "DIAMOND - IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character can’t suffer the [BLEED], [INCINERATE], [POISON], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
           }
         ]
       },
@@ -11181,6 +11229,151 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "forms": [
+        {
+          "name": "Diamond",
+          "healthy": {
+            "cardImage": "EMMA_FROST_DIAMOND_healthy.png",
+            "stamina": 7,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 2,
+              "energy": 3,
+              "mystic": 5
+            },
+            "attacks": [
+              {
+                "name": "DIAMOND STRIKE",
+                "type": "physical",
+                "range": 2,
+                "shape": "range",
+                "dice": 5,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
+                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+                ]
+              },
+              {
+                "name": "SHATTER",
+                "type": "physical",
+                "range": 2,
+                "shape": "area",
+                "dice": 7,
+                "cost": 6,
+                "text": [
+                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
+                  "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "SOMETIMES ONE MUST GET THEIR HANDS DIRTY",
+                "type": "active",
+                "cost": 3,
+                "text": "Choose an interactive terrain feature of Size 3 or less and within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "DIAMOND MIND",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character cannot play Team Tactic Cards."
+              },
+              {
+                "name": "FAR FROM MY BEST LOOK",
+                "type": "innate",
+                "cost": 0,
+                "text": "If this character begins its Activation as <b>Emma Frost</b> (Diamond), at the end of that Activation, it transforms into <b>Emma Frost</b> (Normal)."
+              },
+              {
+                "name": "PSYCHIC IMMUNITY",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
+              },
+              {
+                "name": "IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character can’t suffer the [BLEED], [INCINERATE], [POISON], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+              }
+            ]
+          },
+          "injured": {
+            "cardImage": "EMMA_FROST_DIAMOND_injured.png",
+            "stamina": 7,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 2,
+              "energy": 3,
+              "mystic": 5
+            },
+            "attacks": [
+              {
+                "name": "DIAMOND STRIKE",
+                "type": "physical",
+                "range": 2,
+                "shape": "range",
+                "dice": 5,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
+                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+                ]
+              },
+              {
+                "name": "SHATTER",
+                "type": "physical",
+                "range": 2,
+                "shape": "area",
+                "dice": 7,
+                "cost": 6,
+                "text": [
+                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
+                  "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "SOMETIMES ONE MUST GET THEIR HANDS DIRTY",
+                "type": "active",
+                "cost": 3,
+                "text": "Choose an interactive terrain feature of Size 3 or less and within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "DIAMOND MIND",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character cannot play Team Tactic Cards."
+              },
+              {
+                "name": "FAR FROM MY BEST LOOK",
+                "type": "innate",
+                "cost": 0,
+                "text": "If this character begins its Activation as <b>Emma Frost</b> (Diamond), at the end of that Activation, it transforms into <b>Emma Frost</b> (Normal)."
+              },
+              {
+                "name": "PSYCHIC IMMUNITY",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
+              },
+              {
+                "name": "IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character can’t suffer the [BLEED], [INCINERATE], [POISON], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+              }
+            ]
+          }
+        }
       ],
       "verified": false
     },
@@ -11354,6 +11547,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -11559,6 +11753,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -11726,6 +11921,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -11883,6 +12079,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -12029,6 +12226,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -12197,6 +12395,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -12354,6 +12553,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -12531,6 +12731,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -12698,6 +12899,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -12932,6 +13134,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13051,6 +13254,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13198,6 +13402,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13357,6 +13562,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13474,6 +13680,7 @@
       "sources": [
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13587,6 +13794,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13728,6 +13936,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -13907,6 +14116,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -14056,6 +14266,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -14083,7 +14294,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - HEX SHOT",
+            "name": "HEX SHOT",
             "type": "mystic",
             "range": 3,
             "shape": "range",
@@ -14095,7 +14306,7 @@
             ]
           },
           {
-            "name": "NORMAL - DARK LIGHTNING",
+            "name": "DARK LIGHTNING",
             "type": "mystic",
             "range": 3,
             "shape": "range",
@@ -14105,70 +14316,26 @@
               "{WILD} Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 1 {DMG}.",
               "After this attack is resolved, the target character gains the Shock special condition."
             ]
-          },
-          {
-            "name": "POSSESSED - RAZOR TALONS",
-            "type": "physical",
-            "range": 2,
-            "shape": "range",
-            "dice": 6,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
-              "After this attack is resolved, if the target character was Dazed or KO'd by the attack this character transforms into <b>Hood</b> (Normal)."
-            ]
-          },
-          {
-            "name": "POSSESSED - EMPOWERED DARK LIGHTNING",
-            "type": "mystic",
-            "range": 3,
-            "shape": "range",
-            "dice": 8,
-            "cost": 4,
-            "text": [
-              "{WILD} Empowered Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}.",
-              "After this attack is resolved, the target character gains the Shock special condition.",
-              "After this attack is resolved, this character transforms into <b>Hood</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - BLACK ARTS",
+            "name": "BLACK ARTS",
             "type": "active",
             "cost": 3,
             "text": "Choose another allied character within {RNG} 3 of this character. The chosen character may remove up to 3 {DMG}. If it does, the chosen character gains the Bleed special condition. A character may be affected by this superpower only once per round."
           },
           {
-            "name": "POSSESSED - CHARGE",
-            "type": "active",
-            "cost": 2,
-            "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - INVISIBILITY CLOAK",
+            "name": "INVISIBILITY CLOAK",
             "type": "reactive",
             "cost": 2,
             "text": "When this character is targeted by an attack or would make a dodge roll, you may use this superpower. This character uses its {MYST} Defense to defend or dodge. During this defense or dodge roll, this character adds blanks in its roll to its total successes."
           },
           {
-            "name": "NORMAL - POSSESSED BY NISANTI",
+            "name": "POSSESSED BY NISANTI",
             "type": "innate",
             "cost": 0,
             "text": "When this character is damaged by an enemy effect, after the effect is resolved, this character may transform into <b>Hood</b> (Possessed). If this character would be Dazed, before being Dazed it transforms into <b>Hood</b> (Possessed), then it is Dazed."
-          },
-          {
-            "name": "POSSESSED - DEMONIC RESILIENCE",
-            "type": "innate",
-            "cost": 0,
-            "text": "When this character would suffer {DMG} from an enemy effect, reduce the amount suffered by 2, to a minimum of 1."
-          },
-          {
-            "name": "POSSESSED - MYSTIC VULNERABILITY",
-            "type": "innate",
-            "cost": 0,
-            "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed it transforms into <b>Hood</b> (Normal), then it is Dazed."
           }
         ]
       },
@@ -14184,7 +14351,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - HEX SHOT",
+            "name": "HEX SHOT",
             "type": "mystic",
             "range": 3,
             "shape": "range",
@@ -14196,7 +14363,7 @@
             ]
           },
           {
-            "name": "NORMAL - DARK LIGHTNING",
+            "name": "DARK LIGHTNING",
             "type": "mystic",
             "range": 3,
             "shape": "range",
@@ -14206,70 +14373,26 @@
               "{WILD} Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 1 {DMG}.",
               "After this attack is resolved, the target character gains the Shock special condition."
             ]
-          },
-          {
-            "name": "POSSESSED - RAZOR TALONS",
-            "type": "physical",
-            "range": 2,
-            "shape": "range",
-            "dice": 6,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
-              "After this attack is resolved, if the target character was Dazed or KO'd by the attack this character transforms into <b>Hood</b> (Normal)."
-            ]
-          },
-          {
-            "name": "POSSESSED - EMPOWERED DARK LIGHTNING",
-            "type": "mystic",
-            "range": 3,
-            "shape": "range",
-            "dice": 8,
-            "cost": 4,
-            "text": [
-              "{WILD} Empowered Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}.",
-              "After this attack is resolved, the target character gains the Shock special condition.",
-              "After this attack is resolved, this character transforms into <b>Hood</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - BLACK ARTS",
+            "name": "BLACK ARTS",
             "type": "active",
             "cost": 3,
             "text": "Choose another allied character within {RNG} 3 of this character. The chosen character may remove up to 3 {DMG}. If it does, the chosen character gains the Bleed special condition. A character may be affected by this superpower only once per round."
           },
           {
-            "name": "POSSESSED - CHARGE",
-            "type": "active",
-            "cost": 2,
-            "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - INVISIBILITY CLOAK",
+            "name": "INVISIBILITY CLOAK",
             "type": "reactive",
             "cost": 2,
             "text": "When this character is targeted by an attack or would make a dodge roll, you may use this superpower. This character uses its {MYST} Defense to defend or dodge. During this defense or dodge roll, this character adds blanks in its roll to its total successes."
           },
           {
-            "name": "NORMAL - POSSESSED BY NISANTI",
+            "name": "POSSESSED BY NISANTI",
             "type": "innate",
             "cost": 0,
             "text": "When this character is damaged by an enemy effect, after the effect is resolved, this character may transform into <b>Hood</b> (Possessed). If this character would be Dazed, before being Dazed it transforms into <b>Hood</b> (Possessed), then it is Dazed."
-          },
-          {
-            "name": "POSSESSED - DEMONIC RESILIENCE",
-            "type": "innate",
-            "cost": 0,
-            "text": "When this character would suffer {DMG} from an enemy effect, reduce the amount suffered by 2, to a minimum of 1."
-          },
-          {
-            "name": "POSSESSED - MYSTIC VULNERABILITY",
-            "type": "innate",
-            "cost": 0,
-            "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed it transforms into <b>Hood</b> (Normal), then it is Dazed."
           }
         ]
       },
@@ -14277,6 +14400,129 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "forms": [
+        {
+          "name": "Possessed",
+          "healthy": {
+            "cardImage": "HOOD_POSSESSED_healthy.png",
+            "stamina": 5,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 2,
+              "energy": 2,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "RAZOR TALONS",
+                "type": "physical",
+                "range": 2,
+                "shape": "range",
+                "dice": 6,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
+                  "After this attack is resolved, if the target character was Dazed or KO'd by the attack this character transforms into <b>Hood</b> (Normal)."
+                ]
+              },
+              {
+                "name": "EMPOWERED DARK LIGHTNING",
+                "type": "mystic",
+                "range": 3,
+                "shape": "range",
+                "dice": 8,
+                "cost": 4,
+                "text": [
+                  "{WILD} Empowered Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}.",
+                  "After this attack is resolved, the target character gains the Shock special condition.",
+                  "After this attack is resolved, this character transforms into <b>Hood</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "CHARGE",
+                "type": "active",
+                "cost": 2,
+                "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "DEMONIC RESILIENCE",
+                "type": "innate",
+                "cost": 0,
+                "text": "When this character would suffer {DMG} from an enemy effect, reduce the amount suffered by 2, to a minimum of 1."
+              },
+              {
+                "name": "MYSTIC VULNERABILITY",
+                "type": "innate",
+                "cost": 0,
+                "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed it transforms into <b>Hood</b> (Normal), then it is Dazed."
+              }
+            ]
+          },
+          "injured": {
+            "cardImage": "HOOD_POSSESSED_injured.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 2,
+              "energy": 2,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "RAZOR TALONS",
+                "type": "physical",
+                "range": 2,
+                "shape": "range",
+                "dice": 6,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
+                  "After this attack is resolved, if the target character was Dazed or KO'd by the attack this character transforms into <b>Hood</b> (Normal)."
+                ]
+              },
+              {
+                "name": "EMPOWERED DARK LIGHTNING",
+                "type": "mystic",
+                "range": 3,
+                "shape": "range",
+                "dice": 8,
+                "cost": 4,
+                "text": [
+                  "{WILD} Empowered Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}.",
+                  "After this attack is resolved, the target character gains the Shock special condition.",
+                  "After this attack is resolved, this character transforms into <b>Hood</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "CHARGE",
+                "type": "active",
+                "cost": 2,
+                "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
+              },
+              {
+                "name": "DEMONIC RESILIENCE",
+                "type": "innate",
+                "cost": 0,
+                "text": "When this character would suffer {DMG} from an enemy effect, reduce the amount suffered by 2, to a minimum of 1."
+              },
+              {
+                "name": "MYSTIC VULNERABILITY",
+                "type": "innate",
+                "cost": 0,
+                "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed it transforms into <b>Hood</b> (Normal), then it is Dazed."
+              }
+            ]
+          }
+        }
       ],
       "verified": false
     },
@@ -14466,6 +14712,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -14701,6 +14948,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -14802,6 +15050,7 @@
       "sources": [
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -14934,6 +15183,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -15106,6 +15356,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -15253,6 +15504,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -15418,6 +15670,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -15575,6 +15828,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -15721,6 +15975,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -15880,6 +16135,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -16009,6 +16265,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -16176,6 +16433,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -16367,6 +16625,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -16534,6 +16793,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -16681,6 +16941,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -16839,6 +17100,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -17044,6 +17306,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -17190,6 +17453,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -17361,6 +17625,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -17521,6 +17786,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -17659,6 +17925,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -17807,6 +18074,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -17952,6 +18220,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -18095,6 +18364,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -18240,6 +18510,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -18414,6 +18685,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -18602,6 +18874,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -18760,6 +19033,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -18907,6 +19181,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -19054,6 +19329,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -19213,6 +19489,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -19404,6 +19681,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -19560,6 +19838,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -19727,6 +20006,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -19884,6 +20164,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -20044,6 +20325,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -20204,6 +20486,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -20387,6 +20670,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -20578,6 +20862,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -20724,6 +21009,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -20896,6 +21182,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -21069,6 +21356,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -21240,6 +21528,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -21267,7 +21556,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - MORPHO-PUNCH",
+            "name": "MORPHO-PUNCH",
             "type": "physical",
             "range": 4,
             "shape": "range",
@@ -21277,28 +21566,17 @@
               "After this attack is resolved, this character gains 1 {PWR}.",
               "{WILD} Push: If the target character is Size 2 or less, before {DMG} is dealt the target character may be pushed toward this character {S}."
             ]
-          },
-          {
-            "name": "EMBIGGENED - HIGH FIVE",
-            "type": "physical",
-            "range": 3,
-            "shape": "range",
-            "dice": 5,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - EMBIGGEN",
+            "name": "EMBIGGEN",
             "type": "active",
             "cost": 3,
             "text": "This character transforms into <b>Ms. Marvel</b> (Embiggened). This superpower can be used only once per Turn."
           },
           {
-            "name": "NORMAL - TAKE OUT THE TRASH",
+            "name": "TAKE OUT THE TRASH",
             "type": "active",
             "cost": 3,
             "text": "Choose an interactive terrain feature or an enemy character, both of Size 2 or less and within {RNG} 3, and throw it {S}. This superpower can be used only once per Turn."
@@ -21308,18 +21586,6 @@
             "type": "innate",
             "cost": 0,
             "text": "This character may reroll 1 die in its attack or defense rolls."
-          },
-          {
-            "name": "EMBIGGENED - MORPHOGENETICS",
-            "type": "innate",
-            "cost": 0,
-            "text": "When making attacks, if the target character is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
-          },
-          {
-            "name": "EMBIGGENED - POLYMORPH",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character may interact with objective tokens within {RNG} 2 of it instead of the normal {RNG} 1."
           },
           {
             "name": "IMMUNITY [POSION]",
@@ -21341,7 +21607,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - MORPHO-PUNCH",
+            "name": "MORPHO-PUNCH",
             "type": "physical",
             "range": 4,
             "shape": "range",
@@ -21351,28 +21617,17 @@
               "After this attack is resolved, this character gains 1 {PWR}.",
               "{WILD} Push: If the target character is Size 2 or less, before {DMG} is dealt the target character may be pushed toward this character {S}."
             ]
-          },
-          {
-            "name": "EMBIGGENED - HIGH FIVE",
-            "type": "physical",
-            "range": 3,
-            "shape": "range",
-            "dice": 5,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - EMBIGGEN",
+            "name": "EMBIGGEN",
             "type": "active",
             "cost": 3,
             "text": "This character transforms into <b>Ms. Marvel</b> (Embiggened). This superpower can be used only once per Turn."
           },
           {
-            "name": "NORMAL - TAKE OUT THE TRASH",
+            "name": "TAKE OUT THE TRASH",
             "type": "active",
             "cost": 3,
             "text": "Choose an interactive terrain feature or an enemy character, both of Size 2 or less and within {RNG} 3, and throw it {S}. This superpower can be used only once per Turn."
@@ -21382,18 +21637,6 @@
             "type": "innate",
             "cost": 0,
             "text": "This character may reroll 1 die in its attack or defense rolls."
-          },
-          {
-            "name": "EMBIGGENED - MORPHOGENETICS",
-            "type": "innate",
-            "cost": 0,
-            "text": "When making attacks, if the target character is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
-          },
-          {
-            "name": "EMBIGGENED - POLYMORPH",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character may interact with objective tokens within {RNG} 2 of it instead of the normal {RNG} 1."
           },
           {
             "name": "IMMUNITY [POSION]",
@@ -21407,6 +21650,111 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "forms": [
+        {
+          "name": "Embiggened",
+          "healthy": {
+            "cardImage": "MS_MARVEL_EMBIGGENED_healthy.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 3,
+              "energy": 4,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "HIGH FIVE",
+                "type": "physical",
+                "range": 3,
+                "shape": "range",
+                "dice": 5,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "INHUMAN",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may reroll 1 die in its attack or defense rolls."
+              },
+              {
+                "name": "MORPHOGENETICS",
+                "type": "innate",
+                "cost": 0,
+                "text": "When making attacks, if the target character is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
+              },
+              {
+                "name": "POLYMORPH",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may interact with objective tokens within {RNG} 2 of it instead of the normal {RNG} 1."
+              },
+              {
+                "name": "IMMUNITY [POSION]",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character can’t suffer the [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+              }
+            ]
+          },
+          "injured": {
+            "cardImage": "MS_MARVEL_EMBIGGENED_injured.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 3,
+              "energy": 4,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "HIGH FIVE",
+                "type": "physical",
+                "range": 3,
+                "shape": "range",
+                "dice": 5,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "INHUMAN",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may reroll 1 die in its attack or defense rolls."
+              },
+              {
+                "name": "MORPHOGENETICS",
+                "type": "innate",
+                "cost": 0,
+                "text": "When making attacks, if the target character is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
+              },
+              {
+                "name": "POLYMORPH",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may interact with objective tokens within {RNG} 2 of it instead of the normal {RNG} 1."
+              },
+              {
+                "name": "IMMUNITY [POSION]",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character can’t suffer the [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+              }
+            ]
+          }
+        }
       ],
       "verified": false
     },
@@ -21567,6 +21915,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -21724,6 +22073,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -21885,6 +22235,7 @@
         "cerebro",
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -22041,6 +22392,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -22198,6 +22550,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -22353,6 +22706,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -22510,6 +22864,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -22714,6 +23069,7 @@
         "cerebro",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -22871,6 +23227,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -23054,6 +23411,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -23204,6 +23562,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -23364,6 +23723,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -23535,6 +23895,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -23721,6 +24082,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -23887,6 +24249,7 @@
         "cerebro",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -24054,6 +24417,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -24238,6 +24602,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -24393,6 +24758,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -24565,6 +24931,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -24710,6 +25077,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -24867,6 +25235,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -25036,6 +25405,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -25183,6 +25553,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -25328,6 +25699,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -25496,6 +25868,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -25656,6 +26029,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -25802,6 +26176,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -25961,6 +26336,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -26095,6 +26471,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -26236,6 +26613,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -26406,6 +26784,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -26576,6 +26955,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -26750,6 +27130,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -26898,6 +27279,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -27048,6 +27430,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -27165,6 +27548,7 @@
       "sources": [
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -27343,6 +27727,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -27512,6 +27897,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -27673,6 +28059,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -27877,6 +28264,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -28069,6 +28457,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -28217,6 +28606,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -28377,6 +28767,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -28580,6 +28971,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -28774,6 +29166,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -28944,6 +29337,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29045,6 +29439,7 @@
       "sources": [
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29177,6 +29572,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29313,6 +29709,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29482,6 +29879,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29643,6 +30041,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29800,6 +30199,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -29946,6 +30346,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -30114,6 +30515,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -30297,6 +30699,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -30468,6 +30871,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -30653,6 +31057,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -30808,6 +31213,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -30953,6 +31359,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -31119,6 +31526,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -31292,6 +31700,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -31450,6 +31859,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -31603,6 +32013,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -31737,6 +32148,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -31933,6 +32345,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -32078,6 +32491,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -32239,6 +32653,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -32412,6 +32827,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -32581,6 +32997,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -32752,6 +33169,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -32886,6 +33304,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -33056,6 +33475,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -33237,6 +33657,7 @@
         "cerebro",
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -33408,6 +33829,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -33568,6 +33990,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -33739,6 +34162,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -33929,6 +34353,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -34089,6 +34514,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -34233,6 +34659,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -34379,6 +34806,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -34560,6 +34988,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -34739,6 +35168,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -34864,6 +35294,7 @@
       "sources": [
         "bsdata"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -35033,6 +35464,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -35166,6 +35598,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -35311,6 +35744,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -35494,6 +35928,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -35650,6 +36085,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -35808,6 +36244,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -35975,6 +36412,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -36119,6 +36557,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -36263,6 +36702,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -36433,6 +36873,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -36604,6 +37045,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     },
     {
@@ -36631,7 +37073,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - SIZE-CHANGING SMACK DOWN",
+            "name": "SIZE-CHANGING SMACK DOWN",
             "type": "physical",
             "range": 3,
             "shape": "range",
@@ -36641,77 +37083,29 @@
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, this character may transform into <b>Wasp</b> (Tiny). If it transforms, it drops all objective tokens it is holding before transforming."
             ]
-          },
-          {
-            "name": "TINY - STINGER BLAST",
-            "type": "energy",
-            "range": 2,
-            "shape": "range",
-            "dice": 5,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "The target character does not gain {PWR} for {DMG} dealt by this attack."
-            ]
-          },
-          {
-            "name": "TINY - WASP'S FURY",
-            "type": "energy",
-            "range": 3,
-            "shape": "range",
-            "dice": 6,
-            "cost": 2,
-            "text": [
-              "After this attack is resolved, this character may Advance {M}.",
-              "After this attack is resolved, this character transforms into <b>Wasp</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - CHANGE SIZE",
+            "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
             "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Tiny). The Change Size superpower can be used only once per Turn."
           },
           {
-            "name": "NORMAL - PYM DISCS",
+            "name": "PYM DISCS",
             "type": "active",
             "cost": 3,
             "text": "Choose an interactive terrain feature of Size 3 or less within {RNG} 2 and throw it {M}. This superpower can be used only once per Turn."
           },
           {
-            "name": "TINY - CHANGE SIZE",
-            "type": "active",
-            "cost": 1,
-            "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Normal). The Change Size superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - PYM PARTICLE CONTROL",
+            "name": "PYM PARTICLE CONTROL",
             "type": "reactive",
             "cost": 1,
             "text": "When this character is targeted by an enemy attack or would suffer a collision you may use this superpower. This character drops all objective tokens it is holding then transforms into <b>Wasp</b> (Tiny) before the attack or collision continues."
           },
           {
-            "name": "NORMAL - FLIGHT",
-            "type": "innate",
-            "cost": 0,
-            "text": "When placing the movement tool during an Advance, this character counts as Size 5."
-          },
-          {
-            "name": "TINY - TINY SUPERHERO",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
-          },
-          {
-            "name": "TINY - STEALTH",
-            "type": "innate",
-            "cost": 0,
-            "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
-          },
-          {
-            "name": "TINY - FLIGHT",
+            "name": "FLIGHT",
             "type": "innate",
             "cost": 0,
             "text": "When placing the movement tool during an Advance, this character counts as Size 5."
@@ -36730,7 +37124,7 @@
         },
         "attacks": [
           {
-            "name": "NORMAL - SIZE-CHANGING SMACK DOWN",
+            "name": "SIZE-CHANGING SMACK DOWN",
             "type": "physical",
             "range": 3,
             "shape": "range",
@@ -36740,77 +37134,29 @@
               "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
               "After this attack is resolved, this character may transform into <b>Wasp</b> (Tiny). If it transforms, it drops all objective tokens it is holding before transforming."
             ]
-          },
-          {
-            "name": "TINY - STINGER BLAST",
-            "type": "energy",
-            "range": 2,
-            "shape": "range",
-            "dice": 5,
-            "cost": 0,
-            "text": [
-              "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-              "The target character does not gain {PWR} for {DMG} dealt by this attack."
-            ]
-          },
-          {
-            "name": "TINY - WASP'S FURY",
-            "type": "energy",
-            "range": 3,
-            "shape": "range",
-            "dice": 6,
-            "cost": 2,
-            "text": [
-              "After this attack is resolved, this character may Advance {M}.",
-              "After this attack is resolved, this character transforms into <b>Wasp</b> (Normal)."
-            ]
           }
         ],
         "superpowers": [
           {
-            "name": "NORMAL - CHANGE SIZE",
+            "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
             "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Tiny). The Change Size superpower can be used only once per Turn."
           },
           {
-            "name": "NORMAL - PYM DISCS",
+            "name": "PYM DISCS",
             "type": "active",
             "cost": 3,
             "text": "Choose an interactive terrain feature of Size 3 or less within {RNG} 2 and throw it {M}. This superpower can be used only once per Turn."
           },
           {
-            "name": "TINY - CHANGE SIZE",
-            "type": "active",
-            "cost": 1,
-            "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Normal). The Change Size superpower can be used only once per Turn."
-          },
-          {
-            "name": "NORMAL - PYM PARTICLE CONTROL",
+            "name": "PYM PARTICLE CONTROL",
             "type": "reactive",
             "cost": 1,
             "text": "When this character is targeted by an enemy attack or would suffer a collision you may use this superpower. This character drops all objective tokens it is holding then transforms into <b>Wasp</b> (Tiny) before the attack or collision continues."
           },
           {
-            "name": "NORMAL - FLIGHT",
-            "type": "innate",
-            "cost": 0,
-            "text": "When placing the movement tool during an Advance, this character counts as Size 5."
-          },
-          {
-            "name": "TINY - TINY SUPERHERO",
-            "type": "innate",
-            "cost": 0,
-            "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
-          },
-          {
-            "name": "TINY - STEALTH",
-            "type": "innate",
-            "cost": 0,
-            "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
-          },
-          {
-            "name": "TINY - FLIGHT",
+            "name": "FLIGHT",
             "type": "innate",
             "cost": 0,
             "text": "When placing the movement tool during an Advance, this character counts as Size 5."
@@ -36821,6 +37167,137 @@
         "cerebro",
         "bsdata",
         "jarvis"
+      ],
+      "forms": [
+        {
+          "name": "Tiny",
+          "healthy": {
+            "cardImage": "WASP_TINY_healthy.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 3,
+              "energy": 2,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "STINGER BLAST",
+                "type": "energy",
+                "range": 2,
+                "shape": "range",
+                "dice": 5,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "The target character does not gain {PWR} for {DMG} dealt by this attack."
+                ]
+              },
+              {
+                "name": "WASP'S FURY",
+                "type": "energy",
+                "range": 3,
+                "shape": "range",
+                "dice": 6,
+                "cost": 2,
+                "text": [
+                  "After this attack is resolved, this character may Advance {M}.",
+                  "After this attack is resolved, this character transforms into <b>Wasp</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "CHANGE SIZE",
+                "type": "active",
+                "cost": 1,
+                "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Normal). The Change Size superpower can be used only once per Turn."
+              },
+              {
+                "name": "TINY SUPERHERO",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+              },
+              {
+                "name": "STEALTH",
+                "type": "innate",
+                "cost": 0,
+                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+              },
+              {
+                "name": "FLIGHT",
+                "type": "innate",
+                "cost": 0,
+                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+              }
+            ]
+          },
+          "injured": {
+            "cardImage": "WASP_TINY_injured.png",
+            "stamina": 6,
+            "movement": "M",
+            "size": 2,
+            "defense": {
+              "physical": 3,
+              "energy": 2,
+              "mystic": 3
+            },
+            "attacks": [
+              {
+                "name": "STINGER BLAST",
+                "type": "energy",
+                "range": 2,
+                "shape": "range",
+                "dice": 5,
+                "cost": 0,
+                "text": [
+                  "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+                  "The target character does not gain {PWR} for {DMG} dealt by this attack."
+                ]
+              },
+              {
+                "name": "WASP'S FURY",
+                "type": "energy",
+                "range": 3,
+                "shape": "range",
+                "dice": 6,
+                "cost": 2,
+                "text": [
+                  "After this attack is resolved, this character may Advance {M}.",
+                  "After this attack is resolved, this character transforms into <b>Wasp</b> (Normal)."
+                ]
+              }
+            ],
+            "superpowers": [
+              {
+                "name": "CHANGE SIZE",
+                "type": "active",
+                "cost": 1,
+                "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Normal). The Change Size superpower can be used only once per Turn."
+              },
+              {
+                "name": "TINY SUPERHERO",
+                "type": "innate",
+                "cost": 0,
+                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+              },
+              {
+                "name": "STEALTH",
+                "type": "innate",
+                "cost": 0,
+                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+              },
+              {
+                "name": "FLIGHT",
+                "type": "innate",
+                "cost": 0,
+                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+              }
+            ]
+          }
+        }
       ],
       "verified": false
     },
@@ -37017,6 +37494,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -37164,6 +37642,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -37309,6 +37788,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -37480,6 +37960,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -37655,6 +38136,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -37776,6 +38258,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -37938,6 +38421,7 @@
         "bsdata",
         "jarvis"
       ],
+      "forms": [],
       "verified": false
     },
     {
@@ -38085,6 +38569,7 @@
         "jarvis",
         "ocr"
       ],
+      "forms": [],
       "verified": true
     }
   ]

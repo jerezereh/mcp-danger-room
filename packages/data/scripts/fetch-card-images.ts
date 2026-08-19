@@ -46,7 +46,13 @@ const EXTRACTOR_CACHE = resolve(pkgRoot, '.import/card-images');
 
 const wanted = [
   ...new Set(
-    characters.flatMap(c => [c.healthy.cardImage, c.injured.cardImage]).filter((f): f is string => Boolean(f)),
+    characters
+      .flatMap(c => [
+        c.healthy.cardImage,
+        c.injured.cardImage,
+        ...c.forms.flatMap(f => [f.healthy.cardImage, f.injured.cardImage]),
+      ])
+      .filter((f): f is string => Boolean(f)),
   ),
 ].sort();
 

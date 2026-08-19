@@ -72,6 +72,9 @@ export function RosterBuilder() {
           <input
             value={query}
             onChange={e => setQuery(e.target.value)}
+            // Clearing on focus makes the common case — search for something
+            // else — one gesture instead of select-all-then-type.
+            onFocus={() => setQuery('')}
             placeholder="Search name or affiliation…"
             className="w-full rounded bg-surface px-3 py-2 text-sm text-slate-200 outline-none ring-accent/40 placeholder:text-slate-600 focus:ring-2"
           />

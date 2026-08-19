@@ -457,6 +457,7 @@ describe('manual overrides', () => {
       superpowers: [],
     },
     sources: ['jarvis' as const],
+    forms: [],
     verified: false,
   });
 

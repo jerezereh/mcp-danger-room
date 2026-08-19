@@ -25,6 +25,7 @@ import {
   mergeDrafts,
   OverrideFile,
   parseBsdata,
+  splitForms,
   boldableNames,
   normalizeRulesText,
   cerebroToDraft,
@@ -241,16 +242,34 @@ async function main() {
 
   /*
    * House style last, so hand-written overrides are normalised too and a
-   * correction never has to remember the conventions.
+   * correction never has to remember the conventions. Forms are split first,
+   * so an alternate mode's abilities are normalised alongside the rest.
    */
-  const normalized = patched.characters.map(c => {
+  const altImages = new Map(
+    merged.drafts.filter(d => d.altCardImage).map(d => [d.id, d.altCardImage as string]),
+  );
+  const split = patched.characters.map(c => splitForms(c, altImages.get(c.id) ?? null));
+  const transformed = split.filter(c => c.forms.length > 0);
+  if (transformed.length > 0) {
+    console.log(`\nTransforming characters: ${transformed.length}`);
+    for (const c of transformed) {
+      console.log(`  ${c.id} — ${c.forms.map(f => f.name).join(', ')}`);
+    }
+  }
+
+  const normalized = split.map(c => {
     const names = boldableNames(c);
     const side = (b: (typeof c)['healthy']) => ({
       ...b,
       attacks: b.attacks.map(a => ({ ...a, text: a.text.map(t => normalizeRulesText(t, names)) })),
       superpowers: b.superpowers.map(p => ({ ...p, text: normalizeRulesText(p.text, names) })),
     });
-    return { ...c, healthy: side(c.healthy), injured: side(c.injured) };
+    return {
+      ...c,
+      healthy: side(c.healthy),
+      injured: side(c.injured),
+      forms: c.forms.map(f => ({ ...f, healthy: side(f.healthy), injured: side(f.injured) })),
+    };
   });
 
   writeFileSync(CORPUS, JSON.stringify({ characters: normalized }, null, 2) + '\n');

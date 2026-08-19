@@ -22,6 +22,7 @@ const stub = (id: string, threat: number): Character =>
     threat,
     baseMm: 40,
     sources: ['manual'],
+  forms: [],
     verified: false,
     healthy: {
       cardImage: null,

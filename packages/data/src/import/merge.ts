@@ -324,6 +324,7 @@ export function mergeDrafts(inputs: MergeInputs): MergeResult {
       healthy: mergeSide(id, 'healthy', slot, 'healthy', staminaErrata, conflicts),
       injured: mergeSide(id, 'injured', slot, 'injured', staminaErrata, conflicts),
       ...(cerebro?.errata ? { errata: cerebro.errata } : {}),
+      ...(cerebro?.altCardImage ? { altCardImage: cerebro.altCardImage } : {}),
       ...(cerebro?.tags ? { tags: cerebro.tags } : {}),
       sources: [...sources],
     });

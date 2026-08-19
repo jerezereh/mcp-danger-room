@@ -41,6 +41,8 @@ export interface CharacterDraft {
   packName?: string | null;
   threat?: number;
   baseMm?: number;
+  /** The alternate form's injured card image, on transforming characters. */
+  altCardImage?: string | null;
   healthy?: StatBlockDraft;
   injured?: StatBlockDraft;
   /** Every source that contributed a field, in merge order. */
@@ -117,6 +119,8 @@ export function finalize(draft: CharacterDraft, sources?: readonly DraftSource[]
       packName: draft.packName ?? null,
       threat: draft.threat as number,
       baseMm: draft.baseMm ?? 40,
+      // Populated later by splitForms, for the six characters that transform.
+      forms: [],
       errata: draft.errata ?? null,
       healthy: side(draft.healthy as StatBlockDraft),
       injured: side(draft.injured as StatBlockDraft),

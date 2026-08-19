@@ -119,6 +119,27 @@ export const StatBlock = z.object({
 });
 export type StatBlock = z.infer<typeof StatBlock>;
 
+/**
+ * An alternate mode a character can transform into.
+ *
+ * Six characters print four faces rather than two: Ant-Man and Wasp shrink,
+ * Emma Frost turns to diamond, Ms. Marvel embiggens, the Hood is possessed,
+ * and Captain Marvel goes Binary. Each mode is a full card with its own
+ * healthy and injured faces.
+ *
+ * The default mode stays on `healthy`/`injured` rather than becoming
+ * `forms[0]`, because a character is only ever in one mode to begin with and
+ * everything that reads a stat block — the engine, the roster, the board —
+ * wants the mode it starts in without asking which that is.
+ */
+export const Form = z.object({
+  /** The mode as the card labels it: "Tiny", "Diamond", "Binary". */
+  name: z.string().min(1),
+  healthy: StatBlock,
+  injured: StatBlock,
+});
+export type Form = z.infer<typeof Form>;
+
 export const Character = z.object({
   /** Stable kebab-case key. Never derived from display name at runtime. */
   id: z.string().regex(/^[a-z0-9-]+$/),
@@ -163,6 +184,8 @@ export const Character = z.object({
   sources: z
     .array(z.enum(['legacy-import', 'manual', 'scraped', 'cerebro', 'bsdata', 'jarvis', 'ocr']))
     .default([]),
+  /** Alternate modes, empty for all but the six transforming characters. */
+  forms: z.array(Form).default([]),
   /** False until a human has checked it against the physical card. */
   verified: z.boolean().default(false),
 });

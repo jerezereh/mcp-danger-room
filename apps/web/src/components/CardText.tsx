@@ -58,7 +58,17 @@ export function CardText({
           </strong>
         );
       case 'symbol':
-        return <Glyph key={i} name={token.key} label={SYMBOL_LABELS[token.key]} />;
+        /*
+         * Blank has no icon. The token is kept in the data because the engine
+         * needs to know a die result is meant, but the card prints the word,
+         * so the card reads the word — a chip here would invent an icon the
+         * printed card does not have.
+         */
+        return token.key === 'blank' ? (
+          <span key={i}>{SYMBOL_LABELS.blank}</span>
+        ) : (
+          <Glyph key={i} name={token.key} label={SYMBOL_LABELS[token.key]} />
+        );
       case 'unknown':
         return (
           <span
