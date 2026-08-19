@@ -25,6 +25,8 @@ import {
   mergeDrafts,
   OverrideFile,
   parseBsdata,
+  applyFormStats,
+  formJobId,
   splitForms,
   boldableNames,
   normalizeRulesText,
@@ -33,6 +35,7 @@ import {
 } from '../src/import/index.js';
 import { fetchJarvisCharacters, jarvisToDraft } from '../src/import/jarvis.js';
 import { ocrToDraft, type ExtractionRecord } from '../src/import/ocr.js';
+import type { FormStats } from '../src/import/forms.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = resolve(here, '..');
@@ -248,12 +251,34 @@ async function main() {
   const altImages = new Map(
     merged.drafts.filter(d => d.altCardImage).map(d => [d.id, d.altCardImage as string]),
   );
-  const split = patched.characters.map(c => splitForms(c, altImages.get(c.id) ?? null));
+  /*
+   * An alternate mode's stat box exists only on its own scan, so it is filed
+   * under "<id>_<Mode>" by the extractor rather than merged as a character.
+   */
+  const formStats = new Map(
+    (existsSync(extractedPath)
+      ? (JSON.parse(readFileSync(extractedPath, 'utf8')).results as {
+          id: string;
+          card: { healthy: FormStats['healthy']; injured: FormStats['injured'] };
+        }[])
+      : []
+    )
+      .filter(r => r.id.includes('_'))
+      .map(r => [r.id, { healthy: r.card.healthy, injured: r.card.injured }] as const),
+  );
+
+  const split = patched.characters
+    .map(c => splitForms(c, altImages.get(c.id) ?? null))
+    .map(c => applyFormStats(c, formStats));
   const transformed = split.filter(c => c.forms.length > 0);
   if (transformed.length > 0) {
     console.log(`\nTransforming characters: ${transformed.length}`);
     for (const c of transformed) {
-      console.log(`  ${c.id} — ${c.forms.map(f => f.name).join(', ')}`);
+      const read = c.forms.filter(f => formStats.has(formJobId(c.id, f.name))).length;
+      console.log(
+        `  ${c.id} — ${c.forms.map(f => f.name).join(', ')}` +
+          (read === c.forms.length ? '' : `  ⚠ ${c.forms.length - read} without a read stat box`),
+      );
     }
   }
 

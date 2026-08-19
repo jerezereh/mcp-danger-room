@@ -16,6 +16,20 @@
 
 import type { Character, Form, StatBlock } from '../schema.js';
 
+/**
+ * The id an alternate mode's extraction is filed under.
+ *
+ * An underscore, because character ids match ^[a-z0-9-]+$ and can never
+ * contain one — so a form job cannot collide with a character, and splitting
+ * the id back apart is exact.
+ *
+ * It also has to survive the Batch API, whose custom_id must match
+ * ^[a-zA-Z0-9_-]{1,64}$. A '#' seemed clearer and was rejected outright, so
+ * the form name is stripped to alphanumerics for the same reason.
+ */
+export const formJobId = (characterId: string, formName: string) =>
+  `${characterId}_${formName.replace(/[^A-Za-z0-9]/g, '')}`;
+
 const PREFIX = /^([A-Z][A-Za-z' ]{2,20}) - /;
 const DEFAULT_MODE = 'NORMAL';
 
@@ -98,4 +112,47 @@ export function splitForms(character: Character, altInjuredImage: string | null)
     injured: abilitiesFor(character.injured, DEFAULT_MODE, character.injured.cardImage),
     forms: [...character.forms, form],
   };
+}
+
+/** The stat box of one alternate mode, as the extractor read it. */
+export interface FormStats {
+  healthy: Pick<StatBlock, 'stamina' | 'movement' | 'size' | 'defense'>;
+  injured: Pick<StatBlock, 'stamina' | 'movement' | 'size' | 'defense'>;
+}
+
+/**
+ * Give each alternate mode the stat box printed on its own card.
+ *
+ * Splitting a transforming character divides its abilities but has nothing to
+ * divide its numbers with: Cerebro carries one stamina per character and
+ * BSData never separated the modes, so an alternate mode inherited the
+ * default's stat box. Four of the six were wrong that way — Ant-Man shrinks to
+ * Size 1 and Short movement, Ms. Marvel grows to Size 4, Emma Frost's diamond
+ * form trades mystic defense for physical.
+ *
+ * The scan is the only record of those numbers, so they come from the
+ * extractor. Only the stat box: the abilities stay as BSData split them, which
+ * is a better source for rules text than a vision model reading a card.
+ */
+export function applyFormStats(
+  character: Character,
+  stats: ReadonlyMap<string, FormStats>,
+): Character {
+  if (character.forms.length === 0) return character;
+
+  let used = false;
+  const forms = character.forms.map(form => {
+    const read = stats.get(formJobId(character.id, form.name));
+    if (!read) return form;
+    used = true;
+    return {
+      ...form,
+      healthy: { ...form.healthy, ...read.healthy },
+      injured: { ...form.injured, ...read.injured },
+    };
+  });
+
+  return used
+    ? { ...character, forms, sources: [...new Set([...character.sources, 'ocr' as const])] }
+    : character;
 }

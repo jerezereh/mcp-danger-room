@@ -86,6 +86,7 @@ const ONLY = option('only');
 
 const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.webp']);
 
+
 /**
  * Build a lookup from every image on disk, keyed by a slug of its filename.
  *
@@ -225,9 +226,34 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
         errata: c.errata,
       });
     }
+
+    /*
+     * A transforming character's alternate mode is a separate card with its own
+     * stat box, and no source carries its numbers — Cerebro has one stamina per
+     * character and BSData never separated the modes. The scan is the only
+     * record of them, so each mode is its own job, keyed "<id>#<Mode>".
+     *
+     * No known stamina is passed: there is nothing to cross-check against, which
+     * is exactly why these are being read.
+     */
+    for (const form of c.forms) {
+      const id = formJobId(c.id, form.name);
+      if (!known.has(id)) {
+        known.set(id, {
+          id,
+          name: `${c.name} (${form.name})`,
+          healthyImage: form.healthy.cardImage,
+          injuredImage: form.injured.cardImage,
+          errata: c.errata,
+        });
+      }
+    }
   }
 
-  let needing = new Set(ALL ? known.keys() : worklist.map(e => e.id));
+  const isForm = (id: string) => id.includes('_');
+  let needing = new Set(
+    ALL ? [...known.keys()].filter(id => !isForm(id)) : worklist.map(e => e.id),
+  );
 
   if (ONLY) {
     const wanted =

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { characters } from '../characters.js';
-import { alternateMode, splitForms } from './forms.js';
+import { alternateMode, applyFormStats, formJobId, splitForms } from './forms.js';
 
 const block = (names: string[]) =>
   ({
@@ -99,5 +99,59 @@ describe('the corpus', () => {
         .map(a => a.name);
       expect(names.filter(n => /^[A-Z]+ - /.test(n)), c.id).toEqual([]);
     }
+  });
+});
+
+/*
+ * An alternate mode's numbers exist only on its own scan. Before this, a mode
+ * inherited the default's stat box and four of the six were wrong that way.
+ */
+describe('applyFormStats', () => {
+  const withForm = () => splitForms(character(['NORMAL - A', 'TINY - B']), null);
+
+  const stats = {
+    healthy: { stamina: 4, movement: 'S' as const, size: 1, defense: { physical: 3, energy: 2, mystic: 3 } },
+    injured: { stamina: 3, movement: 'S' as const, size: 1, defense: { physical: 3, energy: 2, mystic: 3 } },
+  };
+
+  it('gives the mode the stat box read from its card', () => {
+    const out = applyFormStats(withForm(), new Map([[formJobId('x', 'Tiny'), stats]]));
+    expect(out.forms[0]?.healthy.size).toBe(1);
+    expect(out.forms[0]?.healthy.movement).toBe('S');
+    // The default mode is untouched.
+    expect(out.healthy.size).toBe(2);
+  });
+
+  it('keeps the abilities and image the split produced', () => {
+    const out = applyFormStats(withForm(), new Map([[formJobId('x', 'Tiny'), stats]]));
+    expect(out.forms[0]?.healthy.superpowers.map(p => p.name)).toEqual(['B']);
+  });
+
+  it('records that a mode read by the extractor came partly from OCR', () => {
+    const out = applyFormStats(withForm(), new Map([[formJobId('x', 'Tiny'), stats]]));
+    expect(out.sources).toContain('ocr');
+  });
+
+  it('leaves a mode alone when nothing was read for it', () => {
+    const before = withForm();
+    expect(applyFormStats(before, new Map())).toBe(before);
+  });
+
+  it('does nothing to a character that does not transform', () => {
+    const before = character(['A', 'B']);
+    expect(applyFormStats(before, new Map())).toBe(before);
+  });
+});
+
+describe('formJobId', () => {
+  it('uses a separator a character id can never contain', () => {
+    // Ids match ^[a-z0-9-]+$, and the Batch API rejects anything outside
+    // ^[a-zA-Z0-9_-]$ in a custom_id — which ruled out the '#' tried first.
+    expect(formJobId('ant-man', 'Tiny')).toBe('ant-man_Tiny');
+    expect(formJobId('ant-man', 'Tiny')).toMatch(/^[a-zA-Z0-9_-]{1,64}$/);
+  });
+
+  it('strips anything the Batch API would reject from the mode name', () => {
+    expect(formJobId('x', 'Super Charged!')).toBe('x_SuperCharged');
   });
 });

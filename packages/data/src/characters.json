@@ -1259,7 +1259,7 @@
             "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
-            "text": "This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny). The Change Size superpower can be used only once per Turn."
+            "text": "This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny). The <b>Change Size</b> superpower can be used only once per Turn."
           },
           {
             "name": "PYM PARTICLE CONTROL",
@@ -1309,7 +1309,7 @@
             "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
-            "text": "This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny). The Change Size superpower can be used only once per Turn."
+            "text": "This character drops all objective tokens it is holding, then transforms into <b>Ant-Man</b> (Tiny). The <b>Change Size</b> superpower can be used only once per Turn."
           },
           {
             "name": "PYM PARTICLE CONTROL",
@@ -1322,7 +1322,8 @@
       "sources": [
         "cerebro",
         "bsdata",
-        "jarvis"
+        "jarvis",
+        "ocr"
       ],
       "forms": [
         {
@@ -1330,8 +1331,8 @@
           "healthy": {
             "cardImage": "ANT_MAN_TINY_healthy.png",
             "stamina": 6,
-            "movement": "M",
-            "size": 2,
+            "movement": "S",
+            "size": 1,
             "defense": {
               "physical": 3,
               "energy": 2,
@@ -1339,7 +1340,7 @@
             },
             "attacks": [
               {
-                "name": "ANT-SIZED UPPERCUT",
+                "name": "Ant-Sized Uppercut",
                 "type": "physical",
                 "range": 1,
                 "shape": "range",
@@ -1353,36 +1354,36 @@
             ],
             "superpowers": [
               {
-                "name": "CHANGE SIZE",
+                "name": "Change Size",
                 "type": "active",
                 "cost": 1,
-                "text": "This character transforms into <b>Ant-Man</b> (Normal). The Change Size superpower can be used only once per Turn."
+                "text": "This character transforms into <b>Ant-Man</b> (Normal). The <b>Change Size</b> superpower can be used only once per Turn."
               },
               {
-                "name": "HITCH A RIDE",
+                "name": "Hitch a Ride",
                 "type": "active",
                 "cost": 0,
-                "text": "Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
+                "text": "This character drops all objective tokens it is holding. Then, Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
               },
               {
-                "name": "STEALTH",
+                "name": "Tiny Superhero",
                 "type": "innate",
                 "cost": 0,
-                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+                "text": "This character may reroll any number of its defense or dodge dice. Additionally, this character cannot hold Civilian objective tokens."
               },
               {
-                "name": "TINY SUPERHERO",
+                "name": "Stealth",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+                "text": ""
               }
             ]
           },
           "injured": {
             "cardImage": "ANT_MAN_TINY_injured.png",
             "stamina": 6,
-            "movement": "M",
-            "size": 2,
+            "movement": "S",
+            "size": 1,
             "defense": {
               "physical": 3,
               "energy": 2,
@@ -1390,7 +1391,7 @@
             },
             "attacks": [
               {
-                "name": "ANT-SIZED UPPERCUT",
+                "name": "Ant-Sized Uppercut",
                 "type": "physical",
                 "range": 1,
                 "shape": "range",
@@ -1404,28 +1405,28 @@
             ],
             "superpowers": [
               {
-                "name": "CHANGE SIZE",
+                "name": "Change Size",
                 "type": "active",
                 "cost": 1,
-                "text": "This character transforms into <b>Ant-Man</b> (Normal). The Change Size superpower can be used only once per Turn."
+                "text": "This character transforms into <b>Ant-Man</b> (Normal). The <b>Change Size</b> superpower can be used only once per Turn."
               },
               {
-                "name": "HITCH A RIDE",
+                "name": "Hitch a Ride",
                 "type": "active",
                 "cost": 0,
-                "text": "Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
+                "text": "This character drops all objective tokens it is holding. Then, Place this character within {RNG} 3 of its current position. This superpower can be used only once per Turn."
               },
               {
-                "name": "STEALTH",
+                "name": "Tiny Superhero",
                 "type": "innate",
                 "cost": 0,
-                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+                "text": "This character may reroll any number of its defense or dodge dice. Additionally, this character cannot hold Civilian objective tokens."
               },
               {
-                "name": "TINY SUPERHERO",
+                "name": "Stealth",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+                "text": ""
               }
             ]
           }
@@ -6276,7 +6277,8 @@
       "sources": [
         "cerebro",
         "bsdata",
-        "jarvis"
+        "jarvis",
+        "ocr"
       ],
       "forms": [
         {
@@ -6293,7 +6295,7 @@
             },
             "attacks": [
               {
-                "name": "BINARY BLAST",
+                "name": "Binary Blast",
                 "type": "energy",
                 "range": 2,
                 "shape": "range",
@@ -6301,59 +6303,59 @@
                 "cost": 1,
                 "text": [
                   "After this attack is resolved, this character Pushes the target character {S}.",
-                  "{WILD} Incinerate: After this attack is resolved, the target character gains the Incinerate special condition."
+                  "{ENRG} <b>Incinerate</b>: After this attack is resolved, the defender gains the Incinerate special condition."
                 ]
               },
               {
-                "name": "WARBIRD",
+                "name": "Warbird",
                 "type": "energy",
                 "range": 3,
                 "shape": "range",
                 "dice": 8,
                 "cost": 3,
                 "text": [
-                  "After this attack is resolved, Place this character within {RNG} 2 of the target character.",
-                  "{WILD} Throw: After this attack is resolved, this character may Throw the target character {S}.",
-                  "{CRIT} {WILD} Explosive: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the target character suffer 1 {DMG}."
+                  "After this attack is resolved, Place this character within {RNG} 2 of the defender.",
+                  "{ENRG} <b>Throw</b>: After this attack is resolved, this character may Throw the defender {S}.",
+                  "{CRIT} {ENRG} <b>Explosive</b>: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the defender suffer 1 {DMG}."
                 ]
               }
             ],
             "superpowers": [
               {
-                "name": "I'M JUST GETTING WARMED UP",
+                "name": "I'm Just Getting Warmed Up",
                 "type": "active",
                 "cost": 2,
-                "text": "Choose an interactive terrain feature or enemy character, both of Size 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
+                "text": "Choose an interactive terrain feature or enemy character, both of {SIZE} 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
               },
               {
-                "name": "READY OR NOT...",
+                "name": "Ready or Not . . .",
                 "type": "active",
                 "cost": 0,
                 "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
               },
               {
-                "name": "I DON'T NEED A POWERUP TO KICK YOUR BUTT",
+                "name": "I Don't Need a Powerup to Kick Your Butt",
                 "type": "reactive",
                 "cost": 0,
                 "text": "When this character spends or loses {PWR}, after the effect is resolved, if this character has 3 or less {PWR}, it may use this superpower. This character transforms into <b>Captain Marvel, Cosmic Avenger</b> (Normal)."
               },
               {
-                "name": "ENHANCED ENERGY ABSORPTION",
+                "name": "Enhanced Energy Absorption",
                 "type": "innate",
                 "cost": 0,
-                "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
+                "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {ENRG} in the defense roll it may change 1 of the attacker's {CRIT}, {ENRG}, or {PWR} results to a Blank. This character gains 1 {PWR} for each die changed in this way."
               },
               {
-                "name": "FLIGHT",
+                "name": "Flight",
                 "type": "innate",
                 "cost": 0,
-                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+                "text": "<b>Flight</b>"
               },
               {
-                "name": "IMMUNITY [INCINERATE, POISON, STAGGER, STUN]",
+                "name": "Immunity (Incinerate, Poison, Stagger, Stun)",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character can’t suffer the [INCINERATE], [POISON], [STAGGER], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+                "text": "<b>Immunity (Incinerate, Poison, Stagger, Stun)</b>"
               }
             ]
           },
@@ -6369,7 +6371,7 @@
             },
             "attacks": [
               {
-                "name": "BINARY BLAST",
+                "name": "Binary Blast",
                 "type": "energy",
                 "range": 2,
                 "shape": "range",
@@ -6377,59 +6379,59 @@
                 "cost": 1,
                 "text": [
                   "After this attack is resolved, this character Pushes the target character {S}.",
-                  "{WILD} Incinerate: After this attack is resolved, the target character gains the Incinerate special condition."
+                  "{ENRG} <b>Incinerate</b>: After this attack is resolved, the defender gains the Incinerate special condition."
                 ]
               },
               {
-                "name": "WARBIRD",
+                "name": "Warbird",
                 "type": "energy",
                 "range": 3,
                 "shape": "range",
                 "dice": 8,
                 "cost": 3,
                 "text": [
-                  "After this attack is resolved, Place this character within {RNG} 2 of the target character.",
-                  "{WILD} Throw: After this attack is resolved, this character may Throw the target character {S}.",
-                  "{CRIT} {WILD} Explosive: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the target character suffer 1 {DMG}."
+                  "After this attack is resolved, Place this character within {RNG} 2 of the defender.",
+                  "{ENRG} <b>Throw</b>: After this attack is resolved, this character may Throw the defender {S}.",
+                  "{CRIT} {ENRG} <b>Explosive</b>: Before {DMG} is dealt, other enemy characters within {RNG} 2 of the defender suffer 1 {DMG}."
                 ]
               }
             ],
             "superpowers": [
               {
-                "name": "I'M JUST GETTING WARMED UP",
+                "name": "I'm Just Getting Warmed Up",
                 "type": "active",
                 "cost": 2,
-                "text": "Choose an interactive terrain feature or enemy character, both of Size 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
+                "text": "Choose an interactive terrain feature or enemy character, both of {SIZE} 4 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
               },
               {
-                "name": "READY OR NOT...",
+                "name": "Ready or Not . . .",
                 "type": "active",
                 "cost": 0,
                 "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
               },
               {
-                "name": "I DON'T NEED A POWERUP TO KICK YOUR BUTT",
+                "name": "I Don't Need a Powerup to Kick Your Butt",
                 "type": "reactive",
                 "cost": 0,
                 "text": "When this character spends or loses {PWR}, after the effect is resolved, if this character has 3 or less {PWR}, it may use this superpower. This character transforms into <b>Captain Marvel, Cosmic Avenger</b> (Normal)."
               },
               {
-                "name": "ENHANCED ENERGY ABSORPTION",
+                "name": "Enhanced Energy Absorption",
                 "type": "innate",
                 "cost": 0,
-                "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {WILD} in the defense roll it may change one of the attacker's {CRIT}, {WILD}, or {HIT} results to a {BLANK}. This character gains 1 {PWR} for each die changed in this way."
+                "text": "When this character is defending against an {ENRG} or {MYST} attack, for each {ENRG} in the defense roll it may change 1 of the attacker's {CRIT}, {ENRG}, or {PWR} results to a Blank. This character gains 1 {PWR} for each die changed in this way."
               },
               {
-                "name": "FLIGHT",
+                "name": "Flight",
                 "type": "innate",
                 "cost": 0,
-                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+                "text": "<b>Flight</b>"
               },
               {
-                "name": "IMMUNITY [INCINERATE, POISON, STAGGER, STUN]",
+                "name": "Immunity (Incinerate, Poison, Stagger, Stun)",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character can’t suffer the [INCINERATE], [POISON], [STAGGER], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+                "text": "<b>Immunity (Incinerate, Poison, Stagger, Stun)</b>"
               }
             ]
           }
@@ -11228,7 +11230,8 @@
       "sources": [
         "cerebro",
         "bsdata",
-        "jarvis"
+        "jarvis",
+        "ocr"
       ],
       "forms": [
         {
@@ -11239,13 +11242,13 @@
             "movement": "M",
             "size": 2,
             "defense": {
-              "physical": 2,
-              "energy": 3,
-              "mystic": 5
+              "physical": 5,
+              "energy": 5,
+              "mystic": 4
             },
             "attacks": [
               {
-                "name": "DIAMOND STRIKE",
+                "name": "Diamond Strike",
                 "type": "physical",
                 "range": 2,
                 "shape": "range",
@@ -11253,53 +11256,53 @@
                 "cost": 0,
                 "text": [
                   "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-                  "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
-                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+                  "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition.",
+                  "{CRIT} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
                 ]
               },
               {
-                "name": "SHATTER",
+                "name": "Shatter",
                 "type": "physical",
                 "range": 2,
                 "shape": "area",
                 "dice": 7,
-                "cost": 6,
+                "cost": 5,
                 "text": [
-                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
-                  "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal)."
+                  "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal).",
+                  "{CRIT} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
                 ]
               }
             ],
             "superpowers": [
               {
-                "name": "SOMETIMES ONE MUST GET THEIR HANDS DIRTY",
+                "name": "Sometimes One Must Get Their Hands Dirty",
                 "type": "active",
                 "cost": 3,
-                "text": "Choose an interactive terrain feature of Size 3 or less and within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+                "text": "Choose an interactive terrain feature or an enemy character, both of {SIZE} 3 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
               },
               {
-                "name": "DIAMOND MIND",
+                "name": "Diamond Mind",
                 "type": "innate",
                 "cost": 0,
                 "text": "This character cannot play Team Tactic Cards."
               },
               {
-                "name": "FAR FROM MY BEST LOOK",
+                "name": "Far From My Best Look",
                 "type": "innate",
                 "cost": 0,
-                "text": "If this character begins its Activation as <b>Emma Frost</b> (Diamond), at the end of that Activation, it transforms into <b>Emma Frost</b> (Normal)."
+                "text": "At the start of this character's Activation, it may transform into <b>Emma Frost</b> (Normal). If it does, this character loses all of its {PWR}. At the end of this character's Activation, if it began that Activation as <b>Emma Frost</b> (Diamond), it transforms into <b>Emma Frost</b> (Normal)."
               },
               {
-                "name": "PSYCHIC IMMUNITY",
+                "name": "Psychic Immunity",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
+                "text": "This character cannot be Pushed or Advanced by the special rules of {MYST} attacks or enemy superpowers. Additionally, when defending against {MYST} attacks, this character counts Blank results in its defense roll as successes."
               },
               {
-                "name": "IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
+                "name": "Immunity (Bleed, Incinerate, Poison, Stun)",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character can’t suffer the [BLEED], [INCINERATE], [POISON], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+                "text": ""
               }
             ]
           },
@@ -11309,13 +11312,13 @@
             "movement": "M",
             "size": 2,
             "defense": {
-              "physical": 2,
-              "energy": 3,
-              "mystic": 5
+              "physical": 5,
+              "energy": 5,
+              "mystic": 4
             },
             "attacks": [
               {
-                "name": "DIAMOND STRIKE",
+                "name": "Diamond Strike",
                 "type": "physical",
                 "range": 2,
                 "shape": "range",
@@ -11323,53 +11326,53 @@
                 "cost": 0,
                 "text": [
                   "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-                  "{WILD} Stun: After this attack is resolved, the target character gains the Stun special condition.",
-                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}."
+                  "{WILD} <b>Stun</b>: After this attack is resolved, the defender gains the Stun special condition.",
+                  "{CRIT} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
                 ]
               },
               {
-                "name": "SHATTER",
+                "name": "Shatter",
                 "type": "physical",
                 "range": 2,
                 "shape": "area",
                 "dice": 7,
-                "cost": 6,
+                "cost": 5,
                 "text": [
-                  "{CRIT} Pierce: Change 1 of the defending character's {CRIT}, {WILD}, or {BLOCK} results to a {BLANK}.",
-                  "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal)."
+                  "After all attacks are resolved, this character may transform into <b>Emma Frost</b> (Normal).",
+                  "{CRIT} <b>Pierce</b>: Change 1 of the defender's {CRIT}, {WILD}, or {BLOCK} results to a Blank."
                 ]
               }
             ],
             "superpowers": [
               {
-                "name": "SOMETIMES ONE MUST GET THEIR HANDS DIRTY",
+                "name": "Sometimes One Must Get Their Hands Dirty",
                 "type": "active",
                 "cost": 3,
-                "text": "Choose an interactive terrain feature of Size 3 or less and within {RNG} 2 and Throw it {M}. This superpower can be used only once per Turn."
+                "text": "Choose an interactive terrain feature or an enemy character, both of {SIZE} 3 or less and within {RNG} 2, and Throw it {M}. This superpower can be used only once per Turn."
               },
               {
-                "name": "DIAMOND MIND",
+                "name": "Diamond Mind",
                 "type": "innate",
                 "cost": 0,
                 "text": "This character cannot play Team Tactic Cards."
               },
               {
-                "name": "FAR FROM MY BEST LOOK",
+                "name": "Far From My Best Look",
                 "type": "innate",
                 "cost": 0,
-                "text": "If this character begins its Activation as <b>Emma Frost</b> (Diamond), at the end of that Activation, it transforms into <b>Emma Frost</b> (Normal)."
+                "text": "At the start of this character's Activation, it may transform into <b>Emma Frost</b> (Normal). If it does, this character loses all of its {PWR}. At the end of this character's Activation, if it began that Activation as <b>Emma Frost</b> (Diamond), it transforms into <b>Emma Frost</b> (Normal)."
               },
               {
-                "name": "PSYCHIC IMMUNITY",
+                "name": "Psychic Immunity",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character cannot be Pushed or Advanced as a result of enemy {MYST} attacks or superpowers.\nAdditionally, when defending against {MYST} attacks, this character counts {BLANK} results in its defense roll as successes."
+                "text": "This character cannot be Pushed or Advanced by the special rules of {MYST} attacks or enemy superpowers. Additionally, when defending against {MYST} attacks, this character counts Blank results in its defense roll as successes."
               },
               {
-                "name": "IMMUNITY [ BLEED, INCINERATE, POISON, STUN]",
+                "name": "Immunity (Bleed, Incinerate, Poison, Stun)",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character can’t suffer the [BLEED], [INCINERATE], [POISON], or [STUN] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+                "text": ""
               }
             ]
           }
@@ -14399,7 +14402,8 @@
       "sources": [
         "cerebro",
         "bsdata",
-        "jarvis"
+        "jarvis",
+        "ocr"
       ],
       "forms": [
         {
@@ -14416,7 +14420,7 @@
             },
             "attacks": [
               {
-                "name": "RAZOR TALONS",
+                "name": "Razor Talons",
                 "type": "physical",
                 "range": 2,
                 "shape": "range",
@@ -14424,42 +14428,42 @@
                 "cost": 0,
                 "text": [
                   "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-                  "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
-                  "After this attack is resolved, if the target character was Dazed or KO'd by the attack this character transforms into <b>Hood</b> (Normal)."
+                  "After this attack is resolved, if the defender was Dazed or KO'd by this attack, this character transforms into <b>Hood</b> (Normal).",
+                  "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
                 ]
               },
               {
-                "name": "EMPOWERED DARK LIGHTNING",
+                "name": "Empowered Dark Lightning",
                 "type": "mystic",
                 "range": 3,
                 "shape": "range",
                 "dice": 8,
                 "cost": 4,
                 "text": [
-                  "{WILD} Empowered Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}.",
-                  "After this attack is resolved, the target character gains the Shock special condition.",
-                  "After this attack is resolved, this character transforms into <b>Hood</b> (Normal)."
+                  "After this attack is resolved, the defender gains the Shock special condition.",
+                  "After this attack is resolved, this character transforms into <b>Hood</b> (Normal).",
+                  "{WILD} <b>Empowered Arc</b>: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the defender equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}."
                 ]
               }
             ],
             "superpowers": [
               {
-                "name": "CHARGE",
+                "name": "Charge",
                 "type": "active",
                 "cost": 2,
                 "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
               },
               {
-                "name": "DEMONIC RESILIENCE",
+                "name": "Demonic Resilience",
                 "type": "innate",
                 "cost": 0,
                 "text": "When this character would suffer {DMG} from an enemy effect, reduce the amount suffered by 2, to a minimum of 1."
               },
               {
-                "name": "MYSTIC VULNERABILITY",
+                "name": "Mystic Vulnerability",
                 "type": "innate",
                 "cost": 0,
-                "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed it transforms into <b>Hood</b> (Normal), then it is Dazed."
+                "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed, it transforms into <b>Hood</b> (Normal), then it is Dazed."
               }
             ]
           },
@@ -14475,7 +14479,7 @@
             },
             "attacks": [
               {
-                "name": "RAZOR TALONS",
+                "name": "Razor Talons",
                 "type": "physical",
                 "range": 2,
                 "shape": "range",
@@ -14483,42 +14487,42 @@
                 "cost": 0,
                 "text": [
                   "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-                  "{WILD} Bleed: After this attack is resolved, the target character gains the Bleed special condition.",
-                  "After this attack is resolved, if the target character was Dazed or KO'd by the attack this character transforms into <b>Hood</b> (Normal)."
+                  "After this attack is resolved, if the defender was Dazed or KO'd by this attack, this character transforms into <b>Hood</b> (Normal).",
+                  "{WILD} <b>Bleed</b>: After this attack is resolved, the defender gains the Bleed special condition."
                 ]
               },
               {
-                "name": "EMPOWERED DARK LIGHTNING",
+                "name": "Empowered Dark Lightning",
                 "type": "mystic",
                 "range": 3,
                 "shape": "range",
                 "dice": 8,
                 "cost": 4,
                 "text": [
-                  "{WILD} Empowered Arc: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the target character equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}.",
-                  "After this attack is resolved, the target character gains the Shock special condition.",
-                  "After this attack is resolved, this character transforms into <b>Hood</b> (Normal)."
+                  "After this attack is resolved, the defender gains the Shock special condition.",
+                  "After this attack is resolved, this character transforms into <b>Hood</b> (Normal).",
+                  "{WILD} <b>Empowered Arc</b>: After this attack is resolved, choose a number of other enemy characters within {RNG} 3 of the defender equal to or less than the number of {WILD} in the attack roll. The chosen characters suffer 2 {DMG}."
                 ]
               }
             ],
             "superpowers": [
               {
-                "name": "CHARGE",
+                "name": "Charge",
                 "type": "active",
                 "cost": 2,
                 "text": "Action: This character immediately makes a move action followed by an attack action. This superpower can be used only once per Turn."
               },
               {
-                "name": "DEMONIC RESILIENCE",
+                "name": "Demonic Resilience",
                 "type": "innate",
                 "cost": 0,
                 "text": "When this character would suffer {DMG} from an enemy effect, reduce the amount suffered by 2, to a minimum of 1."
               },
               {
-                "name": "MYSTIC VULNERABILITY",
+                "name": "Mystic Vulnerability",
                 "type": "innate",
                 "cost": 0,
-                "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed it transforms into <b>Hood</b> (Normal), then it is Dazed."
+                "text": "While defending against a {MYST} attack, this character does not add additional dice to its defense roll as a result of {CRIT} results. If this character is damaged by a {MYST} attack, after the attack is resolved it transforms into <b>Hood</b> (Normal). If this character would be Dazed by a {MYST} attack, before being Dazed, it transforms into <b>Hood</b> (Normal), then it is Dazed."
               }
             ]
           }
@@ -21649,7 +21653,8 @@
       "sources": [
         "cerebro",
         "bsdata",
-        "jarvis"
+        "jarvis",
+        "ocr"
       ],
       "forms": [
         {
@@ -21658,7 +21663,7 @@
             "cardImage": "MS_MARVEL_EMBIGGENED_healthy.png",
             "stamina": 6,
             "movement": "M",
-            "size": 2,
+            "size": 4,
             "defense": {
               "physical": 3,
               "energy": 4,
@@ -21666,7 +21671,7 @@
             },
             "attacks": [
               {
-                "name": "HIGH FIVE",
+                "name": "High Five",
                 "type": "physical",
                 "range": 3,
                 "shape": "range",
@@ -21679,28 +21684,28 @@
             ],
             "superpowers": [
               {
-                "name": "INHUMAN",
+                "name": "Inhuman",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character may reroll 1 die in its attack or defense rolls."
+                "text": "This character may reroll 1 die in its attack and defense rolls."
               },
               {
-                "name": "MORPHOGENETICS",
+                "name": "Morphogenetics",
                 "type": "innate",
                 "cost": 0,
-                "text": "When making attacks, if the target character is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
+                "text": "When making attacks, if the defender is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
               },
               {
-                "name": "POLYMORPH",
+                "name": "Polymorph",
                 "type": "innate",
                 "cost": 0,
                 "text": "This character may interact with objective tokens within {RNG} 2 of it instead of the normal {RNG} 1."
               },
               {
-                "name": "IMMUNITY [POSION]",
+                "name": "Immunity [Poison]",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character can’t suffer the [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+                "text": ""
               }
             ]
           },
@@ -21708,7 +21713,7 @@
             "cardImage": "MS_MARVEL_EMBIGGENED_injured.png",
             "stamina": 6,
             "movement": "M",
-            "size": 2,
+            "size": 4,
             "defense": {
               "physical": 3,
               "energy": 4,
@@ -21716,7 +21721,7 @@
             },
             "attacks": [
               {
-                "name": "HIGH FIVE",
+                "name": "High Five",
                 "type": "physical",
                 "range": 3,
                 "shape": "range",
@@ -21729,28 +21734,28 @@
             ],
             "superpowers": [
               {
-                "name": "INHUMAN",
+                "name": "Inhuman",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character may reroll 1 die in its attack or defense rolls."
+                "text": "This character may reroll 1 die in its attack and defense rolls."
               },
               {
-                "name": "MORPHOGENETICS",
+                "name": "Morphogenetics",
                 "type": "innate",
                 "cost": 0,
-                "text": "When making attacks, if the target character is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
+                "text": "When making attacks, if the defender is smaller than this character, this character may reroll 2 of its attack dice.\nAdditionally, at the end of this character's Activation, it transforms into <b>Ms. Marvel</b> (Normal)."
               },
               {
-                "name": "POLYMORPH",
+                "name": "Polymorph",
                 "type": "innate",
                 "cost": 0,
                 "text": "This character may interact with objective tokens within {RNG} 2 of it instead of the normal {RNG} 1."
               },
               {
-                "name": "IMMUNITY [POSION]",
+                "name": "Immunity [Poison]",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character can’t suffer the [POISON] special condition. If it has the special condition and gains Immunity to it, the character removes the special condition."
+                "text": ""
               }
             ]
           }
@@ -37090,7 +37095,7 @@
             "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
-            "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Tiny). The Change Size superpower can be used only once per Turn."
+            "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Tiny). The <b>Change Size</b> superpower can be used only once per Turn."
           },
           {
             "name": "PYM DISCS",
@@ -37141,7 +37146,7 @@
             "name": "CHANGE SIZE",
             "type": "active",
             "cost": 1,
-            "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Tiny). The Change Size superpower can be used only once per Turn."
+            "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Tiny). The <b>Change Size</b> superpower can be used only once per Turn."
           },
           {
             "name": "PYM DISCS",
@@ -37166,7 +37171,8 @@
       "sources": [
         "cerebro",
         "bsdata",
-        "jarvis"
+        "jarvis",
+        "ocr"
       ],
       "forms": [
         {
@@ -37174,8 +37180,8 @@
           "healthy": {
             "cardImage": "WASP_TINY_healthy.png",
             "stamina": 6,
-            "movement": "M",
-            "size": 2,
+            "movement": "L",
+            "size": 1,
             "defense": {
               "physical": 3,
               "energy": 2,
@@ -37183,7 +37189,7 @@
             },
             "attacks": [
               {
-                "name": "STINGER BLAST",
+                "name": "Stinger Blast",
                 "type": "energy",
                 "range": 2,
                 "shape": "range",
@@ -37191,11 +37197,11 @@
                 "cost": 0,
                 "text": [
                   "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-                  "The target character does not gain {PWR} for {DMG} dealt by this attack."
+                  "The defender does not gain {PWR} for {DMG} dealt by this attack."
                 ]
               },
               {
-                "name": "WASP'S FURY",
+                "name": "Wasp's Fury",
                 "type": "energy",
                 "range": 3,
                 "shape": "range",
@@ -37209,36 +37215,36 @@
             ],
             "superpowers": [
               {
-                "name": "CHANGE SIZE",
+                "name": "Change Size",
                 "type": "active",
                 "cost": 1,
-                "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Normal). The Change Size superpower can be used only once per Turn."
+                "text": "This character transforms into <b>Wasp</b> (Normal). The <b>Change Size</b> superpower can be used only once per Turn."
               },
               {
-                "name": "TINY SUPERHERO",
+                "name": "Tiny Superhero",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+                "text": "This character may reroll any number of its defense or dodge dice. Additionally, this character cannot hold Civilian objective tokens."
               },
               {
-                "name": "STEALTH",
+                "name": "Flight",
                 "type": "innate",
                 "cost": 0,
-                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+                "text": ""
               },
               {
-                "name": "FLIGHT",
+                "name": "Stealth",
                 "type": "innate",
                 "cost": 0,
-                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+                "text": ""
               }
             ]
           },
           "injured": {
             "cardImage": "WASP_TINY_injured.png",
             "stamina": 6,
-            "movement": "M",
-            "size": 2,
+            "movement": "L",
+            "size": 1,
             "defense": {
               "physical": 3,
               "energy": 2,
@@ -37246,7 +37252,7 @@
             },
             "attacks": [
               {
-                "name": "STINGER BLAST",
+                "name": "Stinger Blast",
                 "type": "energy",
                 "range": 2,
                 "shape": "range",
@@ -37254,11 +37260,11 @@
                 "cost": 0,
                 "text": [
                   "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
-                  "The target character does not gain {PWR} for {DMG} dealt by this attack."
+                  "The defender does not gain {PWR} for {DMG} dealt by this attack."
                 ]
               },
               {
-                "name": "WASP'S FURY",
+                "name": "Wasp's Fury",
                 "type": "energy",
                 "range": 3,
                 "shape": "range",
@@ -37272,28 +37278,28 @@
             ],
             "superpowers": [
               {
-                "name": "CHANGE SIZE",
+                "name": "Change Size",
                 "type": "active",
                 "cost": 1,
-                "text": "This character drops all objective tokens it is holding, then transforms into <b>Wasp</b> (Normal). The Change Size superpower can be used only once per Turn."
+                "text": "This character transforms into <b>Wasp</b> (Normal). The <b>Change Size</b> superpower can be used only once per Turn."
               },
               {
-                "name": "TINY SUPERHERO",
+                "name": "Tiny Superhero",
                 "type": "innate",
                 "cost": 0,
-                "text": "This character may reroll any number of defense or dodge dice. Additionally, this character cannot hold objective tokens."
+                "text": "This character may reroll any number of its defense or dodge dice. Additionally, this character cannot hold Civilian objective tokens."
               },
               {
-                "name": "STEALTH",
+                "name": "Flight",
                 "type": "innate",
                 "cost": 0,
-                "text": "Characters must be within {RNG} 3 of this character to target it with attacks."
+                "text": ""
               },
               {
-                "name": "FLIGHT",
+                "name": "Stealth",
                 "type": "innate",
                 "cost": 0,
-                "text": "When placing the movement tool during an Advance, this character counts as Size 5."
+                "text": ""
               }
             ]
           }
