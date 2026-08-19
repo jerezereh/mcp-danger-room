@@ -180,10 +180,10 @@ export const Character = z.object({
    * from Jarvis.
    *
    * None of these imply a human has checked the result; that is `verified`.
- *
- * 'legacy-import' and 'scraped' were here for the prototype's hand-entered
- * corpus and are gone with it — no record carried either once the three
- * community sources replaced them.
+   *
+   * 'legacy-import' and 'scraped' were here for the prototype's hand-entered
+   * corpus and are gone with it — no record carried either once the three
+   * community sources replaced them.
    */
   sources: z
     .array(z.enum(['manual', 'cerebro', 'bsdata', 'jarvis', 'ocr']))

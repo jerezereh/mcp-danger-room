@@ -23,7 +23,7 @@
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { basename, dirname, extname, resolve } from 'node:path';
+import { basename, dirname, extname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import Anthropic from '@anthropic-ai/sdk';
@@ -63,16 +63,30 @@ const option = (name: string, fallback?: string) => {
   return i >= 0 && argv[i + 1] ? (argv[i + 1] as string) : fallback;
 };
 
-const IMAGE_DIR = resolve(repoRoot, option('images', 'assets/card-scans') as string);
-
-/*
- * One scan directory, shared with `fetch:images` and the web client.
+/**
+ * The project's own scan directory, shared with `fetch:images` and the web
+ * client. Downloads always land here.
  *
- * This used to download into .import/card-images while the client read
+ * They used to land in .import/card-images while the client read
  * assets/card-scans, so the same 80-odd megabytes existed twice and a scan
  * fetched by one path was invisible to the other.
  */
-const CACHE_DIR = IMAGE_DIR;
+const SCANS = resolve(repoRoot, 'assets/card-scans');
+
+/**
+ * Where to look for scans already on disk. Defaults to the same directory, so
+ * the common case is one place — but it is the caller's to redirect.
+ */
+const IMAGE_DIR = resolve(repoRoot, option('images', 'assets/card-scans') as string);
+
+/*
+ * Deliberately not IMAGE_DIR.
+ *
+ * --images names a directory to *read*: a curated set, someone else's scans, a
+ * mount. Writing fallback downloads into it would modify a collection the
+ * caller only offered for reading, and fail outright if it is read-only.
+ */
+const CACHE_DIR = SCANS;
 const MODEL = option('model', 'claude-sonnet-5') as string;
 const LIMIT = Number(option('limit', '0'));
 const DRY_RUN = flag('dry-run');
@@ -156,16 +170,20 @@ function resolveLocal(
  * Cached because the images are ~1MB each and the host is a volunteer project —
  * re-downloading 80 of them on every run would be rude, and slow.
  */
-async function fetchRemote(filename: string): Promise<string | undefined> {
+async function fetchRemote(
+  filename: string,
+): Promise<{ path: string; downloaded: boolean } | undefined> {
   const cached = resolve(CACHE_DIR, filename);
-  if (existsSync(cached)) return cached;
+  // Reported separately from a hit, so the run does not claim to have
+  // downloaded scans it read off disk.
+  if (existsSync(cached)) return { path: cached, downloaded: false };
 
   const response = await fetch(cardImageUrl(filename));
   if (!response.ok) return undefined;
 
   mkdirSync(CACHE_DIR, { recursive: true });
   writeFileSync(cached, Buffer.from(await response.arrayBuffer()));
-  return cached;
+  return { path: cached, downloaded: true };
 }
 
 function encode(path: string) {
@@ -301,8 +319,8 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
       if (local || LOCAL_ONLY || !recorded) return local;
 
       const remote = await fetchRemote(recorded);
-      if (remote) fetched++;
-      return remote;
+      if (remote?.downloaded) fetched++;
+      return remote?.path;
     };
 
     const healthyPath = await side('healthy');
@@ -619,7 +637,9 @@ async function main() {
   const { jobs, noImages, fetched } = await buildJobs();
 
   console.log(`Images:  ${IMAGE_DIR}${LOCAL_ONLY ? ' (local only)' : ' + Cerebro'}`);
-  if (fetched > 0) console.log(`         ${fetched} downloaded from Cerebro → .import/card-images/`);
+  if (fetched > 0) {
+    console.log(`         ${fetched} downloaded from Cerebro → ${relative(repoRoot, SCANS)}/`);
+  }
   console.log(`Model:   ${MODEL}${SYNC ? ' (sync)' : ' (batch — 50% cheaper)'}`);
   console.log(`Jobs:    ${jobs.length} character(s) with both card sides on disk`);
   if (noImages.length > 0) {
