@@ -25,6 +25,8 @@ import {
   mergeDrafts,
   OverrideFile,
   parseBsdata,
+  boldableNames,
+  normalizeRulesText,
   cerebroToDraft,
   type CharacterDraft,
 } from '../src/import/index.js';
@@ -237,7 +239,21 @@ async function main() {
     }
   }
 
-  writeFileSync(CORPUS, JSON.stringify({ characters: patched.characters }, null, 2) + '\n');
+  /*
+   * House style last, so hand-written overrides are normalised too and a
+   * correction never has to remember the conventions.
+   */
+  const normalized = patched.characters.map(c => {
+    const names = boldableNames(c);
+    const side = (b: (typeof c)['healthy']) => ({
+      ...b,
+      attacks: b.attacks.map(a => ({ ...a, text: a.text.map(t => normalizeRulesText(t, names)) })),
+      superpowers: b.superpowers.map(p => ({ ...p, text: normalizeRulesText(p.text, names) })),
+    });
+    return { ...c, healthy: side(c.healthy), injured: side(c.injured) };
+  });
+
+  writeFileSync(CORPUS, JSON.stringify({ characters: normalized }, null, 2) + '\n');
   writeFileSync(
     resolve(OUT_DIR, 'needs-data.json'),
     JSON.stringify({ generatedAt: new Date().toISOString(), needsData }, null, 2) + '\n',

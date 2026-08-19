@@ -13,4 +13,5 @@ export * from './extraction.js';
 export * from './jarvis.js';
 export * from './overrides.js';
 export * from './merge.js';
+export * from './normalize.js';
 export * from './slug.js';

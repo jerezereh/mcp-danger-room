@@ -401,6 +401,32 @@
           "text": ""
         }
       ]
+    },
+    {
+      "id": "man-thing-beta",
+      "reason": "A {BETA} playtest card duplicating Man-Thing. Not a fieldable character.",
+      "verified": true,
+      "remove": true
+    },
+    {
+      "id": "nova-beta",
+      "reason": "A {BETA} playtest card duplicating Nova. Not a fieldable character.",
+      "verified": true,
+      "remove": true
+    },
+    {
+      "id": "spider-man-noir",
+      "reason": "Elusive's trigger is Wild and Hit, read against the card. The injured face paraphrased the second bullet — both sides print the same wording, matched here to jarvis-protocol.com.",
+      "verified": true,
+      "attacks": {
+        "The Ol' One, Two": {
+          "text": [
+            "After this attack is resolved, this character gains {PWR} equal to the {DMG} dealt.",
+            "If this character has already attacked the defender during its Activation this Turn, it adds 3 dice to this attack roll.",
+            "{WILD} {HIT} <b>Elusive</b>: After this attack is resolved, this character may Advance {S}."
+          ]
+        }
+      }
     }
   ]
 }
