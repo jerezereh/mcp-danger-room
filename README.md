@@ -45,7 +45,7 @@ packages/
 apps/
   web/       React + react-three-fiber client.
   server/    Colyseus authoritative server.
-assets/      Card images and the legacy JSON corpus.
+assets/      Card scans, fetched on demand and gitignored.
 ```
 
 The one architectural rule: **`packages/rules` imports nothing** — not React,
@@ -57,14 +57,14 @@ repo is replaceable; that constraint is not.
 ## Card data
 
 The corpus lives in `packages/data/src/characters.json`, validated by Zod at load
-time. Four characters are imported from the old prototype and all are marked
-`verified: false`.
-
-To re-run the legacy import (overwrites the file):
+time. 233 characters, built from three community sources plus a vision-model
+reader for the cards none of them cover:
 
 ```bash
-node packages/data/scripts/import-legacy.mjs
+npm run import:cards   --workspace @danger-room/data   # rebuild the corpus
+npm run report:defects --workspace @danger-room/data   # what still needs a human
+npm run extract:cards  --workspace @danger-room/data   # read cards with Claude (costs money)
 ```
 
-Filling out the corpus is the largest single task in the project and is
-independent of all engineering work.
+`overrides.json` holds human corrections and is the only path to
+`verified: true`; it is applied after the merge and beats every source.

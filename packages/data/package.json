@@ -15,8 +15,7 @@
   },
   "scripts": {
     "build": "tsc --build",
-    "typecheck": "tsc --build",
-    "import:legacy": "node scripts/import-legacy.mjs",
+    "typecheck": "tsc --build && tsc -p tsconfig.scripts.json",
     "import:cards": "tsx scripts/import-cards.ts",
     "extract:cards": "tsx scripts/extract-cards.ts",
     "fetch:images": "tsx scripts/fetch-card-images.ts",

@@ -3,7 +3,7 @@
  *
  *   npm run extract:cards --workspace @danger-room/data -- [options]
  *
- *   --images <dir>   Local card scans (default: assets/characterCardImages)
+ *   --images <dir>   Local card scans (default: assets/card-scans)
  *   --local-only     Don't fall back to downloading scans from Cerebro
  *   --limit <n>      Only process the first n characters (start here)
  *   --sync           Run immediately instead of via the Batch API
@@ -31,6 +31,7 @@ import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 
 import { characters as corpus } from '../src/characters.js';
 import { cardImageUrl } from '../src/import/cerebro.js';
+import { formJobId, isFormExtraction } from '../src/import/forms.js';
 import {
   buildSystemPrompt,
   checkTriggerIcons,
@@ -43,7 +44,6 @@ const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = resolve(here, '..');
 const repoRoot = resolve(pkgRoot, '../..');
 const OUT_DIR = resolve(pkgRoot, '.import');
-const CACHE_DIR = resolve(OUT_DIR, 'card-images');
 const BATCH_ID_FILE = resolve(OUT_DIR, 'batch-id.txt');
 const SYMBOL_KEY = resolve(pkgRoot, 'assets/symbol-key.png');
 
@@ -63,7 +63,16 @@ const option = (name: string, fallback?: string) => {
   return i >= 0 && argv[i + 1] ? (argv[i + 1] as string) : fallback;
 };
 
-const IMAGE_DIR = resolve(repoRoot, option('images', 'assets/characterCardImages') as string);
+const IMAGE_DIR = resolve(repoRoot, option('images', 'assets/card-scans') as string);
+
+/*
+ * One scan directory, shared with `fetch:images` and the web client.
+ *
+ * This used to download into .import/card-images while the client read
+ * assets/card-scans, so the same 80-odd megabytes existed twice and a scan
+ * fetched by one path was invisible to the other.
+ */
+const CACHE_DIR = IMAGE_DIR;
 const MODEL = option('model', 'claude-sonnet-5') as string;
 const LIMIT = Number(option('limit', '0'));
 const DRY_RUN = flag('dry-run');

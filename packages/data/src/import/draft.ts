@@ -19,7 +19,6 @@ export type DraftSource =
   | 'bsdata'
   | 'jarvis'
   | 'ocr'
-  | 'legacy-import'
   | 'manual';
 
 export interface StatBlockDraft {
