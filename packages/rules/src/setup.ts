@@ -78,7 +78,17 @@ export function trainingProfile(characterId: CharacterId): CharacterProfile {
     superpowers: [],
   } as const;
 
-  return { characterId, name: 'Training Dummy', baseMm: 40, healthy: stats, injured: stats };
+  // Named after the slot it is filling rather than the character it stands in
+  // for. A dummy that answers to "Amazing Spider-Man" while rolling a generic
+  // 5-dice STRIKE is the same failure as a placeholder stat block: a confident
+  // answer that is not true.
+  return {
+    characterId,
+    name: `Training Dummy (${characterId})`,
+    baseMm: 40,
+    healthy: stats,
+    injured: stats,
+  };
 }
 
 export function createModel(spec: ModelSpec): Model {

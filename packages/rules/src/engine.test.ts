@@ -127,6 +127,7 @@ function play(state: GameState, actions: readonly Action[]): GameState {
   return result.state;
 }
 
+
 describe('determinism', () => {
   // This is the property the entire architecture rests on. If it ever fails,
   // replays, server authority, and AI search all fail with it.

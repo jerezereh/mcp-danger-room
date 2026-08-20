@@ -27,9 +27,11 @@ import {
   statsAt,
   type GameEvent,
   type GameState,
+  type ModelId,
 } from '@danger-room/rules';
 
 import { autoPlayStep, describeInaction } from '../src/lib/autoplay.js';
+import { labelOf, nameOf, playerOf } from '../src/lib/names.js';
 import { playableSparringSpec } from '../src/lib/gameSetup.js';
 
 // ---------------------------------------------------------------------------
@@ -75,17 +77,6 @@ function reproduceCommand(options: Options): string {
   return `npm run play:demo -- ${flags.join(' ')}`;
 }
 
-// ---------------------------------------------------------------------------
-// Names
-// ---------------------------------------------------------------------------
-
-/** A model's printed name, falling back to its id when it has no card. */
-const nameOf = (state: GameState, id: string): string =>
-  state.profiles[state.models[id]?.characterId ?? '']?.name ?? id;
-
-const playerOf = (state: GameState, id: string): string =>
-  state.players[id]?.displayName ?? id;
-
 /**
  * Die faces, abbreviated so a pool fits on one line.
  *
@@ -114,7 +105,9 @@ const FACE_SHORT: Record<string, string> = {
  * here until somebody decides how to say it out loud.
  */
 function render(state: GameState, event: GameEvent): string {
-  const model = (id: string) => nameOf(state, id);
+  // Tagged with the side, so two players fielding the same character stay
+  // apart in the transcript.
+  const model = (id: ModelId) => labelOf(state, id);
 
   switch (event.type) {
     case 'ROUND_STARTED':
@@ -200,7 +193,7 @@ function summary(state: GameState): string {
       if (!m) continue;
       const status = m.health === 'ko' ? "KO'd" : m.dazed ? `Dazed on ${m.damage}` : m.health;
       lines.push(
-        `    ${nameOf(state, id).padEnd(22)} ${status.padEnd(14)} ` +
+        `    ${nameOf(state, id).padEnd(24)} ${status.padEnd(14)} ` +
           `${m.damage} damage · ${m.power} power`,
       );
     }
