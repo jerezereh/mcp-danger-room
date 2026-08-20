@@ -64,13 +64,21 @@ const nameOf = (state: GameState, id: string): string =>
 const playerOf = (state: GameState, id: string): string =>
   state.players[id]?.displayName ?? id;
 
-/** Die faces, abbreviated so a pool fits on one line. */
+/**
+ * Die faces, abbreviated so a pool fits on one line.
+ *
+ * Blank and Failure both do nothing and are shown differently on purpose: a
+ * Blank can be rerolled and a Failure cannot, and effects trigger on `{FAIL}`
+ * in its own right. Keyed loosely so this file does not have to land in step
+ * with the engine's face list; an unlabelled face prints its own name.
+ */
 const FACE_SHORT: Record<string, string> = {
-  critical: 'CRT',
-  wild: 'WLD',
-  hit: 'hit',
-  block: 'blk',
-  blank: ' — ',
+  critical: 'CRIT',
+  wild: 'WILD',
+  hit: ' hit',
+  block: ' blk',
+  blank: '   ·',
+  failure: 'FAIL',
 };
 
 // ---------------------------------------------------------------------------
