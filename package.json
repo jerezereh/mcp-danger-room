@@ -16,9 +16,10 @@
     "build": "npm run build --workspaces --if-present",
     "dev": "npm run dev --workspace @danger-room/web",
     "dev:server": "npm run dev --workspace @danger-room/server",
+    "play:demo": "npm run play:demo --workspace @danger-room/web --",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --build && tsc -p packages/data/tsconfig.scripts.json",
+    "typecheck": "tsc --build && tsc -p packages/data/tsconfig.scripts.json && tsc -p apps/web/tsconfig.scripts.json",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
