@@ -348,6 +348,37 @@ describe('the action budget', () => {
     if (loose.ok) return;
     expect(loose.rejection.code).toBe('UNEXPECTED_ACTION');
   });
+
+  it('rejects a model acting on another model’s activation, prompt or no prompt', () => {
+    // Regression: MOVE and ATTACK checked only that *an* activation frame
+    // existed. With the prompt gone — a snapshot, a crafted save, a bug — a
+    // second model of the same player could act, and the action was charged to
+    // the activating model's budget.
+    const started = play(createSparringGame(), [activate]);
+    const noPrompt: GameState = { ...started, prompt: null };
+
+    const moved = applyAction(noPrompt, {
+      type: 'MOVE',
+      player: p1,
+      modelId: m3,
+      template: 'S',
+      path: [vec3(14, 10, 0)],
+    });
+    expect(moved.ok).toBe(false);
+    if (moved.ok) return;
+    expect(moved.rejection.code).toBe('UNEXPECTED_ACTION');
+
+    const attacked = applyAction(noPrompt, {
+      type: 'ATTACK',
+      player: p1,
+      attackerId: m3,
+      targetId: m2,
+      attackName: STRIKE,
+    });
+    expect(attacked.ok).toBe(false);
+    if (attacked.ok) return;
+    expect(attacked.rejection.code).toBe('UNEXPECTED_ACTION');
+  });
 });
 
 describe('the round loop', () => {

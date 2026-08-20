@@ -121,6 +121,17 @@ const isObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
 
 /**
+ * A position with three finite coordinates.
+ *
+ * Checking only that it is an object is not enough: `pos: {}` passes that and
+ * then propagates NaN through every distance in the game, which is quieter and
+ * worse than an exception — moves get rejected with arithmetic nobody can
+ * explain rather than the save being reported as broken.
+ */
+const isVec3 = (v: unknown): boolean =>
+  isObject(v) && (['x', 'y', 'z'] as const).every(axis => Number.isFinite(v[axis]));
+
+/**
  * Structural validation of a save, before any of it is trusted.
  *
  * Deliberately shallow — it checks the shape the engine will actually
@@ -141,6 +152,14 @@ function checkShape(saved: SavedGame): LoadError | null {
   }
   if (setup['terrain'] !== undefined && !Array.isArray(setup['terrain'])) {
     return { code: 'MALFORMED', message: 'Save setup has malformed terrain.' };
+  }
+
+  // Terrain positions are dereferenced by every line-of-sight trace, and are
+  // the same silent-NaN hazard as a model's.
+  for (const [index, volume] of ((setup['terrain'] as unknown[]) ?? []).entries()) {
+    if (!isObject(volume) || !isVec3(volume['pos'])) {
+      return { code: 'MALFORMED', message: `Terrain ${index} has no usable position.` };
+    }
   }
 
   for (const [index, model] of (setup['models'] as unknown[]).entries()) {
@@ -174,7 +193,7 @@ function checkModelShape(model: unknown, index: number): LoadError | null {
 
   if (!isObject(model)) return malformed(`Model ${index} is not an object.`);
   if (typeof model['id'] !== 'string') return malformed(`Model ${index} has no id.`);
-  if (!isObject(model['pos'])) return malformed(`Model ${index} has no position.`);
+  if (!isVec3(model['pos'])) return malformed(`Model ${index} has no usable position.`);
 
   const profile = model['profile'];
   if (profile === undefined) return null;

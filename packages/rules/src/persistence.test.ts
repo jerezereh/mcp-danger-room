@@ -313,6 +313,44 @@ describe('untrusted saves', () => {
     expect(loaded.error.code).toBe('MALFORMED');
   });
 
+  it('reports a position with no coordinates', () => {
+    // Regression: `pos: {}` passed an is-it-an-object check and then
+    // propagated NaN through every distance in the game — quieter than an
+    // exception and worse, since moves get rejected with arithmetic nobody
+    // can explain rather than the save being reported as broken.
+    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: {} }]));
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports a position whose coordinates are not finite', () => {
+    const loaded = load(
+      bare([{ id: m1, characterId: 'a', owner: p1, pos: { x: 1, y: null, z: 0 } }]),
+    );
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports terrain with no usable position', () => {
+    const saved = {
+      formatVersion: SAVE_FORMAT_VERSION,
+      setup: {
+        seed: 1,
+        players: [{ id: p1, displayName: 'One' }],
+        models: [{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0) }],
+        terrain: [{ id: 'crate', radius: 1, height: 2, size: 2, blocksLineOfSight: true }],
+      },
+      actions: [],
+    } as unknown as SavedGame;
+
+    const loaded = load(saved);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
   it('accepts a model with no profile at all', () => {
     // Optional by design — the engine substitutes a training dummy.
     const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0) }]));

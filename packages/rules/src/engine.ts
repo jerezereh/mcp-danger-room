@@ -125,6 +125,12 @@ const longerThan = (a: MovementTemplate, b: MovementTemplate): boolean =>
  *
  * Only ever the top frame: an activation is the outermost thing on the stack,
  * and anything above it is mid-resolution and answers to a prompt of its own.
+ *
+ * Callers must check the acting model against `modelId` themselves. The
+ * `chooseAction` prompt gate does that too, but only while a prompt is parked
+ * — and a snapshot, a crafted save, or a bug can present a stack with no
+ * prompt. The rule belongs to the engine, not to the fact that somebody
+ * happens to be being asked something.
  */
 function activationFrame(state: GameState): Extract<Frame, { kind: 'activation' }> | null {
   const top = state.stack[state.stack.length - 1];
@@ -190,9 +196,11 @@ export function applyAction(state: GameState, action: Action): Result {
       draft.state = { ...draft.state, lastActivatedBy: action.player };
       emit(draft, { type: 'ACTIVATION_STARTED', modelId: model.id });
 
-      // TODO(rules): power gained at activation start — see issue #6.
-      // TODO(verify): `2` is the commonly cited allowance and is unchecked.
-      pushFrame(draft, { kind: 'activation', modelId: model.id, actionsRemaining: ACTIONS_PER_ACTIVATION });
+      pushFrame(draft, {
+        kind: 'activation',
+        modelId: model.id,
+        actionsRemaining: ACTIONS_PER_ACTIVATION,
+      });
       return resolve(draft);
     }
 
@@ -204,6 +212,9 @@ export function applyAction(state: GameState, action: Action): Result {
 
       const activation = activationFrame(state);
       if (!activation) return reject('UNEXPECTED_ACTION', 'No activation in progress.');
+      if (activation.modelId !== model.id) {
+        return reject('UNEXPECTED_ACTION', 'Another character is mid-activation.');
+      }
 
       const destination = action.path[action.path.length - 1];
       if (!destination) return reject('ILLEGAL_MOVE', 'Move path is empty.');
@@ -269,6 +280,9 @@ export function applyAction(state: GameState, action: Action): Result {
 
       const activation = activationFrame(state);
       if (!activation) return reject('UNEXPECTED_ACTION', 'No activation in progress.');
+      if (activation.modelId !== attacker.id) {
+        return reject('UNEXPECTED_ACTION', 'Another character is mid-activation.');
+      }
 
       // Every number below used to be a constant in this file — 5 attack dice,
       // 3 defense, range 5, whoever the characters were. They now come off the
