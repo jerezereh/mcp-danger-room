@@ -12,8 +12,17 @@
 
 import type { Action, GameEvent, GameState, Rejection } from '@danger-room/rules';
 
-/** Bumped on any breaking change. Rooms refuse mismatched clients. */
-export const PROTOCOL_VERSION = 1;
+/**
+ * Bumped on any breaking change. Rooms refuse mismatched clients.
+ *
+ * v2: the `Action` union gained `PASS_TURN`, and the rules an action is
+ * validated against changed underneath it. The constant is what makes the
+ * version gate in `GameRoom` do anything — left at 1, a new client and an old
+ * server would both advertise v1, the client could send `PASS_TURN`, and the
+ * old engine's switch would fall through every case and return `undefined`,
+ * which `record` then dereferences.
+ */
+export const PROTOCOL_VERSION = 2;
 
 // ---------------------------------------------------------------------------
 // Client → Server

@@ -29,8 +29,16 @@ import type { GameState } from './state.js';
  * Bumped when `SavedGame`, `GameSpec`, or the `Action` union changes shape in a
  * way that makes old logs unreplayable. This is a smaller and more stable
  * surface than full game state, which is the point of the whole approach.
+ *
+ * v2: `GameSpec` models carry a `profile`, and `Action` gained `PASS_TURN`.
+ * A v1 log replays into a game whose characters have none of their printed
+ * attacks — every model falls back to the training dummy — so an ATTACK naming
+ * a real attack is rejected. Left at v1 that surfaced as DIVERGED pointing at
+ * an arbitrary action, which reads as a corrupt save rather than an old one.
+ * The alternating-activation and action-budget rules reject most v1 logs on
+ * their own account too.
  */
-export const SAVE_FORMAT_VERSION = 1;
+export const SAVE_FORMAT_VERSION = 2;
 
 export interface SavedGame {
   readonly formatVersion: number;
@@ -135,6 +143,11 @@ function checkShape(saved: SavedGame): LoadError | null {
     return { code: 'MALFORMED', message: 'Save setup has malformed terrain.' };
   }
 
+  for (const [index, model] of (setup['models'] as unknown[]).entries()) {
+    const bad = checkModelShape(model, index);
+    if (bad) return bad;
+  }
+
   for (const [index, action] of saved.actions.entries()) {
     if (!isObject(action) || typeof action['type'] !== 'string') {
       return {
@@ -142,6 +155,44 @@ function checkShape(saved: SavedGame): LoadError | null {
         atAction: index,
         message: `Action ${index} is not a well-formed action.`,
       };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * A model entry, and the profile hanging off it.
+ *
+ * Checked because the engine dereferences these without asking. A model whose
+ * profile is present but truncated — `"profile": {}` in a hand-edited file —
+ * used to throw out of `createModel` while reading `profile.healthy.size`,
+ * which is not a failure mode a Load button should have.
+ */
+function checkModelShape(model: unknown, index: number): LoadError | null {
+  const malformed = (message: string): LoadError => ({ code: 'MALFORMED', message });
+
+  if (!isObject(model)) return malformed(`Model ${index} is not an object.`);
+  if (typeof model['id'] !== 'string') return malformed(`Model ${index} has no id.`);
+  if (!isObject(model['pos'])) return malformed(`Model ${index} has no position.`);
+
+  const profile = model['profile'];
+  if (profile === undefined) return null;
+  if (!isObject(profile)) return malformed(`Model ${index} has a malformed profile.`);
+
+  for (const face of ['healthy', 'injured'] as const) {
+    const stats = profile[face];
+    if (!isObject(stats)) {
+      return malformed(`Model ${index} has no ${face} stats in its profile.`);
+    }
+    if (typeof stats['stamina'] !== 'number' || typeof stats['size'] !== 'number') {
+      return malformed(`Model ${index} has malformed ${face} stats.`);
+    }
+    if (!isObject(stats['defense'])) {
+      return malformed(`Model ${index} has no ${face} defense stats.`);
+    }
+    if (!Array.isArray(stats['attacks']) || !Array.isArray(stats['superpowers'])) {
+      return malformed(`Model ${index} has malformed ${face} attacks or superpowers.`);
     }
   }
 
@@ -185,10 +236,48 @@ export function load(saved: SavedGame): LoadResult {
   const shape = checkShape(saved);
   if (shape) return { ok: false, error: shape };
 
-  let session = startSession(saved.setup);
+  return replay(saved);
+}
+
+/**
+ * Fold the log over a fresh session.
+ *
+ * Wrapped, because the structural checks above cannot cover everything the
+ * engine will touch and `load` is documented never to throw. `applyAction` is
+ * total for game-rule reasons but not for broken invariants — it throws on a
+ * model that vanishes mid-resolution, or resolution that will not converge —
+ * and a sufficiently strange save can reach those. Better a MALFORMED result
+ * naming the failure than an exception past the caller.
+ */
+function replay(saved: SavedGame): LoadResult {
+  let session: GameSession;
+  try {
+    session = startSession(saved.setup);
+  } catch (error) {
+    return {
+      ok: false,
+      error: {
+        code: 'MALFORMED',
+        message: `Save setup could not be built: ${(error as Error).message}`,
+      },
+    };
+  }
 
   for (const [index, action] of saved.actions.entries()) {
-    const step = record(session, action);
+    let step: RecordResult;
+    try {
+      step = record(session, action);
+    } catch (error) {
+      return {
+        ok: false,
+        error: {
+          code: 'MALFORMED',
+          atAction: index,
+          message: `Action ${index} could not be replayed: ${(error as Error).message}`,
+        },
+      };
+    }
+
     if (!step.ok) {
       return {
         ok: false,

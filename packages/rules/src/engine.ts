@@ -423,14 +423,13 @@ export function applyAction(state: GameState, action: Action): Result {
       const reaction = power?.reaction;
       if (!reaction) return reject('UNEXPECTED_ACTION', `${action.superpower} has no reaction.`);
 
-      putModel(draft, {
-        ...model,
-        power: model.power - offered.cost,
-        // Recorded whether or not the printed text says once per Turn. It is
-        // the commonest restriction on these, and without it a free reaction
-        // could be declared in the same window forever.
-        // TODO(verify): superpowers that may genuinely be used more than once.
-        usedThisTurn: [...model.usedThisTurn, action.superpower],
+      putModel(draft, { ...model, power: model.power - offered.cost });
+
+      // Recorded on the window, not on the model. See `ReactionWindowFrame`.
+      popFrame(draft);
+      pushFrame(draft, {
+        ...top,
+        used: [...top.used, reactionKey(action.modelId, action.superpower)],
       });
       if (offered.cost > 0) {
         emit(draft, { type: 'POWER_SPENT', modelId: model.id, amount: offered.cost });
@@ -1034,11 +1033,12 @@ function openReactionWindow(draft: Draft, timing: ReactionTiming, frame: AttackF
   const target = getModel(draft.state, frame.targetId);
   if (!attacker || !target) return;
 
-  const context = {
+  const context: ReactionContext = {
     timing,
     attackerId: frame.attackerId,
     targetId: frame.targetId,
     damageType: frame.damageType,
+    used: [],
   };
 
   const order = [attacker.owner, target.owner].filter(
@@ -1058,7 +1058,13 @@ interface ReactionContext {
   readonly attackerId: ModelId;
   readonly targetId: ModelId;
   readonly damageType: DamageType;
+  /** Reactions already spent in this window — see `ReactionWindowFrame`. */
+  readonly used: readonly string[];
 }
+
+/** How a used reaction is recorded on the window. */
+const reactionKey = (modelId: ModelId, superpower: string): string =>
+  `${modelId}::${superpower}`;
 
 export interface ReactionOption {
   readonly modelId: ModelId;
@@ -1095,11 +1101,14 @@ function eligibleReactions(
 
     const role = modelId === context.targetId ? 'target' : 'attacker';
     for (const power of reactionsFor(stats, context.timing, role, context.damageType)) {
-      // A variable cost has no number to check against, and once-per-turn is
-      // the commonest restriction printed on these.
+      // A variable cost has no number to check against.
       if (power.cost === 'X') continue;
       if (model.power < power.cost) continue;
-      if (model.usedThisTurn.includes(power.name)) continue;
+      // Already used in *this window*. A once-per-Turn restriction is a
+      // different thing, printed on some superpowers and not on others, and
+      // `SuperpowerProfile` has nowhere to record it yet — so no reaction is
+      // currently restricted beyond the window it is used in.
+      if (context.used.includes(reactionKey(modelId, power.name))) continue;
 
       options.push({ modelId, superpower: power.name, cost: power.cost });
     }

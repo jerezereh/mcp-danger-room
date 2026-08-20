@@ -210,6 +210,20 @@ export interface ReactionWindowFrame {
   readonly targetId: ModelId;
   readonly damageType: DamageType;
   readonly pendingPlayers: readonly PlayerId[];
+  /**
+   * Reactions already used *in this window*, as `modelId::superpower`.
+   *
+   * Scoped to the window rather than the turn, and the distinction is a rule:
+   * the book lets a character use more than one effect in a window, and almost
+   * none of the printed defensive superpowers carry a once-per-Turn
+   * restriction. Recording use on the model instead meant a defender who
+   * shielded the first of two attacks in an enemy activation was denied the
+   * shield against the second.
+   *
+   * It exists at all because the player keeps their place in the queue after
+   * declaring, so without it a free reaction could be declared forever.
+   */
+  readonly used: readonly string[];
 }
 
 /**

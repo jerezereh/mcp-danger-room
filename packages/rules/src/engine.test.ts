@@ -1212,7 +1212,34 @@ describe('reaction windows', () => {
     // The window closed because the only option was spent, so the attack ran
     // to completion rather than asking again.
     expect(once.state.stack.filter(f => f.kind === 'reactionWindow')).toHaveLength(0);
-    expect(once.state.models[m2]?.usedThisTurn).toContain('VIBRANIUM ARMOR');
+    // Recorded on the window, which is gone with it — not on the character.
+    expect(once.state.models[m2]?.usedThisTurn).not.toContain('VIBRANIUM ARMOR');
+  });
+
+  it('offers the same reaction again on the next attack of one activation', () => {
+    // Regression: use was recorded on the model for the whole turn, so a
+    // defender who shielded the first of two attacks in an enemy activation
+    // was denied the shield against the second. Almost none of the printed
+    // defensive superpowers carry a once-per-Turn restriction, and none of the
+    // nine currently registered do.
+    const paused = play(duel({}, defender({ power: 9 })), [activate, strike()]);
+    const first = applyAction(paused, {
+      type: 'DECLARE_REACTION',
+      player: p2,
+      modelId: m2,
+      superpower: 'VIBRANIUM ARMOR',
+    });
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+
+    const second = applyAction(first.state, strike());
+    expect(second.ok).toBe(true);
+    if (!second.ok) return;
+
+    expect(second.state.prompt).toMatchObject({
+      kind: 'declareReaction',
+      options: [{ modelId: m2, superpower: 'VIBRANIUM ARMOR' }],
+    });
   });
 
   it('never offers a reaction to the wrong side of the attack', () => {
