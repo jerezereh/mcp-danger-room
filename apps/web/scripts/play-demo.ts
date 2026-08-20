@@ -41,9 +41,22 @@ interface Options {
   readonly useReactions: boolean;
 }
 
+const DEFAULT_SEED = 11;
+
 function parseArgs(argv: readonly string[]): Options {
+  // Unknown arguments are an error rather than a shrug. The root script used
+  // to swallow every flag — `npm run play:demo -- --seed=42` ran seed 11 and
+  // said so — and a silently wrong seed is the one failure a reproducible
+  // transcript cannot survive.
+  const unknown = argv.filter(a => !a.startsWith('--seed=') && a !== '--pass-reactions');
+  if (unknown.length > 0) {
+    console.error(`Unrecognised argument${unknown.length > 1 ? 's' : ''}: ${unknown.join(' ')}`);
+    console.error('Usage: npm run play:demo -- [--seed=N] [--pass-reactions]');
+    process.exit(1);
+  }
+
   const seedArg = argv.find(a => a.startsWith('--seed='))?.slice('--seed='.length);
-  const seed = seedArg === undefined ? 11 : Number(seedArg);
+  const seed = seedArg === undefined ? DEFAULT_SEED : Number(seedArg);
 
   if (!Number.isFinite(seed)) {
     console.error(`Not a usable seed: ${seedArg}`);
@@ -51,6 +64,15 @@ function parseArgs(argv: readonly string[]): Options {
   }
 
   return { seed, useReactions: !argv.includes('--pass-reactions') };
+}
+
+/** The command that reproduces this run — every option, not just the seed. */
+function reproduceCommand(options: Options): string {
+  const flags = [`--seed=${options.seed}`];
+  // Declining reactions changes which dice are drawn, so a run made with it
+  // does not reproduce without it.
+  if (!options.useReactions) flags.push('--pass-reactions');
+  return `npm run play:demo -- ${flags.join(' ')}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -257,7 +279,7 @@ function main(): void {
 
   console.log(`\nNotes on this transcript:`);
   for (const gap of gaps) console.log(`  · ${gap}`);
-  console.log(`\n${steps} actions · seed ${options.seed} · reproduce with: npm run play:demo -- --seed=${options.seed}`);
+  console.log(`\n${steps} actions · reproduce with: ${reproduceCommand(options)}`);
 }
 
 main();
