@@ -11,6 +11,7 @@ import { describe, expect, it } from 'vitest';
 import { charactersById } from '@danger-room/data';
 import { applyAction, createGame, POWER_PER_ROUND, type GameState } from '@danger-room/rules';
 
+import { autoPlayStep } from './autoplay.js';
 import { playableSparringSpec } from './gameSetup.js';
 import { profileFor } from './profile.js';
 
@@ -48,70 +49,6 @@ describe('profileFor', () => {
   });
 });
 
-/**
- * The dumbest possible player: answer whatever the engine asks.
- *
- * Activate the first model offered, swing at the nearest enemy until the
- * actions run out, decline every reaction. It makes no decisions — the point
- * is that the engine drives itself to an ending, not that anyone plays well.
- *
- * Dispatching on `prompt.kind` rather than assuming a shape is the whole
- * discipline here. A driver that only knew about activations stalled the first
- * time a reaction window opened.
- */
-function answerOnePrompt(state: GameState): GameState | null {
-  const prompt = state.prompt;
-  if (!prompt) return null;
-
-  switch (prompt.kind) {
-    case 'declareReaction': {
-      const passed = applyAction(state, { type: 'PASS_REACTION', player: prompt.player });
-      return passed.ok ? passed.state : null;
-    }
-
-    case 'chooseActivation': {
-      const modelId = prompt.options[0];
-      if (!modelId) return null;
-      const started = applyAction(state, { type: 'ACTIVATE', player: prompt.player, modelId });
-      return started.ok ? started.state : null;
-    }
-
-    case 'chooseAction': {
-      const attacker = state.models[prompt.modelId];
-      const profile = attacker ? state.profiles[attacker.characterId] : undefined;
-      const face =
-        attacker && profile
-          ? attacker.health === 'healthy'
-            ? profile.healthy
-            : profile.injured
-          : undefined;
-      const attackName = face?.attacks[0]?.name;
-      const enemy = Object.values(state.models).find(
-        m => attacker && m.owner !== attacker.owner && m.health !== 'ko',
-      );
-
-      if (attackName && enemy) {
-        const hit = applyAction(state, {
-          type: 'ATTACK',
-          player: prompt.player,
-          attackerId: prompt.modelId,
-          targetId: enemy.id,
-          attackName,
-        });
-        // A hit spends an action, so this terminates: the activation ends by
-        // itself once the budget is gone.
-        if (hit.ok) return hit.state;
-      }
-
-      const ended = applyAction(state, { type: 'END_ACTIVATION', player: prompt.player });
-      return ended.ok ? ended.state : null;
-    }
-
-    default:
-      return null;
-  }
-}
-
 describe('the client’s opening position', () => {
   it('attaches a real profile to every model that has a card', () => {
     const spec = playableSparringSpec(1);
@@ -124,18 +61,40 @@ describe('the client’s opening position', () => {
   });
 
   it('plays a whole game through to the end on real card data', () => {
+    // Driven by `autoplay.ts`, the same no-decisions player that
+    // `scripts/play-demo.ts` narrates — so a transcript read by hand is
+    // evidence about this path rather than about a second implementation.
     let state: GameState = createGame(playableSparringSpec(11));
 
     // Bounded so a loop bug fails the test rather than hanging the suite.
     for (let i = 0; i < 1000 && state.phase !== 'finished'; i++) {
-      const next = answerOnePrompt(state);
-      expect(next).not.toBeNull();
-      if (!next) return;
-      state = next;
+      const step = autoPlayStep(state, { useReactions: true });
+      expect(step).not.toBeNull();
+      if (!step) return;
+      expect(step.result.ok).toBe(true);
+      if (!step.result.ok) return;
+      state = step.result.state;
     }
 
     expect(state.phase).toBe('finished');
     expect(state.prompt).toBeNull();
+  });
+
+  it('moves characters that start out of range, rather than idling', () => {
+    // Two of the four sparring characters open beyond every attack they have.
+    // A driver that only attacked left them standing still for six rounds,
+    // which made the transcript unreadable and left MOVE untested end to end.
+    let state: GameState = createGame(playableSparringSpec(11));
+    let moved = false;
+
+    for (let i = 0; i < 1000 && state.phase !== 'finished' && !moved; i++) {
+      const step = autoPlayStep(state, { useReactions: true });
+      if (!step?.result.ok) break;
+      moved = step.result.events.some(e => e.type === 'MODEL_MOVED');
+      state = step.result.state;
+    }
+
+    expect(moved).toBe(true);
   });
 
   it('closes the loop: damage pays for the reaction it provokes', () => {
@@ -148,9 +107,9 @@ describe('the client’s opening position', () => {
     expect(POWER_PER_ROUND).toBeLessThan(2);
 
     for (let i = 0; i < 1000 && state.prompt?.kind !== 'declareReaction'; i++) {
-      const next = answerOnePrompt(state);
-      if (!next) break;
-      state = next;
+      const step = autoPlayStep(state, { useReactions: true });
+      if (!step?.result.ok) break;
+      state = step.result.state;
     }
 
     const prompt = state.prompt;

@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc --build && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --build"
+    "typecheck": "tsc --build && tsc -p tsconfig.scripts.json",
+    "play:demo": "tsx --conditions=development scripts/play-demo.ts"
   },
   "dependencies": {
     "@danger-room/data": "*",
@@ -30,6 +31,8 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.40",
     "tailwindcss": "^3.4.7",
-    "vite": "^5.3.5"
+    "vite": "^5.3.5",
+    "tsx": "^4.17.0",
+    "@types/node": "^20.14.0"
   }
 }
