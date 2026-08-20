@@ -68,15 +68,40 @@ describe('sides', () => {
 });
 
 describe('labelOf', () => {
-  it('tells two of the same character apart', () => {
-    // The reason #22 exists. Squads cannot contain a duplicate — validateSquad
-    // rejects it — so the two are always on opposite sides, and the side tag
-    // is therefore enough to separate them.
+  it('tells two of the same character apart across the table', () => {
+    // The reason #22 exists: both players may field the same character.
     const mirror = mirrorMatch();
 
     expect(nameOf(mirror, m1)).toBe(nameOf(mirror, m2));
     expect(labelOf(mirror, m1)).toBe('Amazing Spider-Man (P1)');
     expect(labelOf(mirror, m2)).toBe('Amazing Spider-Man (P2)');
     expect(labelOf(mirror, m1)).not.toBe(labelOf(mirror, m2));
+  });
+
+  it('tells two of the same character apart on the same side', () => {
+    // Prime Sentinel and Sentinel MK4 each print an innate superpower letting
+    // a player take two: "when building a Roster or a Squad, a player may
+    // include 2 of this character instead of the normal 1". So a side tag
+    // alone is not enough, which an earlier version of `labelOf` assumed.
+    const spec = playableSparringSpec(11);
+    const spider = spec.models.find(m => m.characterId === 'amazing-spider-man')!;
+
+    const twins = createGame({
+      ...spec,
+      models: [
+        { ...spider, id: m1, owner: p1, pos: vec3(12, 18, 0) },
+        { ...spider, id: m2, owner: p1, pos: vec3(20, 18, 0) },
+      ],
+    });
+
+    expect(labelOf(twins, m1)).toBe('Amazing Spider-Man #1 (P1)');
+    expect(labelOf(twins, m2)).toBe('Amazing Spider-Man #2 (P1)');
+  });
+
+  it('leaves an unambiguous name alone', () => {
+    // The ordinal is noise on every ordinary line, so it only appears where a
+    // name is genuinely ambiguous for that side.
+    expect(labelOf(position(), m1)).toBe('Amazing Spider-Man (P1)');
+    expect(labelOf(position(), m1)).not.toContain('#');
   });
 });

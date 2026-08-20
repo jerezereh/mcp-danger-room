@@ -43,14 +43,31 @@ export function sideOf(state: GameState, id: PlayerId): string {
 /**
  * A model as a log line should name it: "Amazing Spider-Man (P1)".
  *
- * The tag is what makes the log readable when both players field the same
- * character, which is legal and not unusual. It is per *player* rather than
- * per model, and that is sufficient: a squad may not contain the same
- * character twice — `validateSquad` rejects it with `DUPLICATE_CHARACTER` — so
- * two models sharing a name are always on opposite sides.
+ * The side tag is what makes the log readable when both players field the same
+ * character, which is legal and not unusual.
+ *
+ * It is *not* enough on its own. Two characters print an innate superpower
+ * letting a player take two of them — Prime Sentinel's "Bastion's Legion" and
+ * Sentinel MK4's "MASTER MOLD", both reading "when building a Roster or a
+ * Squad, a player may include 2 of this character instead of the normal 1" —
+ * so two models with the same name on the *same* side are legal. An earlier
+ * version of this function assumed they were not, on the strength of
+ * `validateSquad` rejecting duplicates, which is itself the bug (#29).
+ *
+ * So the ordinal appears only when a name is genuinely ambiguous for a side,
+ * which keeps every ordinary line clean and makes the rare one readable.
  */
 export function labelOf(state: GameState, id: ModelId): string {
   const model = state.models[id];
   if (!model) return id;
-  return `${nameOf(state, id)} (${sideOf(state, model.owner)})`;
+
+  const name = nameOf(state, id);
+  const side = sideOf(state, model.owner);
+
+  const namesakes = Object.values(state.models).filter(
+    other => other.owner === model.owner && nameOf(state, other.id) === name,
+  );
+  if (namesakes.length <= 1) return `${name} (${side})`;
+
+  return `${name} #${namesakes.findIndex(other => other.id === id) + 1} (${side})`;
 }
