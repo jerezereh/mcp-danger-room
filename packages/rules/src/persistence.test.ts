@@ -29,8 +29,8 @@ const spec: GameSpec = {
     { id: p2, displayName: 'Player Two' },
   ],
   models: [
-    { id: m1, characterId: 'amazing-spider-man' as CharacterId, characterName: 'Amazing Spider-Man', owner: p1, pos: vec3(12, 18, 0) },
-    { id: m2, characterId: 'black-panther' as CharacterId, characterName: 'Black Panther', owner: p2, pos: vec3(16, 18, 0) },
+    { id: m1, characterId: 'amazing-spider-man' as CharacterId, owner: p1, pos: vec3(12, 18, 0) },
+    { id: m2, characterId: 'black-panther' as CharacterId, owner: p2, pos: vec3(16, 18, 0) },
   ],
 };
 

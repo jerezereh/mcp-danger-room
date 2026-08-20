@@ -8,13 +8,12 @@
  * coarse to animate either.
  */
 
-import { describeEvent, nameOf, playerOf } from '@danger-room/rules';
-
-import { useStore } from '../store.js';
+import { describeEvent } from '../lib/eventText.js';
+import { selectGame, useStore } from '../store.js';
 
 
 export function GameLog() {
-  const state = useStore(s => s.session.state);
+  const game = useStore(selectGame);
   const events = useStore(s => s.events);
   const rejection = useStore(s => s.lastRejection);
 
@@ -31,10 +30,7 @@ export function GameLog() {
         {events.map(event => (
           <li key={event.sequence} className="text-slate-400">
             <span className="mr-2 tabular-nums text-slate-600">{event.sequence}</span>
-            {describeEvent(event, {
-              nameOf: id => nameOf(state, id),
-              playerOf: id => playerOf(state, id),
-            })}
+            {describeEvent(event, game)}
           </li>
         ))}
       </ol>

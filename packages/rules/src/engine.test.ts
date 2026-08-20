@@ -12,9 +12,8 @@ import type {
   StatProfile,
   SuperpowerProfile,
 } from './profile.js';
-import { describe as describeEvent } from './events.js';
 import { createGame, createSparringGame, type GameSpec, type ModelSpec } from './setup.js';
-import { nameOf, playerOf, type GameState } from './state.js';
+import type { GameState } from './state.js';
 
 const p1 = 'p1' as PlayerId;
 const p2 = 'p2' as PlayerId;
@@ -95,8 +94,8 @@ function duel(a: Partial<ModelSpec>, b: Partial<ModelSpec>, seed = 1): GameState
       { id: p2, displayName: 'Two' },
     ],
     models: [
-      { id: m1, characterId: 'alpha' as CharacterId, characterName: 'Alpha', owner: p1, pos: vec3(12, 18, 0), ...a },
-      { id: m2, characterId: 'beta' as CharacterId, characterName: 'Beta', owner: p2, pos: vec3(16, 18, 0), ...b },
+      { id: m1, characterId: 'alpha' as CharacterId, owner: p1, pos: vec3(12, 18, 0), ...a },
+      { id: m2, characterId: 'beta' as CharacterId, owner: p2, pos: vec3(16, 18, 0), ...b },
     ],
   };
   return createGame(spec);
@@ -111,10 +110,10 @@ function threeVersusOne(): GameState {
       { id: p2, displayName: 'Two' },
     ],
     models: [
-      { id: m1, characterId: 'alpha' as CharacterId, characterName: 'Alpha', owner: p1, pos: vec3(12, 18, 0) },
-      { id: m3, characterId: 'gamma' as CharacterId, characterName: 'Gamma', owner: p1, pos: vec3(14, 8, 0) },
-      { id: m5, characterId: 'epsilon' as CharacterId, characterName: 'Epsilon', owner: p1, pos: vec3(20, 30, 0) },
-      { id: m2, characterId: 'beta' as CharacterId, characterName: 'Beta', owner: p2, pos: vec3(16, 18, 0) },
+      { id: m1, characterId: 'alpha' as CharacterId, owner: p1, pos: vec3(12, 18, 0) },
+      { id: m3, characterId: 'gamma' as CharacterId, owner: p1, pos: vec3(14, 8, 0) },
+      { id: m5, characterId: 'epsilon' as CharacterId, owner: p1, pos: vec3(20, 30, 0) },
+      { id: m2, characterId: 'beta' as CharacterId, owner: p2, pos: vec3(16, 18, 0) },
     ],
   });
 }
@@ -128,27 +127,6 @@ function play(state: GameState, actions: readonly Action[]): GameState {
   return result.state;
 }
 
-describe('naming helpers', () => {
-  it('uses readable names for players and models in log text', () => {
-    const state = duel({}, {});
-
-    expect(nameOf(state, m1)).toBe('Alpha');
-    expect(playerOf(state, p1)).toBe('One');
-    expect(
-      describeEvent(
-        {
-          sequence: 1,
-          type: 'DICE_ROLLED',
-          modelId: m1,
-          mode: 'attack',
-          faces: ['hit'],
-          successes: 1,
-        },
-        { nameOf: id => nameOf(state, id), playerOf: id => playerOf(state, id) },
-      ),
-    ).toContain('Alpha rolls attack');
-  });
-});
 
 describe('determinism', () => {
   // This is the property the entire architecture rests on. If it ever fails,
@@ -523,9 +501,9 @@ describe('the round loop', () => {
         { id: p2, displayName: 'Two' },
       ],
       models: [
-        { id: m1, characterId: 'alpha' as CharacterId, characterName: 'Alpha', owner: p1, pos: vec3(12, 18, 0) },
-        { id: m3, characterId: 'gamma' as CharacterId, characterName: 'Gamma', owner: p1, pos: vec3(14, 8, 0) },
-        { id: m2, characterId: 'beta' as CharacterId, characterName: 'Beta', owner: p2, pos: vec3(16, 18, 0) },
+        { id: m1, characterId: 'alpha' as CharacterId, owner: p1, pos: vec3(12, 18, 0) },
+        { id: m3, characterId: 'gamma' as CharacterId, owner: p1, pos: vec3(14, 8, 0) },
+        { id: m2, characterId: 'beta' as CharacterId, owner: p2, pos: vec3(16, 18, 0) },
       ],
     });
 
@@ -1427,9 +1405,9 @@ describe('gaining Power from damage', () => {
         { id: p2, displayName: 'Two' },
       ],
       models: [
-        { id: m1, characterId: 'alpha' as CharacterId, characterName: 'Alpha', owner: p1, pos: vec3(12, 18, 0) },
-        { id: m2, characterId: 'beta' as CharacterId, characterName: 'Beta', owner: p2, pos: vec3(16, 18, 0) },
-        { id: m4, characterId: 'delta' as CharacterId, characterName: 'Delta', owner: p2, pos: vec3(20, 18, 0) },
+        { id: m1, characterId: 'alpha' as CharacterId, owner: p1, pos: vec3(12, 18, 0) },
+        { id: m2, characterId: 'beta' as CharacterId, owner: p2, pos: vec3(16, 18, 0) },
+        { id: m4, characterId: 'delta' as CharacterId, owner: p2, pos: vec3(20, 18, 0) },
       ],
     });
     expect(hurt(state, 3, m4)).toBe(0);

@@ -24,7 +24,6 @@ import {
 export interface ModelSpec {
   readonly id: ModelId;
   readonly characterId: CharacterId;
-  readonly characterName: string;
   readonly owner: PlayerId;
   readonly pos: Vec3;
   /**
@@ -79,7 +78,17 @@ export function trainingProfile(characterId: CharacterId): CharacterProfile {
     superpowers: [],
   } as const;
 
-  return { characterId, name: 'Training Dummy', baseMm: 40, healthy: stats, injured: stats };
+  // Named after the slot it is filling rather than the character it stands in
+  // for. A dummy that answers to "Amazing Spider-Man" while rolling a generic
+  // 5-dice STRIKE is the same failure as a placeholder stat block: a confident
+  // answer that is not true.
+  return {
+    characterId,
+    name: `Training Dummy (${characterId})`,
+    baseMm: 40,
+    healthy: stats,
+    injured: stats,
+  };
 }
 
 export function createModel(spec: ModelSpec): Model {
@@ -90,7 +99,6 @@ export function createModel(spec: ModelSpec): Model {
   return {
     id: spec.id,
     characterId: spec.characterId,
-    characterName: spec.characterName,
     owner: spec.owner,
     pos: spec.pos,
     facing: 0,
@@ -239,28 +247,24 @@ export function sparringSpec(seed = 1): GameSpec {
       {
         id: 'm1' as ModelId,
         characterId: 'amazing-spider-man' as CharacterId,
-        characterName: 'Amazing Spider-Man',
         owner: 'p1' as PlayerId,
         pos: vec3(12, 18, 0),
       },
       {
         id: 'm2' as ModelId,
         characterId: 'black-panther' as CharacterId,
-        characterName: 'Black Panther',
         owner: 'p2' as PlayerId,
         pos: vec3(16, 18, 0),
       },
       {
         id: 'm3' as ModelId,
         characterId: 'ancient-one' as CharacterId,
-        characterName: 'Ancient One',
         owner: 'p1' as PlayerId,
         pos: vec3(14, 8, 0),
       },
       {
         id: 'm4' as ModelId,
         characterId: 'angela' as CharacterId,
-        characterName: 'Angela',
         owner: 'p2' as PlayerId,
         pos: vec3(26, 24, 0),
       },

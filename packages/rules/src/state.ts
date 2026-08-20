@@ -59,7 +59,6 @@ export interface Condition {
 export interface Model {
   readonly id: ModelId;
   readonly characterId: CharacterId;
-  readonly characterName: string;
   readonly owner: PlayerId;
 
   readonly pos: Vec3;
@@ -394,14 +393,3 @@ export function mayPassTurn(state: GameState, player: PlayerId): boolean {
     .reduce((most, other) => Math.max(most, activatableModels(state, other).length), 0);
   return mine < theirs;
 }
-
-/** A model's printed name, falling back to its id when it has no card. */
-export const nameOf = (state: GameState, id: string): string => {
-  const model = state.models[id];
-  if (!model) return id;
-
-  return model.characterName || state.profiles[model.characterId]?.name || id;
-};
-
-export const playerOf = (state: GameState, id: string): string =>
-  state.players[id]?.displayName ?? id;
