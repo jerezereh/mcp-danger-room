@@ -19,10 +19,21 @@ and Vite 6+ will require 20. Use [nvm](https://github.com/nvm-sh/nvm) or similar
 
 ```bash
 npm install
-npm test          # 299 tests across the rules, data, and web packages
+npm test          # 372 tests across the rules, data, and web packages
 npm run typecheck # all five projects
 npm run dev       # web client on http://localhost:5173
 npm run dev:server # game server on :2567 (only needed for online play)
+npm run play:demo  # play a game in the terminal and read the transcript
+```
+
+`play:demo` runs a full six-round game against real card data and narrates it
+from the engine's event stream — dice pools, reaction windows, Power, Dazed and
+the flip. It takes a seed, so a run is reproducible and quotable in a bug
+report:
+
+```bash
+npm run play:demo -- --seed=42
+npm run play:demo -- --seed=42 --pass-reactions
 ```
 
 Card scans are optional and fetched separately — about 450 images, ~410MB, so
