@@ -27,6 +27,8 @@ import {
   statsAt,
   type GameEvent,
   type GameState,
+  nameOf,
+  playerOf,
 } from '@danger-room/rules';
 
 import { autoPlayStep, describeInaction } from '../src/lib/autoplay.js';
@@ -74,17 +76,6 @@ function reproduceCommand(options: Options): string {
   if (!options.useReactions) flags.push('--pass-reactions');
   return `npm run play:demo -- ${flags.join(' ')}`;
 }
-
-// ---------------------------------------------------------------------------
-// Names
-// ---------------------------------------------------------------------------
-
-/** A model's printed name, falling back to its id when it has no card. */
-const nameOf = (state: GameState, id: string): string =>
-  state.profiles[state.models[id]?.characterId ?? '']?.name ?? id;
-
-const playerOf = (state: GameState, id: string): string =>
-  state.players[id]?.displayName ?? id;
 
 /**
  * Die faces, abbreviated so a pool fits on one line.

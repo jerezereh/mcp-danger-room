@@ -74,3 +74,58 @@ type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K>
 
 /** An event as emitted by the engine, before a sequence number is stamped on. */
 export type GameEventInput = DistributiveOmit<GameEvent, 'sequence'>;
+
+
+export type EventNameLookup = {
+  readonly nameOf: (id: string) => string;
+  readonly playerOf: (id: string) => string;
+};
+
+export function describeEvent(event: GameEvent, lookup: EventNameLookup): string {
+  switch (event.type) {
+    case 'ROUND_STARTED':
+      return `Round ${event.round} begins.`;
+    case 'PRIORITY_ASSIGNED':
+      return `${lookup.playerOf(event.player)} takes priority.`;
+    case 'TURN_PASSED':
+      return `${lookup.playerOf(event.player)} passes.`;
+    case 'ACTIVATION_STARTED':
+      return `${lookup.nameOf(event.modelId)} activates.`;
+    case 'ACTIVATION_ENDED':
+      return `${lookup.nameOf(event.modelId)} finishes activating.`;
+    case 'MODEL_MOVED':
+      return `${lookup.nameOf(event.modelId)} moves to (${event.to.x.toFixed(1)}, ${event.to.y.toFixed(1)}).`;
+    case 'POWER_GAINED':
+      return `${lookup.nameOf(event.modelId)} gains ${event.amount} power.`;
+    case 'POWER_SPENT':
+      return `${lookup.nameOf(event.modelId)} spends ${event.amount} power.`;
+    case 'ATTACK_DECLARED':
+      return `${lookup.nameOf(event.attackerId)} attacks ${lookup.nameOf(event.targetId)} with ${event.attackName}.`;
+    case 'DICE_ROLLED':
+      return `${lookup.nameOf(event.modelId)} rolls ${event.mode}: ${event.successes} success${
+        event.successes === 1 ? '' : 'es'
+      } (${event.faces.join(', ')}).`;
+    case 'DAMAGE_DEALT':
+      return `${lookup.nameOf(event.modelId)} takes ${event.amount} damage.`;
+    case 'MODEL_DAZED':
+      return `${lookup.nameOf(event.modelId)} is Dazed.`;
+    case 'MODEL_INJURED':
+      return `${lookup.nameOf(event.modelId)} flips to its injured side.`;
+    case 'MODEL_KO':
+      return `${lookup.nameOf(event.modelId)} is KO'd.`;
+    case 'CONDITION_APPLIED':
+      return `${lookup.nameOf(event.modelId)} gains ${event.condition}.`;
+    case 'CONDITION_REMOVED':
+      return `${lookup.nameOf(event.modelId)} loses ${event.condition}.`;
+    case 'REACTION_WINDOW_OPENED':
+      return `Reaction window: ${event.timing}.`;
+    case 'REACTION_USED':
+      return `${lookup.nameOf(event.modelId)} uses ${event.superpower}.`;
+    case 'OBJECTIVE_SCORED':
+      return `${lookup.playerOf(event.player)} scores ${event.points} VP.`;
+    case 'GAME_ENDED':
+      return event.winner ? `${lookup.playerOf(event.winner)} wins.` : 'The game ends in a draw.';
+  }
+}
+
+export const describe = (event: GameEvent, lookup: EventNameLookup): string => describeEvent(event, lookup);
