@@ -14,7 +14,8 @@
 import type { DieFace } from './dice.js';
 import type { Vec3 } from './geometry/vec.js';
 import type { ModelId, PlayerId } from './ids.js';
-import type { ConditionKind, ReactionWindow } from './state.js';
+import type { ReactionTiming } from './profile.js';
+import type { ConditionKind } from './state.js';
 
 interface EventBase {
   readonly sequence: number;
@@ -24,6 +25,7 @@ export type GameEvent = EventBase &
   (
     | { readonly type: 'ROUND_STARTED'; readonly round: number }
     | { readonly type: 'PRIORITY_ASSIGNED'; readonly player: PlayerId }
+    | { readonly type: 'TURN_PASSED'; readonly player: PlayerId }
     | { readonly type: 'ACTIVATION_STARTED'; readonly modelId: ModelId }
     | { readonly type: 'ACTIVATION_ENDED'; readonly modelId: ModelId }
     | { readonly type: 'MODEL_MOVED'; readonly modelId: ModelId; readonly from: Vec3; readonly to: Vec3 }
@@ -43,15 +45,19 @@ export type GameEvent = EventBase &
         readonly successes: number;
       }
     | { readonly type: 'DAMAGE_DEALT'; readonly modelId: ModelId; readonly amount: number }
+    /** Damage reached Stamina: out for the round, flips at Cleanup. */
+    | { readonly type: 'MODEL_DAZED'; readonly modelId: ModelId }
+    /** The Cleanup Phase flip onto the Injured side. */
     | { readonly type: 'MODEL_INJURED'; readonly modelId: ModelId }
     | { readonly type: 'MODEL_KO'; readonly modelId: ModelId }
     | { readonly type: 'CONDITION_APPLIED'; readonly modelId: ModelId; readonly condition: ConditionKind }
     | { readonly type: 'CONDITION_REMOVED'; readonly modelId: ModelId; readonly condition: ConditionKind }
-    | { readonly type: 'REACTION_WINDOW_OPENED'; readonly window: ReactionWindow }
+    | { readonly type: 'REACTION_WINDOW_OPENED'; readonly timing: ReactionTiming }
     | {
         readonly type: 'REACTION_USED';
         readonly modelId: ModelId;
         readonly superpower: string;
+        readonly timing: ReactionTiming;
       }
     | { readonly type: 'OBJECTIVE_SCORED'; readonly player: PlayerId; readonly points: number }
     | { readonly type: 'GAME_ENDED'; readonly winner: PlayerId | null }

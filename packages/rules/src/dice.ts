@@ -4,6 +4,11 @@
  * The face distribution is *data*, not branching logic, so that correcting it
  * against the real die is a one-line change and so that the AI can reason about
  * expected values without re-deriving them.
+ *
+ * Rolling is split into `rollPool`, `resolveCriticals` and `countSuccesses`
+ * because the attack sequence interleaves the two sides — steps 6, 7, 8 and 10
+ * of the rulebook happen in that order across both players, not as two
+ * independent rolls. See issue #5.
  */
 
 import { nextInts, type RngState } from './rng.js';
@@ -31,7 +36,7 @@ export type RollMode = 'attack' | 'defense';
 
 export interface RollResult {
   readonly faces: readonly DieFace[];
-  /** Faces added by criticals rerolling. Kept separate for the UI's benefit. */
+  /** Faces added by resolving criticals. Kept separate for the UI's benefit. */
   readonly bonusFaces: readonly DieFace[];
   readonly successes: number;
   readonly wilds: number;
@@ -54,45 +59,75 @@ function isSuccess(face: DieFace, mode: RollMode): boolean {
 }
 
 /**
- * Roll `count` dice. Criticals count as successes *and* generate an additional
- * die, which can itself crit — so the loop continues until no new criticals
- * appear. Bounded by `maxCascades` purely as a runaway guard.
+ * Step 10 — count successes.
  *
- * TODO(verify): confirm criticals cascade rather than rerolling exactly once.
+ * "The attacker counts each Critical, Wild, and Hit result on their dice,
+ * while the defender counts each Critical, Wild, and Block result."
+ */
+export function countSuccesses(faces: readonly DieFace[], mode: RollMode): number {
+  return faces.filter(f => isSuccess(f, mode)).length;
+}
+
+/**
+ * Steps 6 and 7 — roll a pool. No criticals are resolved here.
+ *
+ * Separate from `resolveCriticals` because the sequence interleaves the two
+ * sides: *both* initial pools are rolled before *either* side's criticals are
+ * resolved, and criticals are then resolved beginning with the attacker.
+ * Rolling a pool and its criticals in one call cannot express that order.
+ */
+export function rollPool(rng: RngState, count: number): { faces: DieFace[]; rng: RngState } {
+  const drawn = nextInts(rng, DIE_FACES.length, Math.max(0, count));
+  return {
+    faces: drawn.values.map(i => DIE_FACES[i % DIE_FACES.length] as DieFace),
+    rng: drawn.state,
+  };
+}
+
+/**
+ * Step 8 — resolve criticals.
+ *
+ * "Beginning with the attacker, each character rolls an additional die for
+ * each Critical result in their initial roll. Criticals rolled in this step
+ * are not part of the initial roll and do not add further dice to the roll."
+ *
+ * So this is exactly one additional round, and it does **not** cascade. The
+ * engine used to reroll criticals repeatedly until none appeared, which
+ * inflated every pool containing one — a 5-dice attack could roll eight.
+ */
+export function resolveCriticals(
+  rng: RngState,
+  initialFaces: readonly DieFace[],
+): { bonusFaces: DieFace[]; rng: RngState } {
+  const criticals = initialFaces.filter(f => f === 'critical').length;
+  if (criticals === 0) return { bonusFaces: [], rng };
+
+  const drawn = rollPool(rng, criticals);
+  return { bonusFaces: drawn.faces, rng: drawn.rng };
+}
+
+/**
+ * Roll a pool and resolve its criticals in one call — steps 6 and 8, or 7 and
+ * 8, for one side in isolation.
+ *
+ * Convenient for tests and for anything that does not care about the
+ * interleaving. The engine does care, and uses the two primitives directly.
  */
 export function roll(
   rng: RngState,
   count: number,
   mode: RollMode,
-  maxCascades = 10,
 ): { result: RollResult; rng: RngState } {
-  const faces: DieFace[] = [];
-  const bonusFaces: DieFace[] = [];
+  const initial = rollPool(rng, count);
+  const bonus = resolveCriticals(initial.rng, initial.faces);
+  const all = [...initial.faces, ...bonus.bonusFaces];
 
-  let cursor = rng;
-  let toRoll = count;
-  let cascades = 0;
-  let isBonusRound = false;
-
-  while (toRoll > 0 && cascades <= maxCascades) {
-    const drawn = nextInts(cursor, DIE_FACES.length, toRoll);
-    cursor = drawn.state;
-
-    const rolled = drawn.values.map(i => DIE_FACES[i % DIE_FACES.length] as DieFace);
-    (isBonusRound ? bonusFaces : faces).push(...rolled);
-
-    toRoll = rolled.filter(f => f === 'critical').length;
-    isBonusRound = true;
-    cascades++;
-  }
-
-  const all = [...faces, ...bonusFaces];
   return {
-    rng: cursor,
+    rng: bonus.rng,
     result: {
-      faces,
-      bonusFaces,
-      successes: all.filter(f => isSuccess(f, mode)).length,
+      faces: initial.faces,
+      bonusFaces: bonus.bonusFaces,
+      successes: countSuccesses(all, mode),
       wilds: all.filter(f => f === 'wild').length,
       criticals: all.filter(f => f === 'critical').length,
     },

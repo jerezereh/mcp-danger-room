@@ -13,11 +13,12 @@
  */
 
 import { create } from 'zustand';
+
+import { playableSparringSpec } from './lib/gameSetup.js';
 import {
   deserialize,
   record,
   serialize,
-  sparringSpec,
   startSession,
   type Action,
   type GameEvent,
@@ -54,7 +55,7 @@ interface AppState {
 }
 
 export const useStore = create<AppState>((set, get) => ({
-  session: startSession(sparringSpec(Date.now())),
+  session: startSession(playableSparringSpec(Date.now())),
   events: [],
   selectedModel: null,
   cameraMode: 'top-down',
@@ -90,7 +91,7 @@ export const useStore = create<AppState>((set, get) => ({
 
   newGame: seed =>
     set({
-      session: startSession(sparringSpec(seed ?? Date.now())),
+      session: startSession(playableSparringSpec(seed ?? Date.now())),
       events: [],
       selectedModel: null,
       lastRejection: null,

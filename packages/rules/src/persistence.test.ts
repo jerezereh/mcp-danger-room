@@ -33,9 +33,11 @@ const spec: GameSpec = {
   ],
 };
 
+// The spec above carries no profiles, so both models play as training
+// dummies whose one attack is called STRIKE. See `trainingProfile`.
 const script: Action[] = [
   { type: 'ACTIVATE', player: p1, modelId: m1 },
-  { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: 'Spider Strike' },
+  { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: 'STRIKE' },
 ];
 
 function play(actions: readonly Action[]): GameSession {

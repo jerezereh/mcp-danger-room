@@ -7,7 +7,7 @@
  */
 
 import { useState } from 'react';
-import { edgeDistance, hasLineOfSight, rangeBandTo } from '@danger-room/rules';
+import { edgeDistance, hasLineOfSight, MAX_ROUNDS, rangeBandTo } from '@danger-room/rules';
 
 import { Board } from './components/Board.js';
 import { characterName, inches } from './lib/format.js';
@@ -21,6 +21,52 @@ const TABS: { id: View; label: string }[] = [
   { id: 'roster', label: 'Rosters' },
   { id: 'play', label: 'Play' },
 ];
+
+/**
+ * Whose turn it is, and why the last thing you tried did not happen.
+ *
+ * The engine parks a `Prompt` saying exactly what it is waiting for, and it is
+ * the only honest answer to "can I click this?" — with alternating activation
+ * the Activate button is legal for one player at a time, and without this the
+ * other player's click looks like a broken button rather than a turn order.
+ *
+ * TODO(#8): this is the seed of a real action bar. Moves and attacks still
+ * cannot be issued from the board at all.
+ */
+function TurnBanner() {
+  const game = useStore(selectGame);
+  const rejection = useStore(s => s.lastRejection);
+
+  const nameOf = (id: string) => game.players[id]?.displayName ?? id;
+  const prompt = game.prompt;
+
+  const waiting =
+    game.phase === 'finished'
+      ? 'Game over'
+      : prompt?.kind === 'chooseActivation'
+        ? `${nameOf(prompt.player)} to activate`
+        : prompt?.kind === 'chooseAction'
+          ? `${nameOf(prompt.player)} acting`
+          : 'Resolving…';
+
+  return (
+    <div className="border-b border-surface-border p-3">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          Round {game.round}
+          <span className="text-slate-600"> / {MAX_ROUNDS}</span>
+        </span>
+        <span className="truncate text-sm text-slate-200">{waiting}</span>
+      </div>
+
+      {rejection && (
+        <p className="mt-2 rounded bg-accent/10 px-2 py-1 text-xs text-accent">
+          {rejection.message}
+        </p>
+      )}
+    </div>
+  );
+}
 
 function GameView() {
   const dispatch = useStore(s => s.dispatch);
@@ -39,6 +85,8 @@ function GameView() {
       <Board />
 
       <aside className="flex flex-col overflow-hidden border-l border-surface-border bg-surface-raised">
+        <TurnBanner />
+
         <div className="border-b border-surface-border p-3">
           <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
             Selection
@@ -105,7 +153,11 @@ function GameView() {
               <div className="flex gap-2 pt-1">
                 <button
                   type="button"
-                  disabled={model.activatedThisRound}
+                  disabled={
+                    model.activatedThisRound ||
+                    game.prompt?.kind !== 'chooseActivation' ||
+                    game.prompt.player !== model.owner
+                  }
                   onClick={() =>
                     dispatch({ type: 'ACTIVATE', player: model.owner, modelId: model.id })
                   }

@@ -141,6 +141,11 @@ needs input, at which point it parks a `Prompt` and returns. The next action
 resumes from exactly that point. The whole game — including "we are three steps
 into an attack, waiting on a reaction" — round-trips through `JSON.stringify`.
 
+Damage carries its source for the same reason the sequence is stepped: Power is
+gained only from *enemy* effects, so `applyDamage` has to know who caused it.
+An unattributed frame would let a character pay for its next reaction by
+hurting itself.
+
 There is a test asserting exactly that, because it is the property everything
 else rests on:
 
@@ -152,7 +157,31 @@ it('keeps state serializable as plain JSON', () => {
 ```
 
 The attack sequence (`AttackStep`) is modelled as named steps rather than one
-function precisely so that reaction windows have somewhere to insert themselves.
+function precisely so that reaction windows have somewhere to insert
+themselves. There are fourteen of them, one per printed step of the rulebook's
+attack sequence, and three are interrupts.
+
+The bet has now been tested. Black Panther's VIBRANIUM ARMOR — a real printed
+superpower — interrupts a real attack at step 2, and the suspended position
+looks like this:
+
+```
+activation | attack:payPower | reactionWindow
+```
+
+That whole thing round-trips through `JSON.stringify`, which is the property
+the closure implementation would have cost. `apps/web/src/lib/reaction.test.ts`
+asserts it against the corpus rather than against a fixture.
+
+**Reaction eligibility cannot come from the corpus.** MCP superpowers are
+prose — *"When this character is targeted by a {PHYS} or {ENRG} attack, it may
+use this superpower"* — and there are 200 reactive ones, no two worded alike.
+Nothing parses that reliably, and a parser that half-works is worse than none,
+because a superpower firing at the wrong moment is a wrong game rather than a
+missing feature. So structured triggers are hand-written in
+`packages/data/src/reactions.ts` and passed in at setup exactly as stats are. A
+superpower with no entry is carried on the profile and never offered, so the
+gap reads as "not implemented" instead of as a character with no powers.
 
 ---
 
@@ -175,19 +204,29 @@ routine.
 
 ```
 packages/rules     →  (nothing)
-packages/data      →  zod
+packages/data      →  zod, rules (types only)
 packages/protocol  →  rules (types only)
 apps/server        →  rules, protocol, colyseus
 apps/web           →  rules, data, protocol, react, three
 ```
+
+`data` depends on `rules` for types alone, and only because of
+`data/src/reactions.ts` — the hand-written table of what each reactive
+superpower actually does, which is card knowledge expressed in the engine's
+vocabulary. It points at the innermost package, so the direction still holds
+and the constraint that matters is untouched.
 
 Dependencies point strictly inward. `rules` never imports `data` — the engine
 operates on state, not on card definitions, and character stats are passed in
 rather than looked up. That keeps the engine testable without a corpus and keeps
 the corpus replaceable without touching the engine.
 
-*(Currently the engine has placeholder stats hardcoded where card data should be
-injected — see §9.)*
+Stats reach the engine as a `CharacterProfile` **passed in at setup** rather
+than looked up during resolution, so `applyAction` keeps its two-argument
+signature and no consumer has to carry the corpus. The profile travels in the
+`GameSpec`, which means it travels in the save — a corpus correction cannot
+retroactively change a game that has already been played. `apps/web/src/lib/
+profile.ts` is the only place the two shapes meet.
 
 ---
 
@@ -263,8 +302,28 @@ wrong on purpose.
   cascading criticals
 - Base-to-base measurement, range bands, base contact
 - Line of sight with terrain occlusion and elevation
-- Movement validation — path length along a polyline, base overlap rejection
+- Movement validation — path length along a polyline, base overlap rejection,
+  and the character's printed movement template
 - The resolution loop, frame stack, and prompt parking
+- The round loop as printed: a Power Phase granting 1 Power to every
+  character, an Activation Phase of strictly alternating turns with passing,
+  and a Cleanup Phase that flips Dazed characters, passes priority, and clears
+  Activated tokens — in that order, because the order is load-bearing
+- The action budget — a model gets `ACTIONS_PER_ACTIVATION` actions and its
+  activation ends when they run out
+- Attack dice, range, defense-by-damage-type, and stamina thresholds all read
+  off the character's own card
+- The rulebook's 14-step attack sequence, including the Power cost, the
+  one-die floor on both pools, criticals resolving exactly once, the damage cap
+  at remaining Stamina, and the refusal to target an ally
+- Reaction windows at steps 2, 9, 11 and 14, with real eligibility — filtered
+  by trigger, by side of the attack, by damage type, and by whether the
+  character can pay
+- Power spent on attacks and reactions, and gained both from the Power Phase
+  and from suffering damage from an enemy effect — which closes the loop, since
+  a character now earns the Power that pays for the superpower it needs
+- Dazed as a state distinct from the Injured card face: a character out for the
+  round that keeps its damage and its healthy stats until Cleanup flips it
 - Roster/squad validation and legal-squad enumeration
 - Card text tokenizer
 - Legacy data importer (which found a real `{E}`/`{En}` inconsistency in the old
@@ -273,24 +332,40 @@ wrong on purpose.
 
 **Skeleton or absent:**
 
-- Attack resolution runs `rollAttack → rollDefense → damage` and stops. Dice
-  modification steps, wild/crit triggers, and after-attack effects are stubs.
-- Reaction windows have a frame and a prompt but no eligibility enumeration —
-  `options` is always empty.
-- Superpowers, tactic cards, conditions, objectives, VP, and round structure are
-  types without implementations.
-- Power economy is unimplemented.
-- The engine uses hardcoded placeholder stats (5 attack dice, 3 defense, stamina
-  6) where card data should be injected. **This is the highest-priority
-  structural gap** — wiring `@danger-room/data` into the engine's stat lookups is
-  what turns the skeleton into something that plays a real character.
+- Wild and critical *triggers* — the `{WILD}` clauses printed on attacks — are
+  never read. `RollResult` counts them and nothing consumes the count.
+- Step 9 does not distinguish modifying your own dice from forcing an opponent
+  to modify theirs, because no effect can yet tell them apart.
+- `ReactionEffect` has two variants, so nine superpowers out of 200 have a
+  structured trigger. The rest are carried and never offered.
+- Reactions triggered by an *allied character within Range n* being targeted —
+  a large printed family — need a third model and a range band the structured
+  trigger does not carry.
+- Active superpowers, tactic cards, conditions, objectives, and VP are types
+  without implementations. The game ends with no winner.
+- The Power Phase grants its 1 Power and nothing else: the player and
+  non-player effects that follow it are unimplemented, though 106 superpowers
+  reference the phase. The 579 lines of attack text that grant Power are not
+  read either.
+- Passing is offered but never chosen for a reason — a player with characters
+  left always activates unless a human declines. Grunts are not modelled, so
+  the pass condition counts every character.
+- Step 9 collapses two ordered sub-phases into one window (#12).
+- The client cannot issue a move or an attack from the board; it can select a
+  model and start its activation.
+- Games start from a fixed sparring position rather than from drafted squads.
+  The server's copy of that position still plays training dummies, because
+  `apps/server` does not depend on `@danger-room/data`.
+- Several rules constants are still unverified. See §11.
 - No client/server wiring yet: the protocol and room exist, the client does not
   connect. Local play only.
-- No AI, no lobby UI, no persistence, no accounts.
+- No AI, no lobby UI, no accounts.
 
 ---
 
 ## 10. Suggested order of work
+
+*Tracked as GitHub issues #1–#10; #2, #3 and #4 are done.*
 
 **1 — Roster builder against a real corpus.** No board, no server, no engine.
 It is the feature the project was started for, it is useful the day the data
@@ -323,9 +398,11 @@ over a URL.
 
 ## 11. Risks and open questions
 
-**Rules constants are invented.** Range bands, movement distances, base radii,
-size heights, and the die faces are all placeholders marked `TODO(verify)`. The
-geometry is correct; the numbers it operates on are not. Nothing the app reports
+**Rules constants are partly invented.** Round count, actions per activation,
+the Power Phase grant, and the movement-template rule are now verified against
+the rulebook. Range bands, movement distances, base radii, size heights, and
+the die faces remain placeholders marked `TODO(verify)`. The geometry is
+correct; several of the numbers it operates on are not. Nothing the app reports
 about probability or legality should be trusted until §10.3 is done.
 
 **Line of sight is approximated.** `hasLineOfSight` samples the trace rather than
