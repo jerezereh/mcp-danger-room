@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import { edgeDistance, hasLineOfSight, MAX_ROUNDS, rangeBandTo } from '@danger-room/rules';
 
+import { ActionBar } from './components/ActionBar.js';
 import { Board } from './components/Board.js';
 import { characterName, inches } from './lib/format.js';
 import { GameLog } from './components/GameLog.js';
@@ -69,7 +70,6 @@ function TurnBanner() {
 }
 
 function GameView() {
-  const dispatch = useStore(s => s.dispatch);
   const selected = useStore(s => s.selectedModel);
   const game = useStore(selectGame);
   const newGame = useStore(s => s.newGame);
@@ -84,8 +84,9 @@ function GameView() {
     <div className="grid h-full grid-cols-[1fr_300px] overflow-hidden">
       <Board />
 
-      <aside className="flex flex-col overflow-hidden border-l border-surface-border bg-surface-raised">
+      <aside className="flex flex-col overflow-y-auto border-l border-surface-border bg-surface-raised">
         <TurnBanner />
+        <ActionBar />
 
         <div className="border-b border-surface-border p-3">
           <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
@@ -105,6 +106,8 @@ function GameView() {
                 <dd className="text-right text-slate-200">
                   {model.activatedThisRound ? 'yes' : 'no'}
                 </dd>
+                <dt>Dazed</dt>
+                <dd className="text-right text-slate-200">{model.dazed ? 'yes' : 'no'}</dd>
                 <dt>Position</dt>
                 <dd className="text-right tabular-nums text-slate-200">
                   {model.pos.x.toFixed(1)}, {model.pos.y.toFixed(1)}
@@ -150,22 +153,11 @@ function GameView() {
                 </ul>
               </div>
 
-              <div className="flex gap-2 pt-1">
-                <button
-                  type="button"
-                  disabled={
-                    model.activatedThisRound ||
-                    game.prompt?.kind !== 'chooseActivation' ||
-                    game.prompt.player !== model.owner
-                  }
-                  onClick={() =>
-                    dispatch({ type: 'ACTIVATE', player: model.owner, modelId: model.id })
-                  }
-                  className="flex-1 rounded bg-accent/80 px-2 py-1.5 text-xs font-medium text-white transition hover:bg-accent disabled:cursor-not-allowed disabled:bg-surface disabled:text-slate-600"
-                >
-                  Activate
-                </button>
-              </div>
+              {/*
+                No Activate button here any more — activating is one of the
+                things the engine offers, so it belongs in the action bar with
+                everything else it offers. This panel inspects; it does not act.
+              */}
             </div>
           ) : (
             <p className="text-xs text-slate-600">Click a model on the board.</p>

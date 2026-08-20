@@ -138,6 +138,32 @@ function activationFrame(state: GameState): Extract<Frame, { kind: 'activation' 
 }
 
 /**
+ * "If a character is Dazed during their Activation, their Activation
+ * immediately ends."
+ *
+ * Implemented by spending the rest of its actions rather than by unwinding the
+ * stack, so that whatever is mid-flight — an attack two steps from resolving,
+ * a reaction window somebody is being asked about — finishes rather than being
+ * discarded. `resolve()` ends the activation as soon as it is reached.
+ *
+ * TODO(verify): whether "immediately" is meant to abort an in-flight effect.
+ * Unreachable today: nothing damages the active character during its own
+ * activation, so this cannot yet be triggered.
+ */
+function endActivationOf(draft: Draft, modelId: ModelId): void {
+  const stack = draft.state.stack;
+  const index = stack.findIndex(f => f.kind === 'activation' && f.modelId === modelId);
+  if (index < 0) return;
+
+  const frame = stack[index];
+  if (frame?.kind !== 'activation' || frame.actionsRemaining <= 0) return;
+
+  const next = [...stack];
+  next[index] = { ...frame, actionsRemaining: 0 };
+  draft.state = { ...draft.state, stack: next };
+}
+
+/**
  * Charge one action to the activation in progress.
  *
  * The budget was carried on the frame from the start and never decremented, so
@@ -210,6 +236,13 @@ export function applyAction(state: GameState, action: Action): Result {
       if (model.owner !== action.player)
         return reject('NOT_YOUR_TURN', 'That model belongs to your opponent.');
 
+      // "A character with a Dazed token can't move or be moved for any reason."
+      //
+      // TODO(#24): the "or be moved" half needs Push, Throw and Place, which
+      // do not exist. When they do, they have to consult this too — a Dazed
+      // character is immovable, not merely unable to choose to move.
+      if (model.dazed) return reject('MODEL_DAZED', 'That character is Dazed and cannot move.');
+
       const activation = activationFrame(state);
       if (!activation) return reject('UNEXPECTED_ACTION', 'No activation in progress.');
       if (activation.modelId !== model.id) {
@@ -271,6 +304,11 @@ export function applyAction(state: GameState, action: Action): Result {
       if (attacker.owner !== action.player)
         return reject('NOT_YOUR_TURN', 'That model belongs to your opponent.');
       if (target.health === 'ko') return reject('MODEL_KO', 'Target is already KO’d.');
+      // "A character with a Dazed token ... can't be targeted by attacks or be
+      // affected by special rules or superpowers."
+      if (target.dazed) {
+        return reject('MODEL_DAZED', 'That character is Dazed and cannot be targeted.');
+      }
       // "A character can never make an attack without a target and can never
       // choose an allied character to be the target of its attack." Nothing
       // checked this, so a squad could shoot itself.
@@ -602,6 +640,7 @@ function resolve(draft: Draft, guard = 1000): Result {
           // the rest of the round.
           putModel(draft, { ...model, dazed: true });
           emit(draft, { type: 'MODEL_DAZED', modelId: model.id });
+          endActivationOf(draft, model.id);
         } else {
           // TODO(verify): the excerpt covering the Cleanup Phase describes
           // Dazed and the flip, but not what happens to a character that would
@@ -1109,6 +1148,9 @@ function eligibleReactions(
   for (const modelId of [context.attackerId, context.targetId]) {
     const model = getModel(state, modelId);
     if (!model || model.owner !== player || model.health === 'ko') continue;
+    // "Dazed characters ... don't have superpowers." Not merely unable to pay
+    // for one — they do not have it to use.
+    if (model.dazed) continue;
 
     const stats = getStats(state, model);
     if (!stats) continue;

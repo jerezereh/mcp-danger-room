@@ -847,6 +847,80 @@ describe('being Dazed', () => {
     expect(suffer(flipped, 2).models[m2]?.health).toBe('ko');
   });
 
+  it('cannot be targeted by an attack', () => {
+    // "A character with a Dazed token ... can't be targeted by attacks or be
+    // affected by special rules or superpowers."
+    //
+    // Found by the action bar and the engine disagreeing: the UI hid attacks
+    // against a Dazed enemy and the engine happily accepted them. The UI was
+    // right.
+    const state = duel({}, { profile: profile('beta', { healthy: { stamina: 3 } }) });
+    const dazed = suffer(state, 3);
+    expect(dazed.models[m2]?.dazed).toBe(true);
+
+    const result = applyAll(dazed, [
+      { type: 'ACTIVATE', player: p2, modelId: m2 },
+    ]);
+    expect(result.ok).toBe(false);
+
+    const attacking = applyAction(
+      { ...dazed, prompt: { kind: 'chooseAction', player: p1, modelId: m1 }, stack: [{ kind: 'activation', modelId: m1, actionsRemaining: 2 }] },
+      { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: STRIKE },
+    );
+    expect(attacking.ok).toBe(false);
+    if (attacking.ok) return;
+    expect(attacking.rejection.code).toBe('MODEL_DAZED');
+  });
+
+  it('cannot move', () => {
+    // "A character with a Dazed token can't move or be moved for any reason."
+    const state = duel({ profile: profile('alpha', { healthy: { stamina: 3 } }) }, {});
+    const primed: GameState = {
+      ...state,
+      models: { ...state.models, [m1]: { ...state.models[m1]!, dazed: true } },
+      stack: [{ kind: 'activation', modelId: m1, actionsRemaining: 2 }],
+      prompt: { kind: 'chooseAction', player: p1, modelId: m1 },
+    };
+
+    const moved = applyAction(primed, {
+      type: 'MOVE',
+      player: p1,
+      modelId: m1,
+      template: 'S',
+      path: [vec3(12, 20, 0)],
+    });
+    expect(moved.ok).toBe(false);
+    if (moved.ok) return;
+    expect(moved.rejection.code).toBe('MODEL_DAZED');
+  });
+
+  it('is never offered a reaction, because it has no superpowers', () => {
+    // "Dazed characters ... don't have superpowers."
+    const shielded = profile('beta', {
+      healthy: { stamina: 3, superpowers: [shield('VIBRANIUM ARMOR', 2)] },
+    });
+    const state = duel({}, { profile: shielded, power: 9 });
+
+    // Undazed, the window opens.
+    const awake = play(state, [
+      { type: 'ACTIVATE', player: p1, modelId: m1 },
+      { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: STRIKE },
+    ]);
+    expect(awake.prompt?.kind).toBe('declareReaction');
+
+    // Dazed, the same attack is refused outright — and were it not, the
+    // reaction would not be on offer either.
+    const dazed: GameState = {
+      ...state,
+      models: { ...state.models, [m2]: { ...state.models[m2]!, dazed: true } },
+    };
+    const result = applyAll(dazed, [
+      { type: 'ACTIVATE', player: p1, modelId: m1 },
+      { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: STRIKE },
+    ]);
+    expect(result.ok).toBe(false);
+  });
+
   it('emits the beats of taking damage in order', () => {
     const state = duel({}, { profile: profile('beta', { healthy: { stamina: 2 } }) });
     const primed: GameState = {

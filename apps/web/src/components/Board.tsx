@@ -23,13 +23,18 @@ import { Vector3 } from 'three';
 import {
   edgeDistance,
   hasLineOfSight,
+  MOVEMENT_INCHES,
   RANGE_INCHES,
   TABLE_SIZE,
+  type GameState,
   type Model,
+  type ModelId,
   type TerrainVolume,
 } from '@danger-room/rules';
 
+import { toScene, fromScene } from '../lib/coords.js';
 import { characterName, inches } from '../lib/format.js';
+import { targetableBy } from '../lib/targeting.js';
 import { selectGame, useStore } from '../store.js';
 
 const TABLE_COLOR = '#1d2432';
@@ -39,16 +44,17 @@ const PLAYER_COLORS: Record<string, string> = {
 };
 
 /**
- * Table (x, y, elevation) → three.js (x, up, z). Confined to this file.
+ * The model whose activation is in progress, if the engine is asking it to act.
  *
- * Note the negated y. Looking straight down flips handedness, so a naive
- * mapping renders the board mirrored: with the camera above and `up` = +Z,
- * camera-right works out to world −X, and a model at x=16 draws to the *left*
- * of one at x=12. Negating y here (with `up` = −Z below) is what buys both
- * "+x runs right" and "+y runs up" at once — a single flip can only ever fix
- * one of the two.
+ * Read from the prompt rather than from the selection: what you have clicked on
+ * to inspect and what is legally acting are different questions, and conflating
+ * them is how you end up moving the wrong model.
  */
-const toScene = (x: number, y: number, z = 0): [number, number, number] => [x, z, -y];
+function activatingModel(state: GameState): Model | null {
+  const prompt = state.prompt;
+  if (prompt?.kind !== 'chooseAction') return null;
+  return state.models[prompt.modelId] ?? null;
+}
 
 /**
  * Pin the top-down camera's orientation.
@@ -87,7 +93,7 @@ function TopDownLock({ active }: { active: boolean }) {
   return null;
 }
 
-function Table() {
+function Table({ onPick }: { onPick: (point: { x: number; z: number }) => void }) {
   // planeGeometry is centred on its own origin, so it must be offset by half
   // the table to line up with the engine's 0..36 coordinate space. At [0,0,0]
   // it would span -18..18 and sit almost entirely off the playable area.
@@ -96,10 +102,38 @@ function Table() {
       rotation={[-Math.PI / 2, 0, 0]}
       position={toScene(TABLE_SIZE.width / 2, TABLE_SIZE.depth / 2)}
       receiveShadow
+      onClick={event => {
+        event.stopPropagation();
+        onPick(event.point);
+      }}
     >
       <planeGeometry args={[TABLE_SIZE.width, TABLE_SIZE.depth]} />
       <meshStandardMaterial color={TABLE_COLOR} />
     </mesh>
+  );
+}
+
+/**
+ * How far the activating model may move, drawn where it will be measured from.
+ *
+ * The engine measures a move as path length from the model's *current*
+ * position, so this is a plain radius around the centre rather than around the
+ * base edge — unlike the range rings, which are edge-to-edge because that is
+ * how range works. The two are drawn differently on purpose.
+ */
+function MoveRing({ model, template }: { model: Model; template: 'S' | 'M' | 'L' }) {
+  const radius = MOVEMENT_INCHES[template];
+  return (
+    <group position={toScene(model.pos.x, model.pos.y, model.pos.z + 0.04)}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[radius - 0.05, radius + 0.05, 96]} />
+        <meshBasicMaterial color="#5fbd84" transparent opacity={0.85} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[radius, 96]} />
+        <meshBasicMaterial color="#5fbd84" transparent opacity={0.07} />
+      </mesh>
+    </group>
   );
 }
 
@@ -190,24 +224,36 @@ function SightLines({ from, models, terrain }: { from: Model; models: Model[]; t
 function ModelToken({
   model,
   selected,
+  targetable,
   distanceFromSelected,
+  onPick,
 }: {
   model: Model;
   selected: boolean;
+  /** A legal-looking target for the attack currently being aimed. */
+  targetable: boolean;
   distanceFromSelected: number | null;
+  onPick: (id: ModelId) => void;
 }) {
-  const select = useStore(s => s.select);
   const color = PLAYER_COLORS[model.owner] ?? '#888888';
   const dimmed = model.health === 'ko';
 
   return (
     <group position={toScene(model.pos.x, model.pos.y, model.pos.z)}>
+      {/* A ring under anything the aimed attack can currently reach. */}
+      {targetable && (
+        <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[model.radius + 0.12, model.radius + 0.3, 48]} />
+          <meshBasicMaterial color="#f2b134" transparent opacity={0.95} />
+        </mesh>
+      )}
+
       {/* Base: the thing range is actually measured from. */}
       <mesh
         position={[0, 0.05, 0]}
         onClick={event => {
           event.stopPropagation();
-          select(model.id);
+          onPick(model.id);
         }}
         castShadow
       >
@@ -251,11 +297,11 @@ function ModelToken({
               </span>
             )}
           </div>
-          {(selected || model.health !== 'healthy' || model.damage > 0) && (
+          {(selected || model.dazed || model.health !== 'healthy' || model.damage > 0) && (
             <div className="mt-px text-[9px] leading-tight text-slate-400">
               {model.health === 'ko'
                 ? 'KO'
-                : `${model.health} · ${model.damage} dmg · ${model.power}p`}
+                : `${model.dazed ? 'Dazed' : model.health} · ${model.damage} dmg · ${model.power}p`}
             </div>
           )}
         </div>
@@ -268,10 +314,54 @@ function Scene() {
   const game = useStore(selectGame);
   const selectedId = useStore(s => s.selectedModel);
   const cameraMode = useStore(s => s.cameraMode);
+  const boardMode = useStore(s => s.boardMode);
+  const dispatch = useStore(s => s.dispatch);
+  const select = useStore(s => s.select);
 
   const models = useMemo(() => Object.values(game.models), [game.models]);
   const selected = selectedId ? game.models[selectedId] : undefined;
   const target = toScene(TABLE_SIZE.width / 2, TABLE_SIZE.depth / 2);
+
+  const acting = activatingModel(game);
+
+  /**
+   * A click on the table is a move, or nothing.
+   *
+   * The path is a single destination: the engine measures from where the model
+   * actually is, so one point is a straight move. Curved paths are expressible
+   * in the action — `path` is a polyline — and there is no UI for drawing one
+   * yet.
+   */
+  const pickDestination = (point: { x: number; z: number }) => {
+    if (boardMode.kind !== 'move' || !acting) return;
+    dispatch({
+      type: 'MOVE',
+      player: acting.owner,
+      modelId: acting.id,
+      template: boardMode.template,
+      path: [fromScene(point)],
+    });
+  };
+
+  /** A click on a model is an attack while one is aimed, and a selection otherwise. */
+  const pickModel = (id: ModelId) => {
+    if (boardMode.kind === 'attack' && acting && id !== acting.id) {
+      dispatch({
+        type: 'ATTACK',
+        player: acting.owner,
+        attackerId: acting.id,
+        targetId: id,
+        attackName: boardMode.attackName,
+      });
+      return;
+    }
+    select(id);
+  };
+
+  const targetable = useMemo(
+    () => targetableBy(game, acting, boardMode.kind === 'attack' ? boardMode.attackName : null),
+    [game, acting, boardMode],
+  );
 
   return (
     <>
@@ -309,7 +399,7 @@ function Scene() {
       <ambientLight intensity={0.65} />
       <directionalLight position={[20, 40, 20]} intensity={1.1} castShadow />
 
-      <Table />
+      <Table onPick={pickDestination} />
       <Grid
         args={[TABLE_SIZE.width, TABLE_SIZE.depth]}
         position={toScene(TABLE_SIZE.width / 2, TABLE_SIZE.depth / 2, 0.01)}
@@ -328,18 +418,45 @@ function Scene() {
 
       {selected && <RangeRings model={selected} />}
       {selected && <SightLines from={selected} models={models} terrain={game.terrain} />}
+      {acting && boardMode.kind === 'move' && (
+        <MoveRing model={acting} template={boardMode.template} />
+      )}
 
       {models.map(model => (
         <ModelToken
           key={model.id}
           model={model}
           selected={model.id === selectedId}
+          targetable={targetable.has(model.id)}
+          onPick={pickModel}
           distanceFromSelected={
             selected && selected.id !== model.id ? edgeDistance(selected, model) : null
           }
         />
       ))}
     </>
+  );
+}
+
+/**
+ * What a click will do, said out loud.
+ *
+ * The board is one surface with three jobs — inspect, move, shoot — and no way
+ * to tell them apart by looking, so it says which one is armed.
+ */
+function ModeHint() {
+  const boardMode = useStore(s => s.boardMode);
+  if (boardMode.kind === 'idle') return null;
+
+  const text =
+    boardMode.kind === 'move'
+      ? `Click the board to move — ${boardMode.template} template`
+      : `Click a target for ${boardMode.attackName}`;
+
+  return (
+    <div className="pointer-events-none absolute left-1/2 top-4 -translate-x-1/2 rounded-md border border-accent/40 bg-surface-raised/95 px-3 py-1.5 text-xs text-slate-200 backdrop-blur">
+      {text}
+    </div>
   );
 }
 
@@ -389,6 +506,7 @@ export function Board() {
         {cameraMode === 'top-down' ? 'Perspective view' : 'Top-down view'}
       </button>
 
+      <ModeHint />
       <Legend hasSelection={selectedId !== null} />
     </div>
   );

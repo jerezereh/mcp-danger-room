@@ -279,6 +279,21 @@ has no opinion about (selection, camera mode, connection status). Game state
 belongs to the engine and is replaced wholesale by `applyAction` — mixing the two
 is how client-side rules divergence starts.
 
+**The client acts through prompts, not through its own rules.** Every control
+in `ActionBar.tsx` is rendered from `state.prompt` — the engine says what it is
+waiting for and from whom, and the buttons are that answer rather than a second
+implementation of the rules in the UI.
+
+The board is one surface with three jobs — inspect a model, choose where to
+move, choose what to shoot — so a click needs a mode, chosen in the action bar
+and consumed by the next click. That mode is *not* game state: the engine has
+no opinion about what the pointer is doing.
+
+Range rings and target highlights are computed in the client from the engine's
+own exported geometry, which makes them a hint rather than a ruling. The engine
+is still asked when the click lands, and its rejection is what the player sees.
+If the two ever disagree, the highlight is wrong and the refusal is right.
+
 **The client animates from events, not state diffs.** `GameLog.tsx` renders the
 same `GameEvent` stream the server broadcasts and the board will eventually
 animate from. This doubles as a design check: if a log line is hard to phrase,
@@ -329,6 +344,8 @@ wrong on purpose.
 - Legacy data importer (which found a real `{E}`/`{En}` inconsistency in the old
   corpus on its first run)
 - Roster builder UI; board renderer with both cameras; event log
+- A playable board: activate, move, attack, use a reaction, pass and end, all
+  driven by the engine's prompts
 
 **Skeleton or absent:**
 
@@ -352,8 +369,6 @@ wrong on purpose.
   left always activates unless a human declines. Grunts are not modelled, so
   the pass condition counts every character.
 - Step 9 collapses two ordered sub-phases into one window (#12).
-- The client cannot issue a move or an attack from the board; it can select a
-  model and start its activation.
 - Games start from a fixed sparring position rather than from drafted squads.
   The server's copy of that position still plays training dummies, because
   `apps/server` does not depend on `@danger-room/data`.
