@@ -93,6 +93,35 @@ describe('resolving criticals', () => {
   });
 });
 
+describe('the die as a save-format commitment', () => {
+  it('turns a fixed seed into a fixed sequence of faces', () => {
+    // A save is a seed plus a list of *intents*; the dice are recomputed on
+    // load. So `DIE_FACES` is part of the save format, and changing it
+    // reinterprets every save ever taken — the same RNG indices, different
+    // symbols, a different game.
+    //
+    // That failure is the quiet kind. The log records "attack with SPIDER
+    // STRIKE", not "and rolled four successes", so every action stays legal
+    // and the replay succeeds while handing back a board that never happened.
+    //
+    // If this test fails and the change was intended, bump
+    // SAVE_FORMAT_VERSION in persistence.ts so old saves are refused by
+    // version rather than silently reinterpreted.
+    expect(rollPool(createRng(42), 10).faces).toEqual([
+      'block',
+      'hit',
+      'blank',
+      'blank',
+      'wild',
+      'block',
+      'hit',
+      'block',
+      'blank',
+      'hit',
+    ]);
+  });
+});
+
 describe('rolling a pool', () => {
   it('rolls exactly the requested number of dice', () => {
     expect(rollPool(createRng(3), 7).faces).toHaveLength(7);

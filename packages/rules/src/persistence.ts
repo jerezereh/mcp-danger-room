@@ -26,19 +26,36 @@ import { createGame, type GameSpec } from './setup.js';
 import type { GameState } from './state.js';
 
 /**
- * Bumped when `SavedGame`, `GameSpec`, or the `Action` union changes shape in a
- * way that makes old logs unreplayable. This is a smaller and more stable
- * surface than full game state, which is the point of the whole approach.
+ * Bumped whenever the same seed and the same actions stop producing the same
+ * game.
+ *
+ * That is a wider trigger than it first looks, and stating it as "when the
+ * shape changes" has now been wrong twice. A save is a seed plus a list of
+ * *intents*; the outcomes are recomputed on load. So anything the engine uses
+ * to turn intents into outcomes is part of this format — the shape of
+ * `SavedGame`, `GameSpec` and `Action`, but equally the rules, the constants,
+ * and the die.
+ *
+ * The failure mode when this is missed is the quiet one. A shape change breaks
+ * replay loudly, with a DIVERGED at the first action the engine no longer
+ * accepts. A *rules* change usually leaves every action still legal — you may
+ * still activate that model, still declare that attack — so the replay
+ * succeeds and silently hands back a game that never happened.
  *
  * v2: `GameSpec` models carry a `profile`, and `Action` gained `PASS_TURN`.
  * A v1 log replays into a game whose characters have none of their printed
- * attacks — every model falls back to the training dummy — so an ATTACK naming
- * a real attack is rejected. Left at v1 that surfaced as DIVERGED pointing at
- * an arbitrary action, which reads as a corrupt save rather than an old one.
- * The alternating-activation and action-budget rules reject most v1 logs on
- * their own account too.
+ * attacks, so an ATTACK naming a real attack is rejected — which surfaced as
+ * DIVERGED pointing at an arbitrary action, reading as a corrupt save rather
+ * than an old one.
+ *
+ * v3: the die gained its sixth face. The pool size is unchanged, so the same
+ * RNG indices are drawn and four of the eight now land on different symbols —
+ * a v2 replay produces different rolls, different damage, and a different
+ * board, with every action still legal and nothing to complain about.
+ * `dice.test.ts` pins the seed-to-faces mapping so the next change to the die
+ * fails there rather than here.
  */
-export const SAVE_FORMAT_VERSION = 2;
+export const SAVE_FORMAT_VERSION = 3;
 
 export interface SavedGame {
   readonly formatVersion: number;
