@@ -390,7 +390,35 @@ describe('save format versioning', () => {
     expect(loaded.error.message).toContain('v1');
   });
 
-  it('is past v1, because the Action union and GameSpec both changed', () => {
-    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(1);
+  it('refuses a v2 save, whose dice meant something else', () => {
+    // The quiet case. v2 saves are structurally identical to v3 ones and every
+    // action in them is still legal, so replaying one succeeds — but the die
+    // gained a sixth face, four of the eight RNG indices now land on different
+    // symbols, and the board that comes back is not the board that was saved.
+    // Only the version distinguishes them.
+    const v2 = {
+      formatVersion: 2,
+      setup: {
+        seed: 1,
+        players: [
+          { id: p1, displayName: 'One' },
+          { id: p2, displayName: 'Two' },
+        ],
+        models: [
+          { id: m1, characterId: 'a', owner: p1, pos: vec3(12, 18, 0) },
+          { id: m2, characterId: 'b', owner: p2, pos: vec3(16, 18, 0) },
+        ],
+      },
+      actions: [{ type: 'ACTIVATE', player: p1, modelId: m1 }],
+    } as unknown as SavedGame;
+
+    const loaded = load(v2);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('UNSUPPORTED_VERSION');
+  });
+
+  it('is past v2, because the die changed under it', () => {
+    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(2);
   });
 });

@@ -86,6 +86,11 @@ export type ReactionTiming =
  * the frame architecture carries a real one end to end, then grow the union
  * one printed effect at a time. Anything not expressible here is left with no
  * `ReactionProfile` and is never offered.
+ *
+ * The next variant is almost certainly a reroll, since step 9 of the attack
+ * sequence is entirely about rerolling and changing dice (#12). Whatever
+ * implements it must consult `isRerollable` in `dice.ts`: a Failure cannot be
+ * rerolled, and 40 superpowers in the corpus reroll something.
  */
 export type ReactionEffect =
   | { readonly kind: 'addDefenseDice'; readonly count: number }

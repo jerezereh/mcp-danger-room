@@ -332,8 +332,9 @@ wrong on purpose.
 
 **Skeleton or absent:**
 
-- Wild and critical *triggers* — the `{WILD}` clauses printed on attacks — are
-  never read. `RollResult` counts them and nothing consumes the count.
+- Wild, critical and failure *triggers* — the `{WILD}` and `{FAIL}` clauses
+  printed on attacks — are never read. `RollResult` counts all three and
+  nothing consumes the counts.
 - Step 9 does not distinguish modifying your own dice from forcing an opponent
   to modify theirs, because no effect can yet tell them apart.
 - `ReactionEffect` has two variants, so nine superpowers out of 200 have a
@@ -399,10 +400,16 @@ over a URL.
 ## 11. Risks and open questions
 
 **Rules constants are partly invented.** Round count, actions per activation,
-the Power Phase grant, and the movement-template rule are now verified against
-the rulebook. Range bands, movement distances, base radii, size heights, and
-the die faces remain placeholders marked `TODO(verify)`. The geometry is
-correct; several of the numbers it operates on are not. Nothing the app reports
+the Power Phase grant, the movement-template rule, and the die faces are now
+verified against the rulebook. Range bands, movement distances, base radii and
+size heights remain placeholders marked `TODO(verify)`. The geometry is
+correct; several of the numbers it operates on are not.
+
+The die is worth a note: it has **six** symbols, not five. Blank and Failure
+both do nothing, but a Blank can be rerolled and a Failure cannot, and `{FAIL}`
+is a symbol effects trigger on in its own right. The engine had one face doing
+both jobs, which silently made every Failure rerollable and made 126 lines of
+card text unrepresentable. Nothing the app reports
 about probability or legality should be trusted until §10.3 is done.
 
 **Line of sight is approximated.** `hasLineOfSight` samples the trace rather than
