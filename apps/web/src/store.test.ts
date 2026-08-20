@@ -132,6 +132,22 @@ describe('driving a turn through the store', () => {
     expect(state().session.actions).toHaveLength(before);
   });
 
+  it('disarms the board when a snapshot replaces the position', () => {
+    // A snapshot is authoritative state arriving from elsewhere and can move
+    // play to another character entirely. An armed mode belongs to the
+    // position it was armed in, so carrying it across would let the next board
+    // click issue an action for whoever happens to be acting now.
+    const prompt = game().prompt;
+    if (prompt?.kind !== 'chooseActivation') return;
+
+    state().dispatch({ type: 'ACTIVATE', player: prompt.player, modelId: prompt.options[0]! });
+    state().setBoardMode({ kind: 'attack', attackName: 'SPIDER STRIKE' });
+    expect(state().boardMode.kind).toBe('attack');
+
+    state().applySnapshot(game());
+    expect(state().boardMode).toEqual({ kind: 'idle' });
+  });
+
   it('answers a reaction prompt', () => {
     // Reactions are reachable in ordinary play now, so the client has to be
     // able to answer one. Play until a window opens.

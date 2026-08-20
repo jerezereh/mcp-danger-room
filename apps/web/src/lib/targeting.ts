@@ -44,6 +44,8 @@ export function targetableBy(
         other =>
           other.owner !== attacker.owner &&
           other.health !== 'ko' &&
+          // "A character with a Dazed token ... can't be targeted by attacks."
+          !other.dazed &&
           edgeDistance(attacker, other) <= reach &&
           hasLineOfSight(attacker, other, state.terrain).clear,
       )

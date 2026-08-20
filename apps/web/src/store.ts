@@ -116,6 +116,11 @@ export const useStore = create<AppState>((set, get) => ({
   applySnapshot: state =>
     set(current => ({
       session: { setup: current.session.setup, state, actions: [] },
+      // A snapshot can move play to another character entirely. An armed mode
+      // is about the position it was armed in, so carrying it across would let
+      // the next board click issue a move or an attack for whoever happens to
+      // be acting now.
+      boardMode: IDLE,
       lastRejection: null,
     })),
 

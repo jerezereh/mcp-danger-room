@@ -64,6 +64,19 @@ describe('targetableBy', () => {
     expect(targetableBy(blocked, modelOf(blocked, spider), 'SPIDER STRIKE').size).toBe(0);
   });
 
+  it('never highlights a Dazed enemy', () => {
+    // "A character with a Dazed token ... can't be targeted by attacks." The
+    // action bar had this right and the engine did not; both do now, and this
+    // test plus the agreement test below is what keeps them together.
+    const state = position();
+    const dazed: GameState = {
+      ...state,
+      models: { ...state.models, [panther]: { ...state.models[panther]!, dazed: true } },
+    };
+
+    expect(targetableBy(dazed, modelOf(dazed, spider), 'SPIDER STRIKE').size).toBe(0);
+  });
+
   it('highlights nothing for an attack the character does not have', () => {
     const state = position();
     expect(targetableBy(state, modelOf(state, spider), 'HEAT VISION').size).toBe(0);
@@ -101,13 +114,21 @@ describe('targetableBy', () => {
     expect(started.ok).toBe(true);
     if (!started.ok) return;
 
-    const highlighted = targetableBy(started.state, modelOf(started.state, spider), 'SPIDER STRIKE');
+    // Daze one of them, so the check covers the case the two disagreed on.
+    const withDazed: GameState = {
+      ...started.state,
+      models: {
+        ...started.state.models,
+        [ancient]: { ...started.state.models[ancient]!, dazed: true },
+      },
+    };
+    const highlighted = targetableBy(withDazed, modelOf(withDazed, spider), 'SPIDER STRIKE');
 
-    for (const model of Object.values(started.state.models)) {
+    for (const model of Object.values(withDazed.models)) {
       if (model.id === spider) continue;
-      const result = applyAction(started.state, {
+      const result = applyAction(withDazed, {
         type: 'ATTACK',
-        player: started.state.models[spider]!.owner,
+        player: withDazed.models[spider]!.owner,
         attackerId: spider,
         targetId: model.id,
         attackName: 'SPIDER STRIKE',
