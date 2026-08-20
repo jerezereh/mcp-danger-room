@@ -18,6 +18,8 @@ function describe(event: GameEvent): string {
       return `Round ${event.round} begins.`;
     case 'PRIORITY_ASSIGNED':
       return `${event.player} takes priority.`;
+    case 'TURN_PASSED':
+      return `${event.player} passes.`;
     case 'ACTIVATION_STARTED':
       return `${event.modelId} activates.`;
     case 'ACTIVATION_ENDED':
@@ -36,8 +38,10 @@ function describe(event: GameEvent): string {
       } (${event.faces.join(', ')}).`;
     case 'DAMAGE_DEALT':
       return `${event.modelId} takes ${event.amount} damage.`;
+    case 'MODEL_DAZED':
+      return `${event.modelId} is Dazed.`;
     case 'MODEL_INJURED':
-      return `${event.modelId} is injured and flips.`;
+      return `${event.modelId} flips to its injured side.`;
     case 'MODEL_KO':
       return `${event.modelId} is KO'd.`;
     case 'CONDITION_APPLIED':
@@ -45,7 +49,7 @@ function describe(event: GameEvent): string {
     case 'CONDITION_REMOVED':
       return `${event.modelId} loses ${event.condition}.`;
     case 'REACTION_WINDOW_OPENED':
-      return `Reaction window: ${event.window}.`;
+      return `Reaction window: ${event.timing}.`;
     case 'REACTION_USED':
       return `${event.modelId} uses ${event.superpower}.`;
     case 'OBJECTIVE_SCORED':

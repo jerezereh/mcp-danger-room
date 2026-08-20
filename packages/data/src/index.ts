@@ -5,8 +5,9 @@
  * Depends on Zod and nothing else — no rendering, no I/O.
  */
 
+export * from './reactions.js';
 export * from './roster.js';
 export * from './schema.js';
 export * from './symbols.js';
 export * from './import/index.js';
-export { characters } from './characters.js';
+export { characters, charactersById, unverified } from './characters.js';

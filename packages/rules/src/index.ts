@@ -20,6 +20,7 @@ export * from './geometry/measure.js';
 export * from './geometry/vec.js';
 export * from './ids.js';
 export * from './persistence.js';
+export * from './profile.js';
 export * from './rng.js';
 export * from './setup.js';
 export * from './state.js';

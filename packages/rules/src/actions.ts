@@ -36,10 +36,18 @@ export type Action =
       readonly superpower: string;
       readonly targetId?: ModelId;
     }
-  | { readonly type: 'DECLARE_REACTION'; readonly player: PlayerId; readonly modelId: ModelId; readonly superpower: string }
+  /** Use a reactive superpower in the open reaction window. */
+  | {
+      readonly type: 'DECLARE_REACTION';
+      readonly player: PlayerId;
+      readonly modelId: ModelId;
+      readonly superpower: string;
+    }
   | { readonly type: 'PASS_REACTION'; readonly player: PlayerId }
   | { readonly type: 'PLAY_TACTIC'; readonly player: PlayerId; readonly card: CardId }
   | { readonly type: 'END_ACTIVATION'; readonly player: PlayerId }
+  /** End your turn without activating anybody. Legal only when behind on models. */
+  | { readonly type: 'PASS_TURN'; readonly player: PlayerId }
   | { readonly type: 'ROLL_PRIORITY'; readonly player: PlayerId };
 
 export type ActionType = Action['type'];
@@ -51,13 +59,18 @@ export interface Rejection {
     | 'WRONG_PHASE'
     | 'UNKNOWN_MODEL'
     | 'MODEL_ALREADY_ACTIVATED'
+    | 'MODEL_DAZED'
     | 'MODEL_KO'
+    | 'CANNOT_PASS'
+    | 'UNKNOWN_ATTACK'
+    | 'ILLEGAL_TARGET'
     | 'OUT_OF_RANGE'
     | 'NO_LINE_OF_SIGHT'
     | 'INSUFFICIENT_POWER'
     | 'ILLEGAL_MOVE'
     | 'NO_PROMPT_PENDING'
     | 'UNEXPECTED_ACTION'
+    | 'GAME_OVER'
     | 'NOT_IMPLEMENTED';
   readonly message: string;
 }

@@ -45,14 +45,29 @@ export type MovementTemplate = keyof typeof MOVEMENT_INCHES;
 /**
  * Base radii in inches by base size in mm. Models are treated as cylinders.
  *
- * TODO(verify): confirm which characters use which base.
+ * 35mm was missing and is the most common base in the corpus by a wide margin
+ * — 145 of 233 characters — so every one of them silently fell back to the
+ * 40mm default and measured range from a base 2.5mm too wide.
+ *
+ * TODO(verify): each entry is the nominal diameter halved. Whether a physical
+ * base measures its nominal width at the rim is unchecked.
  */
 export const BASE_RADIUS_INCHES: Readonly<Record<number, number>> = {
   25: 0.49,
+  35: 0.69,
   40: 0.79,
   50: 0.98,
   65: 1.28,
 };
+
+/**
+ * Radius for a base size with no entry above, derived rather than guessed.
+ *
+ * A lookup miss used to land on the 40mm default, which is a silent wrong
+ * answer. Deriving keeps an unlisted base approximately right and keeps the
+ * error proportional to the surprise.
+ */
+export const radiusForBaseMm = (mm: number): number => BASE_RADIUS_INCHES[mm] ?? mm / 2 / 25.4;
 
 /**
  * Character Size (1–4) drives terrain interaction and line of sight. Height is
@@ -66,7 +81,23 @@ export const SIZE_HEIGHT_INCHES: Readonly<Record<number, number>> = {
   2: 2,
   3: 3,
   4: 4,
+  // Size 5 is real and rare — Dormammu and the two Sentinel MK4 variants.
+  // Without an entry all three stood 2" tall and were seen over by mistake.
+  5: 5,
 };
 
-/** Standard game length in rounds. TODO(verify). */
+/**
+ * Standard game length in rounds.
+ *
+ * Verified: "A game of Crisis Protocol is played over six Rounds."
+ */
 export const MAX_ROUNDS = 6;
+
+/**
+ * Power every character gains at the start of the Power Phase.
+ *
+ * Verified: "At the beginning of the Power Phase, all characters gain 1
+ * Power." The 106 superpowers that grant *additional* Power during this phase
+ * are all measured against this baseline.
+ */
+export const POWER_PER_ROUND = 1;

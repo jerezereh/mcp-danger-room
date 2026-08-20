@@ -13,6 +13,7 @@ import {
   stateAfter,
   SAVE_FORMAT_VERSION,
   type GameSession,
+  type SavedGame,
 } from './persistence.js';
 import type { GameSpec } from './setup.js';
 
@@ -33,9 +34,11 @@ const spec: GameSpec = {
   ],
 };
 
+// The spec above carries no profiles, so both models play as training
+// dummies whose one attack is called STRIKE. See `trainingProfile`.
 const script: Action[] = [
   { type: 'ACTIVATE', player: p1, modelId: m1 },
-  { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: 'Spider Strike' },
+  { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: 'STRIKE' },
 ];
 
 function play(actions: readonly Action[]): GameSession {
@@ -255,5 +258,139 @@ describe('replay scrubbing', () => {
     expect(scrubbed.ok).toBe(true);
     if (!scrubbed.ok) return;
     expect(scrubbed.session.state).toEqual(original.state);
+  });
+});
+
+describe('untrusted saves', () => {
+  // `load` is public and its input is a localStorage value or a file someone
+  // may have edited. It is documented to return a typed error, never to throw,
+  // and the structural checks cannot cover everything the engine dereferences.
+
+  const bare = (models: unknown[], actions: Action[] = []): SavedGame =>
+    ({
+      formatVersion: SAVE_FORMAT_VERSION,
+      setup: { seed: 1, players: [{ id: p1, displayName: 'One' }], models },
+      actions,
+    }) as SavedGame;
+
+  it('reports a truncated profile instead of throwing', () => {
+    // Regression: a model with `"profile": {}` reached `createModel` and threw
+    // while reading `profile.healthy.size`, escaping past the Load button.
+    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0), profile: {} }]));
+
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+    expect(loaded.error.message).toContain('healthy');
+  });
+
+  it('reports a profile whose stats are the wrong shape', () => {
+    const profile = {
+      characterId: 'a',
+      name: 'A',
+      baseMm: 40,
+      healthy: { stamina: 5, size: 2, movement: 'M', defense: 3, attacks: [], superpowers: [] },
+      injured: { stamina: 5, size: 2, movement: 'M', defense: {}, attacks: [], superpowers: [] },
+    };
+    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0), profile }]));
+
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports a model that is not an object', () => {
+    const loaded = load(bare([null]));
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports a model with no position', () => {
+    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1 }]));
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports a position with no coordinates', () => {
+    // Regression: `pos: {}` passed an is-it-an-object check and then
+    // propagated NaN through every distance in the game — quieter than an
+    // exception and worse, since moves get rejected with arithmetic nobody
+    // can explain rather than the save being reported as broken.
+    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: {} }]));
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports a position whose coordinates are not finite', () => {
+    const loaded = load(
+      bare([{ id: m1, characterId: 'a', owner: p1, pos: { x: 1, y: null, z: 0 } }]),
+    );
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('reports terrain with no usable position', () => {
+    const saved = {
+      formatVersion: SAVE_FORMAT_VERSION,
+      setup: {
+        seed: 1,
+        players: [{ id: p1, displayName: 'One' }],
+        models: [{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0) }],
+        terrain: [{ id: 'crate', radius: 1, height: 2, size: 2, blocksLineOfSight: true }],
+      },
+      actions: [],
+    } as unknown as SavedGame;
+
+    const loaded = load(saved);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('MALFORMED');
+  });
+
+  it('accepts a model with no profile at all', () => {
+    // Optional by design — the engine substitutes a training dummy.
+    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0) }]));
+    expect(loaded.ok).toBe(true);
+  });
+});
+
+describe('save format versioning', () => {
+  it('refuses a v1 save by version rather than by divergence', () => {
+    // Regression: v1 setups carry no profiles, so every model replayed as a
+    // training dummy and an ATTACK naming a real attack was rejected. Left at
+    // v1 that surfaced as DIVERGED pointing at an arbitrary action, which
+    // reads as a corrupt save rather than an old one.
+    const v1 = {
+      formatVersion: 1,
+      setup: {
+        seed: 1,
+        players: [
+          { id: p1, displayName: 'One' },
+          { id: p2, displayName: 'Two' },
+        ],
+        models: [
+          { id: m1, characterId: 'amazing-spider-man', owner: p1, pos: vec3(12, 18, 0) },
+          { id: m2, characterId: 'black-panther', owner: p2, pos: vec3(16, 18, 0) },
+        ],
+      },
+      actions: [
+        { type: 'ACTIVATE', player: p1, modelId: m1 },
+        { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: 'Spider Strike' },
+      ],
+    } as unknown as SavedGame;
+
+    const loaded = load(v1);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('UNSUPPORTED_VERSION');
+    expect(loaded.error.message).toContain('v1');
+  });
+
+  it('is past v1, because the Action union and GameSpec both changed', () => {
+    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(1);
   });
 });

@@ -3,10 +3,11 @@
 A digital client for Marvel: Crisis Protocol — roster building, local playtesting,
 and online play in the browser.
 
-> **Status: early scaffold.** The roster builder works against a 4-character
-> corpus. The rules engine has a working skeleton — geometry, dice, movement
-> validation, and the resolution loop — but most MCP rules are not implemented,
-> and every rules constant needs verification against the rulebook. See
+> **Status: early scaffold.** The roster builder works against the full corpus.
+> The rules engine plays a local game end to end — geometry, dice, movement,
+> the round loop, and attacks resolved against each character's printed stats —
+> but superpowers, power, conditions and scoring are not implemented, and every
+> rules constant still needs verification against the rulebook. See
 > [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Requirements
@@ -18,7 +19,7 @@ and Vite 6+ will require 20. Use [nvm](https://github.com/nvm-sh/nvm) or similar
 
 ```bash
 npm install
-npm test          # 211 tests across the rules and data packages
+npm test          # 299 tests across the rules, data, and web packages
 npm run typecheck # all five projects
 npm run dev       # web client on http://localhost:5173
 npm run dev:server # game server on :2567 (only needed for online play)
