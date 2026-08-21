@@ -10,7 +10,7 @@ import {
 } from './roster.js';
 import type { Character } from './schema.js';
 
-const stub = (id: string, threat: number): Character =>
+const stub = (id: string, threat: number, maxCopies = 1): Character =>
   ({
     id,
     name: id,
@@ -21,6 +21,7 @@ const stub = (id: string, threat: number): Character =>
     errata: null,
     threat,
     baseMm: 40,
+    maxCopies,
     sources: ['manual'],
     forms: [],
     verified: false,
@@ -44,7 +45,8 @@ const stub = (id: string, threat: number): Character =>
     },
   }) satisfies Character;
 
-const lookup = indexCharacters([stub('a', 3), stub('b', 4), stub('c', 2)]);
+/** `twin` stands in for Prime Sentinel and Sentinel MK4: two copies allowed. */
+const lookup = indexCharacters([stub('a', 3), stub('b', 4), stub('c', 2), stub('twin', 3, 2)]);
 
 const roster: Roster = { id: 'r1', name: 'Test', characterIds: ['a', 'b', 'c'] };
 
@@ -83,11 +85,41 @@ describe('roster validation', () => {
     expect(result.violations.map(v => v.code)).not.toContain('ROSTER_TOO_LARGE');
   });
 
-  it('flags duplicates', () => {
+  it('flags a second copy of an ordinary character', () => {
     const dupes: Roster = { ...roster, characterIds: ['a', 'a'] };
-    expect(validateRoster(dupes, lookup).violations.map(v => v.code)).toContain(
-      'DUPLICATE_CHARACTER',
-    );
+    expect(validateRoster(dupes, lookup).violations.map(v => v.code)).toContain('TOO_MANY_COPIES');
+  });
+
+  it('allows two of a character whose card says it may be taken twice', () => {
+    // Prime Sentinel and Sentinel MK4 print this in identical words: "When
+    // building a Roster or a Squad, a player may include 2 of this character
+    // instead of the normal 1." Both were unfieldable as designed before this.
+    const twins: Roster = { ...roster, characterIds: ['twin', 'twin'] };
+    expect(validateRoster(twins, lookup).valid).toBe(true);
+  });
+
+  it('still stops at the third copy, and says what the limit is', () => {
+    const three: Roster = { ...roster, characterIds: ['twin', 'twin', 'twin'] };
+    const violations = validateRoster(three, lookup).violations;
+
+    // Once, on the copy that broke the limit — not once per copy after the
+    // first, which would read as two separate problems.
+    expect(violations).toHaveLength(1);
+    expect(violations[0]?.code).toBe('TOO_MANY_COPIES');
+    expect(violations[0]?.message).toContain('only 2 are allowed');
+  });
+
+  it('counts a second copy against the roster size', () => {
+    // "Include 2 of this character" reads as two of the ten slots, not one
+    // slot holding two. Both copies are listed, and the size check counts
+    // entries.
+    const ids = [
+      'twin',
+      'twin',
+      ...Array.from({ length: DEFAULT_ROSTER_SIZE - 1 }, (_, i) => `x${i}`),
+    ];
+    const result = validateRoster({ ...roster, characterIds: ids }, lookup);
+    expect(result.violations.map(v => v.code)).toContain('ROSTER_TOO_LARGE');
   });
 });
 
@@ -110,6 +142,57 @@ describe('squad validation', () => {
     );
     expect(result.violations.map(v => v.code)).toContain('NOT_IN_ROSTER');
   });
+
+  it('rejects a second copy of an ordinary character', () => {
+    const result = validateSquad(
+      { rosterId: 'r1', characterIds: ['a', 'a'], threatLimit: 20 },
+      roster,
+      lookup,
+    );
+    expect(result.violations.map(v => v.code)).toContain('TOO_MANY_COPIES');
+  });
+
+  it('refuses more copies than the roster actually holds', () => {
+    // The card's allowance is a ceiling, not a supply. A roster with one Prime
+    // Sentinel fields one. `enumerateSquads` has always applied both limits;
+    // this check applied only the card's, so a squad the search would never
+    // have produced still validated.
+    const result = validateSquad(
+      { rosterId: 'r1', characterIds: ['twin', 'twin'], threatLimit: 20 },
+      { ...roster, characterIds: ['twin'] },
+      lookup,
+    );
+    expect(result.valid).toBe(false);
+    expect(result.violations.map(v => v.code)).toEqual(['TOO_MANY_COPIES']);
+    // And says which of the two limits bound, since "only 2 are allowed" while
+    // refusing a second copy would be a worse answer than none.
+    expect(result.violations[0]?.message).toContain(
+      'only 1 is allowed, which is all the roster holds',
+    );
+  });
+
+  it('does not also complain about copies of a character that is not in the roster', () => {
+    const result = validateSquad(
+      { rosterId: 'r1', characterIds: ['twin', 'twin'], threatLimit: 20 },
+      { ...roster, characterIds: ['a'] },
+      lookup,
+    );
+    expect(result.violations.every(v => v.code === 'NOT_IN_ROSTER')).toBe(true);
+  });
+
+  it('allows two of a character whose card allows two', () => {
+    // The wording is "a Roster **or** a Squad" — it lifts both limits, so a
+    // squad-side check that still refused the second copy would leave these
+    // two characters exactly as unplayable as before.
+    const result = validateSquad(
+      { rosterId: 'r1', characterIds: ['twin', 'twin'], threatLimit: 20 },
+      { ...roster, characterIds: ['twin', 'twin'] },
+      lookup,
+    );
+    expect(result.valid).toBe(true);
+    // Threat sums per copy: two 3-Threat characters cost 6.
+    expect(result.totals.threat).toBe(6);
+  });
 });
 
 describe('squad enumeration', () => {
@@ -121,5 +204,32 @@ describe('squad enumeration', () => {
 
   it('returns nothing when the limit affords no one', () => {
     expect(enumerateSquads(roster, lookup, 1)).toEqual([]);
+  });
+
+  it('offers the second copy of a character that allows one', () => {
+    // Before this, the search walked each roster entry once and could never
+    // produce a squad with two of anybody — so the allowance was unreachable
+    // even for a roster that legally held both copies.
+    const twins: Roster = { id: 'r2', name: 'Twins', characterIds: ['twin', 'twin'] };
+    const squads = enumerateSquads(twins, lookup, 6)
+      .map(s => s.join('+'))
+      .sort();
+    expect(squads).toEqual(['twin', 'twin+twin']);
+  });
+
+  it('never fields more copies than the roster actually holds', () => {
+    // The allowance is a ceiling, not a supply. A roster with one Prime
+    // Sentinel fields one, however many the card permits.
+    const single: Roster = { id: 'r3', name: 'One', characterIds: ['twin'] };
+    expect(enumerateSquads(single, lookup, 20)).toEqual([['twin']]);
+  });
+
+  it('does not double-count a duplicate entry as two independent choices', () => {
+    // Regression: walking the raw id list took each entry as its own yes/no,
+    // so a roster listing the same character twice could emit a squad of four.
+    const twins: Roster = { id: 'r4', name: 'Twins', characterIds: ['twin', 'twin'] };
+    for (const squad of enumerateSquads(twins, lookup, 100)) {
+      expect(squad.length).toBeLessThanOrEqual(2);
+    }
   });
 });

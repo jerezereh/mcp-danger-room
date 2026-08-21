@@ -45,7 +45,13 @@ export interface Violation {
   readonly code:
     | 'ROSTER_TOO_LARGE'
     | 'OVER_THREAT_LIMIT'
-    | 'DUPLICATE_CHARACTER'
+    /**
+     * Renamed from `DUPLICATE_CHARACTER`. The limit is no longer always one —
+     * Prime Sentinel and Sentinel MK4 allow two — so "duplicate" described the
+     * violation only by accident, and would have been a lie about the two
+     * characters the rule exists for.
+     */
+    | 'TOO_MANY_COPIES'
     | 'NOT_IN_ROSTER'
     | 'UNKNOWN_CHARACTER'
     | 'NO_LEADER';
@@ -61,6 +67,40 @@ export interface Validation {
 
 type Lookup = ReadonlyMap<string, Character>;
 
+/** How many times each id appears. */
+function countById(ids: readonly string[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const id of ids) counts.set(id, (counts.get(id) ?? 0) + 1);
+  return counts;
+}
+
+/**
+ * Says the limit rather than saying "again".
+ *
+ * "Appears more than once" was accurate while every limit was one. It stops
+ * being a useful sentence the moment a character may legally appear twice: a
+ * player who took three Prime Sentinels needs to be told the number, not told
+ * that they repeated themselves.
+ *
+ * `limit` is passed in rather than read off the character because in a squad it
+ * is not always the card's number — a roster holding one Prime Sentinel fields
+ * one, and being told "only 2 are allowed" while being refused a second is a
+ * worse answer than no answer. `becauseOfRoster` says which constraint bound.
+ */
+function tooManyCopies(
+  character: Character,
+  where: 'roster' | 'squad',
+  limit: number,
+  becauseOfRoster = false,
+): Violation {
+  const allowed = limit === 1 ? 'only 1 is allowed' : `only ${limit} are allowed`;
+  const why = becauseOfRoster ? ', which is all the roster holds' : '';
+  return {
+    code: 'TOO_MANY_COPIES',
+    message: `${character.name} appears too many times in the ${where} — ${allowed}${why}.`,
+  };
+}
+
 export function indexCharacters(characters: readonly Character[]): Lookup {
   return new Map(characters.map(c => [c.id, c]));
 }
@@ -75,7 +115,7 @@ export function validateRoster(
   maxSize: number | null = DEFAULT_ROSTER_SIZE,
 ): Validation {
   const violations: Violation[] = [];
-  const seen = new Set<string>();
+  const copies = new Map<string, number>();
   let threat = 0;
 
   for (const id of roster.characterIds) {
@@ -84,13 +124,15 @@ export function validateRoster(
       violations.push({ code: 'UNKNOWN_CHARACTER', message: `Unknown character "${id}".` });
       continue;
     }
-    if (seen.has(id)) {
-      violations.push({
-        code: 'DUPLICATE_CHARACTER',
-        message: `${character.name} appears more than once in the roster.`,
-      });
+
+    const taken = (copies.get(id) ?? 0) + 1;
+    copies.set(id, taken);
+    // Reported once, on the copy that breaks the limit, rather than on every
+    // copy after the first — otherwise taking four of a character reads as
+    // three separate problems.
+    if (taken === character.maxCopies + 1) {
+      violations.push(tooManyCopies(character, 'roster', character.maxCopies));
     }
-    seen.add(id);
     threat += character.threat;
   }
 
@@ -107,8 +149,12 @@ export function validateRoster(
 
 export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Validation {
   const violations: Violation[] = [];
-  const inRoster = new Set(roster.characterIds);
-  const seen = new Set<string>();
+  // Counts, not membership. A squad is drawn *from* the roster, so how many of
+  // a character the roster holds is a supply the squad cannot exceed — and for
+  // the two characters whose cards allow a second copy, a set could not tell
+  // one Prime Sentinel from two.
+  const held = countById(roster.characterIds);
+  const copies = new Map<string, number>();
   let threat = 0;
 
   for (const id of squad.characterIds) {
@@ -117,19 +163,27 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
       violations.push({ code: 'UNKNOWN_CHARACTER', message: `Unknown character "${id}".` });
       continue;
     }
-    if (!inRoster.has(id)) {
+
+    const available = held.get(id) ?? 0;
+    if (available === 0) {
       violations.push({
         code: 'NOT_IN_ROSTER',
         message: `${character.name} is not in this roster.`,
       });
     }
-    if (seen.has(id)) {
-      violations.push({
-        code: 'DUPLICATE_CHARACTER',
-        message: `${character.name} appears more than once in the squad.`,
-      });
+
+    const taken = (copies.get(id) ?? 0) + 1;
+    copies.set(id, taken);
+
+    // The ceiling is the smaller of what the roster holds and what the card
+    // allows. `enumerateSquads` has always applied both; this applied only the
+    // card's, so a squad it would never have generated still validated.
+    // Skipped entirely when the character is absent from the roster, since
+    // NOT_IN_ROSTER has already said so and a second complaint adds nothing.
+    const limit = Math.min(available, character.maxCopies);
+    if (available > 0 && taken === limit + 1) {
+      violations.push(tooManyCopies(character, 'squad', limit, limit < character.maxCopies));
     }
-    seen.add(id);
     threat += character.threat;
   }
 
@@ -148,29 +202,55 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
  *
  * This is the loadout-analysis primitive: run it across the crisis cards in
  * rotation and you can see which roster slots actually earn their place and
- * which are dead weight. Exponential in roster size, but rosters are ~10
- * characters, so 2^10 is nothing.
+ * which are dead weight.
+ *
+ * The roster is grouped by character first rather than walked entry by entry.
+ * A roster may legitimately list the same character twice — that is the whole
+ * point of `maxCopies` — and walking the raw list would take each entry as an
+ * independent yes/no, so two Prime Sentinels in the roster could produce a
+ * squad of four. How many are actually available is the smaller of what the
+ * roster holds and what the character allows.
+ *
+ * Exponential in the number of distinct characters, but rosters are ~10 and
+ * only two characters in the corpus branch three ways instead of two, so the
+ * worst case is a rounding error either way.
  */
 export function enumerateSquads(roster: Roster, lookup: Lookup, threatLimit: number): string[][] {
-  const characters = roster.characterIds
-    .map(id => lookup.get(id))
-    .filter((c): c is Character => c !== undefined);
+  const grouped = new Map<string, { character: Character; held: number }>();
+  for (const id of roster.characterIds) {
+    const character = lookup.get(id);
+    if (!character) continue;
+    const entry = grouped.get(id);
+    if (entry) entry.held += 1;
+    else grouped.set(id, { character, held: 1 });
+  }
+
+  const slots = [...grouped.values()].map(({ character, held }) => ({
+    character,
+    max: Math.min(held, character.maxCopies),
+  }));
 
   const results: string[][] = [];
 
   const walk = (index: number, chosen: string[], threat: number): void => {
     if (threat > threatLimit) return;
-    if (index === characters.length) {
+    if (index === slots.length) {
       if (chosen.length > 0) results.push([...chosen]);
       return;
     }
-    const character = characters[index];
-    if (!character) return;
+    const slot = slots[index];
+    if (!slot) return;
 
+    // Take none, then one, then two — pushing one more copy each time round
+    // rather than rebuilding the list, and unwinding all of them at the end.
+    // Threat sums per copy, so two of a 3-Threat character costs 6 and the
+    // limit check above needs no special case.
     walk(index + 1, chosen, threat);
-    chosen.push(character.id);
-    walk(index + 1, chosen, threat + character.threat);
-    chosen.pop();
+    for (let taken = 1; taken <= slot.max; taken++) {
+      chosen.push(slot.character.id);
+      walk(index + 1, chosen, threat + slot.character.threat * taken);
+    }
+    for (let taken = 1; taken <= slot.max; taken++) chosen.pop();
   };
 
   walk(0, [], 0);

@@ -53,10 +53,25 @@ export function RosterBuilder() {
 
   const selected = selectedId ? lookup.get(selectedId) : undefined;
 
-  const toggle = (id: string) =>
-    setRosterIds(current =>
-      current.includes(id) ? current.filter(x => x !== id) : [...current, id],
-    );
+  /**
+   * Double-click cycles a character's copies: add one while the card allows
+   * another, then clear them all.
+   *
+   * A plain add/remove toggle could never produce the second Prime Sentinel or
+   * Sentinel MK4 that their cards allow, so the validators would have accepted
+   * a roster the builder could not express. For the other 231 characters
+   * `maxCopies` is 1 and this behaves exactly as the toggle did.
+   */
+  const cycle = (id: string) =>
+    setRosterIds(current => {
+      const held = current.filter(x => x === id).length;
+      const allowed = lookup.get(id)?.maxCopies ?? 1;
+      return held < allowed ? [...current, id] : current.filter(x => x !== id);
+    });
+
+  /** Removes one copy, by position — not every copy of that character. */
+  const removeAt = (index: number) =>
+    setRosterIds(current => current.filter((_, i) => i !== index));
 
   /*
    * The pool is the only portrait element — a long scrolling list wants to be
@@ -95,7 +110,7 @@ export function RosterBuilder() {
                   <tr
                     key={character.id}
                     onClick={() => setSelectedId(character.id)}
-                    onDoubleClick={() => toggle(character.id)}
+                    onDoubleClick={() => cycle(character.id)}
                     className={`cursor-pointer border-t border-surface-border/50 transition ${
                       selectedId === character.id ? 'bg-accent/15' : 'hover:bg-white/5'
                     } ${inRoster ? 'text-slate-500' : 'text-slate-200'}`}
@@ -158,12 +173,14 @@ export function RosterBuilder() {
               </p>
             ) : (
               <ul className="flex-1 space-y-1 overflow-auto">
-                {rosterIds.map(id => {
+                {rosterIds.map((id, index) => {
                   const character = lookup.get(id);
                   if (!character) return null;
                   return (
                     <li
-                      key={id}
+                      // Position, not id: a roster may legitimately hold two of
+                      // the same character, and `key={id}` would collide.
+                      key={`${id}-${index}`}
                       className="flex items-center justify-between rounded px-2 py-1 text-sm hover:bg-white/5"
                     >
                       <button
@@ -177,7 +194,7 @@ export function RosterBuilder() {
                         <span className="tabular-nums">{character.threat} threat</span>
                         <button
                           type="button"
-                          onClick={() => toggle(id)}
+                          onClick={() => removeAt(index)}
                           className="text-slate-600 hover:text-accent"
                           aria-label={`Remove ${character.name}`}
                         >

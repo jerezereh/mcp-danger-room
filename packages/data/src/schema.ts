@@ -168,6 +168,27 @@ export const Character = z.object({
   errata: z.string().nullable().default(null),
   /** Base diameter in mm. */
   baseMm: z.number().int().default(40),
+  /**
+   * How many of this character one player may field, in a Roster *or* a Squad.
+   *
+   * One, for all but two characters. Prime Sentinel and Sentinel MK4 each print
+   * an innate superpower saying otherwise in identical words — "When building a
+   * Roster or a Squad, a player may include 2 of this character instead of the
+   * normal 1" — and both were unfieldable as designed until this existed,
+   * because the validators rejected the second copy.
+   *
+   * A schema field rather than a parsed superpower. There are 1,066 superpowers
+   * in the corpus and a parser that half-works produces a wrong rule rather
+   * than a missing feature — the argument `reactions.ts` makes at length. That
+   * table exists because reaction *behaviour* has nowhere to live in a card
+   * schema; how many copies you may take is a plain property of the character,
+   * like `threat` or `baseMm`, and belongs where the other properties are. Two
+   * characters out of 233 having a non-default value is what a default is for.
+   *
+   * Set through `overrides.json`, the human-correction path, so a re-import
+   * does not lose it.
+   */
+  maxCopies: z.number().int().min(1).default(1),
   healthy: StatBlock,
   injured: StatBlock,
   /**
