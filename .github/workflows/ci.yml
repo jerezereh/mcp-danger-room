@@ -5,9 +5,14 @@
 # 43 files disagreed with Prettier, both for long enough that neither was
 # noticed. This is what stops that recurring.
 #
-# Node 20.11 is the floor `package.json` declares. It is worth pinning to the
+# Node 20.19 is the floor `package.json` declares. It is worth pinning to the
 # floor rather than to "latest 20": the point is to prove the declared minimum
 # still works, since development happens on whatever the contributor has.
+#
+# 20.19 rather than 20.11 because ESLint's `eslint-visitor-keys` requires
+# `^20.19.0 || ^22.13.0 || >=24`. On 20.11 `npm ci` warned EBADENGINE and
+# everything passed anyway, which is the worst of both: a floor CI proves and
+# nothing actually supports.
 name: CI
 
 on:
@@ -34,7 +39,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.11'
+          node-version: '20.19'
           cache: npm
 
       - run: npm ci

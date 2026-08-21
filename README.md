@@ -12,8 +12,11 @@ and online play in the browser.
 
 ## Requirements
 
-Node 20.11+. The repo currently builds on Node 18 but several dependencies warn,
-and Vite 6+ will require 20. Use [nvm](https://github.com/nvm-sh/nvm) or similar.
+Node 20.19+, which is what CI runs. The floor was 20.11 until ESLint's
+`eslint-visitor-keys` started requiring `^20.19.0 || ^22.13.0 || >=24` —
+installing below that warns `EBADENGINE` and then works, which is exactly the
+kind of floor nobody notices has moved. The repo still builds on Node 18, with
+more warnings. Use [nvm](https://github.com/nvm-sh/nvm) or similar.
 
 ## Getting started
 
