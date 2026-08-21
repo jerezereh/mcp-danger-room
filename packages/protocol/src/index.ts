@@ -21,8 +21,23 @@ import type { Action, GameEvent, GameState, Rejection } from '@danger-room/rules
  * server would both advertise v1, the client could send `PASS_TURN`, and the
  * old engine's switch would fall through every case and return `undefined`,
  * which `record` then dereferences.
+ *
+ * v3: `GameState` gained `result` and `GAME_ENDED` gained `reason` (#7), and
+ * both cross the wire — `SNAPSHOT` carries a whole `GameState` and `EVENTS`
+ * carries `GameEvent`s. A new client joining an old server gets a finished
+ * snapshot with no `result` and reports the game as still going. The game also
+ * now ends on elimination, so the two engines disagree about when to stop
+ * accepting actions, which is the same class of breakage v2 was bumped for.
+ *
+ * Note for whoever bumps this next: **v3 is later than it should be.** The
+ * clause above about "the rules an action is validated against" covers the die
+ * gaining its sixth face and the range and movement distances being corrected,
+ * and neither bumped this constant — both bumped `SAVE_FORMAT_VERSION` and
+ * stopped there. Nothing broke, because the client does not connect yet, but
+ * the two constants answer the same question about different transports and
+ * they have been drifting apart. A rules change is a protocol change.
  */
-export const PROTOCOL_VERSION = 2;
+export const PROTOCOL_VERSION = 3;
 
 // ---------------------------------------------------------------------------
 // Client → Server
