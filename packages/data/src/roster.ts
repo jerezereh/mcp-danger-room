@@ -67,6 +67,13 @@ export interface Validation {
 
 type Lookup = ReadonlyMap<string, Character>;
 
+/** How many times each id appears. */
+function countById(ids: readonly string[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const id of ids) counts.set(id, (counts.get(id) ?? 0) + 1);
+  return counts;
+}
+
 /**
  * Says the limit rather than saying "again".
  *
@@ -74,13 +81,23 @@ type Lookup = ReadonlyMap<string, Character>;
  * being a useful sentence the moment a character may legally appear twice: a
  * player who took three Prime Sentinels needs to be told the number, not told
  * that they repeated themselves.
+ *
+ * `limit` is passed in rather than read off the character because in a squad it
+ * is not always the card's number — a roster holding one Prime Sentinel fields
+ * one, and being told "only 2 are allowed" while being refused a second is a
+ * worse answer than no answer. `becauseOfRoster` says which constraint bound.
  */
-function tooManyCopies(character: Character, where: 'roster' | 'squad'): Violation {
-  const limit =
-    character.maxCopies === 1 ? 'only 1 is allowed' : `only ${character.maxCopies} are allowed`;
+function tooManyCopies(
+  character: Character,
+  where: 'roster' | 'squad',
+  limit: number,
+  becauseOfRoster = false,
+): Violation {
+  const allowed = limit === 1 ? 'only 1 is allowed' : `only ${limit} are allowed`;
+  const why = becauseOfRoster ? ', which is all the roster holds' : '';
   return {
     code: 'TOO_MANY_COPIES',
-    message: `${character.name} appears too many times in the ${where} — ${limit}.`,
+    message: `${character.name} appears too many times in the ${where} — ${allowed}${why}.`,
   };
 }
 
@@ -114,7 +131,7 @@ export function validateRoster(
     // copy after the first — otherwise taking four of a character reads as
     // three separate problems.
     if (taken === character.maxCopies + 1) {
-      violations.push(tooManyCopies(character, 'roster'));
+      violations.push(tooManyCopies(character, 'roster', character.maxCopies));
     }
     threat += character.threat;
   }
@@ -132,7 +149,11 @@ export function validateRoster(
 
 export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Validation {
   const violations: Violation[] = [];
-  const inRoster = new Set(roster.characterIds);
+  // Counts, not membership. A squad is drawn *from* the roster, so how many of
+  // a character the roster holds is a supply the squad cannot exceed — and for
+  // the two characters whose cards allow a second copy, a set could not tell
+  // one Prime Sentinel from two.
+  const held = countById(roster.characterIds);
   const copies = new Map<string, number>();
   let threat = 0;
 
@@ -142,7 +163,9 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
       violations.push({ code: 'UNKNOWN_CHARACTER', message: `Unknown character "${id}".` });
       continue;
     }
-    if (!inRoster.has(id)) {
+
+    const available = held.get(id) ?? 0;
+    if (available === 0) {
       violations.push({
         code: 'NOT_IN_ROSTER',
         message: `${character.name} is not in this roster.`,
@@ -151,8 +174,15 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
 
     const taken = (copies.get(id) ?? 0) + 1;
     copies.set(id, taken);
-    if (taken === character.maxCopies + 1) {
-      violations.push(tooManyCopies(character, 'squad'));
+
+    // The ceiling is the smaller of what the roster holds and what the card
+    // allows. `enumerateSquads` has always applied both; this applied only the
+    // card's, so a squad it would never have generated still validated.
+    // Skipped entirely when the character is absent from the roster, since
+    // NOT_IN_ROSTER has already said so and a second complaint adds nothing.
+    const limit = Math.min(available, character.maxCopies);
+    if (available > 0 && taken === limit + 1) {
+      violations.push(tooManyCopies(character, 'squad', limit, limit < character.maxCopies));
     }
     threat += character.threat;
   }

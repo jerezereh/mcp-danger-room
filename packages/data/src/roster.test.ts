@@ -152,6 +152,34 @@ describe('squad validation', () => {
     expect(result.violations.map(v => v.code)).toContain('TOO_MANY_COPIES');
   });
 
+  it('refuses more copies than the roster actually holds', () => {
+    // The card's allowance is a ceiling, not a supply. A roster with one Prime
+    // Sentinel fields one. `enumerateSquads` has always applied both limits;
+    // this check applied only the card's, so a squad the search would never
+    // have produced still validated.
+    const result = validateSquad(
+      { rosterId: 'r1', characterIds: ['twin', 'twin'], threatLimit: 20 },
+      { ...roster, characterIds: ['twin'] },
+      lookup,
+    );
+    expect(result.valid).toBe(false);
+    expect(result.violations.map(v => v.code)).toEqual(['TOO_MANY_COPIES']);
+    // And says which of the two limits bound, since "only 2 are allowed" while
+    // refusing a second copy would be a worse answer than none.
+    expect(result.violations[0]?.message).toContain(
+      'only 1 is allowed, which is all the roster holds',
+    );
+  });
+
+  it('does not also complain about copies of a character that is not in the roster', () => {
+    const result = validateSquad(
+      { rosterId: 'r1', characterIds: ['twin', 'twin'], threatLimit: 20 },
+      { ...roster, characterIds: ['a'] },
+      lookup,
+    );
+    expect(result.violations.every(v => v.code === 'NOT_IN_ROSTER')).toBe(true);
+  });
+
   it('allows two of a character whose card allows two', () => {
     // The wording is "a Roster **or** a Squad" — it lifts both limits, so a
     // squad-side check that still refused the second copy would leave these
