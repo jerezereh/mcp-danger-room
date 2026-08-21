@@ -2,7 +2,7 @@
   "name": "mcp-danger-room",
   "private": true,
   "version": "0.1.0",
-  "description": "A digital client for Marvel: Crisis Protocol \u2014 roster building, local playtesting, and online play.",
+  "description": "A digital client for Marvel: Crisis Protocol — roster building, local playtesting, and online play.",
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
@@ -31,6 +31,6 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.2.0",
-    "vitest": "^2.0.5"
+    "vitest": "^4.1.11"
   }
 }
