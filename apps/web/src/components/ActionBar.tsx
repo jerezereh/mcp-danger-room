@@ -28,6 +28,7 @@ import {
   type MovementTemplate,
 } from '@danger-room/rules';
 
+import { describeOutcome } from '../lib/eventText.js';
 import { characterName, toolInches } from '../lib/format.js';
 import { selectGame, useStore, type BoardMode } from '../store.js';
 
@@ -284,7 +285,7 @@ export function ActionBar() {
   if (game.phase === 'finished') {
     return (
       <div className="border-b border-surface-border p-3">
-        <p className="text-xs text-slate-500">The game is over. Start a new one below.</p>
+        <p className="text-xs text-slate-500">{describeOutcome(game)}. Start a new one below.</p>
       </div>
     );
   }

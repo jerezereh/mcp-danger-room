@@ -451,7 +451,35 @@ describe('save format versioning', () => {
     expect(loaded.error.code).toBe('UNSUPPORTED_VERSION');
   });
 
-  it('is past v3, because the distances changed under it', () => {
-    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(3);
+  it('refuses a v4 save, which could contain actions taken after a wipeout', () => {
+    // v4 games ran all six rounds however one-sided they got, so a log from
+    // one can legally contain activations after a player was eliminated.
+    // Replaying it now meets a finished game and is rejected — loud rather
+    // than quiet, but it still surfaces as DIVERGED at an arbitrary action,
+    // which reads as corruption rather than age.
+    const v4 = {
+      formatVersion: 4,
+      setup: {
+        seed: 1,
+        players: [
+          { id: p1, displayName: 'One' },
+          { id: p2, displayName: 'Two' },
+        ],
+        models: [
+          { id: m1, characterId: 'a', owner: p1, pos: vec3(12, 18, 0) },
+          { id: m2, characterId: 'b', owner: p2, pos: vec3(16, 18, 0) },
+        ],
+      },
+      actions: [{ type: 'ACTIVATE', player: p1, modelId: m1 }],
+    } as unknown as SavedGame;
+
+    const loaded = load(v4);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('UNSUPPORTED_VERSION');
+  });
+
+  it('is past v4, because a wipeout now ends the game', () => {
+    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(4);
   });
 });

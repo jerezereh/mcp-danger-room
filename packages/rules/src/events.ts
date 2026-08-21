@@ -15,7 +15,7 @@ import type { DieFace } from './dice.js';
 import type { Vec3 } from './geometry/vec.js';
 import type { ModelId, PlayerId } from './ids.js';
 import type { ReactionTiming } from './profile.js';
-import type { ConditionKind } from './state.js';
+import type { ConditionKind, GameEndReason } from './state.js';
 
 interface EventBase {
   readonly sequence: number;
@@ -73,7 +73,19 @@ export type GameEvent = EventBase &
         readonly timing: ReactionTiming;
       }
     | { readonly type: 'OBJECTIVE_SCORED'; readonly player: PlayerId; readonly points: number }
-    | { readonly type: 'GAME_ENDED'; readonly winner: PlayerId | null }
+    | {
+        readonly type: 'GAME_ENDED';
+        /**
+         * The winner, or `null` for a draw.
+         *
+         * Null used to mean "nobody worked it out" — the engine emitted it
+         * unconditionally because no winner was ever computed. It now means the
+         * game was genuinely drawn: six rounds with the scores level, or both
+         * squads eliminated in the same resolution.
+         */
+        readonly winner: PlayerId | null;
+        readonly reason: GameEndReason;
+      }
   );
 
 export type GameEventType = GameEvent['type'];

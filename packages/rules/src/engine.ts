@@ -44,8 +44,10 @@ import {
   getModel,
   mayPassTurn,
   getStats,
+  standingModels,
   type AttackFrame,
   type Frame,
+  type GameEndReason,
   type GameState,
   type Model,
   type Prompt,
@@ -532,7 +534,13 @@ function resolve(draft: Draft, guard = 1000): Result {
         // Out of actions is the end of the activation, whether or not the
         // player says so. Parking a chooseAction prompt here instead would
         // offer moves that can no longer legally be taken.
-        if (top.actionsRemaining <= 0) {
+        //
+        // A decided game ends the activation for the same reason. Elimination
+        // is detected in `advanceTurn`, which only runs once the stack is
+        // empty, so the activation has to give way first — otherwise the
+        // player who just knocked out the last enemy character is asked what
+        // they would like to do with their second action.
+        if (top.actionsRemaining <= 0 || survivorsIfDecided(draft.state)) {
           popFrame(draft);
           emit(draft, { type: 'ACTIVATION_ENDED', modelId: top.modelId });
           continue;
@@ -671,6 +679,75 @@ function resolve(draft: Draft, guard = 1000): Result {
 // ---------------------------------------------------------------------------
 
 /**
+ * Has this player been eliminated?
+ *
+ * Owning no models at all is not elimination — that is a fixture with an empty
+ * squad, and reporting it as a loss would end such a game before it started.
+ */
+function wipedOut(state: GameState, player: PlayerId): boolean {
+  const owned = Object.values(state.models).filter(m => m.owner === player).length;
+  return owned > 0 && standingModels(state, player).length === 0;
+}
+
+/**
+ * The players still standing, if elimination has decided the game — otherwise
+ * null.
+ *
+ * The condition is "at most one player left", not "somebody was eliminated".
+ * Those are the same thing in a two-player game and MCP is a two-player game,
+ * but `turnOrder` is not typed to two, and the difference is a three-player
+ * game ending the moment the first player is knocked out.
+ */
+function survivorsIfDecided(state: GameState): readonly PlayerId[] | null {
+  const standing = state.turnOrder.filter(p => !wipedOut(state, p));
+  if (standing.length === state.turnOrder.length || standing.length > 1) return null;
+  return standing;
+}
+
+/**
+ * Whoever has the most Victory Points, or null when nobody does.
+ *
+ * **Always null today.** VP is scored from Crisis Cards and objectives, both
+ * deferred past the MVP, so `victoryPoints` is 0 for everybody and every game
+ * that runs its six rounds is drawn.
+ *
+ * Written out anyway, because the rule is settled even though its input is
+ * not: when scoring lands there is nothing here to revisit, and a declared
+ * draw is an honest answer where the `winner: null` this replaces was just an
+ * unanswered question wearing the same shape.
+ */
+function leaderByVictoryPoints(state: GameState): PlayerId | null {
+  let leader: PlayerId | null = null;
+  let best = -Infinity;
+  let drawn = false;
+
+  for (const id of state.turnOrder) {
+    const score = state.players[id]?.victoryPoints ?? 0;
+    if (score > best) {
+      leader = id;
+      best = score;
+      drawn = false;
+    } else if (score === best) {
+      drawn = true;
+    }
+  }
+
+  return drawn ? null : leader;
+}
+
+/**
+ * Finish the game.
+ *
+ * Records the result on the state as well as emitting it. `phase: 'finished'`
+ * on its own says a game stopped; it does not say who won, and a save loaded
+ * cold has no events to consult.
+ */
+function endGame(draft: Draft, winner: PlayerId | null, reason: GameEndReason): void {
+  draft.state = { ...draft.state, phase: 'finished', result: { winner, reason }, prompt: null };
+  emit(draft, { type: 'GAME_ENDED', winner, reason });
+}
+
+/**
  * Decide who acts next, now that the stack is empty.
  *
  * "Players alternate turns until there are no more characters that can
@@ -680,6 +757,22 @@ function resolve(draft: Draft, guard = 1000): Result {
  * pass either, and Cleanup follows.
  */
 function advanceTurn(draft: Draft): void {
+  // The game may already be decided on the table rather than on the clock.
+  //
+  // Checked here rather than at the KO itself because this is the one place
+  // every resolution passes through with an empty stack: a KO from an attack,
+  // from a Cleanup flip, or from whatever effect is written next all reach it
+  // the same way, and none of them has to remember to look.
+  const survivors = survivorsIfDecided(draft.state);
+  if (survivors) {
+    // `survivors[0] ?? null` covers the mutual kill: nobody left is a draw,
+    // not a win for whoever happens to be first in turn order. Unreachable
+    // today — no effect KOs two characters in one resolution — but cheaper to
+    // write than to diagnose later.
+    endGame(draft, survivors[0] ?? null, 'wipeout');
+    return;
+  }
+
   // Bounded rather than `while (true)`. Each pass either parks a prompt, moves
   // a turn on, or ends a round, so the worst case is every model passing in
   // every round.
@@ -789,10 +882,7 @@ function cleanupPhase(draft: Draft): void {
   // Step 7 — the next Round, or the end of the game.
   const round = draft.state.round + 1;
   if (round > MAX_ROUNDS) {
-    draft.state = { ...draft.state, phase: 'finished' };
-    // TODO(#7): the winner is whoever has the most Victory Points, which are
-    // not scored yet.
-    emit(draft, { type: 'GAME_ENDED', winner: null });
+    endGame(draft, leaderByVictoryPoints(draft.state), 'rounds');
     return;
   }
 

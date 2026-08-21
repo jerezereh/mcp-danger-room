@@ -13,7 +13,7 @@ import type {
   SuperpowerProfile,
 } from './profile.js';
 import { createGame, createSparringGame, type GameSpec, type ModelSpec } from './setup.js';
-import type { GameState } from './state.js';
+import { standingModels, type GameState, type Model } from './state.js';
 
 const p1 = 'p1' as PlayerId;
 const p2 = 'p2' as PlayerId;
@@ -516,6 +516,123 @@ describe('the round loop', () => {
     expect(afterTwo.prompt).toMatchObject({ kind: 'chooseActivation', player: p1, options: [m3] });
   });
 
+  /** Put a model on the table with its card already turned over. */
+  const knockOut = (state: GameState, ...ids: ModelId[]): GameState => ({
+    ...state,
+    models: ids.reduce(
+      (models, id) => ({ ...models, [id]: { ...(models[id] as Model), health: 'ko' } }),
+      state.models,
+    ),
+  });
+
+  it('ends the moment a player has nothing left standing', () => {
+    const state = knockOut(threeVersusOne(), m2);
+    const result = applyAction(state, { type: 'ACTIVATE', player: p1, modelId: m1 });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.state.phase).toBe('finished');
+    expect(result.state.result).toEqual({ winner: p1, reason: 'wipeout' });
+    expect(result.state.prompt).toBeNull();
+    expect(result.events.at(-1)).toMatchObject({
+      type: 'GAME_ENDED',
+      winner: p1,
+      reason: 'wipeout',
+    });
+  });
+
+  it('does not end for a squad that is merely Dazed', () => {
+    // Dazed is out for the round, not out of the game: the character clears its
+    // damage at Cleanup, flips to Injured, and fights on. Ending here would
+    // hand the game to whoever landed the first good hit.
+    const base = threeVersusOne();
+    const dazed: GameState = {
+      ...base,
+      models: { ...base.models, [m2]: { ...(base.models[m2] as Model), dazed: true } },
+    };
+
+    const after = play(dazed, endTurn(p1, m1));
+    expect(after.phase).not.toBe('finished');
+    expect(after.result).toBeNull();
+  });
+
+  it('does not end a three-player game when only one player is out', () => {
+    // MCP is a two-player game, so this is defensive rather than a rule — but
+    // `turnOrder` is not typed to two, and "somebody was eliminated" and "one
+    // player remains" only coincide when there are two of them.
+    const three = createGame({
+      seed: 1,
+      players: [
+        { id: p1, displayName: 'One' },
+        { id: p2, displayName: 'Two' },
+        { id: 'p3' as PlayerId, displayName: 'Three' },
+      ],
+      models: [
+        { id: m1, characterId: 'alpha' as CharacterId, owner: p1, pos: vec3(12, 18, 0) },
+        { id: m2, characterId: 'beta' as CharacterId, owner: p2, pos: vec3(16, 18, 0) },
+        {
+          id: m3,
+          characterId: 'gamma' as CharacterId,
+          owner: 'p3' as PlayerId,
+          pos: vec3(20, 18, 0),
+        },
+      ],
+    });
+
+    const after = play(knockOut(three, m2), endTurn(p1, m1));
+    expect(after.phase).not.toBe('finished');
+  });
+
+  it('ends a real game early when a squad is wiped out', () => {
+    // The crafted cases above put a KO on the board by hand. This one plays it:
+    // two training dummies in range of each other from the start, both swinging
+    // every action, until one of them stops getting up. On seed 5 that is round
+    // 4 — the point being that the game stops when the table decides it rather
+    // than running the clock out.
+    let state = duel({}, {}, 5);
+
+    for (let i = 0; i < 500 && state.phase !== 'finished'; i++) {
+      const prompt = state.prompt;
+      if (!prompt) throw new Error('the engine stopped asking without finishing');
+
+      const action = ((): Action => {
+        switch (prompt.kind) {
+          case 'chooseActivation': {
+            const modelId = prompt.options[0];
+            if (!modelId) throw new Error('asked to activate with no options');
+            return { type: 'ACTIVATE', player: prompt.player, modelId };
+          }
+          case 'chooseAction': {
+            const attacker = state.models[prompt.modelId];
+            const foe = Object.values(state.models).find(
+              m => m.owner !== attacker?.owner && m.health !== 'ko',
+            );
+            if (!attacker || !foe) return { type: 'END_ACTIVATION', player: prompt.player };
+            return {
+              type: 'ATTACK',
+              player: prompt.player,
+              attackerId: attacker.id,
+              targetId: foe.id,
+              attackName: STRIKE,
+            };
+          }
+          case 'declareReaction':
+            return { type: 'PASS_REACTION', player: prompt.player };
+          default:
+            throw new Error(`unexpected prompt ${JSON.stringify(prompt)}`);
+        }
+      })();
+
+      state = play(state, [action]);
+    }
+
+    expect(state.phase).toBe('finished');
+    expect(state.result).toEqual({ winner: p2, reason: 'wipeout' });
+    expect(state.round).toBeLessThan(MAX_ROUNDS);
+    expect(standingModels(state, p2)).toHaveLength(1);
+    expect(standingModels(state, p1)).toHaveLength(0);
+  });
+
   it('finishes the game after the last round', () => {
     let state = createSparringGame(5);
 
@@ -532,6 +649,9 @@ describe('the round loop', () => {
     expect(state.phase).toBe('finished');
     expect(state.round).toBe(MAX_ROUNDS);
     expect(state.prompt).toBeNull();
+    // Drawn, and drawn honestly: Victory Points are the tiebreak and nothing
+    // scores them yet, so six rounds with both squads alive is level.
+    expect(state.result).toEqual({ winner: null, reason: 'rounds' });
   });
 
   it('rejects every action once the game has finished', () => {

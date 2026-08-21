@@ -11,6 +11,7 @@ import { edgeDistance, hasLineOfSight, MAX_ROUNDS, rangeBandTo } from '@danger-r
 
 import { ActionBar } from './components/ActionBar.js';
 import { Board } from './components/Board.js';
+import { describeOutcome } from './lib/eventText.js';
 import { characterName, inches } from './lib/format.js';
 import { GameLog } from './components/GameLog.js';
 import { RosterBuilder } from './components/RosterBuilder.js';
@@ -43,7 +44,7 @@ function TurnBanner() {
 
   const waiting =
     game.phase === 'finished'
-      ? 'Game over'
+      ? describeOutcome(game)
       : prompt?.kind === 'chooseActivation'
         ? `${nameOf(prompt.player)} to activate`
         : prompt?.kind === 'chooseAction'

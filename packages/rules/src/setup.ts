@@ -161,6 +161,7 @@ export function createGame(spec: GameSpec): GameState {
     schemaVersion: SCHEMA_VERSION,
     rng: createRng(spec.seed),
     phase: 'activation',
+    result: null,
     round: 1,
     turnOrder: spec.players.map(p => p.id),
     activePlayer,
