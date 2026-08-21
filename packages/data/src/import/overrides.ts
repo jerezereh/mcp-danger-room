@@ -102,6 +102,7 @@ export const Override = z
     threat: z.number().int().min(0).optional(),
     errata: z.string().nullable().optional(),
     baseMm: z.number().int().optional(),
+    maxCopies: z.number().int().min(1).optional(),
     healthy: StatOverride.optional(),
     injured: StatOverride.optional(),
   })
@@ -234,6 +235,7 @@ export function applyOverrides(
       ...(o.threat !== undefined ? { threat: o.threat } : {}),
       ...(o.errata !== undefined ? { errata: o.errata } : {}),
       ...(o.baseMm !== undefined ? { baseMm: o.baseMm } : {}),
+      ...(o.maxCopies !== undefined ? { maxCopies: o.maxCopies } : {}),
       healthy: side(target.healthy, o.healthy),
       injured: side(target.injured, o.injured),
       ...(o.verified !== undefined ? { verified: o.verified } : {}),

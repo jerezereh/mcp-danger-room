@@ -113,6 +113,9 @@ export function finalize(draft: CharacterDraft, sources?: readonly DraftSource[]
       packName: draft.packName ?? null,
       threat: draft.threat as number,
       baseMm: draft.baseMm ?? 40,
+      // No source publishes a copy allowance; the two characters that have one
+      // get it from overrides.json, which is applied after this.
+      maxCopies: 1,
       // Populated later by splitForms, for the six characters that transform.
       forms: [],
       errata: draft.errata ?? null,

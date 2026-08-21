@@ -497,6 +497,7 @@ describe('manual overrides', () => {
     },
     sources: ['jarvis' as const],
     forms: [],
+    maxCopies: 1,
     verified: false,
   });
 

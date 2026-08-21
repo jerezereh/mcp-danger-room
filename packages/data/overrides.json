@@ -10,6 +10,18 @@
       }
     },
     {
+      "id": "prime-sentinel",
+      "reason": "Bastion's Legion, innate: \"When building a Roster or a Squad, a player may include 2 of this character instead of the normal 1.\" Read off the card. Note the wording lifts both limits, not one.",
+      "verified": true,
+      "maxCopies": 2
+    },
+    {
+      "id": "sentinel-mk4",
+      "reason": "MASTER MOLD, innate: \"When building a Roster or a Squad, a player may include 2 of this character instead of the normal 1.\" Word for word the same allowance as Prime Sentinel's Bastion's Legion.",
+      "verified": true,
+      "maxCopies": 2
+    },
+    {
       "id": "yondu-beta",
       "reason": "A {BETA} playtest card duplicating Yondu. Not a fieldable character.",
       "verified": true,

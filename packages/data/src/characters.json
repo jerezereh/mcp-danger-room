@@ -24102,6 +24102,7 @@
       "threat": 3,
       "errata": null,
       "baseMm": 35,
+      "maxCopies": 2,
       "healthy": {
         "cardImage": "PRIME_SENTINEL_2_healthy.png",
         "stamina": 6,
@@ -28079,6 +28080,7 @@
       "threat": 4,
       "errata": null,
       "baseMm": 65,
+      "maxCopies": 2,
       "healthy": {
         "cardImage": "SENTINEL_MK4_healthy.png",
         "stamina": 8,
