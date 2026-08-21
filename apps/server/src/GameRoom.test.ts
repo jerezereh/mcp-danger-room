@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Client } from '@colyseus/core';
+import { CloseCode, type Client } from '@colyseus/core';
 import { PROTOCOL_VERSION } from '@danger-room/protocol';
 
 import { GameRoom, isClientMessage } from './GameRoom.js';
@@ -50,35 +50,54 @@ describe('isClientMessage', () => {
  * provided. They are stubbed rather than mocked wholesale: `onJoin` is the unit
  * under test and it touches exactly these.
  */
-describe('the protocol version gate', () => {
-  function room() {
-    const instance = new GameRoom();
-    const sent: { to: string; type: string; message: Record<string, unknown> }[] = [];
-    const broadcast: string[] = [];
+/**
+ * A room with the handful of things a real Colyseus server would have provided.
+ *
+ * Stubbed narrowly rather than mocked wholesale: `onJoin` and `onLeave` touch
+ * exactly these. `allowReconnection` is left to each test, because what it does
+ * — resolve, reject, or stay pending — is the entire subject of the `onLeave`
+ * cases below.
+ */
+function room() {
+  const instance = new GameRoom();
+  const sent: { to: string; type: string; message: Record<string, unknown> }[] = [];
+  const broadcast: string[] = [];
 
-    for (const [key, value] of Object.entries({
-      roomId: 'room-1',
-      metadata: { name: 'Test room', isPrivate: false },
-      clock: { currentTime: 0 },
-      broadcast: (type: string) => void broadcast.push(type),
-    })) {
-      Object.defineProperty(instance, key, { value, writable: true, configurable: true });
-    }
+  const stub = (key: string, value: unknown) =>
+    Object.defineProperty(instance, key, { value, writable: true, configurable: true });
 
-    const client = (sessionId: string) => {
-      let left = false;
-      const handle = {
-        sessionId,
-        send: (type: string, message: Record<string, unknown>) =>
-          void sent.push({ to: sessionId, type, message }),
-        leave: () => void (left = true),
-      };
-      return { handle: handle as unknown as Client, hasLeft: () => left };
-    };
-
-    return { instance, sent, broadcast, client };
+  for (const [key, value] of Object.entries({
+    roomId: 'room-1',
+    metadata: { name: 'Test room', isPrivate: false },
+    clock: { currentTime: 0 },
+    broadcast: (type: string) => void broadcast.push(type),
+  })) {
+    stub(key, value);
   }
 
+  const client = (sessionId: string) => {
+    let left = false;
+    const handle = {
+      sessionId,
+      send: (type: string, message: Record<string, unknown>) =>
+        void sent.push({ to: sessionId, type, message }),
+      leave: () => void (left = true),
+    };
+    return { handle: handle as unknown as Client, hasLeft: () => left };
+  };
+
+  /** Join and return the seat the room handed out. */
+  const join = (sessionId: string) => {
+    const joiner = client(sessionId);
+    instance.onJoin(joiner.handle, { displayName: sessionId, protocolVersion: PROTOCOL_VERSION });
+    const joined = [...sent].reverse().find(m => m.to === sessionId && m.type === 'JOINED');
+    return { ...joiner, seat: joined?.message.seat as string | undefined };
+  };
+
+  return { instance, sent, broadcast, client, join, stub };
+}
+
+describe('the protocol version gate', () => {
   it('turns away a client speaking an older protocol', () => {
     const { instance, sent, client } = room();
     const joiner = client('old');
@@ -130,5 +149,88 @@ describe('the protocol version gate', () => {
     // to carry a real state rather than an empty placeholder.
     expect(sent[1]?.message.state).toMatchObject({ round: 1, phase: 'activation' });
     expect(broadcast).toEqual(['ROOM_UPDATED']);
+  });
+});
+
+/**
+ * Leaving, and the close code that says whether it was on purpose.
+ *
+ * Colyseus 0.16 replaced `onLeave(client, consented: boolean)` with
+ * `onLeave(client, code: number)`. The parameter kept its position, so the
+ * upgrade in #35 compiled against the old name for a while and nothing failed
+ * at runtime — every close code is truthy, so every disconnect read as a
+ * deliberate leave and the reconnection window below stopped existing.
+ *
+ * A type error caught it, and only after a clean build. These tests are so that
+ * next time something cheaper does.
+ */
+describe('leaving', () => {
+  /** The room hands out player1, then player2, then spectator. */
+  const nextSeat = (r: ReturnType<typeof room>, id: string) => r.join(id).seat;
+
+  it('frees the seat when a player leaves on purpose', () => {
+    const r = room();
+    r.join('one');
+
+    void r.instance.onLeave(r.client('one').handle, CloseCode.CONSENTED);
+
+    // The seat is observable through who gets it next.
+    expect(nextSeat(r, 'later')).toBe('player1');
+  });
+
+  it('holds the seat for a player who merely dropped', () => {
+    // The regression. Under the old `consented` reading, 1006 was truthy, the
+    // seat was released immediately, and a reconnecting player found their own
+    // game full and was seated as a spectator.
+    const r = room();
+    r.join('one');
+    r.stub('allowReconnection', () => new Promise<Client>(() => {}));
+
+    void r.instance.onLeave(r.client('one').handle, CloseCode.ABNORMAL_CLOSURE);
+
+    expect(nextSeat(r, 'later')).toBe('player2');
+  });
+
+  it('does not hold a seat for a spectator, whatever the code', () => {
+    const r = room();
+    r.join('one');
+    r.join('two');
+    expect(nextSeat(r, 'watcher')).toBe('spectator');
+
+    void r.instance.onLeave(r.client('watcher').handle, CloseCode.ABNORMAL_CLOSURE);
+
+    // Still both players seated, so the next arrival is a spectator again —
+    // and no reconnection window was opened, which would have thrown here
+    // since `allowReconnection` is unstubbed.
+    expect(nextSeat(r, 'another')).toBe('spectator');
+  });
+
+  it('moves the seat onto the session a returning player comes back on', async () => {
+    const r = room();
+    r.join('one');
+    const returning = r.client('one-again');
+    r.stub('allowReconnection', () => Promise.resolve(returning.handle));
+
+    await r.instance.onLeave(r.client('one').handle, CloseCode.ABNORMAL_CLOSURE);
+
+    // Re-keyed, not re-seated: the seat follows the person rather than the
+    // socket, so the next arrival is still only player2.
+    expect(nextSeat(r, 'later')).toBe('player2');
+    expect(r.sent.some(m => m.to === 'one-again' && m.type === 'SNAPSHOT')).toBe(true);
+  });
+
+  it('releases the seat when the reconnection window expires', async () => {
+    const r = room();
+    r.join('one');
+    r.stub('allowReconnection', () => Promise.reject(new Error('expired')));
+
+    await r.instance.onLeave(r.client('one').handle, CloseCode.ABNORMAL_CLOSURE);
+
+    expect(nextSeat(r, 'later')).toBe('player1');
+  });
+
+  it('ignores a leave from a session that never had a seat', () => {
+    const r = room();
+    expect(() => r.instance.onLeave(r.client('ghost').handle, CloseCode.CONSENTED)).not.toThrow();
   });
 });

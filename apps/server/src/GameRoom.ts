@@ -14,7 +14,7 @@
 
 // Imported from @colyseus/core rather than the `colyseus` wrapper: the wrapper
 // is CommonJS and its named exports do not resolve under ESM.
-import { Room, type Client } from '@colyseus/core';
+import { CloseCode, Room, type Client } from '@colyseus/core';
 import {
   record,
   save,
@@ -154,9 +154,17 @@ export class GameRoom extends Room {
    * game. Leaving on purpose (or timing out) releases the seat so it does not
    * block the room forever.
    */
-  override async onLeave(client: Client, consented?: boolean): Promise<void> {
+  override async onLeave(client: Client, code?: number): Promise<void> {
     const seat = this.seats.get(client.sessionId);
     if (!seat) return;
+
+    // Colyseus 0.16 replaced `consented: boolean` with the WebSocket close
+    // code. The rename is the dangerous kind: the old parameter still *exists*
+    // in the same position, so nothing fails at runtime — `consented` simply
+    // starts receiving 4000 or 1006, both truthy, and every disconnect is
+    // treated as a deliberate leave. That frees the seat immediately and
+    // deletes the reconnection window this method exists to provide.
+    const consented = code === CloseCode.CONSENTED;
 
     if (consented || seat.seat === 'spectator') {
       this.seats.delete(client.sessionId);

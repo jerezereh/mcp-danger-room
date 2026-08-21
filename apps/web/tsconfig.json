@@ -6,7 +6,10 @@
     "rootDir": "./src",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
-    "types": ["vite/client"],
+    // "node" is explicit since Vite 8: its client types no longer drag in
+    // @types/node, and `src/components/symbols.test.ts` reads the symbol key
+    // off disk with `node:path` and `node:url`.
+    "types": ["vite/client", "node"],
     "noEmit": false
   },
   "include": ["src/**/*"],

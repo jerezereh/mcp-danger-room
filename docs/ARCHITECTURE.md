@@ -498,10 +498,28 @@ Cockatrice's survival strategy is deliberate: ship the engine, ship no card data
 let users import it. Worth settling before a distribution model is built on the
 opposite assumption.
 
-**Node 18 is past EOL.** The repo builds on it today with warnings; Vite 6+ will
-require 20+. Upgrade before it becomes urgent.
+**The Node floor is 22.13, and it moves without asking.** _Settled, for now._
+It has moved twice in two PRs, both times because a dependency's `engines`
+field said so rather than because this code needed anything: 20.11 → 20.19 for
+ESLint, then 20.19 → 22.13 for `@colyseus/core` (`>= 22.x`), `vite` and
+`@vitejs/plugin-react` (`>=22.12.0`) and ESLint (`^22.13.0`) together. Both
+times `npm ci` warned `EBADENGINE` and passed anyway, and both times the
+warning was missed. `npm ci 2>&1 | grep EBADENGINE` should print nothing;
+run it after a dependency bump.
 
-**Bundle size.** The client is already ~1MB (294KB gzipped) before a single card
+Related: vitest 4 bundles rolldown, which needs `node:util.styleText` from Node
+20.12. Below that it fails at import with a `SyntaxError` naming neither vitest
+nor the Node version.
+
+**The Colyseus client and server are not a matched pair.** The server is on
+0.17; `colyseus.js` stops at 0.16.22, which pairs with a 0.16 server — and
+0.16 cannot be installed with npm at all, because `@colyseus/ws-transport@0.16`
+publishes a `workspace:^` reference npm rejects. The room sends plain objects
+rather than schema state sync, so the schema major difference may not matter,
+but it is untested and has to be settled before client/server wiring lands
+(#35).
+
+**Bundle size.** The client is ~2.2MB (450KB gzipped) before a single card
 image, mostly three.js. Code-split the board away from the roster builder — the
 roster route does not need a 3D engine.
 
