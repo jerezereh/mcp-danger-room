@@ -44,11 +44,11 @@ returns a typed rejection.
 That constraint buys three things at once, which is why it is worth defending
 even when it is inconvenient:
 
-| Consumer | What it needs | Why the constraint delivers it |
-|---|---|---|
-| Browser (local play) | Run the full game with no server | No I/O to stub out |
-| Server (online play) | Be the authority clients cannot forge | Same code, so no rules drift |
-| Web Worker (AI) | Simulate thousands of positions fast | No rendering, no allocation of DOM |
+| Consumer             | What it needs                         | Why the constraint delivers it     |
+| -------------------- | ------------------------------------- | ---------------------------------- |
+| Browser (local play) | Run the full game with no server      | No I/O to stub out                 |
+| Server (online play) | Be the authority clients cannot forge | Same code, so no rules drift       |
+| Web Worker (AI)      | Simulate thousands of positions fast  | No rendering, no allocation of DOM |
 
 The moment the engine reaches for the network or the DOM, all three break
 together. If a future change seems to require it, that is the signal the change
@@ -130,7 +130,7 @@ So suspended resolution is represented as **data**: `state.stack` is an array of
 ```ts
 export type Frame =
   | { kind: 'activation'; modelId: ModelId; actionsRemaining: number }
-  | { kind: 'attack'; step: AttackStep; attackerId: ModelId; /* … */ }
+  | { kind: 'attack'; step: AttackStep; attackerId: ModelId /* … */ }
   | { kind: 'reactionWindow'; window: ReactionWindow; pendingPlayers: readonly PlayerId[] }
   | { kind: 'applyDamage'; modelId: ModelId; amount: number }
   | { kind: 'checkKO'; modelId: ModelId };
@@ -142,7 +142,7 @@ resumes from exactly that point. The whole game — including "we are three step
 into an attack, waiting on a reaction" — round-trips through `JSON.stringify`.
 
 Damage carries its source for the same reason the sequence is stepped: Power is
-gained only from *enemy* effects, so `applyDamage` has to know who caused it.
+gained only from _enemy_ effects, so `applyDamage` has to know who caused it.
 An unattributed frame would let a character pay for its next reaction by
 hurting itself.
 
@@ -174,8 +174,8 @@ the closure implementation would have cost. `apps/web/src/lib/reaction.test.ts`
 asserts it against the corpus rather than against a fixture.
 
 **Reaction eligibility cannot come from the corpus.** MCP superpowers are
-prose — *"When this character is targeted by a {PHYS} or {ENRG} attack, it may
-use this superpower"* — and there are 200 reactive ones, no two worded alike.
+prose — _"When this character is targeted by a {PHYS} or {ENRG} attack, it may
+use this superpower"_ — and there are 200 reactive ones, no two worded alike.
 Nothing parses that reliably, and a parser that half-works is worse than none,
 because a superpower firing at the wrong moment is a wrong game rather than a
 missing feature. So structured triggers are hand-written in
@@ -286,7 +286,7 @@ implementation of the rules in the UI.
 
 The board is one surface with three jobs — inspect a model, choose where to
 move, choose what to shoot — so a click needs a mode, chosen in the action bar
-and consumed by the next click. That mode is *not* game state: the engine has
+and consumed by the next click. That mode is _not_ game state: the engine has
 no opinion about what the pointer is doing.
 
 Range rings and target highlights are computed in the client from the engine's
@@ -349,14 +349,14 @@ wrong on purpose.
 
 **Skeleton or absent:**
 
-- Wild, critical and failure *triggers* — the `{WILD}` and `{FAIL}` clauses
+- Wild, critical and failure _triggers_ — the `{WILD}` and `{FAIL}` clauses
   printed on attacks — are never read. `RollResult` counts all three and
   nothing consumes the counts.
 - Step 9 does not distinguish modifying your own dice from forcing an opponent
   to modify theirs, because no effect can yet tell them apart.
 - `ReactionEffect` has two variants, so nine superpowers out of 200 have a
   structured trigger. The rest are carried and never offered.
-- Reactions triggered by an *allied character within Range n* being targeted —
+- Reactions triggered by an _allied character within Range n_ being targeted —
   a large printed family — need a third model and a range band the structured
   trigger does not carry.
 - Active superpowers, tactic cards, conditions, objectives, and VP are types
@@ -381,7 +381,7 @@ wrong on purpose.
 
 ## 10. Suggested order of work
 
-*Tracked as GitHub issues #1–#10; #2, #3 and #4 are done.*
+_Tracked as GitHub issues #1–#10; #2, #3 and #4 are done._
 
 **1 — Roster builder against a real corpus.** No board, no server, no engine.
 It is the feature the project was started for, it is useful the day the data
@@ -392,7 +392,7 @@ that matters most.
 investigating whether a community dataset exists to import rather than
 hand-typing ~200 characters. Everything downstream is gated on this.
 
-**3 — Verify the rules constants.** *Done, bar size heights.* Every value in
+**3 — Verify the rules constants.** _Done, bar size heights._ Every value in
 `constants.ts` and the die face distribution in `dice.ts` began as a
 placeholder; isolating them in two files kept this an afternoon rather than an
 excavation. See §11 for what is left.

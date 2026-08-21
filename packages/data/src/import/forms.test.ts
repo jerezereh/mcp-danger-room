@@ -1,24 +1,17 @@
 import { describe, expect, it } from 'vitest';
 
 import { characters } from '../characters.js';
-import {
-  alternateMode,
-  applyFormStats,
-  formJobId,
-  isFormExtraction,
-  splitForms,
-} from './forms.js';
+import { alternateMode, applyFormStats, formJobId, isFormExtraction, splitForms } from './forms.js';
 
-const block = (names: string[]) =>
-  ({
-    cardImage: 'X_NORMAL_injured.png',
-    stamina: 5,
-    movement: 'S' as const,
-    size: 2,
-    defense: { physical: 2, energy: 2, mystic: 2 },
-    attacks: [],
-    superpowers: names.map(name => ({ name, type: 'innate' as const, cost: 0, text: '' })),
-  });
+const block = (names: string[]) => ({
+  cardImage: 'X_NORMAL_injured.png',
+  stamina: 5,
+  movement: 'S' as const,
+  size: 2,
+  defense: { physical: 2, energy: 2, mystic: 2 },
+  attacks: [],
+  superpowers: names.map(name => ({ name, type: 'innate' as const, cost: 0, text: '' })),
+});
 
 const character = (names: string[]) =>
   ({
@@ -88,7 +81,12 @@ describe('splitForms', () => {
 
 describe('the corpus', () => {
   it('has exactly the six characters that transform', () => {
-    expect(characters.filter(c => c.forms.length > 0).map(c => c.id).sort()).toEqual([
+    expect(
+      characters
+        .filter(c => c.forms.length > 0)
+        .map(c => c.id)
+        .sort(),
+    ).toEqual([
       'ant-man',
       'captain-marvel-cosmic-avenger',
       'emma-frost',
@@ -103,7 +101,10 @@ describe('the corpus', () => {
       const names = [c.healthy, c.injured, ...c.forms.flatMap(f => [f.healthy, f.injured])]
         .flatMap(s => [...s.attacks, ...s.superpowers])
         .map(a => a.name);
-      expect(names.filter(n => /^[A-Z]+ - /.test(n)), c.id).toEqual([]);
+      expect(
+        names.filter(n => /^[A-Z]+ - /.test(n)),
+        c.id,
+      ).toEqual([]);
     }
   });
 });
@@ -116,8 +117,18 @@ describe('applyFormStats', () => {
   const withForm = () => splitForms(character(['NORMAL - A', 'TINY - B']), null);
 
   const stats = {
-    healthy: { stamina: 4, movement: 'S' as const, size: 1, defense: { physical: 3, energy: 2, mystic: 3 } },
-    injured: { stamina: 3, movement: 'S' as const, size: 1, defense: { physical: 3, energy: 2, mystic: 3 } },
+    healthy: {
+      stamina: 4,
+      movement: 'S' as const,
+      size: 1,
+      defense: { physical: 3, energy: 2, mystic: 3 },
+    },
+    injured: {
+      stamina: 3,
+      movement: 'S' as const,
+      size: 1,
+      defense: { physical: 3, energy: 2, mystic: 3 },
+    },
   };
 
   it('gives the mode the stat box read from its card', () => {

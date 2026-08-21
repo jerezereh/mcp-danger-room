@@ -109,7 +109,6 @@ const ONLY = option('only');
 
 const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.webp']);
 
-
 /**
  * Build a lookup from every image on disk, keyed by a slug of its filename.
  *
@@ -291,7 +290,9 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
               f => f.id,
             );
           })()
-        : ONLY.split(',').map(x => x.trim()).filter(Boolean);
+        : ONLY.split(',')
+            .map(x => x.trim())
+            .filter(Boolean);
 
     needing = new Set(wanted.filter(id => known.has(id) || needing.has(id)));
     for (const id of wanted) {
@@ -336,12 +337,8 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
       known: {
         ...(entry?.name ? { name: entry.name } : {}),
         ...(entry?.affiliations ? { affiliations: entry.affiliations } : {}),
-        ...(entry?.healthyStamina !== undefined
-          ? { healthyStamina: entry.healthyStamina }
-          : {}),
-        ...(entry?.injuredStamina !== undefined
-          ? { injuredStamina: entry.injuredStamina }
-          : {}),
+        ...(entry?.healthyStamina !== undefined ? { healthyStamina: entry.healthyStamina } : {}),
+        ...(entry?.injuredStamina !== undefined ? { injuredStamina: entry.injuredStamina } : {}),
         // Without this, every errata'd character reports a false stamina
         // mismatch — the scan is pre-errata, the corpus is current.
         ...(entry?.errata ? { errata: entry.errata } : {}),
@@ -363,9 +360,7 @@ async function buildJobs(): Promise<{ jobs: Job[]; noImages: string[]; fetched: 
  */
 const symbolKey = (() => {
   if (!existsSync(SYMBOL_KEY)) {
-    throw new Error(
-      `Missing ${SYMBOL_KEY}. Rebuild it with: python3 scripts/build-symbol-key.py`,
-    );
+    throw new Error(`Missing ${SYMBOL_KEY}. Rebuild it with: python3 scripts/build-symbol-key.py`);
   }
   return encode(SYMBOL_KEY);
 })();
@@ -425,9 +420,7 @@ interface Extraction {
   disagreements: ReturnType<typeof crossCheck>;
 }
 
-type ParseOutcome =
-  | { ok: true; card: ExtractedCard }
-  | { ok: false; error: string };
+type ParseOutcome = { ok: true; card: ExtractedCard } | { ok: false; error: string };
 
 /**
  * Pull the structured output out of a finished message.
@@ -659,7 +652,9 @@ async function main() {
   if (DRY_RUN) {
     console.log('\n--dry-run: would send');
     for (const job of jobs.slice(0, 10)) {
-      console.log(`  ${job.id}\n    ${basename(job.healthyPath)}\n    ${basename(job.injuredPath)}`);
+      console.log(
+        `  ${job.id}\n    ${basename(job.healthyPath)}\n    ${basename(job.injuredPath)}`,
+      );
     }
     if (jobs.length > 10) console.log(`  … and ${jobs.length - 10} more`);
     return;
@@ -672,7 +667,6 @@ async function main() {
   // Only *unexplained* disagreements warrant review — a pre-errata scan
   // reading the printed value is expected, and flagging 136 of those would
   // bury the real misreads.
-
 
   /*
    * Accumulate rather than replace.
@@ -696,11 +690,8 @@ async function main() {
 
   writeFileSync(
     extractedPath,
-    JSON.stringify(
-      { generatedAt: new Date().toISOString(), model: MODEL, results: all },
-      null,
-      2,
-    ) + '\n',
+    JSON.stringify({ generatedAt: new Date().toISOString(), model: MODEL, results: all }, null, 2) +
+      '\n',
   );
   /*
    * Structural check on trigger icons.
@@ -716,7 +707,8 @@ async function main() {
   );
   if (triggerProblems.length > 0) {
     const byToken: Record<string, number> = {};
-    for (const p of triggerProblems) for (const o of p.offenders) byToken[o] = (byToken[o] ?? 0) + 1;
+    for (const p of triggerProblems)
+      for (const o of p.offenders) byToken[o] = (byToken[o] ?? 0) + 1;
     console.log(
       `\n⚠ ${triggerProblems.length} trigger bullets lead with a symbol no trigger can carry:`,
     );

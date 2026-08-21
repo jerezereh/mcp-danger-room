@@ -16,7 +16,6 @@ import type { RngState } from '../rng.js';
 import {
   boostFrom,
   rollPool,
-  MAX_BOOST,
   REROLL_COST,
   type Answer,
   type AttackContext,
@@ -184,9 +183,7 @@ function advance(ctx: AttackContext, frame: Frame, pending: Answer | null): Atta
           ...f,
           step: 'rollDefense',
           targetPowerSpent: f.targetPowerSpent + (paying ? REROLL_COST : 0),
-          events: paying
-            ? [...f.events, { type: 'rerolled', modelId: ctx.targetId }]
-            : f.events,
+          events: paying ? [...f.events, { type: 'rerolled', modelId: ctx.targetId }] : f.events,
         };
         answer = null;
         continue;

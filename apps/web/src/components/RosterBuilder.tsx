@@ -31,8 +31,7 @@ export function RosterBuilder() {
     if (!q) return allCharacters;
     return allCharacters.filter(
       c =>
-        c.name.toLowerCase().includes(q) ||
-        c.affiliations.some(a => a.toLowerCase().includes(q)),
+        c.name.toLowerCase().includes(q) || c.affiliations.some(a => a.toLowerCase().includes(q)),
     );
   }, [query]);
 
@@ -87,7 +86,7 @@ export function RosterBuilder() {
                 <th className="px-3 py-2 font-medium">Name</th>
                 <th className="px-3 py-2 font-medium">Affiliations</th>
                 <th className="px-3 py-2 text-right font-medium">Threat</th>
-                              </tr>
+              </tr>
             </thead>
             <tbody>
               {filtered.map(character => {
@@ -143,15 +142,15 @@ export function RosterBuilder() {
           <div className="flex min-h-0 flex-col">
             <div className="mb-2 flex items-baseline justify-between">
               <h3 className="text-sm font-semibold text-slate-200">Roster</h3>
-            <span
-              className={`text-xs tabular-nums ${
-                validation.valid ? 'text-slate-400' : 'text-accent'
-              }`}
-            >
-              {rosterIds.length} / {DEFAULT_ROSTER_SIZE} characters ·{' '}
-              {validation.totals.threat} threat
-            </span>
-          </div>
+              <span
+                className={`text-xs tabular-nums ${
+                  validation.valid ? 'text-slate-400' : 'text-accent'
+                }`}
+              >
+                {rosterIds.length} / {DEFAULT_ROSTER_SIZE} characters · {validation.totals.threat}{' '}
+                threat
+              </span>
+            </div>
 
             {rosterIds.length === 0 ? (
               <p className="py-4 text-center text-xs text-slate-600">
@@ -159,39 +158,37 @@ export function RosterBuilder() {
               </p>
             ) : (
               <ul className="flex-1 space-y-1 overflow-auto">
-              {rosterIds.map(id => {
-                const character = lookup.get(id);
-                if (!character) return null;
-                return (
-                  <li
-                    key={id}
-                    className="flex items-center justify-between rounded px-2 py-1 text-sm hover:bg-white/5"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setSelectedId(id)}
-                      className="truncate text-left text-slate-200"
+                {rosterIds.map(id => {
+                  const character = lookup.get(id);
+                  if (!character) return null;
+                  return (
+                    <li
+                      key={id}
+                      className="flex items-center justify-between rounded px-2 py-1 text-sm hover:bg-white/5"
                     >
-                      {character.name}
-                    </button>
-                    <span className="flex shrink-0 items-center gap-2 text-xs text-slate-500">
-                      <span className="tabular-nums">
-                        {character.threat} threat
-                      </span>
                       <button
                         type="button"
-                        onClick={() => toggle(id)}
-                        className="text-slate-600 hover:text-accent"
-                        aria-label={`Remove ${character.name}`}
+                        onClick={() => setSelectedId(id)}
+                        className="truncate text-left text-slate-200"
                       >
-                        ×
+                        {character.name}
                       </button>
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+                      <span className="flex shrink-0 items-center gap-2 text-xs text-slate-500">
+                        <span className="tabular-nums">{character.threat} threat</span>
+                        <button
+                          type="button"
+                          onClick={() => toggle(id)}
+                          className="text-slate-600 hover:text-accent"
+                          aria-label={`Remove ${character.name}`}
+                        >
+                          ×
+                        </button>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
 
             {validation.violations.map((v, i) => (
               <p key={i} className="mt-2 text-xs text-accent">

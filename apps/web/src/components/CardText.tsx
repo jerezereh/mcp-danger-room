@@ -82,7 +82,8 @@ export function CardText({
     }
   });
 
-  if (!bullet) return <p className={`text-sm leading-relaxed text-slate-300 ${className}`}>{body}</p>;
+  if (!bullet)
+    return <p className={`text-sm leading-relaxed text-slate-300 ${className}`}>{body}</p>;
 
   return (
     <p className={`flex gap-1.5 text-sm leading-relaxed text-slate-300 ${className}`}>

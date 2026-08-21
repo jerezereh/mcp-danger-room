@@ -116,7 +116,9 @@ function main() {
 
     const mark = corrected.has(id) ? '  ✓ corrected by a verified override' : '';
     lines.push(
-      `${id}  [${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ')}]${mark}`,
+      `${id}  [${Object.entries(counts)
+        .map(([k, n]) => `${n} ${k}`)
+        .join(', ')}]${mark}`,
     );
     for (const d of defects) {
       lines.push(`      ${d.kind.padEnd(19)} ${d.side.padEnd(8)} ${d.where}  —  ${d.detail}`);
@@ -135,7 +137,9 @@ function main() {
     ),
   ].filter(id => !corrected.has(id));
   console.log(`${affected} of ${results.length} characters have at least one detectable defect`);
-  console.log(`  ${affected - outstanding.length} already corrected, ${outstanding.length} outstanding`);
+  console.log(
+    `  ${affected - outstanding.length} already corrected, ${outstanding.length} outstanding`,
+  );
   for (const [kind, n] of Object.entries(totals)) console.log(`  ${kind.padEnd(20)} ${n}`);
   console.log('\nNot listed: readings that are plausible but wrong — those need the scan.');
 

@@ -158,7 +158,6 @@ describe('unrecognized glyphs', () => {
   });
 });
 
-
 /*
  * Blank is the only die result with no printed icon, so sources spell it out.
  * It was previously aliased onto Failure, which conflated two different faces —

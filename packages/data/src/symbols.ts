@@ -81,7 +81,8 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   // Energy and Wild are the other confusable pair, and colour cannot separate
   // them: inline in rules text both are white on black, and only the stat box
   // and attack-type badges are coloured. The blade count is the real tell.
-  energy: 'a pinwheel of several curved blades around a centre, like a camera shutter (yellow in the stat box, white inline)',
+  energy:
+    'a pinwheel of several curved blades around a centre, like a camera shutter (yellow in the stat box, white inline)',
   mystic: 'a blue eye',
   power: 'a star with long, even, sharply pointed spikes and a large round dark hole at its centre',
   damage: 'three slightly curved parallel lines',
@@ -104,7 +105,8 @@ export const SYMBOL_GLYPHS: Readonly<Record<SymbolKey, string>> = {
   // centre and all three have something dark at that centre, so the centre
   // separates nothing. The outline does. Power has long even spikes, Hit is an
   // uneven burst, Threat has no spikes at all.
-  threat: 'a smooth circle with no spikes, cut into six segments by thin lines from a dot at its centre',
+  threat:
+    'a smooth circle with no spikes, cut into six segments by thin lines from a dot at its centre',
   size: 'an I-beam, the same icon the stat box uses for Size',
   // Both appear on bars *and* inline in rules text — Lady Mastermind copies an
   // attack's Strength, and Dormammu's Leadership refers to itself by its star.

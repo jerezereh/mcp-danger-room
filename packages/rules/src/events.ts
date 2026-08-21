@@ -28,7 +28,12 @@ export type GameEvent = EventBase &
     | { readonly type: 'TURN_PASSED'; readonly player: PlayerId }
     | { readonly type: 'ACTIVATION_STARTED'; readonly modelId: ModelId }
     | { readonly type: 'ACTIVATION_ENDED'; readonly modelId: ModelId }
-    | { readonly type: 'MODEL_MOVED'; readonly modelId: ModelId; readonly from: Vec3; readonly to: Vec3 }
+    | {
+        readonly type: 'MODEL_MOVED';
+        readonly modelId: ModelId;
+        readonly from: Vec3;
+        readonly to: Vec3;
+      }
     | { readonly type: 'POWER_GAINED'; readonly modelId: ModelId; readonly amount: number }
     | { readonly type: 'POWER_SPENT'; readonly modelId: ModelId; readonly amount: number }
     | {
@@ -50,8 +55,16 @@ export type GameEvent = EventBase &
     /** The Cleanup Phase flip onto the Injured side. */
     | { readonly type: 'MODEL_INJURED'; readonly modelId: ModelId }
     | { readonly type: 'MODEL_KO'; readonly modelId: ModelId }
-    | { readonly type: 'CONDITION_APPLIED'; readonly modelId: ModelId; readonly condition: ConditionKind }
-    | { readonly type: 'CONDITION_REMOVED'; readonly modelId: ModelId; readonly condition: ConditionKind }
+    | {
+        readonly type: 'CONDITION_APPLIED';
+        readonly modelId: ModelId;
+        readonly condition: ConditionKind;
+      }
+    | {
+        readonly type: 'CONDITION_REMOVED';
+        readonly modelId: ModelId;
+        readonly condition: ConditionKind;
+      }
     | { readonly type: 'REACTION_WINDOW_OPENED'; readonly timing: ReactionTiming }
     | {
         readonly type: 'REACTION_USED';

@@ -36,12 +36,7 @@
  */
 import { z } from 'zod/v4';
 
-import {
-  CANONICAL_TOKENS,
-  SYMBOL_GLYPHS,
-  SYMBOL_LABELS,
-  type SymbolKey,
-} from '../symbols.js';
+import { CANONICAL_TOKENS, SYMBOL_GLYPHS, SYMBOL_LABELS, type SymbolKey } from '../symbols.js';
 
 /** Mirrors `PowerCost` in schema.ts — a number, or "X" when the player chooses. */
 const ExtractedCost = z.union([z.number().int().min(0), z.literal('X')]);
@@ -111,7 +106,9 @@ export function buildSystemPrompt({ symbolKeyImage = false } = {}): string {
     .map(
       key =>
         `  ${CANONICAL_TOKENS[key].padEnd(width)}  ${SYMBOL_LABELS[key]}` +
-        (symbolKeyImage ? '' : `${' '.repeat(Math.max(1, 11 - SYMBOL_LABELS[key].length))}${SYMBOL_GLYPHS[key]}`),
+        (symbolKeyImage
+          ? ''
+          : `${' '.repeat(Math.max(1, 11 - SYMBOL_LABELS[key].length))}${SYMBOL_GLYPHS[key]}`),
     )
     .join('\n');
 
@@ -326,10 +323,14 @@ export function checkTriggerIcons(card: ExtractedCard): TriggerProblem[] {
   for (const side of ['healthy', 'injured'] as const) {
     for (const attack of card[side].attacks) {
       for (const text of attack.text) {
-        const lead = text.match(/^((?:\{[A-Za-z]+\}\s*)+)\s*(?:<b>)?[A-Za-z][A-Za-z '!-]{1,24}?(?:<\/b>)?\s*:/);
+        const lead = text.match(
+          /^((?:\{[A-Za-z]+\}\s*)+)\s*(?:<b>)?[A-Za-z][A-Za-z '!-]{1,24}?(?:<\/b>)?\s*:/,
+        );
         if (!lead) continue;
 
-        const tokens = [...(lead[1] as string).matchAll(/\{([A-Za-z]+)\}/g)].map(m => m[1] as string);
+        const tokens = [...(lead[1] as string).matchAll(/\{([A-Za-z]+)\}/g)].map(
+          m => m[1] as string,
+        );
         // {UNKNOWN} is an honest flag, not a misread — it is reported elsewhere.
         const offenders = tokens.filter(t => !DICE_TOKENS.has(t) && t !== 'UNKNOWN');
         if (offenders.length > 0) out.push({ side, attack: attack.name, text, offenders });

@@ -57,7 +57,10 @@ function toAttack(attack: StatBlock['attacks'][number]): AttackProfile {
  * can say what a character *has* — and the gap stays visible instead of
  * looking like the character simply has no powers.
  */
-function toSuperpower(characterId: string, power: StatBlock['superpowers'][number]): SuperpowerProfile {
+function toSuperpower(
+  characterId: string,
+  power: StatBlock['superpowers'][number],
+): SuperpowerProfile {
   return {
     name: power.name,
     type: power.type,

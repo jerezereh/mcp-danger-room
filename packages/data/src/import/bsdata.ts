@@ -237,7 +237,9 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
 
     const sides = profiles.filter(p => typeName(p) === 'Character');
     const attacks = profiles.filter(p => typeName(p) === 'Attacks');
-    const powers = profiles.filter(p => typeName(p).endsWith('Superpowers') || typeName(p) === 'Leadership');
+    const powers = profiles.filter(
+      p => typeName(p).endsWith('Superpowers') || typeName(p) === 'Leadership',
+    );
 
     const toAttack = (p: Node): Attack | null => {
       const c = characteristics(p);
@@ -247,7 +249,10 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
       const rawType = (c['Type'] ?? '').replace(/[{}]/g, '').trim().toLowerCase();
       const type = DAMAGE_TYPES[rawType];
       if (!type) {
-        warnings.push({ character: rawName, message: `unknown attack type "${c['Type']}" on ${attackName}` });
+        warnings.push({
+          character: rawName,
+          message: `unknown attack type "${c['Type']}" on ${attackName}`,
+        });
       }
 
       const parsedRange = parseRange(c['Range']);
@@ -343,12 +348,20 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
 
     const threat = int(characteristics(sides[0] ?? {})['Threat']);
     const affiliations = [...walk(entry)]
-      .filter(n => '@targetId' in n && 'categoryLink' !== undefined)
+      // TODO(#33): this should be restricted to categoryLink nodes. It used to
+      // read `&& 'categoryLink' !== undefined`, comparing a string literal to
+      // undefined — always true, so the clause did nothing and every node with
+      // a targetId reaches the lookup. Dropped rather than guessed at, because
+      // it changes what the import produces.
+      .filter(n => '@targetId' in n)
       .map(n => categories.get(attr(n, 'targetId') ?? ''))
       .filter((n): n is string => Boolean(n) && n !== 'Character' && n !== 'Characters');
 
     if (sides.length === 1) {
-      warnings.push({ character: rawName, message: 'only one Character profile (no injured side)' });
+      warnings.push({
+        character: rawName,
+        message: 'only one Character profile (no injured side)',
+      });
     }
 
     drafts.push({

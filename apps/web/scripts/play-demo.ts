@@ -228,7 +228,9 @@ function main(): void {
     }
 
     if (step.rejected) {
-      console.log(`      (${step.rejected.action.type} refused: ${step.rejected.rejection.message})`);
+      console.log(
+        `      (${step.rejected.action.type} refused: ${step.rejected.rejection.message})`,
+      );
     }
 
     // "Activates, does nothing" is unreadable without a reason.
@@ -262,7 +264,9 @@ function main(): void {
   const gaps: string[] = [];
   if (!seen.has('MODEL_MOVED')) gaps.push('nobody moved this run');
   gaps.push('round 1’s Power Phase is invisible: createGame grants it without emitting events');
-  gaps.push('no event marks a phase beginning, so Power and Cleanup are inferred from what follows');
+  gaps.push(
+    'no event marks a phase beginning, so Power and Cleanup are inferred from what follows',
+  );
   if (idle > 0) {
     gaps.push(
       `${idle} activations did nothing — the driver walks straight at its target ` +

@@ -5,5 +5,5 @@
     "composite": false,
     "types": ["node"]
   },
-  "include": ["scripts/**/*.ts", "src/lib/**/*.ts"]
+  "include": ["scripts/**/*.ts", "src/lib/**/*.ts", "vite.config.ts"]
 }

@@ -70,7 +70,8 @@ export function hasLineOfSight(
     // Sample the segment; if any sample sits inside the cylinder, it blocks.
     for (let i = 0; i <= TRACE_SAMPLES; i++) {
       const point = lerp(from, to, i / TRACE_SAMPLES);
-      const withinFootprint = Math.hypot(point.x - volume.pos.x, point.y - volume.pos.y) <= volume.radius;
+      const withinFootprint =
+        Math.hypot(point.x - volume.pos.x, point.y - volume.pos.y) <= volume.radius;
       const belowTop = point.z <= volume.pos.z + volume.height;
       const aboveBase = point.z >= volume.pos.z;
 

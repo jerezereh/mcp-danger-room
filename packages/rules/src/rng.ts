@@ -23,7 +23,7 @@ export function createRng(seed: number): RngState {
  * [0, 1) alongside the advanced state.
  */
 export function next(state: RngState): { value: number; state: RngState } {
-  let t = (state.seed + 0x6d2b79f5) >>> 0;
+  const t = (state.seed + 0x6d2b79f5) >>> 0;
   let x = t;
   x = Math.imul(x ^ (x >>> 15), x | 1);
   x ^= x + Math.imul(x ^ (x >>> 7), x | 61);

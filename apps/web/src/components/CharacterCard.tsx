@@ -121,7 +121,15 @@ function Bar({
   );
 }
 
-function Value({ icon, label, children }: { icon: string; label: string; children: React.ReactNode }) {
+function Value({
+  icon,
+  label,
+  children,
+}: {
+  icon: string;
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <span className="flex items-center gap-1" title={label}>
       <Glyph name={icon} label={label} className="h-4 w-4" />

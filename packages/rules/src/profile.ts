@@ -175,10 +175,7 @@ export function findAttack(stats: StatProfile, name: string): AttackProfile | un
 }
 
 /** Find a named superpower on a stat block. */
-export function findSuperpower(
-  stats: StatProfile,
-  name: string,
-): SuperpowerProfile | undefined {
+export function findSuperpower(stats: StatProfile, name: string): SuperpowerProfile | undefined {
   return stats.superpowers.find(s => s.name === name);
 }
 

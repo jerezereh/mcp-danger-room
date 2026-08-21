@@ -12,19 +12,27 @@ and online play in the browser.
 
 ## Requirements
 
-Node 20.11+. The repo currently builds on Node 18 but several dependencies warn,
-and Vite 6+ will require 20. Use [nvm](https://github.com/nvm-sh/nvm) or similar.
+Node 20.19+, which is what CI runs. The floor was 20.11 until ESLint's
+`eslint-visitor-keys` started requiring `^20.19.0 || ^22.13.0 || >=24` —
+installing below that warns `EBADENGINE` and then works, which is exactly the
+kind of floor nobody notices has moved. The repo still builds on Node 18, with
+more warnings. Use [nvm](https://github.com/nvm-sh/nvm) or similar.
 
 ## Getting started
 
 ```bash
 npm install
-npm test          # 397 tests across the rules, data, and web packages
+npm run check     # format, lint, typecheck and test — everything CI runs
+npm test          # 427 tests across the rules, data, and web packages
 npm run typecheck # all five projects
 npm run dev       # web client on http://localhost:5173
 npm run dev:server # game server on :2567 (only needed for online play)
 npm run play:demo  # play a game in the terminal and read the transcript
 ```
+
+`npm run check` is the one to run before pushing: it is the same four commands
+the CI workflow runs, in the same order, cheapest first. `npm run format`
+fixes what `format:check` complains about.
 
 `play:demo` runs a full six-round game against real card data and narrates it
 from the engine's event stream — dice pools, reaction windows, Power, Dazed and

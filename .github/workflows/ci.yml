@@ -1,0 +1,53 @@
+# Every check the repo knows how to run, on every pull request.
+#
+# There was no workflow here before #31 — `.github/` held a dependabot config
+# and nothing else — so nothing verified a PR. `npm run lint` was broken and
+# 43 files disagreed with Prettier, both for long enough that neither was
+# noticed. This is what stops that recurring.
+#
+# Node 20.19 is the floor `package.json` declares. It is worth pinning to the
+# floor rather than to "latest 20": the point is to prove the declared minimum
+# still works, since development happens on whatever the contributor has.
+#
+# 20.19 rather than 20.11 because ESLint's `eslint-visitor-keys` requires
+# `^20.19.0 || ^22.13.0 || >=24`. On 20.11 `npm ci` warned EBADENGINE and
+# everything passed anyway, which is the worst of both: a floor CI proves and
+# nothing actually supports.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+# A new push supersedes the run in flight. Master is excluded so its history
+# keeps a result per commit.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+jobs:
+  check:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.19'
+          cache: npm
+
+      - run: npm ci
+
+      # Ordered cheapest-first, so a formatting slip does not wait behind a
+      # two-minute build to tell you about itself.
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

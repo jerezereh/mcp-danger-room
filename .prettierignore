@@ -1,0 +1,18 @@
+# Build output and caches. Gitignored, so formatting them is churn on files
+# nobody reads and nobody commits.
+dist/
+build/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# Generated, not authored. `npm run import:cards` rebuilds this from the
+# community sources and applies overrides.json; reformatting it would put a
+# diff in front of the next import rather than in front of a person.
+packages/data/src/characters.json
+
+# Import-pipeline scratch: cached BSData files and reports.
+packages/data/.import/
+
+# Lockfile — npm owns the formatting.
+package-lock.json

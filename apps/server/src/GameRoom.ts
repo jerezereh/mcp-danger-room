@@ -116,7 +116,10 @@ export class GameRoom extends Room {
     });
   }
 
-  override onJoin(client: Client, options: { displayName?: string; protocolVersion?: number }): void {
+  override onJoin(
+    client: Client,
+    options: { displayName?: string; protocolVersion?: number },
+  ): void {
     if (options.protocolVersion !== PROTOCOL_VERSION) {
       this.sendTo(client, {
         type: 'ERROR',
@@ -212,7 +215,10 @@ export class GameRoom extends Room {
 
       case 'CONCEDE': {
         const seat = this.seats.get(client.sessionId);
-        this.broadcastMessage({ type: 'GAME_OVER', winner: seat ? this.opponentOf(seat.seat) : null });
+        this.broadcastMessage({
+          type: 'GAME_OVER',
+          winner: seat ? this.opponentOf(seat.seat) : null,
+        });
         return;
       }
 
