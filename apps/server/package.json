@@ -11,10 +11,11 @@
     "typecheck": "tsc --build"
   },
   "dependencies": {
-    "@colyseus/core": "^0.15.0",
-    "@colyseus/ws-transport": "^0.15.3",
+    "@colyseus/core": "^0.17.50",
+    "@colyseus/ws-transport": "^0.17.13",
     "@danger-room/protocol": "*",
-    "@danger-room/rules": "*"
+    "@danger-room/rules": "*",
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "tsx": "^4.17.0"
