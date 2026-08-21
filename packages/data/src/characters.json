@@ -13579,7 +13579,7 @@
       "packName": null,
       "threat": 0,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 50,
       "healthy": {
         "cardImage": null,
         "stamina": 2,
@@ -14966,7 +14966,7 @@
       "packName": null,
       "threat": 0,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 50,
       "healthy": {
         "cardImage": null,
         "stamina": 3,
@@ -22093,7 +22093,7 @@
       "packName": "Black Panther, Chosen of Bast and Namor, the Sub-Mariner",
       "threat": 5,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 50,
       "healthy": {
         "cardImage": "NAMOR_THE_SUB_MARINER_healthy.png",
         "stamina": 7,
@@ -22883,7 +22883,7 @@
       "packName": "Bastion, Nimrod, and Omega Sentinel",
       "threat": 5,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 65,
       "healthy": {
         "cardImage": "NIMROD_healthy.png",
         "stamina": 7,
@@ -24101,7 +24101,7 @@
       "packName": "Operation Zero Tolerance Character and Card Pack",
       "threat": 3,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 35,
       "healthy": {
         "cardImage": "PRIME_SENTINEL_2_healthy.png",
         "stamina": 6,
@@ -27449,7 +27449,7 @@
       "packName": null,
       "threat": 0,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 35,
       "healthy": {
         "cardImage": null,
         "stamina": 2,
@@ -29356,7 +29356,7 @@
       "packName": null,
       "threat": 0,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 50,
       "healthy": {
         "cardImage": null,
         "stamina": 2,
@@ -33495,7 +33495,7 @@
       "packName": "Mighty Thor, Lady Sif, Thor, Hero of Midgard & Loki, Prince of Lies",
       "threat": 5,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 35,
       "healthy": {
         "cardImage": "THE_MIGHTY_THOR_healthy.png",
         "stamina": 8,
@@ -35187,7 +35187,7 @@
       "packName": null,
       "threat": 0,
       "errata": null,
-      "baseMm": 40,
+      "baseMm": 50,
       "healthy": {
         "cardImage": null,
         "stamina": 3,
