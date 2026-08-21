@@ -36,6 +36,11 @@ import type { Action, GameEvent, GameState, Rejection } from '@danger-room/rules
  * stopped there. Nothing broke, because the client does not connect yet, but
  * the two constants answer the same question about different transports and
  * they have been drifting apart. A rules change is a protocol change.
+ *
+ * That last sentence is enforced now rather than hoped for. `versioning.test.ts`
+ * pins this constant in one assertion alongside `SCHEMA_VERSION`,
+ * `SAVE_FORMAT_VERSION` and the full set of wire tags, so moving any of them
+ * puts all three numbers on screen.
  */
 export const PROTOCOL_VERSION = 3;
 

@@ -354,6 +354,11 @@ export interface GameState {
  *
  * v2: `result` — a finished game records who won and why, instead of leaving
  * both to be reconstructed from the event log.
+ *
+ * Guarded by `versioning.test.ts`: the field lists there are typed
+ * `Record<keyof GameState, true>`, so adding or removing a field is a compile
+ * error until it is listed, and that listing sits in the same assertion as this
+ * number.
  */
 export const SCHEMA_VERSION = 2;
 
