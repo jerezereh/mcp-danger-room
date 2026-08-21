@@ -19,12 +19,17 @@ and Vite 6+ will require 20. Use [nvm](https://github.com/nvm-sh/nvm) or similar
 
 ```bash
 npm install
-npm test          # 397 tests across the rules, data, and web packages
+npm run check     # format, lint, typecheck and test — everything CI runs
+npm test          # 427 tests across the rules, data, and web packages
 npm run typecheck # all five projects
 npm run dev       # web client on http://localhost:5173
 npm run dev:server # game server on :2567 (only needed for online play)
 npm run play:demo  # play a game in the terminal and read the transcript
 ```
+
+`npm run check` is the one to run before pushing: it is the same four commands
+the CI workflow runs, in the same order, cheapest first. `npm run format`
+fixes what `format:check` complains about.
 
 `play:demo` runs a full six-round game against real card data and narrates it
 from the engine's event stream — dice pools, reaction windows, Power, Dazed and
