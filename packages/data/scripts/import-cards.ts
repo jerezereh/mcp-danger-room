@@ -101,7 +101,9 @@ async function main() {
     jarvis = raw.map(jarvisToDraft);
     console.log(`  ${jarvis.length} characters`);
   } catch (error) {
-    console.log(`  unavailable (${(error as Error).message.split('.')[0]}) — continuing without it`);
+    console.log(
+      `  unavailable (${(error as Error).message.split('.')[0]}) — continuing without it`,
+    );
   }
 
   // OCR extractions, if any have been run. These are the only source of rules
@@ -239,7 +241,9 @@ async function main() {
   if (overrideFile.overrides.length > 0) {
     console.log(`\nOverrides: ${patched.applied.length} applied`);
     if (patched.removed.length > 0) {
-      console.log(`  ${patched.removed.length} character(s) removed: ${patched.removed.join(', ')}`);
+      console.log(
+        `  ${patched.removed.length} character(s) removed: ${patched.removed.join(', ')}`,
+      );
     }
     for (const id of patched.unmatched) {
       console.log(`  ⚠ no character matched override id "${id}"`);
@@ -316,7 +320,11 @@ async function main() {
   writeFileSync(
     resolve(OUT_DIR, 'conflicts.json'),
     JSON.stringify(
-      { generatedAt: new Date().toISOString(), conflicts: merged.conflicts, warnings: bsdata.warnings },
+      {
+        generatedAt: new Date().toISOString(),
+        conflicts: merged.conflicts,
+        warnings: bsdata.warnings,
+      },
       null,
       2,
     ) + '\n',

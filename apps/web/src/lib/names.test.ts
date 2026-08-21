@@ -4,7 +4,14 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { createGame, vec3, type CharacterId, type GameState, type ModelId, type PlayerId } from '@danger-room/rules';
+import {
+  createGame,
+  vec3,
+  type CharacterId,
+  type GameState,
+  type ModelId,
+  type PlayerId,
+} from '@danger-room/rules';
 
 import { playableSparringSpec } from './gameSetup.js';
 import { labelOf, nameOf, playerOf, sideOf } from './names.js';
@@ -43,7 +50,9 @@ describe('nameOf', () => {
     const dummies = createGame({
       seed: 1,
       players: [{ id: p1, displayName: 'One' }],
-      models: [{ id: m1, characterId: 'amazing-spider-man' as CharacterId, owner: p1, pos: vec3(1, 1, 0) }],
+      models: [
+        { id: m1, characterId: 'amazing-spider-man' as CharacterId, owner: p1, pos: vec3(1, 1, 0) },
+      ],
     });
 
     expect(nameOf(dummies, m1)).toContain('Training Dummy');

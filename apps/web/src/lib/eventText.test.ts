@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { applyAction, createGame, type GameEvent, type GameState, type ModelId } from '@danger-room/rules';
+import {
+  applyAction,
+  createGame,
+  type GameEvent,
+  type GameState,
+  type ModelId,
+} from '@danger-room/rules';
 
 import { describeEvent } from './eventText.js';
 import { playableSparringSpec } from './gameSetup.js';
@@ -50,7 +56,9 @@ describe('describeEvent', () => {
 
   it('says one success and two successes correctly', () => {
     const state = position();
-    const id = state.turnOrder.length ? (Object.keys(state.models)[0] as ModelId) : ('m1' as ModelId);
+    const id = state.turnOrder.length
+      ? (Object.keys(state.models)[0] as ModelId)
+      : ('m1' as ModelId);
     const roll = (successes: number): GameEvent => ({
       sequence: 1,
       type: 'DICE_ROLLED',

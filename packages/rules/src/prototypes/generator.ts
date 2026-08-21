@@ -39,7 +39,12 @@ import {
 
 /** What the flow can ask the driver for. */
 type Request =
-  | { readonly kind: 'roll'; readonly modelId: AttackContext['attackerId']; readonly dice: number; readonly mode: 'attack' | 'defense' }
+  | {
+      readonly kind: 'roll';
+      readonly modelId: AttackContext['attackerId'];
+      readonly dice: number;
+      readonly mode: 'attack' | 'defense';
+    }
   | { readonly kind: 'ask'; readonly prompt: AttackPrompt }
   | { readonly kind: 'emit'; readonly event: AttackEvent };
 

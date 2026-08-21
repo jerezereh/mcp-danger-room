@@ -15,12 +15,7 @@ import type { DieFace } from './dice.js';
 import type { TerrainVolume } from './geometry/los.js';
 import type { Vec3 } from './geometry/vec.js';
 import type { CardId, CharacterId, ModelId, PlayerId } from './ids.js';
-import type {
-  CharacterProfile,
-  DamageType,
-  ReactionTiming,
-  StatProfile,
-} from './profile.js';
+import type { CharacterProfile, DamageType, ReactionTiming, StatProfile } from './profile.js';
 import { statsAt } from './profile.js';
 import type { RngState } from './rng.js';
 
@@ -37,15 +32,7 @@ import type { RngState } from './rng.js';
 export type ModelHealth = 'healthy' | 'injured' | 'ko';
 
 export type ConditionKind =
-  | 'bleed'
-  | 'incinerate'
-  | 'poison'
-  | 'shock'
-  | 'stagger'
-  | 'stun'
-  | 'slow'
-  | 'root'
-  | 'hex';
+  'bleed' | 'incinerate' | 'poison' | 'shock' | 'stagger' | 'stun' | 'slow' | 'root' | 'hex';
 
 export interface Condition {
   readonly kind: ConditionKind;
@@ -123,12 +110,7 @@ export interface ObjectiveMarker {
  * within Cleanup is load-bearing: priority passes *before* Activated tokens
  * are removed.
  */
-export type Phase =
-  | 'setup'
-  | 'power'
-  | 'activation'
-  | 'cleanup'
-  | 'finished';
+export type Phase = 'setup' | 'power' | 'activation' | 'cleanup' | 'finished';
 
 /**
  * A suspended step of resolution, represented as *data* rather than a closure.

@@ -11,7 +11,6 @@
 import { describeEvent } from '../lib/eventText.js';
 import { selectGame, useStore } from '../store.js';
 
-
 export function GameLog() {
   const game = useStore(selectGame);
   const events = useStore(s => s.events);
@@ -24,9 +23,7 @@ export function GameLog() {
       </h3>
 
       <ol className="flex-1 space-y-1 overflow-auto p-3 text-xs">
-        {events.length === 0 && (
-          <li className="text-slate-600">Nothing has happened yet.</li>
-        )}
+        {events.length === 0 && <li className="text-slate-600">Nothing has happened yet.</li>}
         {events.map(event => (
           <li key={event.sequence} className="text-slate-400">
             <span className="mr-2 tabular-nums text-slate-600">{event.sequence}</span>

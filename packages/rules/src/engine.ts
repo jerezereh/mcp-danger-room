@@ -342,10 +342,16 @@ export function applyAction(state: GameState, action: Action): Result {
         return reject('NOT_IMPLEMENTED', `${attack.shape} attacks are not implemented yet.`);
       }
       if (attack.range === '*') {
-        return reject('NOT_IMPLEMENTED', 'Attacks whose range their own text defines are not implemented yet.');
+        return reject(
+          'NOT_IMPLEMENTED',
+          'Attacks whose range their own text defines are not implemented yet.',
+        );
       }
       if (attack.cost === 'X') {
-        return reject('NOT_IMPLEMENTED', 'Attacks with a variable Power cost are not implemented yet.');
+        return reject(
+          'NOT_IMPLEMENTED',
+          'Attacks with a variable Power cost are not implemented yet.',
+        );
       }
 
       // Step 1 — choose an attack. "If the character doesn't have sufficient
@@ -367,11 +373,7 @@ export function applyAction(state: GameState, action: Action): Result {
         );
       }
 
-      const los = hasLineOfSight(
-        footprintOf(attacker),
-        footprintOf(target),
-        draft.state.terrain,
-      );
+      const los = hasLineOfSight(footprintOf(attacker), footprintOf(target), draft.state.terrain);
       if (!los.clear) return reject('NO_LINE_OF_SIGHT', 'Terrain blocks line of sight.');
 
       emit(draft, {
@@ -1115,8 +1117,7 @@ interface ReactionContext {
 }
 
 /** How a used reaction is recorded on the window. */
-const reactionKey = (modelId: ModelId, superpower: string): string =>
-  `${modelId}::${superpower}`;
+const reactionKey = (modelId: ModelId, superpower: string): string => `${modelId}::${superpower}`;
 
 export interface ReactionOption {
   readonly modelId: ModelId;

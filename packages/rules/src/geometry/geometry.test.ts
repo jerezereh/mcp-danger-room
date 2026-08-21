@@ -46,11 +46,15 @@ describe('measurement', () => {
 
 describe('point-to-segment distance', () => {
   it('measures perpendicular distance when the foot falls inside', () => {
-    expect(distanceToSegmentHorizontal(vec3(5, 3, 0), vec3(0, 0, 0), vec3(10, 0, 0))).toBeCloseTo(3);
+    expect(distanceToSegmentHorizontal(vec3(5, 3, 0), vec3(0, 0, 0), vec3(10, 0, 0))).toBeCloseTo(
+      3,
+    );
   });
 
   it('clamps to the endpoints when the foot falls outside', () => {
-    expect(distanceToSegmentHorizontal(vec3(-4, 0, 0), vec3(0, 0, 0), vec3(10, 0, 0))).toBeCloseTo(4);
+    expect(distanceToSegmentHorizontal(vec3(-4, 0, 0), vec3(0, 0, 0), vec3(10, 0, 0))).toBeCloseTo(
+      4,
+    );
   });
 
   it('handles a degenerate zero-length segment', () => {
@@ -86,8 +90,9 @@ describe('line of sight', () => {
   });
 
   it('is not blocked by terrain flagged as non-blocking', () => {
-    expect(hasLineOfSight(model(0, 0), model(10, 0), [wall({ blocksLineOfSight: false })]).clear)
-      .toBe(true);
+    expect(
+      hasLineOfSight(model(0, 0), model(10, 0), [wall({ blocksLineOfSight: false })]).clear,
+    ).toBe(true);
   });
 
   it('clears a low wall when both models stand on rooftops', () => {

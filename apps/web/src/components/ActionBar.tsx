@@ -64,16 +64,19 @@ function Button({
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-        {label}
-      </h4>
+      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">{label}</h4>
       <div className="flex flex-wrap gap-1.5">{children}</div>
     </div>
   );
 }
 
 /** Can this attack reach that model at all? A hint for the button, not a rule. */
-function reachable(state: GameState, attacker: Model, attack: AttackProfile, target: Model): boolean {
+function reachable(
+  state: GameState,
+  attacker: Model,
+  attack: AttackProfile,
+  target: Model,
+): boolean {
   if (attack.shape !== 'range' || attack.range === '*') return false;
   if (edgeDistance(attacker, target) > RANGE_INCHES[attack.range]) return false;
   return hasLineOfSight(attacker, target, state.terrain).clear;
@@ -307,11 +310,7 @@ export function ActionBar() {
         <ChooseAction player={prompt.player} modelId={prompt.modelId} />
       )}
       {prompt.kind === 'declareReaction' && (
-        <DeclareReaction
-          player={prompt.player}
-          timing={prompt.timing}
-          options={prompt.options}
-        />
+        <DeclareReaction player={prompt.player} timing={prompt.timing} options={prompt.options} />
       )}
     </div>
   );

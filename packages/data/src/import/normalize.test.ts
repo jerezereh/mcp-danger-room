@@ -22,9 +22,7 @@ describe('normalizeRulesText', () => {
 
   it('bolds the phase names', () => {
     expect(normalizeRulesText('during the Power Phase')).toBe('during the <b>Power Phase</b>');
-    expect(normalizeRulesText('during the cleanup phase')).toBe(
-      'during the <b>Cleanup Phase</b>',
-    );
+    expect(normalizeRulesText('during the cleanup phase')).toBe('during the <b>Cleanup Phase</b>');
   });
 
   it("matches Modify Opponent's Dice whole rather than as Modify Dice", () => {

@@ -22,7 +22,7 @@ const stub = (id: string, threat: number): Character =>
     threat,
     baseMm: 40,
     sources: ['manual'],
-  forms: [],
+    forms: [],
     verified: false,
     healthy: {
       cardImage: null,
@@ -70,7 +70,9 @@ describe('roster validation', () => {
   });
 
   it('flags a roster over the size limit', () => {
-    const ids = Array.from({ length: DEFAULT_ROSTER_SIZE + 1 }, (_, i) => (i === 0 ? 'a' : `x${i}`));
+    const ids = Array.from({ length: DEFAULT_ROSTER_SIZE + 1 }, (_, i) =>
+      i === 0 ? 'a' : `x${i}`,
+    );
     const result = validateRoster({ ...roster, characterIds: ids }, lookup);
     expect(result.violations.map(v => v.code)).toContain('ROSTER_TOO_LARGE');
   });

@@ -24,7 +24,7 @@ describe('slug — the join key across sources', () => {
     expect(slugify('Abomination')).toBe('abomination');
     expect(slugify('ABOMINATION (Emil Blonsky)')).toBe('abomination');
     expect(slugify('Amazing Spider-Man')).toBe('amazing-spider-man');
-    expect(slugify("Ant-Man")).toBe('ant-man');
+    expect(slugify('Ant-Man')).toBe('ant-man');
     expect(slugify('M.O.D.O.K.')).toBe('modok');
   });
 
@@ -214,7 +214,17 @@ describe('finalize', () => {
       movement: 'M',
       size: 2,
       defense: { physical: 3, energy: 3, mystic: 3 },
-      attacks: [{ name: 'Punch', type: 'physical', range: 1, shape: 'range' as const, dice: 5, cost: 0, text: [] }],
+      attacks: [
+        {
+          name: 'Punch',
+          type: 'physical',
+          range: 1,
+          shape: 'range' as const,
+          dice: 5,
+          cost: 0,
+          text: [],
+        },
+      ],
       superpowers: [],
     },
     injured: {
@@ -222,7 +232,17 @@ describe('finalize', () => {
       movement: 'M',
       size: 2,
       defense: { physical: 3, energy: 3, mystic: 3 },
-      attacks: [{ name: 'Punch', type: 'physical', range: 1, shape: 'range' as const, dice: 5, cost: 0, text: [] }],
+      attacks: [
+        {
+          name: 'Punch',
+          type: 'physical',
+          range: 1,
+          shape: 'range' as const,
+          dice: 5,
+          cost: 0,
+          text: [],
+        },
+      ],
       superpowers: [],
     },
     sources: ['bsdata'],
@@ -286,9 +306,7 @@ describe('OCR cross-check', () => {
   });
 
   it('is silent when the model agrees with what we already know', () => {
-    expect(
-      crossCheck(extracted(), { name: 'Angela', healthyStamina: 6 }),
-    ).toEqual([]);
+    expect(crossCheck(extracted(), { name: 'Angela', healthyStamina: 6 })).toEqual([]);
   });
 
   it('checks nothing it was given nothing for', () => {
@@ -395,7 +413,12 @@ describe('errata-aware OCR cross-check', () => {
     });
 
     expect(found).toHaveLength(1);
-    expect(found[0]).toMatchObject({ field: 'healthy.stamina', extracted: 6, known: 7, explained: true });
+    expect(found[0]).toMatchObject({
+      field: 'healthy.stamina',
+      extracted: 6,
+      known: 7,
+      explained: true,
+    });
   });
 
   it('accepts the current value on a reprinted card, silently', () => {
@@ -405,7 +428,7 @@ describe('errata-aware OCR cross-check', () => {
   });
 
   // The parse is what keeps this a real check rather than a blanket exemption.
-  it('still catches a genuine misread on an errata\'d character', () => {
+  it("still catches a genuine misread on an errata'd character", () => {
     const found = crossCheck(extracted(9, 6), {
       healthyStamina: 7,
       injuredStamina: 6,
@@ -441,7 +464,15 @@ describe('manual overrides', () => {
       size: 2,
       defense: { physical: 3, energy: 2, mystic: 2 },
       attacks: [
-        { name: 'Kick', type: 'physical' as const, range: 1, shape: 'range' as const, dice: 4, cost: 0, text: [] },
+        {
+          name: 'Kick',
+          type: 'physical' as const,
+          range: 1,
+          shape: 'range' as const,
+          dice: 4,
+          cost: 0,
+          text: [],
+        },
       ],
       superpowers: [],
     },
@@ -452,7 +483,15 @@ describe('manual overrides', () => {
       size: 2,
       defense: { physical: 3, energy: 2, mystic: 2 },
       attacks: [
-        { name: 'Kick', type: 'physical' as const, range: 1, shape: 'range' as const, dice: 4, cost: 0, text: [] },
+        {
+          name: 'Kick',
+          type: 'physical' as const,
+          range: 1,
+          shape: 'range' as const,
+          dice: 4,
+          cost: 0,
+          text: [],
+        },
       ],
       superpowers: [],
     },
@@ -496,10 +535,7 @@ describe('manual overrides', () => {
   it('reports an id that matched nothing instead of ignoring it', () => {
     // A typo'd id would otherwise look like a correction that silently never
     // happened — the worst failure mode for a hand-maintained file.
-    const { applied, unmatched } = applyOverrides(
-      [base()],
-      [{ id: 'toadd', reason: 'typo' }],
-    );
+    const { applied, unmatched } = applyOverrides([base()], [{ id: 'toadd', reason: 'typo' }]);
     expect(applied).toEqual([]);
     expect(unmatched).toEqual(['toadd']);
   });
@@ -515,9 +551,7 @@ describe('manual overrides', () => {
   });
 
   it('rejects unknown fields rather than silently dropping them', () => {
-    expect(
-      Override.safeParse({ id: 'toad', reason: 'x', stamina: 5 }).success,
-    ).toBe(false);
+    expect(Override.safeParse({ id: 'toad', reason: 'x', stamina: 5 }).success).toBe(false);
   });
 });
 
@@ -555,7 +589,15 @@ describe('OCR as a merge source', () => {
         size: 4,
         defense: { physical: 9, energy: 9, mystic: 9 },
         attacks: [
-          { name: 'OCR Attack', type: 'physical', range: 2, shape: 'range' as const, dice: 5, cost: 0, text: ['read off the card'] },
+          {
+            name: 'OCR Attack',
+            type: 'physical',
+            range: 2,
+            shape: 'range' as const,
+            dice: 5,
+            cost: 0,
+            text: ['read off the card'],
+          },
         ],
         superpowers: [{ name: 'OCR Power', type: 'innate', cost: 0, text: '' }],
       },
@@ -656,7 +698,6 @@ describe('parseCost', () => {
     expect(parseCost('x')).toBe('X');
   });
 });
-
 
 /*
  * Trigger icons are always dice results, so a prefix carrying anything else is

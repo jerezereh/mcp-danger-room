@@ -136,9 +136,7 @@ export function cerebroToDraft(raw: CerebroCharacter): CharacterDraft {
   };
 }
 
-export async function fetchCerebroCharacters(
-  base = CEREBRO_BASE,
-): Promise<CerebroCharacter[]> {
+export async function fetchCerebroCharacters(base = CEREBRO_BASE): Promise<CerebroCharacter[]> {
   const response = await fetch(`${base}/characters`);
   if (!response.ok) {
     throw new Error(`Cerebro /characters returned ${response.status}`);

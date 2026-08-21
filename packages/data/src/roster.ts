@@ -151,11 +151,7 @@ export function validateSquad(squad: Squad, roster: Roster, lookup: Lookup): Val
  * which are dead weight. Exponential in roster size, but rosters are ~10
  * characters, so 2^10 is nothing.
  */
-export function enumerateSquads(
-  roster: Roster,
-  lookup: Lookup,
-  threatLimit: number,
-): string[][] {
+export function enumerateSquads(roster: Roster, lookup: Lookup, threatLimit: number): string[][] {
   const characters = roster.characterIds
     .map(id => lookup.get(id))
     .filter((c): c is Character => c !== undefined);

@@ -238,9 +238,7 @@ describe('replay scrubbing', () => {
 
     expect(atStart.session.state.models[m1]?.activatedThisRound).toBe(false);
     expect(afterActivate.session.state.models[m1]?.activatedThisRound).toBe(true);
-    expect(atEnd.session.state.sequence).toBeGreaterThan(
-      afterActivate.session.state.sequence,
-    );
+    expect(atEnd.session.state.sequence).toBeGreaterThan(afterActivate.session.state.sequence);
   });
 
   it('clamps a negative index to the opening position', () => {
@@ -276,7 +274,9 @@ describe('untrusted saves', () => {
   it('reports a truncated profile instead of throwing', () => {
     // Regression: a model with `"profile": {}` reached `createModel` and threw
     // while reading `profile.healthy.size`, escaping past the Load button.
-    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0), profile: {} }]));
+    const loaded = load(
+      bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0), profile: {} }]),
+    );
 
     expect(loaded.ok).toBe(false);
     if (loaded.ok) return;
@@ -292,7 +292,9 @@ describe('untrusted saves', () => {
       healthy: { stamina: 5, size: 2, movement: 'M', defense: 3, attacks: [], superpowers: [] },
       injured: { stamina: 5, size: 2, movement: 'M', defense: {}, attacks: [], superpowers: [] },
     };
-    const loaded = load(bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0), profile }]));
+    const loaded = load(
+      bare([{ id: m1, characterId: 'a', owner: p1, pos: vec3(1, 1, 0), profile }]),
+    );
 
     expect(loaded.ok).toBe(false);
     if (loaded.ok) return;

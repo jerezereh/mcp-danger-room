@@ -71,7 +71,12 @@ const shield = (
   name,
   type: 'reactive',
   cost,
-  reaction: { timing: 'targeted', role: 'target', damageTypes, effect: { kind: 'addDefenseDice', count } },
+  reaction: {
+    timing: 'targeted',
+    role: 'target',
+    damageTypes,
+    effect: { kind: 'addDefenseDice', count },
+  },
 });
 
 /** An attack with everything but its damage type and pool left at defaults. */
@@ -126,7 +131,6 @@ function play(state: GameState, actions: readonly Action[]): GameState {
   }
   return result.state;
 }
-
 
 describe('determinism', () => {
   // This is the property the entire architecture rests on. If it ever fails,
@@ -563,10 +567,7 @@ describe('movement', () => {
   it('measures a curved path along its length, not end to end', () => {
     // A dogleg that is short in displacement but long in travel must still be
     // rejected — this is why paths are polylines rather than destinations.
-    rejects(
-      moving({ path: [vec3(12, 18, 0), vec3(12, 22, 0), vec3(13, 18, 0)] }),
-      'ILLEGAL_MOVE',
-    );
+    rejects(moving({ path: [vec3(12, 18, 0), vec3(12, 22, 0), vec3(13, 18, 0)] }), 'ILLEGAL_MOVE');
   });
 
   it('rejects ending a move overlapping another base', () => {
@@ -678,7 +679,15 @@ describe('attack', () => {
     const reach = (range: 2 | 5) =>
       applyAll(
         duel(
-          { profile: profile('alpha', { healthy: { attacks: [{ name: STRIKE, type: 'physical', range, shape: 'range', dice: 5, cost: 0 }] } }) },
+          {
+            profile: profile('alpha', {
+              healthy: {
+                attacks: [
+                  { name: STRIKE, type: 'physical', range, shape: 'range', dice: 5, cost: 0 },
+                ],
+              },
+            }),
+          },
           { pos: vec3(18, 18, 0) },
         ),
         [activate, attack()],
@@ -690,7 +699,15 @@ describe('attack', () => {
 
   it('rolls the attack pool the card prints', () => {
     const state = duel(
-      { profile: profile('alpha', { healthy: { attacks: [{ name: STRIKE, type: 'physical', range: 2, shape: 'range', dice: 8, cost: 0 }] } }) },
+      {
+        profile: profile('alpha', {
+          healthy: {
+            attacks: [
+              { name: STRIKE, type: 'physical', range: 2, shape: 'range', dice: 8, cost: 0 },
+            ],
+          },
+        }),
+      },
       {},
     );
     const result = applyAll(state, [activate, attack()]);
@@ -710,7 +727,9 @@ describe('attack', () => {
       healthy: { defense: { physical: 1, energy: 4, mystic: 7 } },
     });
     const mystic = profile('alpha', {
-      healthy: { attacks: [{ name: STRIKE, type: 'mystic', range: 2, shape: 'range', dice: 5, cost: 0 }] },
+      healthy: {
+        attacks: [{ name: STRIKE, type: 'mystic', range: 2, shape: 'range', dice: 5, cost: 0 }],
+      },
     });
 
     const result = applyAll(duel({ profile: mystic }, { profile: defender }), [activate, attack()]);
@@ -723,7 +742,9 @@ describe('attack', () => {
 
   it('rejects beam and area attacks rather than resolving them wrongly', () => {
     const beam = profile('alpha', {
-      healthy: { attacks: [{ name: STRIKE, type: 'energy', range: 3, shape: 'beam', dice: 5, cost: 0 }] },
+      healthy: {
+        attacks: [{ name: STRIKE, type: 'energy', range: 3, shape: 'beam', dice: 5, cost: 0 }],
+      },
     });
     const result = applyAll(duel({ profile: beam }, {}), [activate, attack()]);
 
@@ -828,9 +849,12 @@ describe('being Dazed', () => {
   it('reads the injured face once the card has flipped', () => {
     // Healthy Stamina 3, injured Stamina 9. Before the flip 3 damage Dazes it;
     // after the flip it takes 9 to do so again.
-    const state = duel({}, {
-      profile: profile('beta', { healthy: { stamina: 3 }, injured: { stamina: 9 } }),
-    });
+    const state = duel(
+      {},
+      {
+        profile: profile('beta', { healthy: { stamina: 3 }, injured: { stamina: 9 } }),
+      },
+    );
     const flipped = throughCleanup(suffer(state, 3));
     expect(flipped.models[m2]?.health).toBe('injured');
 
@@ -839,9 +863,12 @@ describe('being Dazed', () => {
   });
 
   it('is KO’d rather than Dazed a second time', () => {
-    const state = duel({}, {
-      profile: profile('beta', { healthy: { stamina: 2 }, injured: { stamina: 2 } }),
-    });
+    const state = duel(
+      {},
+      {
+        profile: profile('beta', { healthy: { stamina: 2 }, injured: { stamina: 2 } }),
+      },
+    );
     const flipped = throughCleanup(suffer(state, 2));
     expect(flipped.models[m2]?.health).toBe('injured');
 
@@ -859,13 +886,15 @@ describe('being Dazed', () => {
     const dazed = suffer(state, 3);
     expect(dazed.models[m2]?.dazed).toBe(true);
 
-    const result = applyAll(dazed, [
-      { type: 'ACTIVATE', player: p2, modelId: m2 },
-    ]);
+    const result = applyAll(dazed, [{ type: 'ACTIVATE', player: p2, modelId: m2 }]);
     expect(result.ok).toBe(false);
 
     const attacking = applyAction(
-      { ...dazed, prompt: { kind: 'chooseAction', player: p1, modelId: m1 }, stack: [{ kind: 'activation', modelId: m1, actionsRemaining: 2 }] },
+      {
+        ...dazed,
+        prompt: { kind: 'chooseAction', player: p1, modelId: m1 },
+        stack: [{ kind: 'activation', modelId: m1, actionsRemaining: 2 }],
+      },
       { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: STRIKE },
     );
     expect(attacking.ok).toBe(false);
@@ -1063,7 +1092,10 @@ describe('the attack sequence', () => {
 
   it('spends the attack’s Power cost at step 3', () => {
     const costly = duel(
-      { profile: profile('alpha', { healthy: { attacks: [attackProfile({ cost: 3 })] } }), power: 5 },
+      {
+        profile: profile('alpha', { healthy: { attacks: [attackProfile({ cost: 3 })] } }),
+        power: 5,
+      },
       {},
     );
     const result = applyAll(costly, [activate, strike]);
@@ -1145,9 +1177,12 @@ describe('the damage cap', () => {
   };
 
   it('ignores damage beyond the target’s remaining Stamina', () => {
-    const state = duel({}, {
-      profile: profile('beta', { healthy: { stamina: 4 }, injured: { stamina: 4 } }),
-    });
+    const state = duel(
+      {},
+      {
+        profile: profile('beta', { healthy: { stamina: 4 }, injured: { stamina: 4 } }),
+      },
+    );
 
     const hit = overkill(state, 99);
     // Dazed on 4 damage — its full Stamina — rather than KO'd by the excess.
@@ -1155,9 +1190,12 @@ describe('the damage cap', () => {
   });
 
   it('reports the damage actually suffered, not the damage offered', () => {
-    const state = duel({}, {
-      profile: profile('beta', { healthy: { stamina: 4 }, injured: { stamina: 4 } }),
-    });
+    const state = duel(
+      {},
+      {
+        profile: profile('beta', { healthy: { stamina: 4 }, injured: { stamina: 4 } }),
+      },
+    );
 
     const primed: GameState = {
       ...state,
@@ -1191,7 +1229,9 @@ describe('reaction windows', () => {
     over: { damageTypes?: readonly DamageType[]; power?: number; cost?: number } = {},
   ) => ({
     profile: profile('beta', {
-      healthy: { superpowers: [shield('VIBRANIUM ARMOR', 2, over.damageTypes ?? [], over.cost ?? 2)] },
+      healthy: {
+        superpowers: [shield('VIBRANIUM ARMOR', 2, over.damageTypes ?? [], over.cost ?? 2)],
+      },
     }),
     power: over.power ?? 3,
   });

@@ -65,7 +65,11 @@ export type Seat = 'player1' | 'player2' | 'spectator';
 export interface RoomSummary {
   readonly id: string;
   readonly name: string;
-  readonly players: readonly { readonly seat: Seat; readonly displayName: string; readonly ready: boolean }[];
+  readonly players: readonly {
+    readonly seat: Seat;
+    readonly displayName: string;
+    readonly ready: boolean;
+  }[];
   readonly spectators: number;
   readonly phase: 'lobby' | 'drafting' | 'playing' | 'finished';
   readonly createdAt: number;

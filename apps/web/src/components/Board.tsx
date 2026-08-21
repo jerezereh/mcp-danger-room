@@ -17,7 +17,14 @@
  */
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Grid, Html, Line, OrbitControls, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
+import {
+  Grid,
+  Html,
+  Line,
+  OrbitControls,
+  OrthographicCamera,
+  PerspectiveCamera,
+} from '@react-three/drei';
 import { useMemo } from 'react';
 import { Vector3 } from 'three';
 import {
@@ -143,7 +150,13 @@ function TableEdge() {
   const { width: w, depth: d } = TABLE_SIZE;
   return (
     <Line
-      points={[toScene(0, 0, 0.02), toScene(w, 0, 0.02), toScene(w, d, 0.02), toScene(0, d, 0.02), toScene(0, 0, 0.02)]}
+      points={[
+        toScene(0, 0, 0.02),
+        toScene(w, 0, 0.02),
+        toScene(w, d, 0.02),
+        toScene(0, d, 0.02),
+        toScene(0, 0, 0.02),
+      ]}
       color="#4a5570"
       lineWidth={1.5}
     />
@@ -196,7 +209,15 @@ function RangeRings({ model }: { model: Model }) {
  * answer shows up as a line that visibly passes through a wall while claiming
  * to be clear.
  */
-function SightLines({ from, models, terrain }: { from: Model; models: Model[]; terrain: readonly TerrainVolume[] }) {
+function SightLines({
+  from,
+  models,
+  terrain,
+}: {
+  from: Model;
+  models: Model[];
+  terrain: readonly TerrainVolume[];
+}) {
   return (
     <>
       {models
@@ -390,11 +411,7 @@ function Scene() {
         />
       )}
 
-      <OrbitControls
-        target={target}
-        enableRotate={cameraMode === 'perspective'}
-        makeDefault
-      />
+      <OrbitControls target={target} enableRotate={cameraMode === 'perspective'} makeDefault />
       <TopDownLock active={cameraMode === 'top-down'} />
 
       <ambientLight intensity={0.65} />

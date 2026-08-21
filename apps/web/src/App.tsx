@@ -132,7 +132,9 @@ function GameView() {
                       const los = hasLineOfSight(model, other, game.terrain);
                       return (
                         <li key={other.id} className="flex items-baseline justify-between gap-2">
-                          <span className="truncate text-slate-400">{characterName(other.characterId)}</span>
+                          <span className="truncate text-slate-400">
+                            {characterName(other.characterId)}
+                          </span>
                           <span className="flex shrink-0 items-center gap-1.5 tabular-nums">
                             <span className="text-slate-300">{inches(gap)}</span>
                             <span className="text-[#4ab3c7]">{band ? `R${band}` : '—'}</span>
@@ -175,15 +177,15 @@ function GameView() {
         )}
 
         <div className="flex items-center gap-1 border-t border-surface-border px-3 py-2 text-xs text-slate-500">
-          <button type="button" onClick={() => newGame()} className="transition hover:text-slate-300">
+          <button
+            type="button"
+            onClick={() => newGame()}
+            className="transition hover:text-slate-300"
+          >
             New
           </button>
           <span className="text-slate-700">·</span>
-          <button
-            type="button"
-            onClick={saveToStorage}
-            className="transition hover:text-slate-300"
-          >
+          <button type="button" onClick={saveToStorage} className="transition hover:text-slate-300">
             Save
           </button>
           <span className="text-slate-700">·</span>
@@ -230,9 +232,7 @@ export function App() {
         </nav>
       </header>
 
-      <main className="min-h-0 flex-1">
-        {view === 'roster' ? <RosterBuilder /> : <GameView />}
-      </main>
+      <main className="min-h-0 flex-1">{view === 'roster' ? <RosterBuilder /> : <GameView />}</main>
     </div>
   );
 }

@@ -185,9 +185,7 @@ export const Character = z.object({
    * corpus and are gone with it — no record carried either once the three
    * community sources replaced them.
    */
-  sources: z
-    .array(z.enum(['manual', 'cerebro', 'bsdata', 'jarvis', 'ocr']))
-    .default([]),
+  sources: z.array(z.enum(['manual', 'cerebro', 'bsdata', 'jarvis', 'ocr'])).default([]),
   /** Alternate modes, empty for all but the six transforming characters. */
   forms: z.array(Form).default([]),
   /** False until a human has checked it against the physical card. */

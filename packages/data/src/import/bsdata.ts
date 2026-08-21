@@ -237,7 +237,9 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
 
     const sides = profiles.filter(p => typeName(p) === 'Character');
     const attacks = profiles.filter(p => typeName(p) === 'Attacks');
-    const powers = profiles.filter(p => typeName(p).endsWith('Superpowers') || typeName(p) === 'Leadership');
+    const powers = profiles.filter(
+      p => typeName(p).endsWith('Superpowers') || typeName(p) === 'Leadership',
+    );
 
     const toAttack = (p: Node): Attack | null => {
       const c = characteristics(p);
@@ -247,7 +249,10 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
       const rawType = (c['Type'] ?? '').replace(/[{}]/g, '').trim().toLowerCase();
       const type = DAMAGE_TYPES[rawType];
       if (!type) {
-        warnings.push({ character: rawName, message: `unknown attack type "${c['Type']}" on ${attackName}` });
+        warnings.push({
+          character: rawName,
+          message: `unknown attack type "${c['Type']}" on ${attackName}`,
+        });
       }
 
       const parsedRange = parseRange(c['Range']);
@@ -353,7 +358,10 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
       .filter((n): n is string => Boolean(n) && n !== 'Character' && n !== 'Characters');
 
     if (sides.length === 1) {
-      warnings.push({ character: rawName, message: 'only one Character profile (no injured side)' });
+      warnings.push({
+        character: rawName,
+        message: 'only one Character profile (no injured side)',
+      });
     }
 
     drafts.push({

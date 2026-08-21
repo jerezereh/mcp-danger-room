@@ -38,7 +38,10 @@ export type CharacterReactions = Readonly<Record<string, ReactionProfile>>;
  *
  * `damageTypes` empty means the printed trigger has no type gate.
  */
-const defensiveShield = (count: number, damageTypes: ReactionProfile['damageTypes'] = []): ReactionProfile => ({
+const defensiveShield = (
+  count: number,
+  damageTypes: ReactionProfile['damageTypes'] = [],
+): ReactionProfile => ({
   timing: 'targeted',
   role: 'target',
   damageTypes,

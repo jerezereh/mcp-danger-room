@@ -272,7 +272,10 @@ export function load(saved: SavedGame): LoadResult {
   }
 
   if (!saved.setup || !Array.isArray(saved.actions)) {
-    return { ok: false, error: { code: 'MALFORMED', message: 'Save is missing setup or actions.' } };
+    return {
+      ok: false,
+      error: { code: 'MALFORMED', message: 'Save is missing setup or actions.' },
+    };
   }
 
   // `startSession` and `applyAction` both trust their input, so the shape has
