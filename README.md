@@ -13,11 +13,14 @@ and online play in the browser.
 
 ## Requirements
 
-Node 20.19+, which is what CI runs. The floor was 20.11 until ESLint's
-`eslint-visitor-keys` started requiring `^20.19.0 || ^22.13.0 || >=24` —
-installing below that warns `EBADENGINE` and then works, which is exactly the
-kind of floor nobody notices has moved. The repo still builds on Node 18, with
-more warnings. Use [nvm](https://github.com/nvm-sh/nvm) or similar.
+Node 22.13+, which is what CI runs. The floor moves when a dependency's
+`engines` field says it must — 20.11 → 20.19 for ESLint, then 20.19 → 22.13 for
+`@colyseus/core`, `vite` and ESLint together. Installing below it warns
+`EBADENGINE` and then works anyway, which is exactly the kind of floor nobody
+notices has moved, so read those warnings after an upgrade:
+`npm ci 2>&1 | grep EBADENGINE` should print nothing. Node 20 reached end of
+life in April 2026 regardless. Use [nvm](https://github.com/nvm-sh/nvm) or
+similar.
 
 ## Getting started
 

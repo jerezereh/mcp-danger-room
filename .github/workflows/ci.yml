@@ -5,14 +5,25 @@
 # 43 files disagreed with Prettier, both for long enough that neither was
 # noticed. This is what stops that recurring.
 #
-# Node 20.19 is the floor `package.json` declares. It is worth pinning to the
-# floor rather than to "latest 20": the point is to prove the declared minimum
+# Node 22.13 is the floor `package.json` declares. It is worth pinning to the
+# floor rather than to "latest 22": the point is to prove the declared minimum
 # still works, since development happens on whatever the contributor has.
 #
-# 20.19 rather than 20.11 because ESLint's `eslint-visitor-keys` requires
-# `^20.19.0 || ^22.13.0 || >=24`. On 20.11 `npm ci` warned EBADENGINE and
-# everything passed anyway, which is the worst of both: a floor CI proves and
-# nothing actually supports.
+# The floor has moved twice, and both times a dependency's `engines` field moved
+# it rather than anything this code does:
+#
+#   20.11 → 20.19   eslint-visitor-keys wants ^20.19.0 || ^22.13.0 || >=24
+#   20.19 → 22.13   @colyseus/core wants >= 22.x, vite and @vitejs/plugin-react
+#                   want ^20.19.0 || >=22.12.0, and eslint-visitor-keys pins the
+#                   22 line to .13 — so 22.13 is the lowest that satisfies all
+#                   three, not a round number picked for looks
+#
+# Both times `npm ci` warned EBADENGINE and then passed anyway, which is the
+# worst of both: a floor CI proves and nothing actually supports.
+#
+# **Read the EBADENGINE warnings after a dependency bump.** They are the only
+# signal, they scroll past in a wall of install output, and they have now been
+# missed twice. `npm ci 2>&1 | grep EBADENGINE` should print nothing.
 name: CI
 
 on:
@@ -39,7 +50,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.19'
+          node-version: '22.13'
           cache: npm
 
       - run: npm ci
