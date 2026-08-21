@@ -39,7 +39,6 @@ import {
   type ReactionEffect,
   type ReactionTiming,
 } from './profile.js';
-import { nextInt } from './rng.js';
 import {
   activatableModels,
   getModel,

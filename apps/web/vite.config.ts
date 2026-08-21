@@ -1,4 +1,5 @@
 import { createReadStream, existsSync, statSync } from 'node:fs';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -15,7 +16,7 @@ const SCANS = resolve(__dirname, '../../assets/card-scans');
  * 404 that the card UI already handles.
  */
 function cardScans(): Plugin {
-  const handler = (req: any, res: any, next: () => void) => {
+  const handler = (req: IncomingMessage, res: ServerResponse, next: () => void) => {
     const url = (req.url ?? '').split('?')[0] as string;
     if (!url.startsWith('/cards/')) return next();
 

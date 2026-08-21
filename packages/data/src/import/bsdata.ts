@@ -343,7 +343,12 @@ export function parseBsdata(catalogueXml: string, gameSystemXml: string): Bsdata
 
     const threat = int(characteristics(sides[0] ?? {})['Threat']);
     const affiliations = [...walk(entry)]
-      .filter(n => '@targetId' in n && 'categoryLink' !== undefined)
+      // TODO(#33): this should be restricted to categoryLink nodes. It used to
+      // read `&& 'categoryLink' !== undefined`, comparing a string literal to
+      // undefined — always true, so the clause did nothing and every node with
+      // a targetId reaches the lookup. Dropped rather than guessed at, because
+      // it changes what the import produces.
+      .filter(n => '@targetId' in n)
       .map(n => categories.get(attr(n, 'targetId') ?? ''))
       .filter((n): n is string => Boolean(n) && n !== 'Character' && n !== 'Characters');
 

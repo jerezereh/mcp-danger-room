@@ -16,7 +16,6 @@ import type { RngState } from '../rng.js';
 import {
   boostFrom,
   rollPool,
-  MAX_BOOST,
   REROLL_COST,
   type Answer,
   type AttackContext,
