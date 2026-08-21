@@ -498,10 +498,18 @@ Cockatrice's survival strategy is deliberate: ship the engine, ship no card data
 let users import it. Worth settling before a distribution model is built on the
 opposite assumption.
 
-**Node 18 no longer builds this repo.** _Settled._ The floor is 20.19 (#34) and
-CI pins it. Vitest 4 bundles rolldown, which needs `node:util.styleText` from
-Node 20.12 — on 18 it fails at import with a `SyntaxError` naming neither
-vitest nor the Node version.
+**The Node floor is 22.13, and it moves without asking.** _Settled, for now._
+It has moved twice in two PRs, both times because a dependency's `engines`
+field said so rather than because this code needed anything: 20.11 → 20.19 for
+ESLint, then 20.19 → 22.13 for `@colyseus/core` (`>= 22.x`), `vite` and
+`@vitejs/plugin-react` (`>=22.12.0`) and ESLint (`^22.13.0`) together. Both
+times `npm ci` warned `EBADENGINE` and passed anyway, and both times the
+warning was missed. `npm ci 2>&1 | grep EBADENGINE` should print nothing;
+run it after a dependency bump.
+
+Related: vitest 4 bundles rolldown, which needs `node:util.styleText` from Node
+20.12. Below that it fails at import with a `SyntaxError` naming neither vitest
+nor the Node version.
 
 **The Colyseus client and server are not a matched pair.** The server is on
 0.17; `colyseus.js` stops at 0.16.22, which pairs with a 0.16 server — and
