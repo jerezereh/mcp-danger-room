@@ -54,8 +54,18 @@ import type { GameState } from './state.js';
  * board, with every action still legal and nothing to complain about.
  * `dice.test.ts` pins the seed-to-faces mapping so the next change to the die
  * fails there rather than here.
+ *
+ * v4: the measured distances replaced the invented ones (#10). Range bands,
+ * movement tools and base radii all moved, and every one of them decides
+ * whether an action is legal. A v3 MOVE of 4.5" was rejected when the Medium
+ * tool was 4" and is accepted now that it is 5"; a v3 ATTACK at Range 3 that
+ * could not reach 5.5" reaches it now. Both directions are worse than a
+ * refusal: the rejected ones diverge at an arbitrary action, and the newly
+ * legal ones replay clean into a game that could not have been played.
+ * `constants.test.ts` pins the distances so the next change to them fails
+ * there rather than here.
  */
-export const SAVE_FORMAT_VERSION = 3;
+export const SAVE_FORMAT_VERSION = 4;
 
 export interface SavedGame {
   readonly formatVersion: number;
