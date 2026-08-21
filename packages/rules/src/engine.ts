@@ -1276,8 +1276,12 @@ function mustOwner(state: GameState, id: ModelId) {
 /**
  * Is this point on the 36"x36" table?
  *
- * TODO(verify): treats the model's centre, not its base. The rulebook's answer
- * to "may a base overhang the edge?" needs checking.
+ * TODO(verify): treats the model's centre, not its base. The table size is
+ * settled (#10) and every other distance in the game is measured from the base
+ * edge, which makes centre-only measurement here the odd one out — but the
+ * question this turns on is whether a base may overhang the edge at all, and
+ * that is still unanswered. Until it is, widening this would trade one guess
+ * for another.
  */
 function onTable(p: Vec3): boolean {
   return p.x >= 0 && p.x <= TABLE_SIZE.width && p.y >= 0 && p.y <= TABLE_SIZE.depth;

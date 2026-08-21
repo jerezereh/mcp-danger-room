@@ -116,10 +116,11 @@ function Table({ onPick }: { onPick: (point: { x: number; z: number }) => void }
 /**
  * How far the activating model may move, drawn where it will be measured from.
  *
- * The engine measures a move as path length from the model's *current*
- * position, so this is a plain radius around the centre rather than around the
- * base edge — unlike the range rings, which are edge-to-edge because that is
- * how range works. The two are drawn differently on purpose.
+ * Drawn around the centre rather than around the base edge, unlike the range
+ * rings. That is not an inconsistency: a move is measured edge-to-edge too,
+ * but both ends of that measurement are the same base, so the centre travels
+ * the tool's full length. Range measures between two different bases, and both
+ * of them come off the distance.
  */
 function MoveRing({ model, template }: { model: Model; template: 'S' | 'M' | 'L' }) {
   const radius = MOVEMENT_INCHES[template];

@@ -28,7 +28,7 @@ import {
   type MovementTemplate,
 } from '@danger-room/rules';
 
-import { characterName } from '../lib/format.js';
+import { characterName, inches } from '../lib/format.js';
 import { selectGame, useStore, type BoardMode } from '../store.js';
 
 const TEMPLATES: readonly MovementTemplate[] = ['S', 'M', 'L'];
@@ -173,9 +173,9 @@ function ChooseAction({ player, modelId }: { player: string; modelId: ModelId })
                   : { kind: 'move', template },
               )
             }
-            title={`${MOVEMENT_INCHES[template]}" — then click the board`}
+            title={`${inches(MOVEMENT_INCHES[template])} — then click the board`}
           >
-            {template} · {MOVEMENT_INCHES[template]}"
+            {template} · {inches(MOVEMENT_INCHES[template])}
           </Button>
         ))}
       </Section>
