@@ -372,7 +372,7 @@ wrong on purpose.
 - Games start from a fixed sparring position rather than from drafted squads.
   The server's copy of that position still plays training dummies, because
   `apps/server` does not depend on `@danger-room/data`.
-- Several rules constants are still unverified. See §11.
+- Size heights are still estimated, and no source publishes them. See §11.
 - No client/server wiring yet: the protocol and room exist, the client does not
   connect. Local play only.
 - No AI, no lobby UI, no accounts.
@@ -392,10 +392,10 @@ that matters most.
 investigating whether a community dataset exists to import rather than
 hand-typing ~200 characters. Everything downstream is gated on this.
 
-**3 — Verify the rules constants.** Every value in `constants.ts` and the die
-face distribution in `dice.ts` is a placeholder. They are isolated in two files
-specifically so this is an afternoon rather than an excavation. Until this is
-done the app reports confident wrong numbers.
+**3 — Verify the rules constants.** *Done, bar size heights.* Every value in
+`constants.ts` and the die face distribution in `dice.ts` began as a
+placeholder; isolating them in two files kept this an afternoon rather than an
+excavation. See §11 for what is left.
 
 **4 — Wire card data into the engine.** Replace the hardcoded stats. This is what
 makes an attack mean something.
@@ -414,18 +414,25 @@ over a URL.
 
 ## 11. Risks and open questions
 
-**Rules constants are partly invented.** Round count, actions per activation,
-the Power Phase grant, the movement-template rule, and the die faces are now
-verified against the rulebook. Range bands, movement distances, base radii and
-size heights remain placeholders marked `TODO(verify)`. The geometry is
-correct; several of the numbers it operates on are not.
+**Rules constants are measured, with one exception.** Round count, actions per
+activation, the Power Phase grant, the movement-template rule, the die faces,
+the board size, the range bands, the movement tools and the base categories are
+all verified. **Size heights are not, and cannot be from the sources we have:**
+height is a per-character value that neither the rulebook nor
+jarvis-protocol.com publishes, so `SIZE_HEIGHT_INCHES` estimates one inch per
+Size band and is the last invented distance in the engine. It feeds line of
+sight only.
+
+Two smaller gaps remain. `onTable()` measures the model's centre rather than its
+base, because whether a base may overhang the table edge is still unanswered.
+And nine characters in the corpus have no base size from Jarvis and take the
+schema's 40mm default, which is a guess wearing a number.
 
 The die is worth a note: it has **six** symbols, not five. Blank and Failure
 both do nothing, but a Blank can be rerolled and a Failure cannot, and `{FAIL}`
 is a symbol effects trigger on in its own right. The engine had one face doing
 both jobs, which silently made every Failure rerollable and made 126 lines of
-card text unrepresentable. Nothing the app reports
-about probability or legality should be trusted until §10.3 is done.
+card text unrepresentable.
 
 **Line of sight is approximated.** `hasLineOfSight` samples the trace rather than
 solving the volume, and does not implement MCP's terrain-size or cover rules. It

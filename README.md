@@ -6,8 +6,8 @@ and online play in the browser.
 > **Status: playable, unfinished.** Two people can sit at one keyboard and play
 > a game: activate, move, attack, react, and reach the end of six rounds
 > against real card data. Nobody wins yet — objectives and Victory Points are
-> not implemented — and most superpowers, conditions and several rules
-> constants are still outstanding. See
+> not implemented — and most superpowers and conditions are still outstanding.
+> The distances it measures with are the real ones. See
 > [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Requirements

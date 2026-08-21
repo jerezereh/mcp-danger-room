@@ -418,7 +418,38 @@ describe('save format versioning', () => {
     expect(loaded.error.code).toBe('UNSUPPORTED_VERSION');
   });
 
-  it('is past v2, because the die changed under it', () => {
-    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(2);
+  it('refuses a v3 save, whose distances meant something else', () => {
+    // The same quiet case as v2, one layer along. v3 saves are structurally
+    // identical to v4 ones, but the Medium tool was 4" and is now 5", so this
+    // 4.5" move was illegal when it was saved and is legal now. Replaying it
+    // succeeds and hands back a game that could not have been played. Only the
+    // version distinguishes them.
+    const v3 = {
+      formatVersion: 3,
+      setup: {
+        seed: 1,
+        players: [
+          { id: p1, displayName: 'One' },
+          { id: p2, displayName: 'Two' },
+        ],
+        models: [
+          { id: m1, characterId: 'a', owner: p1, pos: vec3(12, 18, 0) },
+          { id: m2, characterId: 'b', owner: p2, pos: vec3(30, 30, 0) },
+        ],
+      },
+      actions: [
+        { type: 'ACTIVATE', player: p1, modelId: m1 },
+        { type: 'MOVE', player: p1, modelId: m1, template: 'M', path: [vec3(12, 22.5, 0)] },
+      ],
+    } as unknown as SavedGame;
+
+    const loaded = load(v3);
+    expect(loaded.ok).toBe(false);
+    if (loaded.ok) return;
+    expect(loaded.error.code).toBe('UNSUPPORTED_VERSION');
+  });
+
+  it('is past v3, because the distances changed under it', () => {
+    expect(SAVE_FORMAT_VERSION).toBeGreaterThan(3);
   });
 });
