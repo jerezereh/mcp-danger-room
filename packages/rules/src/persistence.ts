@@ -72,6 +72,11 @@ import type { GameState } from './state.js';
  * is the loud direction of the failure rather than the quiet one, but it still
  * reports as DIVERGED at an arbitrary action, which reads as a corrupt save
  * rather than an old one.
+ *
+ * Guarded by `versioning.test.ts`, which replays a fixed script on a fixed seed
+ * and pins the result next to this number. Anything that turns the same intents
+ * into a different outcome fails it — which is the trigger described at the top
+ * of this comment, finally wired to something that goes off.
  */
 export const SAVE_FORMAT_VERSION = 5;
 

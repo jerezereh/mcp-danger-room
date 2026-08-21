@@ -198,6 +198,50 @@ effects.
 Two tests guard this, and they should be treated as load-bearing rather than
 routine.
 
+### The version constants, and what guards them
+
+Determinism is only useful while two builds agree on what "the same game" means.
+Three constants police that, on three transports:
+
+| constant              | guards                                              | lives in                            |
+| --------------------- | --------------------------------------------------- | ----------------------------------- |
+| `SAVE_FORMAT_VERSION` | intent → outcome: the rules, the constants, the die | `packages/rules/src/persistence.ts` |
+| `SCHEMA_VERSION`      | the shape of `GameState`                            | `packages/rules/src/state.ts`       |
+| `PROTOCOL_VERSION`    | everything that crosses the wire                    | `packages/protocol/src/index.ts`    |
+
+All three have been missed. `SAVE_FORMAT_VERSION` twice, until its comment was
+rewritten to state the trigger properly. `PROTOCOL_VERSION` for the die's sixth
+face and again for the corrected distances — both of which bumped the save
+format and stopped there — and a third time until a reviewer caught it.
+
+The misses share a shape: the constant guards something the author was not
+thinking about while changing it. So `versioning.test.ts` (one in `rules`, one
+in `protocol`) pins the _surface_ each constant guards and puts the constant in
+the same assertion:
+
+- A fixed script replayed on a fixed seed, with the resulting damage, Power,
+  positions, RNG position and event counts pinned beside
+  `SAVE_FORMAT_VERSION`. Any change to a rule, a distance or a die face fails
+  it.
+- One fully-populated **sample per type**, typed as that type: every `Frame`
+  and `Prompt` variant, `Model`, `PlayerState`, the profile types, and
+  `GameState` itself. The compiler checks a sample in three directions at once
+  — an added required field is a missing property, a renamed or removed one is
+  an unknown property, a retyped one is not assignable — so most breakage is a
+  _compile_ error before it is a test failure. A runtime fingerprint of each
+  sample's key set then turns it into a version question.
+- The wire's messages, actions and events the same way, pinned beside all
+  **three** versions at once, because a schema change and a rules change are
+  both protocol changes and that is precisely the coupling that kept being
+  forgotten.
+
+The one thing samples do not notice is a field added as _optional_. That is
+deliberate: an optional addition is also the one change an old reader survives.
+
+These tests are meant to fail. A failure is the question "did you mean to change
+this, and did you bump the number?", and the fix is to update the expectation in
+the same edit as the bump.
+
 ---
 
 ## 6. Package layout and the dependency rule
