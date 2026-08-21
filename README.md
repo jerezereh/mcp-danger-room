@@ -4,9 +4,10 @@ A digital client for Marvel: Crisis Protocol — roster building, local playtest
 and online play in the browser.
 
 > **Status: playable, unfinished.** Two people can sit at one keyboard and play
-> a game: activate, move, attack, react, and reach the end of six rounds
-> against real card data. Nobody wins yet — objectives and Victory Points are
-> not implemented — and most superpowers and conditions are still outstanding.
+> a game: activate, move, attack, react, and reach a result against real card
+> data. A game is won by wiping out the other squad; six rounds with both sides
+> alive is a draw, because objectives and Victory Points are not implemented
+> yet. Most superpowers and conditions are still outstanding.
 > The distances it measures with are the real ones. See
 > [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 

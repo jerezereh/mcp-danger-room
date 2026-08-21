@@ -360,7 +360,9 @@ wrong on purpose.
   a large printed family — need a third model and a range band the structured
   trigger does not carry.
 - Active superpowers, tactic cards, conditions, objectives, and VP are types
-  without implementations. The game ends with no winner.
+  without implementations. A game can therefore only be _won_ by elimination —
+  Victory Points are the tiebreak at the end of round six and nothing scores
+  them, so every game that goes the distance is drawn (#7).
 - The Power Phase grants its 1 Power and nothing else: the player and
   non-player effects that follow it are unimplemented, though 106 superpowers
   reference the phase. The 579 lines of attack text that grant Power are not

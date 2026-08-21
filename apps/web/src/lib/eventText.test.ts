@@ -5,9 +5,10 @@ import {
   type GameEvent,
   type GameState,
   type ModelId,
+  type PlayerId,
 } from '@danger-room/rules';
 
-import { describeEvent } from './eventText.js';
+import { describeEvent, describeOutcome } from './eventText.js';
 import { playableSparringSpec } from './gameSetup.js';
 
 const position = (): GameState => createGame(playableSparringSpec(11));
@@ -102,5 +103,36 @@ describe('describeEvent', () => {
     }
 
     expect(seen.size).toBeGreaterThan(3);
+  });
+});
+
+describe('describeOutcome', () => {
+  const finished = (result: GameState['result']): GameState => ({
+    ...position(),
+    phase: 'finished',
+    result,
+  });
+
+  it('names the winner and says how they won', () => {
+    const state = finished({ winner: 'p1' as PlayerId, reason: 'wipeout' });
+    expect(describeOutcome(state)).toBe(
+      'Player One wins — nothing left standing on the other side',
+    );
+  });
+
+  it('distinguishes a win on points from a win by elimination', () => {
+    const state = finished({ winner: 'p2' as PlayerId, reason: 'rounds' });
+    expect(describeOutcome(state)).toBe('Player Two wins on Victory Points');
+  });
+
+  it('says why a draw was a draw', () => {
+    expect(describeOutcome(finished({ winner: null, reason: 'rounds' }))).toContain('drawn');
+    expect(describeOutcome(finished({ winner: null, reason: 'wipeout' }))).toBe(
+      'Both squads are wiped out — the game is drawn',
+    );
+  });
+
+  it('does not claim a result for a game still in progress', () => {
+    expect(describeOutcome(position())).toBe('The game is still going');
   });
 });

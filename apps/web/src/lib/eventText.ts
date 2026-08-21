@@ -17,7 +17,7 @@
  * animate either.
  */
 
-import type { GameEvent, GameState } from '@danger-room/rules';
+import { MAX_ROUNDS, type GameEvent, type GameState } from '@danger-room/rules';
 
 import { labelOf, playerOf } from './names.js';
 
@@ -67,6 +67,29 @@ export function describeEvent(event: GameEvent, state: GameState): string {
     case 'OBJECTIVE_SCORED':
       return `${player(event.player)} scores ${event.points} VP.`;
     case 'GAME_ENDED':
-      return event.winner ? `${player(event.winner)} wins.` : 'The game ends in a draw.';
+      return `${describeOutcome(state)}.`;
   }
+}
+
+/**
+ * How a finished game finished, in words.
+ *
+ * Reads `state.result` rather than the `GAME_ENDED` event, so the same sentence
+ * serves the log line and the header — and so a client that has scrolled past
+ * the event, or never had it, can still say who won.
+ */
+export function describeOutcome(state: GameState): string {
+  const result = state.result;
+  if (!result) return 'The game is still going';
+
+  const winner = result.winner;
+  if (winner === null) {
+    return result.reason === 'wipeout'
+      ? 'Both squads are wiped out — the game is drawn'
+      : `${MAX_ROUNDS} rounds elapse with the scores level — the game is drawn`;
+  }
+
+  return result.reason === 'wipeout'
+    ? `${playerOf(state, winner)} wins — nothing left standing on the other side`
+    : `${playerOf(state, winner)} wins on Victory Points`;
 }

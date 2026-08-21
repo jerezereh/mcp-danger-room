@@ -113,6 +113,30 @@ export interface ObjectiveMarker {
 export type Phase = 'setup' | 'power' | 'activation' | 'cleanup' | 'finished';
 
 /**
+ * Why a game stopped.
+ *
+ * `'rounds'` is the ordinary ending — six rounds elapsed. `'wipeout'` is a
+ * player having no characters left standing, which decides the game whatever
+ * the round counter says: a squad with nothing on the table cannot activate,
+ * cannot score, and cannot come back.
+ */
+export type GameEndReason = 'rounds' | 'wipeout';
+
+/**
+ * How a finished game finished.
+ *
+ * Kept on the state rather than left to be recovered from the event log, so
+ * that `phase: 'finished'` says what happened rather than only that something
+ * did. A save loaded cold, a spectator arriving late and a client that has
+ * dropped its log all need the answer, and none of them have the events.
+ */
+export interface GameResult {
+  /** The winner, or `null` for a draw. */
+  readonly winner: PlayerId | null;
+  readonly reason: GameEndReason;
+}
+
+/**
  * A suspended step of resolution, represented as *data* rather than a closure.
  *
  * This is the load-bearing decision in the whole engine. MCP is full of
@@ -288,6 +312,8 @@ export interface GameState {
   readonly rng: RngState;
 
   readonly phase: Phase;
+  /** Non-null exactly when `phase` is 'finished'. */
+  readonly result: GameResult | null;
   readonly round: number;
   readonly turnOrder: readonly PlayerId[];
   readonly activePlayer: PlayerId | null;
@@ -323,7 +349,13 @@ export interface GameState {
   readonly sequence: number;
 }
 
-export const SCHEMA_VERSION = 1;
+/**
+ * Bumped on breaking shape changes to `GameState`.
+ *
+ * v2: `result` — a finished game records who won and why, instead of leaving
+ * both to be reconstructed from the event log.
+ */
+export const SCHEMA_VERSION = 2;
 
 export function getModel(state: GameState, id: ModelId): Model | undefined {
   return state.models[id];
@@ -351,6 +383,19 @@ export function getStats(state: GameState, model: Model): StatProfile | undefine
  *
  * "activate one character that does not have an Activated or Dazed token."
  */
+/**
+ * Characters this player still has on the table.
+ *
+ * KO'd models are gone for good. Dazed ones count: they are out for the round,
+ * but they clear their damage at Cleanup, flip to Injured, and fight on — so a
+ * player whose whole squad is Dazed has not lost.
+ */
+export function standingModels(state: GameState, player: PlayerId): ModelId[] {
+  return Object.values(state.models)
+    .filter(m => m.owner === player && m.health !== 'ko')
+    .map(m => m.id);
+}
+
 export function activatableModels(state: GameState, player: PlayerId): ModelId[] {
   return Object.values(state.models)
     .filter(m => m.owner === player && !m.activatedThisRound && !m.dazed && m.health !== 'ko')

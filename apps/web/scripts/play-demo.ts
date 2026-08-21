@@ -31,6 +31,7 @@ import {
 } from '@danger-room/rules';
 
 import { autoPlayStep, describeInaction } from '../src/lib/autoplay.js';
+import { describeOutcome } from '../src/lib/eventText.js';
 import { labelOf, nameOf, playerOf } from '../src/lib/names.js';
 import { playableSparringSpec } from '../src/lib/gameSetup.js';
 
@@ -152,8 +153,10 @@ function render(state: GameState, event: GameEvent): string {
       return `      ${model(event.modelId)} loses ${event.condition}`;
     case 'OBJECTIVE_SCORED':
       return `  ${playerOf(state, event.player)} scores ${event.points} VP`;
-    case 'GAME_ENDED':
-      return `\n═══ Game over ${'═'.repeat(45)}`;
+    case 'GAME_ENDED': {
+      const banner = `\n═══ Game over ${'═'.repeat(45)}`;
+      return `${banner}\n\n  ${describeOutcome(state)}.`;
+    }
   }
 }
 

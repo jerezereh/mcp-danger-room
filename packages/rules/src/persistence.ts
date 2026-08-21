@@ -64,8 +64,16 @@ import type { GameState } from './state.js';
  * legal ones replay clean into a game that could not have been played.
  * `constants.test.ts` pins the distances so the next change to them fails
  * there rather than here.
+ *
+ * v5: a game now ends when a player has no characters left standing, instead
+ * of running all six rounds regardless (#7). A v4 log could contain actions
+ * taken after a wipeout — perfectly legal at the time, since nothing was
+ * watching — and replaying one now hits a finished game and is rejected. This
+ * is the loud direction of the failure rather than the quiet one, but it still
+ * reports as DIVERGED at an arbitrary action, which reads as a corrupt save
+ * rather than an old one.
  */
-export const SAVE_FORMAT_VERSION = 4;
+export const SAVE_FORMAT_VERSION = 5;
 
 export interface SavedGame {
   readonly formatVersion: number;
