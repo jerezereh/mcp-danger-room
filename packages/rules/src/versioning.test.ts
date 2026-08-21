@@ -2,78 +2,85 @@ import { describe, expect, it } from 'vitest';
 
 import type { Action } from './actions.js';
 import { applyAll } from './engine.js';
-import { vec3 } from './geometry/vec.js';
-import type { ModelId, PlayerId } from './ids.js';
-import { SAVE_FORMAT_VERSION } from './persistence.js';
-import { createSparringGame } from './setup.js';
 import type { GameEvent } from './events.js';
-import { SCHEMA_VERSION, type GameState, type Model, type PlayerState } from './state.js';
+import type { TerrainVolume } from './geometry/los.js';
+import { vec3, type Vec3 } from './geometry/vec.js';
+import type { CardId, CharacterId, ModelId, PlayerId } from './ids.js';
+import { SAVE_FORMAT_VERSION } from './persistence.js';
+import type {
+  AttackProfile,
+  CharacterProfile,
+  ReactionEffect,
+  ReactionProfile,
+  StatProfile,
+  SuperpowerProfile,
+} from './profile.js';
+import type { RngState } from './rng.js';
+import { createSparringGame } from './setup.js';
+import {
+  SCHEMA_VERSION,
+  type Condition,
+  type Frame,
+  type GameResult,
+  type GameState,
+  type Model,
+  type ObjectiveMarker,
+  type PlayerState,
+  type Prompt,
+} from './state.js';
 
 /**
- * Guards for the version constants.
+ * Guards for `SAVE_FORMAT_VERSION` and `SCHEMA_VERSION`.
  *
- * Three constants in this repo answer "is your build compatible with mine?",
- * and all three have been missed at least once:
+ * Three constants answer "is your build compatible with mine?", and all three
+ * have been missed. `SAVE_FORMAT_VERSION` twice, until its comment was
+ * rewritten to state the trigger properly. `PROTOCOL_VERSION` three times — see
+ * `packages/protocol/src/versioning.test.ts`, which guards it.
  *
- *   `SAVE_FORMAT_VERSION`  a save is a seed and a list of intents, so anything
- *                          that changes intent → outcome changes the format.
- *                          Missed twice before its comment was rewritten to say
- *                          so, and its own text records that.
- *   `SCHEMA_VERSION`       the shape of `GameState`.
- *   `PROTOCOL_VERSION`     what crosses the wire. Missed for the die's sixth
- *                          face and again for the corrected distances; caught
- *                          in review the third time.
+ * Every miss had the same shape: the constant guards something the author was
+ * not thinking about while changing it. No test can know that a rule changed,
+ * but a test *can* pin the surface each constant guards and put the constant in
+ * the same assertion, so the number is on screen the moment the surface moves.
  *
- * The pattern in every miss was the same: the constant is guarding something
- * the author was not thinking about while changing it. No test can know that a
- * rule changed — but a test *can* pin the surface each constant guards, and put
- * the constant in the same assertion, so the number is on screen at the moment
- * the surface moves.
- *
- * **These tests are meant to fail.** A failure here is not a bug report; it is
- * the question "did you mean to change this, and if so did you bump the
- * number?". Update the expected value in the same edit as the bump.
+ * **These tests are meant to fail.** A failure is not a bug report; it is the
+ * question "did you mean to change this, and did you bump the number?". Update
+ * the expected value in the same edit as the bump.
  */
 
 const p1 = 'p1' as PlayerId;
 const p2 = 'p2' as PlayerId;
-const [m1, m2, m3, m4] = ['m1', 'm2', 'm3', 'm4'] as ModelId[];
+const m1 = 'm1' as ModelId;
+const m2 = 'm2' as ModelId;
+const m3 = 'm3' as ModelId;
+const m4 = 'm4' as ModelId;
+
+// ---------------------------------------------------------------------------
+// SAVE_FORMAT_VERSION — the outcome a replay has to reproduce
+// ---------------------------------------------------------------------------
 
 /**
  * A fixed script on a fixed seed.
  *
- * Chosen to touch everything a save's replay depends on: two attacks (the die,
- * the defense roll, damage, and the Power a hit generates), a Medium move of
- * 4.5" (illegal when that tool was 4"), attacks at 2.43" edge-to-edge (illegal
- * if Range 2 shrinks below that), and enough turns to reach a second round.
+ * Chosen to touch everything a replay depends on: two attacks (the die, the
+ * defense roll, damage, and the Power a hit generates), a Medium move of 4.5"
+ * that was illegal when that tool was 4", attacks at 2.43" edge-to-edge that
+ * become illegal if Range 2 shrinks below it, and enough turns to reach a
+ * second round.
  */
 const SCRIPT: readonly Action[] = [
-  { type: 'ACTIVATE', player: p1, modelId: m1 as ModelId },
-  {
-    type: 'ATTACK',
-    player: p1,
-    attackerId: m1 as ModelId,
-    targetId: m2 as ModelId,
-    attackName: 'STRIKE',
-  },
+  { type: 'ACTIVATE', player: p1, modelId: m1 },
+  { type: 'ATTACK', player: p1, attackerId: m1, targetId: m2, attackName: 'STRIKE' },
   { type: 'END_ACTIVATION', player: p1 },
-  { type: 'ACTIVATE', player: p2, modelId: m2 as ModelId },
-  {
-    type: 'ATTACK',
-    player: p2,
-    attackerId: m2 as ModelId,
-    targetId: m1 as ModelId,
-    attackName: 'STRIKE',
-  },
+  { type: 'ACTIVATE', player: p2, modelId: m2 },
+  { type: 'ATTACK', player: p2, attackerId: m2, targetId: m1, attackName: 'STRIKE' },
   { type: 'END_ACTIVATION', player: p2 },
-  { type: 'ACTIVATE', player: p1, modelId: m3 as ModelId },
-  { type: 'MOVE', player: p1, modelId: m3 as ModelId, template: 'M', path: [vec3(14, 12.5, 0)] },
+  { type: 'ACTIVATE', player: p1, modelId: m3 },
+  { type: 'MOVE', player: p1, modelId: m3, template: 'M', path: [vec3(14, 12.5, 0)] },
   { type: 'END_ACTIVATION', player: p1 },
-  { type: 'ACTIVATE', player: p2, modelId: m4 as ModelId },
+  { type: 'ACTIVATE', player: p2, modelId: m4 },
   { type: 'END_ACTIVATION', player: p2 },
 ];
 
-/** Everything a replay of the same log has to reproduce, in one readable object. */
 function outcomeOf(state: GameState, events: readonly GameEvent[]) {
   const counts: Record<string, number> = {};
   for (const event of events) counts[event.type] = (counts[event.type] ?? 0) + 1;
@@ -96,18 +103,16 @@ function outcomeOf(state: GameState, events: readonly GameEvent[]) {
   };
 }
 
-const keysOf = <T extends object>(shape: T): string[] => Object.keys(shape).sort();
-
 describe('SAVE_FORMAT_VERSION', () => {
   it('still produces the game this version claims to produce', () => {
     const replay = applyAll(createSparringGame(7), [...SCRIPT]);
 
-    // A rejection here is the same signal as a changed fingerprint, arriving
-    // less prettily: an action that was legal when this was written no longer
-    // is, so a saved log containing it will not replay either.
+    // A rejection is the same signal as a changed fingerprint, arriving less
+    // prettily: an action that was legal when this was written no longer is, so
+    // a saved log containing it will not replay either.
     expect(
       replay.ok,
-      replay.ok ? '' : `${replay.rejection?.code}: ${replay.rejection?.message}`,
+      replay.ok ? '' : `${replay.rejection.code}: ${replay.rejection.message}`,
     ).toBe(true);
     if (!replay.ok) return;
 
@@ -115,10 +120,10 @@ describe('SAVE_FORMAT_VERSION', () => {
       SAVE_FORMAT_VERSION,
       outcome: outcomeOf(replay.state, replay.events),
     }).toEqual({
-      // Bump both halves together. The version belongs in this assertion rather
-      // than its own, because a fingerprint that changes without the number
-      // changing is exactly the bug this file exists to catch — and a developer
-      // fixing the expected outcome has to look straight at the version to do it.
+      // The version belongs in this assertion rather than its own: a
+      // fingerprint that changes without the number changing is exactly the bug
+      // this file exists to catch, and a developer fixing the expected outcome
+      // has to look straight at the version to do it.
       SAVE_FORMAT_VERSION: 5,
       outcome: {
         round: 2,
@@ -146,111 +151,246 @@ describe('SAVE_FORMAT_VERSION', () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// SCHEMA_VERSION — the shape of everything inside a GameState
+// ---------------------------------------------------------------------------
+
+/**
+ * One fully-populated value per type, typed as that type.
+ *
+ * Samples rather than `Record<keyof T, true>` key lists, which is the second
+ * pass at this file: key lists caught a *new* field and nothing else. A sample
+ * is checked by the compiler in three directions at once —
+ *
+ *   added required field  → "missing property" on the sample
+ *   removed or renamed    → "unknown property" (excess property check)
+ *   retyped               → the literal no longer assignable
+ *
+ * — and the runtime fingerprint below turns any of that into a version
+ * question. The gap left is a field added as *optional*, which changes nothing
+ * here; that is also the one change old readers survive, so it is the right
+ * thing to be quiet about.
+ */
+const VEC: Vec3 = { x: 1, y: 2, z: 3 };
+const RNG: RngState = { seed: 1 };
+const RESULT: GameResult = { winner: p1, reason: 'wipeout' };
+const CONDITION: Condition = { kind: 'bleed', stacks: 1, source: m2 };
+const OBJECTIVE: ObjectiveMarker = { id: 'o1', pos: VEC, kind: 'extract', heldBy: null };
+const TERRAIN: TerrainVolume = {
+  id: 't1',
+  pos: VEC,
+  radius: 1,
+  height: 2,
+  size: 3,
+  blocksLineOfSight: true,
+};
+
+const ATTACK: AttackProfile = {
+  name: 'STRIKE',
+  type: 'physical',
+  range: 2,
+  shape: 'range',
+  dice: 5,
+  cost: 0,
+};
+const REACTION_EFFECTS: {
+  readonly [K in ReactionEffect['kind']]: Extract<ReactionEffect, { kind: K }>;
+} = {
+  addDefenseDice: { kind: 'addDefenseDice', count: 1 },
+  addAttackDice: { kind: 'addAttackDice', count: 1 },
+};
+const REACTION: ReactionProfile = {
+  timing: 'targeted',
+  role: 'target',
+  damageTypes: ['physical'],
+  effect: REACTION_EFFECTS.addDefenseDice,
+};
+const SUPERPOWER: SuperpowerProfile = {
+  name: 'SHIELD',
+  type: 'reactive',
+  cost: 2,
+  reaction: REACTION,
+};
+const STATS: StatProfile = {
+  stamina: 6,
+  movement: 'M',
+  size: 2,
+  defense: { physical: 3, energy: 3, mystic: 3 },
+  attacks: [ATTACK],
+  superpowers: [SUPERPOWER],
+};
+const PROFILE: CharacterProfile = {
+  characterId: 'alpha' as CharacterId,
+  name: 'Alpha',
+  baseMm: 40,
+  healthy: STATS,
+  injured: STATS,
+};
+
+const MODEL: Model = {
+  id: m1,
+  characterId: 'alpha' as CharacterId,
+  owner: p1,
+  pos: VEC,
+  facing: 0,
+  radius: 0.7874,
+  height: 2,
+  health: 'healthy',
+  dazed: false,
+  damage: 0,
+  power: 1,
+  conditions: [CONDITION],
+  activatedThisRound: false,
+  usedThisTurn: ['SHIELD'],
+  holdingObjective: null,
+};
+
+const PLAYER: PlayerState = {
+  id: p1,
+  displayName: 'One',
+  squad: [m1],
+  victoryPoints: 0,
+  tacticCards: ['card' as CardId],
+  threatSpent: 0,
+  hasPriority: true,
+};
+
+const FRAMES: { readonly [K in Frame['kind']]: Extract<Frame, { kind: K }> } = {
+  activation: { kind: 'activation', modelId: m1, actionsRemaining: 2 },
+  attack: {
+    kind: 'attack',
+    step: 'declareTarget',
+    attackerId: m1,
+    targetId: m2,
+    attackName: 'STRIKE',
+    damageType: 'physical',
+    cost: 0,
+    attackDice: 5,
+    defenseDice: 3,
+    attackFaces: null,
+    defenseFaces: null,
+    attackBonusFaces: null,
+    defenseBonusFaces: null,
+    attackSuccesses: null,
+    defenseSuccesses: null,
+    damage: null,
+  },
+  reactionWindow: {
+    kind: 'reactionWindow',
+    timing: 'targeted',
+    attackerId: m1,
+    targetId: m2,
+    damageType: 'physical',
+    pendingPlayers: [p2],
+    used: ['m2::SHIELD'],
+  },
+  applyDamage: { kind: 'applyDamage', modelId: m2, amount: 2, source: m1 },
+  checkDazed: { kind: 'checkDazed', modelId: m2 },
+};
+
+const PROMPTS: { readonly [K in Prompt['kind']]: Extract<Prompt, { kind: K }> } = {
+  chooseActivation: { kind: 'chooseActivation', player: p1, options: [m1], mayPass: false },
+  chooseAction: { kind: 'chooseAction', player: p1, modelId: m1 },
+  declareReaction: {
+    kind: 'declareReaction',
+    player: p2,
+    timing: 'targeted',
+    options: [{ modelId: m2, superpower: 'SHIELD', cost: 2 }],
+  },
+  rollPriority: { kind: 'rollPriority', players: [p1, p2] },
+};
+
+const STATE: GameState = {
+  schemaVersion: SCHEMA_VERSION,
+  rng: RNG,
+  phase: 'activation',
+  result: RESULT,
+  round: 1,
+  turnOrder: [p1, p2],
+  activePlayer: p1,
+  players: { p1: PLAYER },
+  models: { m1: MODEL },
+  profiles: { alpha: PROFILE },
+  terrain: [TERRAIN],
+  objectives: [OBJECTIVE],
+  lastActivatedBy: null,
+  stack: [FRAMES.activation],
+  prompt: PROMPTS.chooseAction,
+  sequence: 0,
+};
+
+const shape = (value: object): string => Object.keys(value).sort().join(',');
+
+const shapes = (samples: Readonly<Record<string, object>>): string[] =>
+  Object.entries(samples)
+    .map(([tag, value]) => `${tag}(${shape(value)})`)
+    .sort();
+
 describe('SCHEMA_VERSION', () => {
-  /*
-   * `Record<keyof T, true>` rather than a hand-written list: adding a field to
-   * `GameState` is a *compile* error here until it is listed, which is a firmer
-   * reminder than a failing assertion and arrives before the test even runs.
-   * Removing one is an error too.
-   */
-  const GAME_STATE: Record<keyof GameState, true> = {
-    schemaVersion: true,
-    rng: true,
-    phase: true,
-    result: true,
-    round: true,
-    turnOrder: true,
-    activePlayer: true,
-    players: true,
-    models: true,
-    profiles: true,
-    terrain: true,
-    objectives: true,
-    lastActivatedBy: true,
-    stack: true,
-    prompt: true,
-    sequence: true,
-  };
-
-  const MODEL: Record<keyof Model, true> = {
-    id: true,
-    characterId: true,
-    owner: true,
-    pos: true,
-    facing: true,
-    radius: true,
-    height: true,
-    health: true,
-    dazed: true,
-    damage: true,
-    power: true,
-    conditions: true,
-    activatedThisRound: true,
-    usedThisTurn: true,
-    holdingObjective: true,
-  };
-
-  const PLAYER: Record<keyof PlayerState, true> = {
-    id: true,
-    displayName: true,
-    squad: true,
-    victoryPoints: true,
-    tacticCards: true,
-    threatSpent: true,
-    hasPriority: true,
-  };
-
   it('still describes the state shape this version claims to describe', () => {
     expect({
       SCHEMA_VERSION,
-      gameState: keysOf(GAME_STATE),
-      model: keysOf(MODEL),
-      player: keysOf(PLAYER),
+      gameState: shape(STATE),
+      model: shape(MODEL),
+      player: shape(PLAYER),
+      frames: shapes(FRAMES),
+      prompts: shapes(PROMPTS),
+      nested: shapes({
+        condition: CONDITION,
+        objective: OBJECTIVE,
+        result: RESULT,
+        rng: RNG,
+        terrain: TERRAIN,
+        vec3: VEC,
+      }),
+      profile: shapes({
+        attack: ATTACK,
+        character: PROFILE,
+        reaction: REACTION,
+        stats: STATS,
+        superpower: SUPERPOWER,
+        ...REACTION_EFFECTS,
+      }),
     }).toEqual({
       SCHEMA_VERSION: 2,
-      gameState: [
-        'activePlayer',
-        'lastActivatedBy',
-        'models',
-        'objectives',
-        'phase',
-        'players',
-        'profiles',
-        'prompt',
-        'result',
-        'rng',
-        'round',
-        'schemaVersion',
-        'sequence',
-        'stack',
-        'terrain',
-        'turnOrder',
+      gameState:
+        'activePlayer,lastActivatedBy,models,objectives,phase,players,profiles,prompt,result,rng,' +
+        'round,schemaVersion,sequence,stack,terrain,turnOrder',
+      model:
+        'activatedThisRound,characterId,conditions,damage,dazed,facing,health,height,' +
+        'holdingObjective,id,owner,pos,power,radius,usedThisTurn',
+      player: 'displayName,hasPriority,id,squad,tacticCards,threatSpent,victoryPoints',
+      frames: [
+        'activation(actionsRemaining,kind,modelId)',
+        'applyDamage(amount,kind,modelId,source)',
+        'attack(attackBonusFaces,attackDice,attackFaces,attackName,attackSuccesses,attackerId,' +
+          'cost,damage,damageType,defenseBonusFaces,defenseDice,defenseFaces,defenseSuccesses,' +
+          'kind,step,targetId)',
+        'checkDazed(kind,modelId)',
+        'reactionWindow(attackerId,damageType,kind,pendingPlayers,targetId,timing,used)',
       ],
-      model: [
-        'activatedThisRound',
-        'characterId',
-        'conditions',
-        'damage',
-        'dazed',
-        'facing',
-        'health',
-        'height',
-        'holdingObjective',
-        'id',
-        'owner',
-        'pos',
-        'power',
-        'radius',
-        'usedThisTurn',
+      prompts: [
+        'chooseAction(kind,modelId,player)',
+        'chooseActivation(kind,mayPass,options,player)',
+        'declareReaction(kind,options,player,timing)',
+        'rollPriority(kind,players)',
       ],
-      player: [
-        'displayName',
-        'hasPriority',
-        'id',
-        'squad',
-        'tacticCards',
-        'threatSpent',
-        'victoryPoints',
+      nested: [
+        'condition(kind,source,stacks)',
+        'objective(heldBy,id,kind,pos)',
+        'result(reason,winner)',
+        'rng(seed)',
+        'terrain(blocksLineOfSight,height,id,pos,radius,size)',
+        'vec3(x,y,z)',
+      ],
+      profile: [
+        'addAttackDice(count,kind)',
+        'addDefenseDice(count,kind)',
+        'attack(cost,dice,name,range,shape,type)',
+        'character(baseMm,characterId,healthy,injured,name)',
+        'reaction(damageTypes,effect,role,timing)',
+        'stats(attacks,defense,movement,size,stamina,superpowers)',
+        'superpower(cost,name,reaction,type)',
       ],
     });
   });

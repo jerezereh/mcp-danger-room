@@ -223,13 +223,20 @@ the same assertion:
   positions, RNG position and event counts pinned beside
   `SAVE_FORMAT_VERSION`. Any change to a rule, a distance or a die face fails
   it.
-- The `GameState`, `Model` and `PlayerState` field lists typed
-  `Record<keyof T, true>`, so a new field is a _compile_ error before it is a
-  test failure.
-- The wire's message, action and event tags the same way — pinned beside all
+- One fully-populated **sample per type**, typed as that type: every `Frame`
+  and `Prompt` variant, `Model`, `PlayerState`, the profile types, and
+  `GameState` itself. The compiler checks a sample in three directions at once
+  — an added required field is a missing property, a renamed or removed one is
+  an unknown property, a retyped one is not assignable — so most breakage is a
+  _compile_ error before it is a test failure. A runtime fingerprint of each
+  sample's key set then turns it into a version question.
+- The wire's messages, actions and events the same way, pinned beside all
   **three** versions at once, because a schema change and a rules change are
   both protocol changes and that is precisely the coupling that kept being
   forgotten.
+
+The one thing samples do not notice is a field added as _optional_. That is
+deliberate: an optional addition is also the one change an old reader survives.
 
 These tests are meant to fail. A failure is the question "did you mean to change
 this, and did you bump the number?", and the fix is to update the expectation in
